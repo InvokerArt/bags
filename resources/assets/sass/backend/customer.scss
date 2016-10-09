@@ -1,0 +1,26 @@
+.form-control.edui-default {
+    height: auto;
+    padding: 0;
+    border: none;
+}
+.column-slug {
+    width: 25%;
+}
+.column-posts {
+    width: 74px;
+}
+.check-column, .column-id {
+    width: 2em;
+}
+.column-author, .column-format, .column-links, .column-parent, .column-posts {
+    width: 10%;
+}
+.column-date {
+    width: 12%;
+}
+.column-categories, .column-rel, .column-response, .column-role, .column-tags {
+    width: 15%;
+}
+.column-comments {
+    width: 5.5em;
+}
