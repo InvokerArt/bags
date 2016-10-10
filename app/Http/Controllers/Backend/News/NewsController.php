@@ -45,28 +45,27 @@ class NewsController extends Controller
     public function get(NewsRequest $request)
     {
         return Datatables::of($this->news->getForDataTable())
+            ->filter(function ($query) use ($request) {
+                News::newsFilter($query, $request);
+            })
             ->addColumn('ids', function ($news) {
                 return $news->checkbox_button;
+            })
+            ->editColumn('title', function ($news) {
+                return str_limit($news->title, 30, '...');
             })
             ->addColumn('author', function ($news) {
                 return $news->user->name;
             })
-            ->addColumn('categories', function ($news) {
-                $categories = [];
-                foreach ($news->categories as $category) {
-                    array_push($categories, $category->name);
-                }
-                return $categories;
+            ->editColumn('categories', function ($news) {
+                return $news->categories->map(function ($category) {
+                    return $category->name;
+                })->implode('<br>');
             })
-            ->addColumn('tags', function ($news) {
-                $tags = [];
-                foreach ($news->tags as $tag) {
-                    array_push($tags, $tag->name);
-                }
-                return implode(",", $tags);
-            })
-            ->addColumn('comments', function ($news) {
-                return $news->comments()->count();
+            ->editColumn('tags', function ($news) {
+                return $news->tags->map(function ($tags) {
+                    return $tags->name;
+                })->implode('、');
             })
             ->addColumn('actions', function ($news) {
                 return $news->action_buttons;

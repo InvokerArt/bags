@@ -2,10 +2,14 @@
 
 namespace App\Models\Backend\News;
 
+use App\Models\Access\User\User;
+use App\Models\Backend\News\Traits\Attribute\NewsAttribute;
+use App\Models\Backend\News\Traits\Relationship\NewsRelationship;
 use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
+    use NewsRelationship, NewsAttribute;
     /**
      * 默认数据库
      * @var string
@@ -26,40 +30,49 @@ class News extends Model
         'user_id',
     ];
 
-    //checkbox按钮
-    public function getCheckboxButtonAttribute()
+    static function newsFilter($query, $request)
     {
-        return '<input type="checkbox" name="id[]" value="'.$this->id.'">';
-    }
+        if ($request->has('id')) {
+            $query = $query->where('id', '=', $request->get('id'));
+        }
 
-    //操作按钮
-    public function getActionButtonsAttribute()
-    {
-        
-        return '<a href="' . route(env('APP_BACKEND_PREFIX').'.news.edit', $this->id) . '" class="btn btn-xs blue"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="编辑"></i></a> <a href="' . route(env('APP_BACKEND_PREFIX').'.news.destroy', $this->id) . '" data-method="delete" class="btn btn-xs red"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="移至回收站"></i></a>';
-    }
+        if ($request->has('title')) {
+            $query = $query->where('title', 'like', "%{$request->get('title')}%");
+        }
 
-    //分类多对多
-    public function categories()
-    {
-        return $this->belongsToMany('App\Models\Backend\News\CategoriesNews', 'category_new', 'news_id', 'category_id');
-    }
+        if ($request->has('author')) {
+            $user = User::where('name', $request->get('author'))->first();
+            $user_id = $user ? $user->id : '';
+            $query = $query->where('user_id', $user_id);
+        }
 
-    //用户一对多反向
-    public function user()
-    {
-        return $this->belongsTo('App\Models\Access\User\User');
-    }
+        /**
+         * 使用 whereHas 和 orWhereHas 方法来在 has 查询中插入 where 子句。这些方法允许你为关联进行自定义的约束查询。
+         */
+        if ($request->has('categories')) {
+            $query = $query->whereHas('categories', function ($query) use ($request) {
+                $query->where('category_new.category_id', $request->get('categories'));
+            });
+        }
 
-    //标签多对多的多态关联
-    public function tags()
-    {
-        return $this->morphToMany('App\Models\Backend\Tags\Tag', 'taggable');
-    }
+        if ($request->has('tags')) {
+            $query = $query->whereHas('tags', function ($query) use ($request) {
+                $query->where('tags.name', $request->get('tags'));
+            });
+        }
 
-    //评论一对多
-    public function comments()
-    {
-        return $this->morphMany('App\Models\Backend\Comments\Comment', 'commentable');
+        if ($request->has('published_from') && !$request->has('published_to')) {
+            $query = $query->where('published_at', '>=', $request->get('published_from'));
+        }
+
+        if (!$request->has('published_from') && $request->has('published_to')) {
+            $query = $query->where('published_at', '<=', $request->get('published_to'));
+        }
+
+        if ($request->has('published_from') && $request->has('published_to')) {
+            $query = $query->whereBetween('published_at', [$request->get('published_from'),$request->get('published_to')]);
+        }
+
+        return $query;
     }
 }

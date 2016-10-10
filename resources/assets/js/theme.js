@@ -526,11 +526,11 @@ var Theme = function() {
     // Handle Select2 Dropdowns
     var handleSelect2 = function() {
         if ($().select2) {
-            $.fn.select2.defaults.set("theme", "bootstrap");
+            $.fn.select2.defaults.set("theme", "bootstrap input-sm");
             $('.select2').select2({ 
-                placeholder: "Select",
-                width: 'auto', 
-                allowClear: true
+                placeholder: "请选择",
+                width: '100%',
+                allowClear: false
             });
         }
     };

@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-xs-10">
                         <div class="table-container">
-                            <form method="POST" id="search-form" class="form-inline" role="form">
+                            <form method="POST" class="form-inline" role="form">
                                 <table class="table table-striped table-bordered table-hover" id="tags-table">
                                     <thead>
                                         <tr role="row" class="heading">
@@ -119,13 +119,6 @@
                     ],
                     "pageLength": 20,
                 }
-            });
-
-            $('.filter-submit').on('click', function(e) {
-                $('#search-form').submit(function(){
-                    grid.draw();
-                    e.preventDefault();
-                })
             });
             
             $(document).ajaxComplete(function(){

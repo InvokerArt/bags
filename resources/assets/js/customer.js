@@ -418,10 +418,44 @@ $(function(){
         }
     });
 
-    /**
-     * 绑定所有引导提示
-     */
+    //绑定所有引导提示
     $("body").tooltip({
         selector: '[data-toggle="tooltip"]'
     });
+
+    //表单提交搜索
+    $('.filter-submit').on('click', function(e) {
+        $(this).closest('form').submit(function(){
+            grid.draw();
+            e.preventDefault();
+        })
+    });
+
+    /**
+     * 删除操作
+     */
+    $('body').on('submit', 'form[name=delete_item]', function(e){
+        e.preventDefault();
+        var form = this;
+        var link = $('a[data-method="delete"]');
+        var cancel = (link.attr('data-trans-button-cancel')) ? link.attr('data-trans-button-cancel') : "返回";
+        var confirm = (link.attr('data-trans-button-confirm')) ? link.attr('data-trans-button-confirm') : "确定";
+        var title = (link.attr('data-trans-title')) ? link.attr('data-trans-title') : "警告";
+        var text = (link.attr('data-trans-text')) ? link.attr('data-trans-text') : "你确定要删除吗？";
+
+        swal({
+            title: title,
+            text: text,
+            type: "warning",
+            showCancelButton: true,
+            cancelButtonText: cancel,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: confirm,
+            closeOnConfirm: true
+        }, function(confirmed) {
+            if (confirmed)
+                form.submit();
+        });
+    });
+    
 });

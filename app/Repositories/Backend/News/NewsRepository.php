@@ -28,7 +28,10 @@ class NewsRepository implements NewsInterface
 
     public function getForDataTable()
     {
-        return News::all();
+        /**
+         * withCount--统计关联的结果而不实际的加载它们。
+         */
+        return News::with(['tags', 'categories'])->withCount('comments');
     }
 
     public function create($input)

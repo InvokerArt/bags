@@ -5,7 +5,7 @@
         <ul class="page-sidebar-menu" data-auto-scroll="true" data-slide-speed="200">
             <li class="sidebar-search-wrapper hidden-xs">
                 <!-- 快速搜索开始 -->
-                <form class="sidebar-search sidebar-search-bordered sidebar-search-solid" action="extra_search.html" method="POST">
+                {{-- <form class="sidebar-search sidebar-search-bordered sidebar-search-solid" action="extra_search.html" method="POST">
                     <a href="javascript:;" class="remove">
                         <i class="icon-close"></i>
                     </a>
@@ -15,7 +15,7 @@
                             <a href="javascript:;" class="btn submit"><i class="icon-magnifier"></i></a>
                         </span>
                     </div>
-                </form>
+                </form> --}}
                 <!-- 快速搜索结束 -->
             </li>
             <li class="start {{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.dashboard')) }} ">
@@ -89,4 +89,4 @@
         <!-- 侧边菜单结束 -->
     </div>
 </div>
-<!-- 侧边栏结束 -->
+<!-- 侧边栏结束
