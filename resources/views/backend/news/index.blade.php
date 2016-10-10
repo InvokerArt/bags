@@ -57,16 +57,16 @@
                         <td>
                         </td>
                         <td>
-                            <div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-                                <input type="text" class="form-control form-filter input-sm" readonly="" name="published_from" placeholder="开始时间">
+                            <div class="input-group date margin-bottom-5">
+                                <input type="text" class="form-control form-filter input-sm date-timepicker" readonly="" name="published_from" placeholder="开始时间">
                                 <span class="input-group-btn">
                                     <button class="btn btn-sm default" type="button">
                                         <i class="fa fa-calendar"></i>
                                     </button>
                                 </span>
                             </div>
-                            <div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
-                                <input type="text" class="form-control form-filter input-sm" readonly="" name="published_to" placeholder="结束时间">
+                            <div class="input-group date">
+                                <input type="text" class="form-control form-filter input-sm date-timepicker" readonly="" name="published_to" placeholder="结束时间">
                                 <span class="input-group-btn">
                                     <button class="btn btn-sm default" type="button">
                                         <i class="fa fa-calendar"></i>

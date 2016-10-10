@@ -115,11 +115,9 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        $tags = $this->tags->getPopularTags();
         $newsTags = $news->tags->pluck('name')->all();
-        $newsTag = implode(',', $newsTags);
         $categories = $news->categories->pluck('id')->toArray();
-        return view('backend.news.edit', compact(['news', 'tags', 'newsTag', 'categories']));
+        return view('backend.news.edit', compact(['news', 'tags', 'newsTags', 'categories']));
     }
 
     /**
@@ -143,5 +141,11 @@ class NewsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function popularTags()
+    {
+        $popularTags = $this->tags->getPopularTags();
+        return $popularTags;
     }
 }

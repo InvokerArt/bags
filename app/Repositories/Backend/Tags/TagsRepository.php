@@ -25,6 +25,11 @@ class TagsRepository implements TagsInterface
 
     public function getPopularTags($limit = 10)
     {
+        // $tags = Tag::whereHas('news', function ($query) {
+        //     $query->select(DB::raw('count(taggables.taggable_id) AS count'))->orderBy('count', 'desc');
+        // })
+        // ->get();
+        // return $tags;
         $tags = Tag::select ([
             'id',
             'name',

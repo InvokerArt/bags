@@ -10,8 +10,8 @@
 
 @section('content')
 {{ Form::model($news, ['route' => [env('APP_BACKEND_PREFIX').'.news.update', $news], 'method' => 'PATCH', 'id' => 'edit-news']) }}
-    <div class="row">
-        <div class="col-xs-10">
+    <div id="poststuff">
+        <div class="news-body-content">
             <div class="news-body">
                 <div class="form-group">
                     <input type="text" name="title" class="form-control" placeholder="在此输入资讯标题" value="{{ $news->title }}">
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-2 news-sidebar">
+        <div class="news-sidebar">
             <div class="newsbox margin-bottom-15">
                 <h2>
                     <span>发布</span>
@@ -65,15 +65,23 @@
                 </h2>
                 <div class="inside">
                     <div>
-                        <input type="text" name="newtag" class="form-control" placeholder="添加标签" value="{{ $newsTag }}">
+                        <input type="text" name="newtag" class="form-control newtag">
+                        <button type="button" class="btn add-tag pull-right">添加</button>
                         <p class="help-block">多个标签请用英文逗号（,）分开</p>
                     </div>
-                    <div class="margin-top-10">
-                        <select class="select2 form-control" name="tags" multiple>
-                            @foreach ($tags as $tag)
-                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                            @endforeach
-                        </select>
+                    <div class="tagchecklist">
+                        @foreach ($newsTags as $newsTag)
+                        <span>
+                        <a id="post_tag-check-num-0" class="ntdelbutton" tabindex="0"><i class="icon-close"></i></a>&nbsp;{{ $newsTag }}
+                        </span>
+                        @endforeach
+                    </div>
+                    <div class="hide-if-no-js">
+                        <a href="javascript:;" class="tagcloud-link" id="link-post_tag">从常用标签中选择</a>
+                        <p id="tagcloud-post_tag" class="the-tagcloud">
+                            <a href="javascript:;" data-id="1" class="tag-link">世界</a>
+                            <a href="javascript:;" data-id="2" class="tag-link">我的</a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -163,5 +171,11 @@
         ue.ready(function() {
             ue.execCommand('serverparam', '_token', '{{ csrf_token() }}');//此处为支持laravel5 csrf ,根据实际情况修改,目的就是设置 _token 值.
         });
+
+        //获取常用标签
+        $('.tagcloud-link').on('click', function (){
+
+        });
+
     </script>
 @stop
