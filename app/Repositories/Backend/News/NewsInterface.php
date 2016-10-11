@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Backend\News;
 
+use App\Models\Backend\News\News;
+
 interface NewsInterface
 {
     public function getForDataTable();
@@ -17,7 +19,7 @@ interface NewsInterface
      * @param $input
      * @return mixed
      */
-    public function update($id, $input);
+    public function update(News $news, $input);
 
     /**
      * @param  $id

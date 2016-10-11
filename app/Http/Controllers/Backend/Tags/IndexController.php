@@ -141,4 +141,13 @@ class IndexController extends Controller
         $this->tags->destroy($id);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.tags.index')->withFlashSuccess('标签删除成功');
     }
+
+    public function popular()
+    {
+        $popularTags = $this->tags->getPopularTags();
+        $popularTags = $popularTags->map(function ($tags) {
+            return ['id' => $tags->id, 'name' => $tags->name, 'news_count' => $tags->news_count];
+        });
+        return $popularTags;
+    }
 }

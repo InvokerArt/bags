@@ -25,7 +25,7 @@ class NewsStoreOrUpdateRequest extends Request
     {
         return [
             'title' => 'required',
-            'slug' => 'required|alpha_dash',
+            //'slug' => 'required|alpha_dash',
             'subtitle' => 'required',
             'content' => 'required',
             'categories_id' => 'required'

@@ -57,6 +57,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
     //标签
     Route::group(['namespace' => 'Tags', 'as' => 'tags.', 'prefix' => 'tags'], function () {
         Route::get('/get', 'IndexController@get')->name('get');
+        Route::get('/popular', 'IndexController@popular')->name('popular');
         Route::post('/', 'IndexController@store')->name('store');
         Route::get('/', 'IndexController@index')->name('index');
         Route::get('/create', 'IndexController@create')->name('create');

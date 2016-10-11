@@ -14580,6 +14580,10 @@ body.stop-scrolling {
     border: 1px solid #ddd;
     line-height: 1.8em;
     word-spacing: 3px; }
+  .newsbox .the-tagcloud {
+    display: none; }
+  .newsbox .the-tagcloud a {
+    text-decrotion: underline; }
 
 .form-control.edui-default {
   height: auto;

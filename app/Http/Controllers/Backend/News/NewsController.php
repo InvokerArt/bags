@@ -115,7 +115,7 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        $newsTags = $news->tags->pluck('name')->all();
+        $newsTags = $news->tags->pluck('name', 'id')->all();
         $categories = $news->categories->pluck('id')->toArray();
         return view('backend.news.edit', compact(['news', 'tags', 'newsTags', 'categories']));
     }
@@ -127,9 +127,10 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(News $news, NewsStoreOrUpdateRequest $request)
     {
-        //
+        $this->news->update($news, $request);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.index')->withFlashSuccess('更新成功');
     }
 
     /**
@@ -141,11 +142,5 @@ class NewsController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function popularTags()
-    {
-        $popularTags = $this->tags->getPopularTags();
-        return $popularTags;
     }
 }

@@ -109,7 +109,7 @@
                         {data: 'ids', name: '',"orderable": false,"searchable": false},
                         {data: 'id', name: '',"orderable": true,"searchable": true},
                         {data: 'name', name: '',"orderable": true,"searchable": true},
-                        {data: 'count', name: 'count',"orderable": true,"searchable": false},
+                        {data: 'news_count', name: 'news_count',"orderable": true,"searchable": false},
                         {data: 'created_at', name: '',"orderable": true,"searchable": true},
                         {data: 'actions', name: '', orderable: false, searchable: false}
                     ],

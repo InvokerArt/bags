@@ -17,7 +17,7 @@ class CreateNewsTable extends Migration
             $table->increments('id')->index();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('slug')->unique()->index()->comment('固定链接地址');
+            $table->string('slug')->nullable()->unique()->index()->comment('固定链接地址');
             $table->string('title')->comment('标题');
             $table->string('subtitle')->comment('副标题');
             $table->text('content')->comment('内容');

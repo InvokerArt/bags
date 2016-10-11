@@ -28,4 +28,32 @@ trait NewsRelationship
     {
         return $this->morphMany('App\Models\Backend\Comments\Comment', 'commentable');
     }
+
+    //添加标签数据到中间表
+    public function attachTag($tag)
+    {
+        if (is_object($tag)) {
+            $tag = $tag->getKey();
+        }
+
+        if (is_array($tag)) {
+            $tag = $tag['id'];
+        }
+
+        $this->tags()->attach($tag);
+    }
+
+    //添加标签数据到中间表
+    public function attachTags($tags)
+    {
+        foreach ($tags as $tag) {
+            $this->attachTag($tag);
+        }
+    }
+
+    //更新标签数据到中间表
+    public function syncTags($tags)
+    {
+        $this->tags()->sync($tags);
+    }
 }

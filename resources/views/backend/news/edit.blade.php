@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <input type="text" name="title" class="form-control" placeholder="在此输入资讯标题" value="{{ $news->title }}">
                 </div>
-                <div class="inside">
+                {{-- <div class="inside">
                     <div id="edit-slug-box" class="hide-if-no-js"> <strong>固定链接：</strong>
                         <span id="sample-permalink">
                             {{ env('APP_URL').'news/' }}
@@ -24,7 +24,7 @@
                                 <input type="text" id="slug" class="form-control" name="slug" autocomplete="off" value="{{ str_replace(env('APP_URL').'news/', '', $news->slug) }}"></span>
                         </span>
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-group margin-top-15">
                     <textarea name="subtitle" class="form-control" placeholder="在此输入资讯简介">{{ $news->subtitle }}</textarea>
                     <span class="help-block">字数建议控制在100字以内</span>
@@ -65,22 +65,21 @@
                 </h2>
                 <div class="inside">
                     <div>
-                        <input type="text" name="newtag" class="form-control newtag">
+                        <input type="text" class="form-control newtag" autocomplete="off">
+                        <input type="hidden" name="tag" class="tag" value="{{ implode(',', $newsTags) }}">
                         <button type="button" class="btn add-tag pull-right">添加</button>
                         <p class="help-block">多个标签请用英文逗号（,）分开</p>
                     </div>
                     <div class="tagchecklist">
-                        @foreach ($newsTags as $newsTag)
+                        @foreach ($newsTags as $key => $value)
                         <span>
-                        <a id="post_tag-check-num-0" class="ntdelbutton" tabindex="0"><i class="icon-close"></i></a>&nbsp;{{ $newsTag }}
+                        <a class="ntdelbutton"><i class="icon-close"></i></a>&nbsp;{{ $value }}
                         </span>
                         @endforeach
                     </div>
                     <div class="hide-if-no-js">
                         <a href="javascript:;" class="tagcloud-link" id="link-post_tag">从常用标签中选择</a>
                         <p id="tagcloud-post_tag" class="the-tagcloud">
-                            <a href="javascript:;" data-id="1" class="tag-link">世界</a>
-                            <a href="javascript:;" data-id="2" class="tag-link">我的</a>
                         </p>
                     </div>
                 </div>
@@ -90,12 +89,13 @@
                     <span>特色图片</span>
                 </h2>
                 <div class="inside">
-                    <a href="javascript:;">
+                    <input type="hidden" name="image" class="thumbnail" value="{{ $news->image }}">
+                    <a href="javascript:;" class="update-thumbnail">
                         <img width="100%" src="http://www.testwordpress.com/wp-content/uploads/2016/09/mocha-1.jpg">
                     </a>
-                    <p class="help-block" id="set-post-thumbnail-desc">点击图片来修改或更新</p>
+                    <p class="help-block" id="how-to">点击图片来修改或更新</p>
                     <p class="help-block">
-                        <a href="#" id="remove-post-thumbnail" onclick="WPRemoveThumbnail('1529892b00');return false;">移除特色图片</a>
+                        <a href="javascript:;" class="news-thumbnail remove">移除特色图片</a>
                     </p>
                 </div>
             </div>
@@ -114,6 +114,7 @@
                 placeholder: "从常用标签中选择"
             })
 
+            //分类目录
             $('.news-categories').jstree({
                 core: {
                     strings : { 
@@ -174,8 +175,73 @@
 
         //获取常用标签
         $('.tagcloud-link').on('click', function (){
+            if ($(this).hasClass('has')) {
+                $('.the-tagcloud').toggle();
+            } else {
+                var html = '';
+                $.ajax({
+                    url: '{{ route(env('APP_BACKEND_PREFIX').".tags.popular") }}',
+                    success: function (data){
+                        $.each(data, function(key, val){
+                            html += '<a href="javascript:;" data-id="' + val.id + '" class="tag-link" title="' + val.news_count + '篇资讯">' + val.name + '</a>\n';
+                        })
+                        $('.tagcloud-link').addClass('has');
+                        $('.the-tagcloud').html(html).show();
 
+                    }
+                })
+            }
         });
+
+        //添加标签
+        $(document).on('click', '.the-tagcloud a,.add-tag', function (){
+            var tag_name = $('.tag').val().split(',');
+            if ($(this).hasClass('add-tag')) {
+                var text = $('.newtag').val();
+                $('.newtag').val('');
+            } else {
+                var text = $(this).text();
+            }
+            var html = '';
+            if ($.inArray(text, tag_name) < 0) {
+                if (tag_name.length && $('.tag').val()) {
+                    $('.tag').val(tag_name.join(',') + ',' +text);
+                } else {
+                    $('.tag').val(text);
+                }
+                html += '<span>';
+                html += '<a class="ntdelbutton"><i class="icon-close"></i></a>&nbsp;'+text;
+                html += '</span>';
+                $('.tagchecklist').append(html);
+            } else {
+                $('.newtag').focus();
+            }
+        });
+
+        //删除标签
+        $(document).on('click', '.ntdelbutton', function (){
+            var tag_name = $('.tag').val().split(',');
+            var text = $.trim($(this).closest('span').text());
+            tag_name.splice($.inArray(text, tag_name), 1);
+            if (tag_name.length) {
+                $('.tag').val(tag_name.join(','));
+            } else {
+                $('.tag').val('');
+            }
+            $(this).closest('span').remove();
+        });
+
+        //移除图片
+        $('.news-thumbnail').on('click', function(){
+            if ($(this).hasClass('remove')) {
+                $('.thumbnail,#how-to').remove();
+                $('.thumbnail').val('');
+                $(this).removeClass('remove').addClass('add').text('添加特色图像');
+            } else {
+                $(this).removeClass('add').addClass('remove').text('移除特色图片');
+            }
+        })
+
 
     </script>
 @stop

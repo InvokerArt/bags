@@ -25,35 +25,33 @@ class TagsRepository implements TagsInterface
 
     public function getPopularTags($limit = 10)
     {
-        // $tags = Tag::whereHas('news', function ($query) {
-        //     $query->select(DB::raw('count(taggables.taggable_id) AS count'))->orderBy('count', 'desc');
-        // })
+        //ORM获取
+        return Tag::select('id', 'name')
+        ->withCount('news')
+        ->has('news', '>', 0)
+        ->limit($limit)
+        ->get()
+        ->sortByDesc(function ($query) {
+            return $query->news->count();
+        });
+        //原始mysql获取
+        // $tags = Tag::select ([
+        //     'id',
+        //     'name',
+        //     DB::raw('count(taggables.taggable_id) AS count'),
+        //     'created_at'
+        // ])
+        // ->leftJoin('taggables', 'taggables.taggable_id', '=', 'tags.id')
+        // ->groupBy('tags.id')
+        // ->limit($limit)
+        // ->orderBy('count', 'desc')
         // ->get();
         // return $tags;
-        $tags = Tag::select ([
-            'id',
-            'name',
-            DB::raw('count(taggables.taggable_id) AS count'),
-            'created_at'
-        ])
-        ->leftJoin('taggables', 'taggables.taggable_id', '=', 'tags.id')
-        ->groupBy('tags.id')
-        ->limit($limit)
-        ->orderBy('count', 'desc')
-        ->get();
-        return $tags;
     }
 
     public function getForDataTable()
     {
-        $tags = Tag::select ([
-            'id',
-            'name',
-            DB::raw('count(taggables.taggable_id) AS count'),
-            'created_at'
-        ])
-        ->leftJoin('taggables', 'taggables.taggable_id', '=', 'tags.id')
-        ->groupBy('tags.id');
+        $tags = Tag::withCount('news')->get();
         return $tags;
     }
 
