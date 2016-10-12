@@ -40,11 +40,11 @@
                 </h2>
                 <div class="inside">
                     <input type="text" name="published_at" class="form-control date-timepicker" placeholder="发布时间">
-                    <button href="javascript:;" class="btn green margin-top-10">
+                    <button href="javascript:;" class="btn btn-default margin-top-10">
                         <i class="fa fa-eye"></i>
                         预览 
                     </button>
-                    <button href="javascript:;" class="btn red pull-right margin-top-10">
+                    <button href="javascript:;" class="btn green pull-right margin-top-10">
                         <i class="fa fa-edit"></i>
                         发布 
                     </button>

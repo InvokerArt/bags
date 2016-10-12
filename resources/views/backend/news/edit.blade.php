@@ -30,6 +30,9 @@
                     <span class="help-block">字数建议控制在100字以内</span>
                 </div>
                 <div class="form-group">
+                    <button type="button" id="insert-media-button" class="btn blue insert-media add_media margin-bottom-5" data-editor="content">
+                        <i class="fa fa-image"></i> 添加媒体
+                    </button>
                     <textarea name="content" id="editor" class="form-control">{{ $news->content }}</textarea>
                 </div>
             </div>
@@ -41,11 +44,11 @@
                 </h2>
                 <div class="inside">
                     <input type="text" name="published_at" class="form-control date-timepicker" placeholder="发布时间" value="{{ $news->published_at }}">
-                    <button href="javascript:;" class="btn green margin-top-10">
+                    <button href="javascript:;" class="btn btn-default  margin-top-10">
                         <i class="fa fa-eye"></i>
                         预览 
                     </button>
-                    <button href="javascript:;" class="btn red pull-right margin-top-10">
+                    <button href="javascript:;" class="btn green pull-right margin-top-10">
                         <i class="fa fa-edit"></i>
                         发布 
                     </button>
@@ -234,7 +237,7 @@
         //移除图片
         $('.news-thumbnail').on('click', function(){
             if ($(this).hasClass('remove')) {
-                $('.thumbnail,#how-to').remove();
+                $('.update-thumbnail img,#how-to').remove();
                 $('.thumbnail').val('');
                 $(this).removeClass('remove').addClass('add').text('添加特色图像');
             } else {

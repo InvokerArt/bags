@@ -15,7 +15,7 @@
                             <input type="text" name="name" class="form-control" placeholder="在此输入标签名称">
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-block red pull-right margin-top-10">
+                            <button type="submit" class="btn btn-block green pull-right margin-top-10">
                                 <i class="fa fa-edit"></i>
                                 添加新标签
                             </button>

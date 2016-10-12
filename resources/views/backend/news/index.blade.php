@@ -7,8 +7,8 @@
 <div class="portlet light portlet-fit portlet-datatable bordered">
     <div class="portlet-title">
         <div class="actions">
-            <a href="{{ route(env('APP_BACKEND_PREFIX').'.news.create') }}" class="btn green btn-info">
-                <i class="fa fa-plus"></i>
+            <a href="{{ route(env('APP_BACKEND_PREFIX').'.news.create') }}" class="btn green">
+                <i class="fa fa-plus-square-o"></i>
                 <span class="hidden-xs">添加资讯</span>
             </a>
         </div>

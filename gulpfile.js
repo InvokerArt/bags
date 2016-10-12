@@ -37,7 +37,8 @@ elixir(function(mix) {
         'backend/app.css',
         'vendor/jquery.dataTables.min.css',
         'vendor/dataTables.bootstrap.css',
-        'vendor/bootstrap-datetimepicker.min.css'
+        'vendor/bootstrap-datetimepicker.min.css',
+        'vendor/media-manager.css'
     ], 'resources/assets/css/backend/plugin.css')
     /**
      * 后台样式
@@ -178,6 +179,7 @@ elixir(function(mix) {
         'vendor/bootstrap-datepicker.min.js',
         'vendor/sweetalert.min.js',
         'vendor/icheck.min.js',
+        'vendor/media-manager.js',
         'theme.js',
         'layout.js',
         'datatable.js',

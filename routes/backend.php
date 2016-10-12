@@ -4,6 +4,9 @@
  * Backend 路由
  * Namespaces indicate folder structure
  * Admin middleware groups web, auth, and routeNeedsPermission
+ *
+ * 项目注意事项
+ * "talvbansal/media-manager": "^1.0","stevenyangecho/laravel-u-editor": "^1.3" 根据自己项目有做修改
  */
 Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.'], function () {
     Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
@@ -78,7 +81,9 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/{comment}', 'CommentController@show')->name('show');
         Route::get('/{comment}/edit', 'CommentController@edit')->name('edit');
     });
-        
+
+    //媒体库
+    Route::get('/media', 'Media\IndexController@index')->name('media.index');
     Route::get('/', 'DashboardController@index')->name('index');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });

@@ -40,6 +40,12 @@
                     </li>
                 </ul>
             </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.media.index')) }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.media.index') }}">
+                    <i class="icon-folder-alt"></i>
+                    <span class="title">媒体库</span>
+                </a>
+            </li>
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.tags*')) }}">
                 <a href="{{ route(env('APP_BACKEND_PREFIX').'.tags.index') }}">
                     <i class="icon-tag"></i>

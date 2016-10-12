@@ -25,7 +25,8 @@
         "dingo/api": "1.0.x@dev",
         "baum/baum": "^1.1",
         "stevenyangecho/laravel-u-editor": "^1.3",
-        "lsrur/inspector": "^1.0"
+        "lsrur/inspector": "^1.0",
+        "talvbansal/media-manager": "^1.0"
         
     },
     "require-dev": {

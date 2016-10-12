@@ -19,17 +19,19 @@
  */
 Auth::routes();
 //技验验证
-Route::get('ajax/geetest','Controller@getGeetest');
+Route::get('ajax/geetest', 'Controller@getGeetest');
+//媒体库
+TalvBansal\MediaManager\Http\Routes::mediaBrowser();
 
 Route::group(['namespace' => 'Frontend'], function () {
-	/**
-	 * 需要登录页面
-	 */
-	Route::group(['namespace' => 'User', 'middleware' => 'auth'], function() {
-    	Route::get('/dashboard', 'DashboardController@index')->name('frontend.user.dashboard');
+    /**
+     * 需要登录页面
+     */
+    Route::group(['namespace' => 'User', 'middleware' => 'auth'], function () {
+        Route::get('/dashboard', 'DashboardController@index')->name('frontend.user.dashboard');
     });
-	/**
-	 * 不需要登录页面
-	 */
+    /**
+     * 不需要登录页面
+     */
     Route::get('/', 'IndexController@index')->name('frontend.index');
 });
