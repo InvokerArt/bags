@@ -183,7 +183,7 @@
          * 第三方组件
          */
         //调试分析工具
-        //Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
         Lsrur\Inspector\InspectorServiceProvider::class,
         //Html工具
         Collective\Html\HtmlServiceProvider::class,
@@ -257,7 +257,7 @@
         //官方社会化登录插件
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         //调试分析工具
-        //'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Inspector' => Lsrur\Inspector\Facade\Inspector::class,
         //HtmlForm工具
         'Html'        => Collective\Html\HtmlFacade::class,

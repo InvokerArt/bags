@@ -30,7 +30,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            //Passport 
+            //Passport
             \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
         ],
 
@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
          * 自定义后台admin登录
          */
         'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
+        'passport' => \App\Http\Middleware\PassportDingo::class,
     ];
 }

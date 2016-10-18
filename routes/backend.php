@@ -61,25 +61,19 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
     Route::group(['namespace' => 'Tags', 'as' => 'tags.', 'prefix' => 'tags'], function () {
         Route::get('/get', 'IndexController@get')->name('get');
         Route::get('/popular', 'IndexController@popular')->name('popular');
-        Route::post('/', 'IndexController@store')->name('store');
-        Route::get('/', 'IndexController@index')->name('index');
-        Route::get('/create', 'IndexController@create')->name('create');
-        Route::match(['put', 'patch'], '/{tag}', 'IndexController@update')->name('update');
-        Route::delete('/{tag}', 'IndexController@destroy')->name('destroy');
-        Route::get('/{tag}', 'IndexController@show')->name('show');
-        Route::get('/{tag}/edit', 'IndexController@edit')->name('edit');
+        Route::resource('/', 'IndexController');
     });
 
     //评论
     Route::group(['namespace' => 'Comments', 'as' => 'comments.', 'prefix' => 'comments'], function () {
         Route::get('/get', 'CommentController@get')->name('get');
-        Route::post('/', 'CommentController@store')->name('store');
-        Route::get('/', 'CommentController@index')->name('index');
-        Route::get('/create', 'CommentController@create')->name('create');
-        Route::match(['put', 'patch'], '/{comment}', 'CommentController@update')->name('update');
-        Route::delete('/{comment}', 'CommentController@destroy')->name('destroy');
-        Route::get('/{comment}', 'CommentController@show')->name('show');
-        Route::get('/{comment}/edit', 'CommentController@edit')->name('edit');
+        Route::resource('/', 'CommentController');
+    });
+
+    //收藏
+    Route::group(['namespace' => 'Favorites', 'as' => 'favorites.', 'prefix' => 'favorites'], function () {
+        Route::get('/get', 'FavoriteController@get')->name('get');
+        Route::resource('/', 'FavoriteController');
     });
 
     //媒体库

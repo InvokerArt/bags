@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers\Backend\Access;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Backend\Access\User\UserRequest;
+use App\Repositories\Backend\Access\User\UserInterface;
+use Illuminate\Http\Request;
 use Yajra\Datatables\Facades\Datatables;
 
 class UserController extends Controller
 {
+    private $users;
+
+    public function __construct(UserInterface $users)
+    {
+        $this->users = $users;
+    }
     /**
      * 所有用户列表页
      *
@@ -23,24 +31,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function get(UserRequest $request)
+    public function get(Request $request)
     {
-        return Datatables::of($this->users->getForDataTable())
-            ->addColumn('role', function ($user) {
-                $roles = [];
-
-                if ($user->roles()->count() > 0) {
-                    foreach ($user->roles as $role) {
-                        array_push($roles, $role->name);
-                    }
-
-                    return implode("<br/>", $roles);
-                } else {
-                    return '暂无';
-                }
+        return Datatables::of($this->users->getUserForDataTable())
+            ->addColumn('ids', function ($user) {
+                return $user->checkbox_button;
             })
             ->addColumn('actions', function ($user) {
-                return $user->admin_action_buttons;
+                return $user->user_action_buttons;
             })
         ->make(true);
     }
@@ -52,7 +50,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.access.user.create');
     }
 
     /**

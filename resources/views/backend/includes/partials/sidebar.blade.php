@@ -32,10 +32,10 @@
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.news.index')) }}">
+                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.news*')) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.news.index') }}">资讯</a>
                     </li>
-                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.news.categories.index')) }}">
+                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.news.categories*')) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.news.categories.index') }}">分类</a>
                     </li>
                 </ul>
@@ -58,6 +58,12 @@
                     <span class="title">评论管理</span>
                 </a>
             </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.favorites*')) }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.favorites.index') }}">
+                    <i class="icon-like"></i>
+                    <span class="title">收藏管理</span>
+                </a>
+            </li>
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.access*')) }}">
                 <a href="javascript:;">
                     <i class="icon-people"></i>
@@ -65,16 +71,16 @@
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.access.user.index')) }}">
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.user.index') }}">所有用户</a>
+                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.access.user*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.user.index') }}">普通用户</a>
                     </li>
-                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.access.admin.index')) }}">
+                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.access.admin*')) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.admin.index') }}">管理员</a>
                     </li>
-                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.access.role.index')) }}">
+                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.access.role*')) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.role.index') }}">角色管理</a>
                     </li>
-                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.access.permission.index')) }}">
+                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.access.permission*')) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.permission.index') }}">权限管理</a>
                     </li>
                 </ul>

@@ -4,7 +4,6 @@ namespace App\Models\Backend\News\Traits\Attribute;
 
 trait NewsAttribute
 {
-
     //checkbox按钮
     public function getCheckboxButtonAttribute()
     {

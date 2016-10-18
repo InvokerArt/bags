@@ -1,0 +1,19 @@
+{
+  "name": "Stone Api",
+  "version": "1.0.0",
+  "description": "接口文档",
+  "title": "接口文档",
+  "url" : "http://stone.dev/api",
+  "header": {
+    "title": "接口概述",
+    "filename": "header.md"
+  },
+  "order": [
+    "GetUser",
+    "PostUser"
+  ],
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  }
+}

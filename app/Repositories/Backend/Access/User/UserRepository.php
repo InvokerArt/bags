@@ -40,8 +40,22 @@ class UserRepository implements UserInterface
      */
     public function getForDataTable()
     {
-        return User::leftJoin("role_user",'role_user.user_id','=','users.id')
+        return User::leftJoin("role_user", 'role_user.user_id', '=', 'users.id')
             ->whereNotNull('role_user.user_id')
+            ->get()
+            ->unique();
+    }
+
+    /**
+     * 获取普通用户
+     * @param int $status
+     * @param bool $trashed
+     * @return mixed
+     */
+    public function getUserForDataTable()
+    {
+        return User::leftJoin("role_user", 'role_user.user_id', '=', 'users.id')
+            ->whereNull('role_user.user_id')
             ->get()
             ->unique();
     }
@@ -57,7 +71,9 @@ class UserRepository implements UserInterface
     {
         $user = User::where('name', $input['name'])->first();
 
-        if (!$user) throw new GeneralException('用户不存在！');
+        if (!$user) {
+            throw new GeneralException('用户不存在！');
+        }
 
         if ($user->id == 1) {
             throw new GeneralException('创始人不允许更改！');
@@ -65,7 +81,9 @@ class UserRepository implements UserInterface
 
         $all = $input['role_user'] == 'all' ? true : false;
 
-        if (! isset($input['roles'])) $input['roles'] = [];
+        if (! isset($input['roles'])) {
+            $input['roles'] = [];
+        }
 
         $roles = [];
         if (! $all) {
@@ -83,14 +101,14 @@ class UserRepository implements UserInterface
             $roles[] = 2;
         }
 
-		DB::transaction(function() use ($user, $roles) {
+        DB::transaction(function () use ($user, $roles) {
             try {
                 $user->attachRoles($roles);
                 return true;
             } catch (\Exception $e) {
                 throw new GeneralException('管理员创建失败！');
             }
-		});
+        });
     }
 
     /**
@@ -104,7 +122,9 @@ class UserRepository implements UserInterface
     {
         $user = User::where('name', $input['name'])->first();
 
-        if (!$user) throw new GeneralException('用户不存在！');
+        if (!$user) {
+            throw new GeneralException('用户不存在！');
+        }
 
         if ($user->id == 1) {
             throw new GeneralException('创始人不允许更改！');
@@ -112,7 +132,9 @@ class UserRepository implements UserInterface
 
         $all = $input['role_user'] == 'all' ? true : false;
 
-        if (! isset($input['roles'])) $input['roles'] = [];
+        if (! isset($input['roles'])) {
+            $input['roles'] = [];
+        }
 
         $roles = [];
         if (! $all) {
@@ -130,7 +152,7 @@ class UserRepository implements UserInterface
             $roles[] = 2;
         }
 
-        DB::transaction(function() use ($user, $roles) {
+        DB::transaction(function () use ($user, $roles) {
             try {
                 $this->flushRoles($roles, $user);
                 return true;
@@ -190,17 +212,17 @@ class UserRepository implements UserInterface
             throw new GeneralException("This user must be deleted first before it can be destroyed permanently.");
         }
 
-		DB::transaction(function() use ($user) {
-			//Detach all roles & permissions
-			$user->detachRoles($user->roles);
+        DB::transaction(function () use ($user) {
+            //Detach all roles & permissions
+            $user->detachRoles($user->roles);
 
-			if ($user->forceDelete()) {
-				event(new UserPermanentlyDeleted($user));
-				return true;
-			}
+            if ($user->forceDelete()) {
+                event(new UserPermanentlyDeleted($user));
+                return true;
+            }
 
-			throw new GeneralException(trans('exceptions.backend.access.users.delete_error'));
-		});
+            throw new GeneralException(trans('exceptions.backend.access.users.delete_error'));
+        });
     }
 
     /**
@@ -241,11 +263,11 @@ class UserRepository implements UserInterface
         switch ($status) {
             case 0:
                 event(new UserDeactivated($user));
-            break;
+                break;
 
             case 1:
                 event(new UserReactivated($user));
-            break;
+                break;
         }
 
         if ($user->save()) {
@@ -330,16 +352,16 @@ class UserRepository implements UserInterface
         }
     }
 
-	/**
-	 * Remove old session variables from admin logging in as user
-	 */
-	public function flushTempSession()
-	{
-		//Remove any old session variables
-		session()->forget("admin_user_id");
-		session()->forget("admin_user_name");
-		session()->forget("temp_user_id");
-	}
+    /**
+     * Remove old session variables from admin logging in as user
+     */
+    public function flushTempSession()
+    {
+        //Remove any old session variables
+        session()->forget("admin_user_id");
+        session()->forget("admin_user_name");
+        session()->forget("temp_user_id");
+    }
 
     /**
      * Check to make sure at lease one role is being applied or deactivate user
@@ -422,5 +444,4 @@ class UserRepository implements UserInterface
         $user->confirmed         = isset($input['confirmed']) ? 1 : 0;
         return $user;
     }
-
 }

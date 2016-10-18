@@ -5,6 +5,45 @@ namespace App\Models\Backend\News;
 use Baum\Node;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Backend\News\CategoriesNews
+ *
+ * @property integer $id
+ * @property integer $parent_id
+ * @property integer $lft
+ * @property integer $rgt
+ * @property integer $depth
+ * @property string $name
+ * @property boolean $is_active
+ * @property string $slug
+ * @property string $description
+ * @property string $meta_title
+ * @property string $meta_keywords
+ * @property string $meta_description
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \App\Models\Backend\News\CategoriesNews $parent
+ * @property-read \Baum\Extensions\Eloquent\Collection|\App\Models\Backend\News\CategoriesNews[] $children
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereParentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereLft($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereRgt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereDepth($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereIsActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereMetaTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereMetaKeywords($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereMetaDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\CategoriesNews whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Baum\Node withoutNode($node)
+ * @method static \Illuminate\Database\Query\Builder|\Baum\Node withoutSelf()
+ * @method static \Illuminate\Database\Query\Builder|\Baum\Node withoutRoot()
+ * @method static \Illuminate\Database\Query\Builder|\Baum\Node limitDepth($limit)
+ * @mixin \Eloquent
+ */
 class CategoriesNews extends Node
 {
     /**

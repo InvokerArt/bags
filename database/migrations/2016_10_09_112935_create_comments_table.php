@@ -23,6 +23,7 @@ class CreateCommentsTable extends Migration
             $table->string('commentable_type');
             $table->tinyInteger('status')->default(1)->comment('状态//0回收站//1待审核//2通过');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

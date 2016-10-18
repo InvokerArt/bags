@@ -236,5 +236,21 @@ return [
         'json' => Dingo\Api\Http\Response\Format\Json::class,
 
     ],
+    
+    /*
+     * 接口频率限制
+     */
+    'rate_limits' => [
+        // 访问频率限制，次数/分钟
+        'access' => [
+            'expires' => env('RATE_LIMITS_EXPIRES', 1),
+            'limits'  => env('RATE_LIMITS', 60),
+        ],
+        // 发布频率限制（发帖和评论），次数/分钟
+        'publish' => [
+            'expires' => env('PUBLISH_RATE_LIMITS_EXPIRES', 1),
+            'limits'  => env('PUBLISH_RATE_LIMITS', 10),
+        ],
+    ],
 
 ];

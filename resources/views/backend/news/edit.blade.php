@@ -30,9 +30,6 @@
                     <span class="help-block">字数建议控制在100字以内</span>
                 </div>
                 <div class="form-group">
-                    <button type="button" id="insert-media-button" class="btn blue insert-media add_media margin-bottom-5" data-editor="content">
-                        <i class="fa fa-image"></i> 添加媒体
-                    </button>
                     <textarea name="content" id="editor" class="form-control">{{ $news->content }}</textarea>
                 </div>
             </div>
@@ -92,19 +89,30 @@
                     <span>特色图片</span>
                 </h2>
                 <div class="inside">
-                    <input type="hidden" name="image" class="thumbnail" value="{{ $news->image }}">
-                    <a href="javascript:;" class="update-thumbnail">
-                        <img width="100%" src="http://www.testwordpress.com/wp-content/uploads/2016/09/mocha-1.jpg">
+                    <input type="hidden" name="image" class="thumbnail" value="{{ $news->image }}" v-model="image">
+                    <a href="javascript:;" class="update-thumbnail" @click="openFromPageImage()">
+                        <img v-if="image" class="img img-responsive" id="page-image-preview" style="width:100%" :src="image">
                     </a>
-                    <p class="help-block" id="how-to">点击图片来修改或更新</p>
-                    <p class="help-block">
-                        <a href="javascript:;" class="news-thumbnail remove">移除特色图片</a>
+                    <p class="help-block" id="how-to" v-if="image" @click="openFromPageImage()">点击图片来修改或更新</p>
+                    <p class="help-block" v-if="image">
+                        <a href="javascript:;" class="news-thumbnail" @click="removeImage()">移除特色图片</a>
                     </p>
-                </div>
+                    <p class="help-block" v-else="image">
+                        <a href="javascript:;" @click="openFromPageImage()">添加特色图片</a>
+                    </p>
+
             </div>
         </div>
     </div>
     {{ Form::close() }}
+    <media-modal :show.sync="showMediaManager">
+        <media-manager
+                :is-modal="true"
+                :selected-event-name.sync="selectedEventName"
+                :show.sync="showMediaManager"
+        >
+        </media-manager>
+    </media-modal>
 @stop
 
 @section('js')
@@ -174,7 +182,7 @@
         });
         ue.ready(function() {
             ue.execCommand('serverparam', '_token', '{{ csrf_token() }}');//此处为支持laravel5 csrf ,根据实际情况修改,目的就是设置 _token 值.
-        });
+        })
 
         //获取常用标签
         $('.tagcloud-link').on('click', function (){
@@ -234,16 +242,59 @@
             $(this).closest('span').remove();
         });
 
-        //移除图片
-        $('.news-thumbnail').on('click', function(){
-            if ($(this).hasClass('remove')) {
-                $('.update-thumbnail img,#how-to').remove();
-                $('.thumbnail').val('');
-                $(this).removeClass('remove').addClass('add').text('添加特色图像');
-            } else {
-                $(this).removeClass('add').addClass('remove').text('移除特色图片');
+        //媒体库逻辑
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+
+        new Vue({
+            el: 'body',
+            data: {
+                image: null,
+                selectedEventName: null,
+                showMediaManager: false,
+                simpleMde: null
+            },
+
+            ready: function () {
+                //移除图片
+                // $(document).on('click', '.news-thumbnail', function(){
+                //     $('.thumbnail').val('');
+                // })
+            },
+
+            events: {
+                'media-manager-selected-image': function (file) {
+                    this.image = file.relativePath;
+                    this.showMediaManager = false;
+                },
+
+                'media-manager-notification' : function(message, type, time)
+                {
+                    swal({   
+                        title: "提示信息",   
+                        text: message,   
+                        timer: 2000,   
+                        showConfirmButton: false 
+                    });
+                }
+
+            },
+
+            methods: {
+
+                openFromPageImage: function()
+                {
+                    this.showMediaManager = true;
+                    this.selectedEventName = 'image';
+                },
+
+                removeImage: function()
+                {
+                    this.image = '';
+                }
             }
-        })
+        });
 
 
     </script>

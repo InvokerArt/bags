@@ -53,21 +53,21 @@ elixir(function(mix) {
     /**
      * 模板样式（没有圆角有阴影）
      */
-    .sass([
-        'backend/global/components-md.scss',
-    ], 'resources/assets/css/backend/components-md.css')
-    .styles([
-        'resources/assets/css/backend/components-md.css'
-    ], 'public/css/backend/components-md.css')
+    // .sass([
+    //     'backend/global/components-md.scss',
+    // ], 'resources/assets/css/backend/components-md.css')
+    // .styles([
+    //     'resources/assets/css/backend/components-md.css'
+    // ], 'public/css/backend/components-md.css')
     /**
      * 模板样式（有圆角）
      */
-    .sass([
-        'backend/global/components-rounded.scss',
-    ], 'resources/assets/css/backend/components-rounded.css')
-    .styles([
-        'resources/assets/css/backend/components-rounded.css'
-    ], 'public/css/backend/components-rounded.css')
+    // .sass([
+    //     'backend/global/components-rounded.scss',
+    // ], 'resources/assets/css/backend/components-rounded.css')
+    // .styles([
+    //     'resources/assets/css/backend/components-rounded.css'
+    // ], 'public/css/backend/components-rounded.css')
     /**
      * 默认模板
      */
@@ -85,79 +85,79 @@ elixir(function(mix) {
     /**
      * blue模板
      */
-    .sass([
-        'backend/app.scss',
-        'backend/global/plugins.scss',
-        'backend/global/components.scss',
-        'backend/admin/layout/layout.scss',
-        'backend/admin/layout/themes/blue.scss',
-    ], 'resources/assets/css/backend/blue.css')
-    .styles([
-        'backend/plugin.css',
-        'backend/blue.css',
-    ], 'public/css/backend/blue.css')
+    // .sass([
+    //     'backend/app.scss',
+    //     'backend/global/plugins.scss',
+    //     'backend/global/components.scss',
+    //     'backend/admin/layout/layout.scss',
+    //     'backend/admin/layout/themes/blue.scss',
+    // ], 'resources/assets/css/backend/blue.css')
+    // .styles([
+    //     'backend/plugin.css',
+    //     'backend/blue.css',
+    // ], 'public/css/backend/blue.css')
     /**
      * darkblue模板
      */
-    .sass([
-        'backend/app.scss',
-        'backend/global/plugins.scss',
-        'backend/global/components.scss',
-        'backend/admin/layout/layout.scss',
-        'backend/admin/layout/themes/darkblue.scss',
-    ], 'resources/assets/css/backend/darkblue.css')
-    .styles([
-        'backend/plugin.css',
-        'backend/darkblue.css',
-    ], 'public/css/backend/darkblue.css')
+    // .sass([
+    //     'backend/app.scss',
+    //     'backend/global/plugins.scss',
+    //     'backend/global/components.scss',
+    //     'backend/admin/layout/layout.scss',
+    //     'backend/admin/layout/themes/darkblue.scss',
+    // ], 'resources/assets/css/backend/darkblue.css')
+    // .styles([
+    //     'backend/plugin.css',
+    //     'backend/darkblue.css',
+    // ], 'public/css/backend/darkblue.css')
     /**
      * grey模板
      */
-    .sass([
-        'backend/app.scss',
-        'backend/global/plugins.scss',
-        'backend/global/components.scss',
-        'backend/admin/layout/layout.scss',
-        'backend/admin/layout/themes/grey.scss',
-    ], 'resources/assets/css/backend/grey.css')
-    .styles([
-        'backend/plugin.css',
-        'backend/grey.css',
-    ], 'public/css/backend/grey.css')
+    // .sass([
+    //     'backend/app.scss',
+    //     'backend/global/plugins.scss',
+    //     'backend/global/components.scss',
+    //     'backend/admin/layout/layout.scss',
+    //     'backend/admin/layout/themes/grey.scss',
+    // ], 'resources/assets/css/backend/grey.css')
+    // .styles([
+    //     'backend/plugin.css',
+    //     'backend/grey.css',
+    // ], 'public/css/backend/grey.css')
     /**
      * light模板
      */
-    .sass([
-        'backend/app.scss',
-        'backend/global/plugins.scss',
-        'backend/global/components.scss',
-        'backend/admin/layout/layout.scss',
-        'backend/admin/layout/themes/light.scss',
-    ], 'resources/assets/css/backend/light.css')
+    // .sass([
+    //     'backend/app.scss',
+    //     'backend/global/plugins.scss',
+    //     'backend/global/components.scss',
+    //     'backend/admin/layout/layout.scss',
+    //     'backend/admin/layout/themes/light.scss',
+    // ], 'resources/assets/css/backend/light.css')
 
-    .styles([
-        'backend/plugin.css',
-        'backend/light.css',
-    ], 'public/css/backend/light.css')
+    // .styles([
+    //     'backend/plugin.css',
+    //     'backend/light.css',
+    // ], 'public/css/backend/light.css')
     /**
      * light2模板
      */
-    .sass([
-        'backend/app.scss',
-        'backend/global/plugins.scss',
-        'backend/global/components.scss',
-        'backend/admin/layout/layout.scss',
-        'backend/admin/layout/themes/light2.scss',
-    ], 'resources/assets/css/backend/light2.css')
+    // .sass([
+    //     'backend/app.scss',
+    //     'backend/global/plugins.scss',
+    //     'backend/global/components.scss',
+    //     'backend/admin/layout/layout.scss',
+    //     'backend/admin/layout/themes/light2.scss',
+    // ], 'resources/assets/css/backend/light2.css')
 
-    .sass([
-        'backend/pages/login.scss'
-    ], 'public/css/login.css')
+    // .sass([
+    //     'backend/pages/login.scss'
+    // ], 'public/css/login.css')
 
-    .styles([
-        'backend/plugin.css',
-        'backend/light2.css',
-    ], 'public/css/backend/light2.css')
+    // .styles([
+    //     'backend/plugin.css',
+    //     'backend/light2.css',
+    // ], 'public/css/backend/light2.css')
 
     /**
      * 后台JS

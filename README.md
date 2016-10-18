@@ -1,2 +1,2 @@
-# lravel O2O项目
-laravel后台API
+### apidoc
+apidoc -i App/Api/v1/Controllers -o public/apidoc

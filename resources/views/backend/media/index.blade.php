@@ -21,9 +21,7 @@
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
-        ]); ?>
-    </script>
-    <script>    
+        ]); ?>  
         new Vue({
             el: 'body',
             events:{

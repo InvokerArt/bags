@@ -25,8 +25,8 @@
         "dingo/api": "1.0.x@dev",
         "baum/baum": "^1.1",
         "stevenyangecho/laravel-u-editor": "^1.3",
-        "lsrur/inspector": "^1.0",
-        "talvbansal/media-manager": "^1.0"
+        "talvbansal/media-manager": "^1.0",
+        "doctrine/dbal": "^2.5"
         
     },
     "require-dev": {
@@ -35,7 +35,9 @@
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
-        "barryvdh/laravel-debugbar": "^2.2"
+        "barryvdh/laravel-debugbar": "^2.2",
+        "barryvdh/laravel-ide-helper": "^2.2",
+        "lsrur/inspector": "^1.0"
     },
     "autoload": {
         "classmap": [
@@ -62,10 +64,14 @@
         ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta",
             "php artisan optimize"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta",
             "php artisan optimize"
         ]
     },

@@ -4,6 +4,11 @@ namespace App\Models\Backend;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Backend\Services
+ *
+ * @mixin \Eloquent
+ */
 class Services extends Model
 {
     protected $table        = 'services';

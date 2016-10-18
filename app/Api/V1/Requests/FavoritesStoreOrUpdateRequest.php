@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\Auth;
+namespace App\Api\V1\Requests;
 
 use Dingo\Api\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class FavoritesStoreOrUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,10 +24,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => 'required|is_mobile|unique:users',
-            //'mobile' => 'required|confirm_mobile_not_change|confirm_rule:check_mobile_unique',
-            //'verifyCode' => 'required|verify_code',
-            'password' => 'required|min:6'
+            //
         ];
     }
 }

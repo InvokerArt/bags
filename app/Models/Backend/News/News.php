@@ -7,6 +7,44 @@ use App\Models\Backend\News\Traits\Attribute\NewsAttribute;
 use App\Models\Backend\News\Traits\Relationship\NewsRelationship;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Backend\News\News
+ *
+ * @property integer $id
+ * @property integer $user_id
+ * @property string $slug 固定链接地址
+ * @property string $title 标题
+ * @property string $subtitle 副标题
+ * @property string $content 内容
+ * @property string $image 标题图片
+ * @property integer $hits 浏览数
+ * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Backend\Comments\Comment[] $comments 评论数
+ * @property boolean $status 状态//0回收站//1已发布//2未来发布
+ * @property \Carbon\Carbon $published_at 发布于
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property-read \Baum\Extensions\Eloquent\Collection|\App\Models\Backend\News\CategoriesNews[] $categories
+ * @property-read \App\Models\Access\User\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Backend\Tags\Tag[] $tags
+ * @property-read mixed $checkbox_button
+ * @property-read mixed $action_buttons
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereSubtitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereContent($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereImage($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereHits($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereComments($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News wherePublishedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Backend\News\News whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class News extends Model
 {
     use NewsRelationship, NewsAttribute;

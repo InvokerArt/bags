@@ -28,11 +28,11 @@ class CreateCategoriesNewsTable extends Migration
             // Add needed columns here (f.ex: name, slug, path, etc.)
             $table->string('name', 255);
             $table->boolean('is_active')->default(true);
-            $table->string('slug', 100)->nullable();
-            $table->string('description', 255)->nullable();
-            $table->string('meta_title', 255)->nullable();
-            $table->string('meta_keywords', 255)->nullable();
-            $table->string('meta_description', 255)->nullable();
+            $table->string('slug', 100)->unique()->nullable();
+            $table->string('description', 255)->default('');
+            $table->string('meta_title', 255)->default('');
+            $table->string('meta_keywords', 255)->default('');
+            $table->string('meta_description', 255)->default('');
 
             $table->timestamps();
         });

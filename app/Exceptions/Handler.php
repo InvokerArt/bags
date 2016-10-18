@@ -64,7 +64,8 @@ class Handler extends ExceptionHandler
         if ($e instanceof UserNeedsRolesException) {
             return redirect()->route(env('APP_BACKEND_PREFIX').'.access.user.edit', $e->userID())->withInput()->withFlashDanger($e->validationErrors());
         }
-        
+
+        \Inspector::renderException($exception);    //调试插件
         return parent::render($request, $e);
     }
 
