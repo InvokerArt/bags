@@ -4,9 +4,6 @@
  * Backend 路由
  * Namespaces indicate folder structure
  * Admin middleware groups web, auth, and routeNeedsPermission
- *
- * 项目注意事项
- * "talvbansal/media-manager": "^1.0","stevenyangecho/laravel-u-editor": "^1.3" 根据自己项目有做修改
  */
 Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.'], function () {
     Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
@@ -27,6 +24,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
     Route::group(['namespace' => 'Access', 'as' => 'access.', 'prefix' => 'access'], function () {
         //用户
         Route::get('/user/get', 'UserController@get')->name('user.get');
+        Route::post('/user/avatar', 'UserController@avatar')->name('user.avatar');
         Route::resource('/user', 'UserController');
         //管理员
         Route::get('/admin/get', 'AdminController@get')->name('admin.get');
@@ -37,6 +35,24 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         //权限
         Route::get('/permission/get', 'PermissionController@get')->name('permission.get');
         Route::resource('/permission', 'PermissionController');
+    });
+
+    Route::group(['namespace' => 'Companies', 'as' => 'companies.', 'prefix' => 'companies'], function () {
+        //公司分类
+        Route::resource('categories', 'CategoryController', ['except' => 'show']);
+        Route::get('categories/children', 'CategoryController@children')->name('categories.children');
+        Route::post('categories/move', 'CategoryController@move')->name('categories.move');
+        Route::post('categories/copy', 'CategoryController@copy')->name('categories.copy');
+        Route::post('categories/rename', 'CategoryController@rename')->name('categories.rename');
+        //公司
+        Route::get('/get', 'CompanyController@get')->name('get');
+        Route::post('/', 'CompanyController@store')->name('store');
+        Route::get('/', 'CompanyController@index')->name('index');
+        Route::get('/create', 'CompanyController@create')->name('create');
+        Route::match(['put', 'patch'], '/{company}', 'CompanyController@update')->name('update');
+        Route::delete('/{company}', 'CompanyController@destroy')->name('destroy');
+        Route::get('/{company}', 'CompanyController@show')->name('show');
+        Route::get('/{company}/edit', 'CompanyController@edit')->name('edit');
     });
 
     Route::group(['namespace' => 'News', 'as' => 'news.', 'prefix' => 'news'], function () {

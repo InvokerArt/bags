@@ -178,7 +178,6 @@
          * SocialiteServiceProvider官方社会化登录插件
          */
         Laravel\Passport\PassportServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class,
         /*
          * 第三方组件
          */
@@ -208,6 +207,8 @@
         Stevenyangecho\UEditor\UEditorServiceProvider::class,
         //Media
         TalvBansal\MediaManager\Providers\MediaManagerServiceProvider::class,
+        //图片处理
+        Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -276,6 +277,8 @@
         //Dingo api
         'Api' => Dingo\Api\Facade\API::class,
         'ApiRoute' => Dingo\Api\Facade\Route::class,
+        //图片处理
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
  ];

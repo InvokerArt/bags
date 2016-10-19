@@ -15,7 +15,7 @@ class CreateCompanyImageTable extends Migration
     {
         Schema::create('company_image', function (Blueprint $table) {
             $table->integer('company_id')->unsigned();
-            $table->foreign('company_id')->references('id')->on('companys')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
             $table->string('image')->comment('公司信息图片地址');
             $table->tinyInteger('type')->comment('图片类型 1营业执照 2公司照片');
             $table->timestamps();

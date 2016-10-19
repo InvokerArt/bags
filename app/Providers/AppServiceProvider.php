@@ -53,10 +53,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         if ($this->app->environment() !== 'production') {
-            $this->app->register(\Lsrur\Inspector\InspectorServiceProvider::class);
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
-
+        
         /**
          * 新闻
          */
@@ -79,6 +78,22 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\Backend\Tags\TagsInterface::class,
             \App\Repositories\Backend\Tags\TagsRepository::class
+        );
+
+        /**
+         * 公司
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Companies\CompaniesInterface::class,
+            \App\Repositories\Backend\Companies\CompaniesRepository::class
+        );
+
+        /**
+         * 公司分类
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Companies\CategoryInterface::class,
+            \App\Repositories\Backend\Companies\CategoryRepository::class
         );
     }
 }

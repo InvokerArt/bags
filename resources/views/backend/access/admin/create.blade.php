@@ -35,7 +35,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('name', null, ['class' => 'form-control', 'autocomplete' => 'off']) }}
+                                    {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'off']) }}
                                 </div>
                             </div>
                             <div class="form-group">

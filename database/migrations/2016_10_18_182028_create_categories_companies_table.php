@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriesCompanysTable extends Migration
+class CreateCategoriesCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCategoriesCompanysTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories_companys', function (Blueprint $table) {
+        Schema::create('categories_companies', function (Blueprint $table) {
             // These columns are needed for Baum's Nested Set implementation to work.
             // Column names may be changed, but they *must* all exist and be modified
             // in the model.

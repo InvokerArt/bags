@@ -64,6 +64,21 @@
                     <span class="title">收藏管理</span>
                 </a>
             </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.companies*')) }}">
+                <a href="javascript:;">
+                    <i class="icon-briefcase"></i>
+                    <span class="title">公司管理</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.companies*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.index') }}">公司列表</a>
+                    </li>
+                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.companies.categories*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.index') }}">分类</a>
+                    </li>
+                </ul>
+            </li>
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.access*')) }}">
                 <a href="javascript:;">
                     <i class="icon-people"></i>

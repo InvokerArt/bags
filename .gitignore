@@ -30,3 +30,4 @@ bootstrap/cache/
 /storage/debugbar
 /public/js/backend.js.map
 /storage/app/public
+/.phpstorm.meta.php

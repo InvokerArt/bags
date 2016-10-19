@@ -1,44 +1,59 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Access;
+namespace App\Http\Controllers\Backend\Companies;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\Access\User\UserRequest;
-use App\Repositories\Backend\Access\User\UserInterface;
+use App\Http\Requests\Backend\Companies\CompanyRequest;
+use App\Models\Backend\Companies\CategoriesCompany;
+use App\Repositories\Backend\Companies\CompaniesInterface;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Facades\Datatables;
+use Yajra\Datatables\Datatables;
 
-class UserController extends Controller
+class CompanyController extends Controller
 {
-    private $users;
+    protected $companies;
+    protected $categories;
 
-    public function __construct(UserInterface $users)
+    public function __construct(CompaniesInterface $companies, CategoriesCompany $categories)
     {
-        $this->users = $users;
+        $this->companies = $companies;
+        $this->categories = $categories;
     }
-    /**
-     * 所有用户列表页
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('backend.access.user.index');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function get(Request $request)
+    public function index()
     {
-        return Datatables::of($this->users->getUserForDataTable())
-            ->addColumn('ids', function ($user) {
-                return $user->checkbox_button;
+        $categories = $this->categories->all();
+        return view('backend.companies.index', compact('categories'));
+    }
+
+    /**
+     * 公司列表
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function get(CompanyRequest $request)
+    {
+        return Datatables::of($this->companies->getForDataTable())
+            ->filter(function ($query) use ($request) {
+                Companies::companiesFilter($query, $request);
             })
-            ->addColumn('actions', function ($user) {
-                return $user->user_action_buttons;
+            ->addColumn('ids', function ($companies) {
+                return $companies->checkbox_button;
+            })
+            ->editColumn('name', function ($companies) {
+                return str_limit($companies->title, 30, '...');
+            })
+            ->editColumn('categories', function ($companies) {
+                return $companies->categories->map(function ($category) {
+                    return $category->name;
+                })->implode('<br>');
+            })
+            ->addColumn('actions', function ($companies) {
+                return $companies->action_buttons;
             })
         ->make(true);
     }
@@ -50,7 +65,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('backend.access.user.create');
+        //
     }
 
     /**
@@ -107,10 +122,5 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function avatar()
-    {
-        
     }
 }

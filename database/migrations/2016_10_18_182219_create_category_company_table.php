@@ -16,8 +16,8 @@ class CreateCategoryCompanyTable extends Migration
         Schema::create('category_company', function (Blueprint $table) {
             $table->integer('company_id')->unsigned();
             $table->integer('category_id')->unsigned();
-            $table->foreign('company_id')->references('id')->on('companys')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories_companys')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories_companies')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

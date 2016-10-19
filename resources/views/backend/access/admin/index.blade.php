@@ -26,7 +26,7 @@
                 </tr>
                 <tr role="row" class="filter">
                     <td>
-                        <input type="text" class="form-control form-filter input-sm" name="name">
+                        <input type="text" class="form-control form-filter input-sm" name="username">
                     </td>
                     <td>
                         <input type="text" class="form-control form-filter input-sm" name="email">
@@ -87,7 +87,7 @@
                         url: '{{ route(env('APP_BACKEND_PREFIX').".access.admin.get") }}',
                     },
                     columns: [
-                        {data: 'name', name: 'users.name',"orderable": true,"searchable": true},
+                        {data: 'username', name: 'users.username',"orderable": true,"searchable": true},
                         {data: 'email', name: 'users.email',"orderable": true,"searchable": true},
                         {data: 'role', name: 'roles.name',"orderable": true,"searchable": true},
                         {data: 'created_at', name: 'users.created_at',"orderable": true,"searchable": true},

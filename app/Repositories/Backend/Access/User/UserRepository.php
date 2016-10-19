@@ -40,10 +40,13 @@ class UserRepository implements UserInterface
      */
     public function getForDataTable()
     {
-        return User::leftJoin("role_user", 'role_user.user_id', '=', 'users.id')
-            ->whereNotNull('role_user.user_id')
-            ->get()
-            ->unique();
+        return User::has('roles', '>', 0)
+        ->get();
+        //原生写法
+        // return User::leftJoin("role_user", 'role_user.user_id', '=', 'users.id')
+        //     ->whereNotNull('role_user.user_id')
+        //     ->get()
+        //     ->unique();
     }
 
     /**
@@ -54,10 +57,13 @@ class UserRepository implements UserInterface
      */
     public function getUserForDataTable()
     {
-        return User::leftJoin("role_user", 'role_user.user_id', '=', 'users.id')
-            ->whereNull('role_user.user_id')
-            ->get()
-            ->unique();
+        return User::has('roles', '=', 0)
+        ->get();
+        //原生写法
+        // return User::leftJoin("role_user", 'role_user.user_id', '=', 'users.id')
+        //     ->whereNull('role_user.user_id')
+        //     ->get()
+        //     ->unique();
     }
 
     /**
@@ -69,7 +75,7 @@ class UserRepository implements UserInterface
      */
     public function create($input)
     {
-        $user = User::where('name', $input['name'])->first();
+        $user = User::where('username', $input['username'])->first();
 
         if (!$user) {
             throw new GeneralException('用户不存在！');
@@ -120,7 +126,7 @@ class UserRepository implements UserInterface
      */
     public function update($input)
     {
-        $user = User::where('name', $input['name'])->first();
+        $user = User::where('username', $input['username'])->first();
 
         if (!$user) {
             throw new GeneralException('用户不存在！');
@@ -310,7 +316,7 @@ class UserRepository implements UserInterface
 
         //Add new session variables
         session(["admin_user_id" => access()->id()]);
-        session(["admin_user_name" => access()->user()->name]);
+        session(["admin_user_name" => access()->user()->username]);
         session(["temp_user_id" => $user->id]);
 
         //Login user
@@ -436,7 +442,7 @@ class UserRepository implements UserInterface
     private function createUserStub($input)
     {
         $user                    = new User;
-        $user->name              = $input['name'];
+        $user->username              = $input['username'];
         $user->email             = $input['email'];
         $user->password          = bcrypt($input['password']);
         $user->status            = isset($input['status']) ? 1 : 0;

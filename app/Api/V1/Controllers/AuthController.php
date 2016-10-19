@@ -182,11 +182,6 @@ class AuthController extends BaseController
             return $this->response->error($res['message'], 400);
         }
 
-        /**
-         * 注意修改查看https://github.com/toplan/laravel-sms/blob/master/src/Toplan/LaravelSms/validations.php#L16修改
-         * $attempts = isset($state['attempts']) ? $state['attempts'] : 0 + 1;
-         * @var [type]
-         */
         $res = SmsManager::validateFields();
         if (!$res['success']) {
             return $this->response->error($res['message'], 400);
@@ -237,11 +232,6 @@ class AuthController extends BaseController
     {
         $user = $request->user()->toArray();
         return response(formatArray($user));
-    }
-
-    public function update(UserUpdateRequest $request)
-    {
-        //
     }
 
     // public function users(Request $request)
