@@ -16584,6 +16584,135 @@ namespace {
     }
 
 
+    class Image extends \Intervention\Image\Facades\Image{
+        
+        /**
+         * Overrides configuration settings
+         *
+         * @param array $config
+         * @static 
+         */
+        public static function configure($config = array()){
+            return \Intervention\Image\ImageManager::configure($config);
+        }
+        
+        /**
+         * Initiates an Image instance from different input types
+         *
+         * @param mixed $data
+         * @return \Intervention\Image\Image 
+         * @static 
+         */
+        public static function make($data){
+            return \Intervention\Image\ImageManager::make($data);
+        }
+        
+        /**
+         * Creates an empty image canvas
+         *
+         * @param integer $width
+         * @param integer $height
+         * @param mixed $background
+         * @return \Intervention\Image\Image 
+         * @static 
+         */
+        public static function canvas($width, $height, $background = null){
+            return \Intervention\Image\ImageManager::canvas($width, $height, $background);
+        }
+        
+        /**
+         * Create new cached image and run callback
+         * (requires additional package intervention/imagecache)
+         *
+         * @param \Closure $callback
+         * @param integer $lifetime
+         * @param boolean $returnObj
+         * @return \Image 
+         * @static 
+         */
+        public static function cache($callback, $lifetime = null, $returnObj = false){
+            return \Intervention\Image\ImageManager::cache($callback, $lifetime, $returnObj);
+        }
+        
+    }
+
+
+    class JsValidator extends \Proengsoft\JsValidation\Facades\JsValidatorFacade{
+        
+        /**
+         * Creates JsValidator instance based on rules and message arrays.
+         *
+         * @param array $rules
+         * @param array $messages
+         * @param array $customAttributes
+         * @param null|string $selector
+         * @return \Proengsoft\JsValidation\JavascriptValidator 
+         * @static 
+         */
+        public static function make($rules, $messages = array(), $customAttributes = array(), $selector = null){
+            return \Proengsoft\JsValidation\JsValidatorFactory::make($rules, $messages, $customAttributes, $selector);
+        }
+        
+        /**
+         * Creates JsValidator instance based on FormRequest.
+         *
+         * @param $formRequest
+         * @param null $selector
+         * @return \Proengsoft\JsValidation\JavascriptValidator 
+         * @throws FormRequestArgumentException
+         * @static 
+         */
+        public static function formRequest($formRequest, $selector = null){
+            return \Proengsoft\JsValidation\JsValidatorFactory::formRequest($formRequest, $selector);
+        }
+        
+        /**
+         * Creates JsValidator instance based on Validator.
+         *
+         * @param \Illuminate\Validation\Validator $validator
+         * @param string|null $selector
+         * @return \Proengsoft\JsValidation\JavascriptValidator 
+         * @static 
+         */
+        public static function validator($validator, $selector = null){
+            return \Proengsoft\JsValidation\JsValidatorFactory::validator($validator, $selector);
+        }
+        
+    }
+
+
+    class Plupload extends \JildertMiedema\LaravelPlupload\Facades\Plupload{
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function make($settings = null){
+            return \JildertMiedema\LaravelPlupload\Manager::make($settings);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function init($settings = null){
+            return \JildertMiedema\LaravelPlupload\Manager::init($settings);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function receive($name, $handler){
+            return \JildertMiedema\LaravelPlupload\Manager::receive($name, $handler);
+        }
+        
+    }
+
+
     class Datatables extends \Yajra\Datatables\Facades\Datatables{
         
         /**

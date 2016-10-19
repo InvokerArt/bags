@@ -19,6 +19,7 @@ class CreateJobsTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
             $table->text('content')->comment('公司简介');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

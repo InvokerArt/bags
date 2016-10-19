@@ -1,6 +1,7 @@
 /**
 Customer script to handle the theme customer
 **/
+
 var Customer = function() {
 
     /**

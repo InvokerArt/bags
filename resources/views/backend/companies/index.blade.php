@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('page-title')
-    资讯列表
+    公司列表
 @stop
 @section('content')
 <div class="portlet light portlet-fit portlet-datatable bordered">
@@ -9,7 +9,7 @@
         <div class="actions">
             <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.create') }}" class="btn green">
                 <i class="fa fa-plus-square-o"></i>
-                <span class="hidden-xs">添加资讯</span>
+                <span class="hidden-xs">添加公司</span>
             </a>
         </div>
     </div>

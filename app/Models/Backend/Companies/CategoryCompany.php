@@ -4,7 +4,7 @@ namespace App\Models\Backend\Companies;
 
 use Baum\Node;
 
-class CategoriesCompany extends Node
+class CategoryCompany extends Node
 {
     /**
     * Table name.

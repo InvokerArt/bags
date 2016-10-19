@@ -65,7 +65,7 @@ class Handler extends ExceptionHandler
             return redirect()->route(env('APP_BACKEND_PREFIX').'.access.user.edit', $e->userID())->withInput()->withFlashDanger($e->validationErrors());
         }
         
-        \Inspector::renderException($e);    //调试插件
+        //\Inspector::renderException($e);    //调试插件
         return parent::render($request, $e);
     }
 

@@ -94,6 +94,10 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
 
     //媒体库
     Route::get('/media', 'Media\IndexController@index')->name('media.index');
+    //普通文件上传
+    Route::post('upload', 'UploadController@index')->name('upload.index');
+    //营业执照和公司照片文件上传
+    Route::post('upload/company', 'UploadController@company')->name('upload.company');
     Route::get('/', 'DashboardController@index')->name('index');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });

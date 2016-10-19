@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Companies;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Companies\CategoryRequest;
 use App\Http\Requests\Backend\Companies\CategoryUpdateRequest;
-use App\Models\Backend\Companies\CategoriesCompanies;
+use App\Models\Backend\Companies\CategoryCompany;
 use App\Repositories\Backend\Companies\CategoryInterface;
 use Illuminate\Http\Request;
 
@@ -31,16 +31,16 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         if ($id) {
-            $category = CategoriesCompanies::root()->find($id);
+            $category = CategoryCompany::root()->find($id);
         } else {
-            if (null === CategoriesCompanies::root()) {
+            if (null === CategoryCompany::root()) {
                 //生成默认数据
-                CategoriesCompanies::create(['name' => '原材料']);
-                CategoriesCompanies::create(['name' => '包装']);
+                CategoryCompany::create(['name' => '原材料']);
+                CategoryCompany::create(['name' => '包装']);
             }
-            $category = CategoriesCompanies::roots()->first();
+            $category = CategoryCompany::roots()->first();
         }
-        return view('backend.companys.category.index', compact('category'));
+        return view('backend.companies.category.index', compact('category'));
     }
 
     /**
@@ -63,8 +63,8 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         $name = $request->name;
-        $categories = CategoriesCompanies::root()->find($id);
-        $children = CategoriesCompanies::create(['name' => $name]);
+        $categories = CategoryCompany::root()->find($id);
+        $children = CategoryCompany::create(['name' => $name]);
         $children->makeChildOf($categories);
         return ['id'=>$children->id, 'icon' => 'fa fa-folder icon-lg icon-state-warning'];
     }
@@ -101,7 +101,7 @@ class CategoryController extends Controller
     public function update($id, CategoryUpdateRequest $request)
     {
         $this->categories->update($id, $request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.companys.categories.index')->withFlashSuccess('更新成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.categories.index')->withFlashSuccess('更新成功');
     }
 
     /**
@@ -124,7 +124,7 @@ class CategoryController extends Controller
         $parent = $request->parent;
         $disabled = $request->disabled;
         if ($parent == "#") {
-            $catetories = CategoriesCompanies::roots()->get();
+            $catetories = CategoryCompany::roots()->get();
             foreach ($catetories as $category) {
                 $children = $category->children()->get();
                 $data[] = array(
@@ -138,7 +138,7 @@ class CategoryController extends Controller
                 );
             }
         } else {
-            $catetories = CategoriesCompanies::root()->find($parent)->getImmediateDescendants();
+            $catetories = CategoryCompany::root()->find($parent)->getImmediateDescendants();
             foreach ($catetories as $category) {
                 $children = $category->isLeaf();
                 $data[] = array(
@@ -159,8 +159,8 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         $parent = $request->parent;
-        $catetorie = CategoriesCompanies::root()->find($parent);
-        $children = CategoriesCompanies::root()->find($id);
+        $catetorie = CategoryCompany::root()->find($parent);
+        $children = CategoryCompany::root()->find($id);
         $children->makeChildOf($catetorie);
     }
 
@@ -168,14 +168,14 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         $parent = $request->parent;
-        $categories = CategoriesCompanies::root()->find($parent);
-        $childrens = CategoriesCompanies::root()->find($id)->getDescendantsAndSelf();
+        $categories = CategoryCompany::root()->find($parent);
+        $childrens = CategoryCompany::root()->find($id)->getDescendantsAndSelf();
     }
 
     public function rename(CategoryRequest $request)
     {
         $id = $request->id;
         $this->categories->update($id, $request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.companys.categories.index')->withFlashSuccess('重命名成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.categories.index')->withFlashSuccess('重命名成功');
     }
 }

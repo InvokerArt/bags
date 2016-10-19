@@ -209,6 +209,10 @@
         TalvBansal\MediaManager\Providers\MediaManagerServiceProvider::class,
         //图片处理
         Intervention\Image\ImageServiceProvider::class,
+        //jquery validate
+        Proengsoft\JsValidation\JsValidationServiceProvider::class,
+        //上传插件
+        JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider::class,
     ],
 
     /*
@@ -279,6 +283,9 @@
         'ApiRoute' => Dingo\Api\Facade\Route::class,
         //图片处理
         'Image' => Intervention\Image\Facades\Image::class,
+        //jquery validate
+        'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
+        'Plupload' => JildertMiedema\LaravelPlupload\Facades\Plupload::class,
     ],
 
  ];

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend\Companies;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Companies\CompanyRequest;
-use App\Models\Backend\Companies\CategoriesCompany;
+use App\Models\Backend\Companies\CategoryCompany;
 use App\Repositories\Backend\Companies\CompaniesInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -14,7 +14,7 @@ class CompanyController extends Controller
     protected $companies;
     protected $categories;
 
-    public function __construct(CompaniesInterface $companies, CategoriesCompany $categories)
+    public function __construct(CompaniesInterface $companies, CategoryCompany $categories)
     {
         $this->companies = $companies;
         $this->categories = $categories;
@@ -65,7 +65,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.companies.create');
     }
 
     /**
@@ -98,7 +98,7 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('backend.companies.create');
     }
 
     /**

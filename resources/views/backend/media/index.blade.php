@@ -18,6 +18,7 @@
 @stop
 
 @section('js')
+    <script type="text/javascript" src="{{ asset('js/media-manager.js') }}"></script>
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),

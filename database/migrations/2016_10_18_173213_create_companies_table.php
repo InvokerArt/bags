@@ -17,12 +17,16 @@ class CreateCompaniesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('name')->default('')->comment('公司名');
-            $table->string('telephone', 30)->unique()->comment('公司电话');
-            $table->string('address')->unique()->comment('公司地址');
+            $table->string('name')->index()->comment('公司名');
+            $table->string('slug')->nullable()->unique()->index()->comment('固定链接地址');
+            $table->string('telephone', 30)->comment('公司电话');
+            $table->string('address')->comment('公司地址');
             $table->text('notes')->comment('加盟须知');
             $table->text('content')->comment('公司简介');
+            $table->integer('view_count')->unsigned()->default(0)->index()->comment('浏览数');
+            $table->integer('comment_count')->unsigned()->default(0)->index()->comment('评论数');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
