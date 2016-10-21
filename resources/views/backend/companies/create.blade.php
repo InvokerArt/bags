@@ -11,12 +11,12 @@
 @section('content')
     <div class="portlet light portlet-fit portlet-form bordered" id="form_wizard">
         <div class="portlet-body">
-            {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.companies.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'submit_form']) }}
+            {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.company.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'submit_form']) }}
             <div class="form-wizard" id="company">
                 <div class="form-body">
                     <ul class="nav nav-pills nav-justified steps">
                         <li class="active">
-                            <a href="#tab1" data-toggle="tab" class="step" aria-expanded="true">
+                            <a href="#tab1" data-toggle="tab" class="step active" aria-expanded="true">
                                 <span class="number"> 1 </span>
                                 <span class="desc">
                                     <i class="fa fa-check"></i>基本信息
@@ -32,10 +32,18 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#tab3" data-toggle="tab" class="step active">
+                            <a href="#tab3" data-toggle="tab" class="step">
                                 <span class="number"> 3 </span>
                                 <span class="desc">
                                     <i class="fa fa-check"></i>公司照片
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab4" data-toggle="tab" class="step">
+                                <span class="number"> 4 </span>
+                                <span class="desc">
+                                    <i class="fa fa-check"></i>确定
                                 </span>
                             </a>
                         </li>
@@ -71,6 +79,28 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">
+                                    公司类型
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-10">
+                                    <div class="radio-list">
+                                        <label for="" class="radio-inline">
+                                        {{ Form::radio('role', 1, true, ['data-title' => '采购商']) }}
+                                        采购商
+                                        </label>
+                                        <label for="" class="radio-inline">
+                                        {{ Form::radio('role', 2, false, ['data-title' => '供应商']) }}
+                                        供应商
+                                        </label>
+                                        <label for="" class="radio-inline">
+                                        {{ Form::radio('role', 3, false, ['data-title' => '机构']) }}
+                                        机构
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">
                                     公司电话
                                     <span class="required">*</span>
                                 </label>
@@ -84,7 +114,8 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('address', null, ['class' => 'form-control', 'autocomplete' => 'true']) }}
+                                    <div id="location"></div>
+                                    {{ Form::hidden('address', null, ['class' => 'form-control address', 'autocomplete' => 'true']) }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -119,72 +150,96 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab2">
-                            <div id="tab_images_uploader_container" class="text-align-reverse margin-bottom-10">
-                                <a id="tab_images_uploader_pickfiles" href="javascript:;" class="btn btn-success"> <i class="fa fa-plus"></i>
+                            <div id="uploader_licenses" class="text-align-reverse margin-bottom-10">
+                                <a id="licenses_uploader_pickfiles" href="javascript:;" class="btn btn-success"> <i class="fa fa-plus"></i>
                                     选择图片
                                 </a>
-                                <a id="tab_images_uploader_uploadfiles" href="javascript:;" class="btn btn-primary">
+                                <a id="licenses_uploader_uploadfiles" href="javascript:;" class="btn btn-primary">
                                     <i class="fa fa-share"></i>
                                     上传图片
                                 </a>
                             </div>
                             <div class="row">
-                                <div id="tab_images_uploader_filelist" class="col-md-6 col-sm-12"></div>
+                                <div id="licenses_uploader_filelist" class="col-md-12"></div>
                             </div>
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr role="row" class="heading">
-                                        <th>Image</th>
-                                        <th width="10%"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <a href="../assets/pages/media/works/img1.jpg" class="fancybox-button" data-rel="fancybox-button">
-                                                <img class="img-responsive" src="../assets/pages/media/works/img1.jpg" alt=""></a>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:;" class="btn btn-default btn-sm">
-                                                <i class="fa fa-times"></i>
-                                                删除
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="../assets/pages/media/works/img2.jpg" class="fancybox-button" data-rel="fancybox-button">
-                                                <img class="img-responsive" src="../assets/pages/media/works/img2.jpg" alt=""></a>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:;" class="btn btn-default btn-sm">
-                                                <i class="fa fa-times"></i>
-                                                删除
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="../assets/pages/media/works/img3.jpg" class="fancybox-button" data-rel="fancybox-button">
-                                                <img class="img-responsive" src="../assets/pages/media/works/img3.jpg" alt=""></a>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:;" class="btn btn-default btn-sm">
-                                                <i class="fa fa-times"></i>
-                                                删除
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                         <div class="tab-pane" id="tab3">
+                            <div id="uploader_photos" class="text-align-reverse margin-bottom-10">
+                                <a id="photos_uploader_pickfiles" href="javascript:;" class="btn btn-success"> <i class="fa fa-plus"></i>
+                                    选择图片
+                                </a>
+                                <a id="photos_uploader_uploadfiles" href="javascript:;" class="btn btn-primary">
+                                    <i class="fa fa-share"></i>
+                                    上传图片
+                                </a>
+                            </div>
+                            <div class="row">
+                                <div id="photos_uploader_filelist" class="col-md-12"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab4">
+                            <h3 class="block">确认公司信息</h3>
+                            <h4 class="form-section">基本信息</h4>
                             <div class="form-group">
-                                <label class="col-md-2 control-label">
-                                    公司照片
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="col-md-10">
+                                <label class="control-label col-md-3">所属会员用户名:</label>
+                                <div class="col-md-4">
+                                    <p class="form-control-static" data-display="username"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">公司名:</label>
+                                <div class="col-md-4">
+                                    <p class="form-control-static" data-display="name"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">公司类型:</label>
+                                <div class="col-md-4">
+                                    <p class="form-control-static" data-display="role"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">公司电话:</label>
+                                <div class="col-md-4">
+                                    <p class="form-control-static" data-display="telephone"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">公司地址:</label>
+                                <div class="col-md-4">
+                                    <p class="form-control-static" data-display="address"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">主营分类:</label>
+                                <div class="col-md-4">
+                                    <p class="form-control-static" data-display="categories"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">加盟须知:</label>
+                                <div class="col-md-4">
+                                    <p class="form-control-static" data-display="notes"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">公司简介:</label>
+                                <div class="col-md-4">
+                                    <p class="form-control-static" data-display="content"></p>
+                                </div>
+                            </div>
+                            <h4 class="form-section">公司营业执照</h4>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">公司营业执照:</label>
+                                <div class="col-md-4">
+                                    <p class="form-control-static" data-display="licenses[]"></p>
+                                </div>
+                            </div>
+                            <h4 class="form-section">公司照片</h4>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">公司照片:</label>
+                                <div class="col-md-4">
+                                    <p class="form-control-static" data-display="photos[]"></p>
                                 </div>
                             </div>
                         </div>
@@ -213,6 +268,8 @@
 @stop
 
 @section('js')
+    <script src="{{asset('js/vendor/cityselect/jquery.cxselect.min.js')}}"></script>
+    <script src="{{asset('js/location.js')}}"></script>
     <script src="{{asset('js/vendor/plupload/plupload.full.min.js')}}"></script>
     <script src="{{asset('js/vendor/plupload/i18n/zh_CN.js')}}"></script>
     @include('UEditor::head')
@@ -220,9 +277,16 @@
     {{-- {!! JsValidator::formRequest('App\Http\Requests\Backend\Companies\CompanyStoreOrUpdateRequest', '#submit_form') !!} --}}
     <script type="text/javascript">
         $(function(){
-            $('.select2').select2({
-                placeholder: "从常用标签中选择"
-            })
+            $('#location').location();
+            $('input').iCheck({
+                radioClass: 'iradio_flat-green'
+            });
+            //灯箱插件
+            $(document).on('click', '[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', function(event) {
+                event.preventDefault();
+                return $(this).ekkoLightbox({
+                });
+            });
 
             //分类
             $('.categories-companies').jstree({
@@ -237,7 +301,7 @@
                     check_callback: !0,
                     data: {
                         url: function(e) {
-                            return "{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.children') }}"
+                            return "{{ route(env('APP_BACKEND_PREFIX').'.company.categories.children') }}"
                         },
                         data: function(e) {
                             return {
@@ -338,12 +402,49 @@
                 },
 
                 submitHandler: function (form) {
-                    success.show();
                     error.hide();
+                    form.submit();
                     //add here some ajax code to submit your form or just call form.submit() if you want to submit the form without ajax
                 }
 
             });
+
+            var displayConfirm = function() {
+                $('#tab4 .form-control-static', form).each(function(){
+                    var input = $('[name="'+$(this).attr("data-display")+'"]', form);
+                    if (input.is(":radio")) {
+                        input = $('[name="'+$(this).attr("data-display")+'"]:checked', form);
+                    }
+                    if (input.is(":text") || input.is("textarea")) {
+                        $(this).html(input.val());
+                    } else if (input.is("select")) {
+                        $(this).html(input.find('option:selected').text());
+                    } else if (input.is(":radio") && input.is(":checked")) {
+                        $(this).html(input.attr("data-title"));
+                    }  else if ($(this).attr("data-display") == 'address') {
+                        $(this).html($('#city-title').html());
+                    }  else if ($(this).attr("data-display") == 'licenses[]') {
+                        var licenses = [];
+                        $('[name="licenses[]"]', form).each(function(){ 
+                            licenses.push('<img src="' + $(this).val() + '" style="width:30px;margin-right:5px"/>');
+                        });
+                        $(this).html(licenses.join(""));
+                    } else if ($(this).attr("data-display") == 'photos[]') {
+                        var photos = [];
+                        $('[name="photos[]"]', form).each(function(){
+                            photos.push('<img src="' + $(this).val() + '" style="width:30px;margin-right:5px"/>');
+                        });
+                        $(this).html(photos.join(""));
+                    } else if($(this).attr("data-display") == 'categories') {
+                        var categories = [];
+                        var categories_id = $('#categories').val().split(',');
+                        $.each(categories_id, function(key, value) {
+                            categories.push($('#'+value).text());
+                        })
+                        $(this).html(categories.join("<br>"));
+                    }
+                });
+            }
 
             var handleTitle = function(tab, navigation, index) {
                 var total = navigation.find('li').length;
@@ -416,27 +517,24 @@
 
             $('#form_wizard').find('.button-previous').hide();
             $('#form_wizard .button-submit').click(function () {
-                alert('请完成所有信息！');
+                $('#submit_form').submit();
             }).hide();
         })
 
-        //图片上传
-        var uploader = new plupload.Uploader({
+        //执照
+        var licenses = new plupload.Uploader({
             // add X-CSRF-TOKEN in headers attribute to fix this issue
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
             },
             runtimes : 'html5,flash,silverlight,html4',
-             
-            browse_button : document.getElementById('tab_images_uploader_pickfiles'), // you can pass in id...
-            container: document.getElementById('tab_images_uploader_container'), // ... or DOM Element itself
-             
+            browse_button : document.getElementById('licenses_uploader_pickfiles'), // you can pass in id...
+            container: document.getElementById('uploader_licenses'), // ... or DOM Element itself
             url : "{{ route(env("APP_BACKEND_PREFIX").'.upload.company') }}",
-             
             filters : {
                 max_file_size : '10mb',
                 mime_types: [
-                    {title : "图片文件", extensions : "jpg,gif,png"}
+                    {title : "图片文件", extensions : "jpg,jpeg,gif,png"}
                 ]
             },
             flash_swf_url : "{{ asset("js/vendor/plupload/Moxie.swf") }}",
@@ -444,22 +542,31 @@
          
             init: {
                 PostInit: function() {
-                    $('#tab_images_uploader_filelist').html("");
+                    $('#licenses_uploader_filelist').html("");
          
-                    $('#tab_images_uploader_uploadfiles').click(function() {
-                        uploader.start();
+                    $('#licenses_uploader_uploadfiles').click(function() {
+                        licenses.start();
                         return false;
                     });
 
-                    $('#tab_images_uploader_filelist').on('click', '.added-files .remove', function(){
-                        uploader.removeFile($(this).parent('.added-files').attr("id"));    
-                        $(this).parent('.added-files').remove();                     
+                    $('#licenses_uploader_filelist').on('click', '.added-files .remove', function(){
+                        var src = $(this).parents('.added-files').find('img').attr('src');
+                        $.post(
+                            "/{{ env('APP_BACKEND_PREFIX') }}/upload/company/", 
+                            { 
+                                '_method' : 'delete', 
+                                '_token' : '{{ csrf_token() }}', 
+                                'url' : src 
+                            }
+                        );
+                        licenses.removeFile($(this).parents('.added-files').attr("id"));    
+                        $(this).parents('.added-files').remove();                     
                     });
                 },
          
                 FilesAdded: function(up, files) {
                     plupload.each(files, function(file) {
-                        $('#tab_images_uploader_filelist').append('<div class="alert alert-warning added-files" id="uploaded_file_' + file.id + '">' + file.name + '(' + plupload.formatSize(file.size) + ') <span class="status label label-info"></span>&nbsp;<a href="javascript:;" style="margin-top:-5px" class="remove pull-right btn btn-sm red"><i class="fa fa-times"></i> 删除</a></div>');
+                        $('#licenses_uploader_filelist').append('<div class="alert alert-warning added-files" id="uploaded_file_' + file.id + '"><div class="filename new" style="line-height: 32px;overflow: hidden;">' + file.name + '(' + plupload.formatSize(file.size) + ') <span class="status label label-info"></span>&nbsp;<a href="javascript:;" class="remove pull-right btn btn-sm red"><i class="fa fa-times"></i> 删除</a></div></div>');
                     });
                 },
          
@@ -470,10 +577,11 @@
                 FileUploaded: function(up, file, response) {
                     var response = $.parseJSON(response.response);
 
-                    if (response.result && response.result == 'OK') {
+                    if (response.result && response.result.message == 'OK') {
                         var id = response.id; // uploaded file's unique name. Here you can collect uploaded file names and submit an jax request to your server side script to process the uploaded files and update the images tabke
 
-                        $('#uploaded_file_' + file.id + ' > .status').removeClass("label-info").addClass("label-success").html('<i class="fa fa-check"></i> Done'); // set successfull upload
+                        $('#uploaded_file_' + file.id + ' .status').removeClass("label-info").addClass("label-success").html('<i class="fa fa-check"></i> 完成');
+                        $('#uploaded_file_' + file.id).removeClass("alert-warning").addClass("alert-success").prepend('<a href="' + response.result.url + '" data-toggle="lightbox"><img style="float:left;margin-right:10px;max-width:40px;max-height:32px;" src="' + response.result.url + '"></a><input type="hidden" name="licenses[]" value="' + response.result.url + '"/>') // set successfull upload
                     } else {
                         $('#uploaded_file_' + file.id + ' > .status').removeClass("label-info").addClass("label-danger").html('<i class="fa fa-warning"></i> Failed'); // set failed upload
                         Theme.alert({type: 'danger', message: '其中一个上传失败。 请重试。', closeInSeconds: 10, icon: 'warning'});
@@ -485,8 +593,81 @@
                 }
             }
         });
+        licenses.init();
 
-        uploader.init();
+        //照片
+        var photoer = new plupload.Uploader({
+            // add X-CSRF-TOKEN in headers attribute to fix this issue
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+            runtimes : 'html5,flash,silverlight,html4',
+            browse_button : document.getElementById('photos_uploader_pickfiles'), // you can pass in id...
+            container: document.getElementById('uploader_photos'), // ... or DOM Element itself
+            url : "{{ route(env("APP_BACKEND_PREFIX").'.upload.company') }}",
+            filters : {
+                max_file_size : '10mb',
+                mime_types: [
+                    {title : "图片文件", extensions : "jpg,jpeg,gif,png"}
+                ]
+            },
+            flash_swf_url : "{{ asset("js/vendor/plupload/Moxie.swf") }}",
+            silverlight_xap_url : '{{ asset("js/vendor/plupload/Moxie.xap") }}',          
+         
+            init: {
+                PostInit: function() {
+                    $('#photos_uploader_filelist').html("");
+         
+                    $('#photos_uploader_uploadfiles').click(function() {
+                        photoer.start();
+                        return false;
+                    });
+
+                    $('#photos_uploader_filelist').on('click', '.added-files .remove', function(){
+                        var src = $(this).parents('.added-files').find('img').attr('src');
+                        $.post(
+                            "/{{ env('APP_BACKEND_PREFIX') }}/upload/company/", 
+                            { 
+                                '_method' : 'delete', 
+                                '_token' : '{{ csrf_token() }}', 
+                                'url' : src 
+                            }
+                        );
+                        photoer.removeFile($(this).parents('.added-files').attr("id"));    
+                        $(this).parents('.added-files').remove();                     
+                    });
+                },
+         
+                FilesAdded: function(up, files) {
+                    plupload.each(files, function(file) {
+                        $('#photos_uploader_filelist').append('<div class="alert alert-warning added-files" id="uploaded_file_' + file.id + '"><div class="filename new" style="line-height: 32px;overflow: hidden;">' + file.name + '(' + plupload.formatSize(file.size) + ') <span class="status label label-info"></span>&nbsp;<a href="javascript:;" class="remove pull-right btn btn-sm red"><i class="fa fa-times"></i> 删除</a></div></div>');
+                    });
+                },
+         
+                UploadProgress: function(up, file) {
+                    $('#uploaded_file_' + file.id + ' > .status').html(file.percent + '%');
+                },
+
+                FileUploaded: function(up, file, response) {
+                    var response = $.parseJSON(response.response);
+
+                    if (response.result && response.result.message == 'OK') {
+                        var id = response.id; // uploaded file's unique name. Here you can collect uploaded file names and submit an jax request to your server side script to process the uploaded files and update the images tabke
+
+                        $('#uploaded_file_' + file.id + ' .status').removeClass("label-info").addClass("label-success").html('<i class="fa fa-check"></i> 完成');
+                        $('#uploaded_file_' + file.id).removeClass("alert-warning").addClass("alert-success").prepend('<a href="' + response.result.url + '" data-toggle="lightbox"><img style="float:left;margin-right:10px;max-width:40px;max-height:32px;" src="' + response.result.url + '"></a><input type="hidden" name="photos[]" value="' + response.result.url + '"/>') // set successfull upload
+                    } else {
+                        $('#uploaded_file_' + file.id + ' > .status').removeClass("label-info").addClass("label-danger").html('<i class="fa fa-warning"></i> Failed'); // set failed upload
+                        Theme.alert({type: 'danger', message: '其中一个上传失败。 请重试。', closeInSeconds: 10, icon: 'warning'});
+                    }
+                },
+         
+                Error: function(up, err) {
+                    Theme.alert({type: 'danger', message: err.message, closeInSeconds: 10, icon: 'warning'});
+                }
+            }
+        });
+        photoer.init();
 
         /**
          * 百度编辑器

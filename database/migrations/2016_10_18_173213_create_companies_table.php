@@ -20,11 +20,14 @@ class CreateCompaniesTable extends Migration
             $table->string('name')->index()->comment('公司名');
             $table->string('slug')->nullable()->unique()->index()->comment('固定链接地址');
             $table->string('telephone', 30)->comment('公司电话');
-            $table->string('address')->comment('公司地址');
+            $table->json('licenses')->comment('营业执照');
+            $table->json('photos')->comment('公司照片');
             $table->text('notes')->comment('加盟须知');
             $table->text('content')->comment('公司简介');
+            $table->integer('address')->comment('公司地址ID');
             $table->integer('view_count')->unsigned()->default(0)->index()->comment('浏览数');
             $table->integer('comment_count')->unsigned()->default(0)->index()->comment('评论数');
+            $table->tinyInteger('role')->default(1)->comment('用户身份 1采购商 2供应商 3机构');
             $table->timestamps();
             $table->softDeletes();
         });

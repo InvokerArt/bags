@@ -183,6 +183,7 @@ elixir(function(mix) {
         'vendor/jsvalidation.min.js',
         'vendor/additional-methods.min.js',
         'vendor/jquery.bootstrap.wizard.min.js',
+        'vendor/ekko-lightbox.min.js',
         'theme.js',
         'layout.js',
         'datatable.js',

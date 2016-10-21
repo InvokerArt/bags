@@ -72,10 +72,10 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.companies*')) }}">
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.index') }}">公司列表</a>
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.company.index') }}">公司列表</a>
                     </li>
-                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.companies.categories*')) }}">
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.index') }}">分类</a>
+                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.company.categories*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.company.categories.index') }}">分类</a>
                     </li>
                 </ul>
             </li>

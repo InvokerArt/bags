@@ -24,8 +24,8 @@ class CompanyStoreOrUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'require',
-            'name' => 'require'
+            'username' => 'required',
+            'name' => 'required'
         ];
     }
 }

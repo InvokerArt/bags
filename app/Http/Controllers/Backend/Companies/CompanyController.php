@@ -4,19 +4,23 @@ namespace App\Http\Controllers\Backend\Companies;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Companies\CompanyRequest;
+use App\Http\Requests\Backend\Companies\CompanyStoreOrUpdateRequest;
+use App\Models\Access\User\User;
+use App\Models\Backend\Area;
 use App\Models\Backend\Companies\CategoryCompany;
-use App\Repositories\Backend\Companies\CompaniesInterface;
+use App\Models\Backend\Companies\Company;
+use App\Repositories\Backend\Companies\CompanyInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
 class CompanyController extends Controller
 {
-    protected $companies;
+    protected $company;
     protected $categories;
 
-    public function __construct(CompaniesInterface $companies, CategoryCompany $categories)
+    public function __construct(CompanyInterface $company, CategoryCompany $categories)
     {
-        $this->companies = $companies;
+        $this->company = $company;
         $this->categories = $categories;
     }
     /**
@@ -37,23 +41,20 @@ class CompanyController extends Controller
      */
     public function get(CompanyRequest $request)
     {
-        return Datatables::of($this->companies->getForDataTable())
-            ->filter(function ($query) use ($request) {
-                Companies::companiesFilter($query, $request);
+        return Datatables::of($this->company->getForDataTable())
+            // ->filter(function ($query) use ($request) {
+            //     Company::companiesFilter($query, $request);
+            // })
+            ->addColumn('ids', function ($company) {
+                return $company->checkbox_button;
             })
-            ->addColumn('ids', function ($companies) {
-                return $companies->checkbox_button;
-            })
-            ->editColumn('name', function ($companies) {
-                return str_limit($companies->title, 30, '...');
-            })
-            ->editColumn('categories', function ($companies) {
-                return $companies->categories->map(function ($category) {
+            ->editColumn('categories', function ($company) {
+                return $company->categories->map(function ($category) {
                     return $category->name;
                 })->implode('<br>');
             })
-            ->addColumn('actions', function ($companies) {
-                return $companies->action_buttons;
+            ->addColumn('actions', function ($company) {
+                return $company->action_buttons;
             })
         ->make(true);
     }
@@ -74,9 +75,10 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompanyStoreOrUpdateRequest $request)
     {
-        //
+        $this->company->create($request);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.index')->withFlashSuccess('公司添加成功');
     }
 
     /**
@@ -96,9 +98,15 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Company $company)
     {
-        return view('backend.companies.create');
+        $categories = $company->categories->pluck('id')->toArray();
+        $user = User::where('id', $company->user_id)->first();
+        $company->username = $user->username;
+        $city = Area::select('parent_id')->where('code', '=', $company->address)->first();
+        $province = Area::select('parent_id')->where('code', '=', $city->parent_id)->first();
+        $location = json_encode(['province' => $province->parent_id, 'city' => $city->parent_id ,'area' => $company->address]);
+        return view('backend.companies.edit', compact(['company', 'categories', 'location']));
     }
 
     /**
@@ -108,9 +116,10 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Company $company, CompanyStoreOrUpdateRequest $request)
     {
-        //
+        $this->company->update($company, $request);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.company.index')->withFlashSuccess('更新成功');
     }
 
     /**

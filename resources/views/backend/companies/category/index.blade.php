@@ -20,25 +20,47 @@
                     <div id="category_tree"></div>
                 </div>
                 <div class="col-xs-10 category-company">
-                    {!! Form::model($category,['route' => [env('APP_BACKEND_PREFIX').'.companies.categories.update', $category->id], 'id' => 'category','class'=>'form-horizontal','method' => 'PATCH','enctype'=>'multipart/form-data']) !!}
+                    {!! Form::model($category,['route' => [env('APP_BACKEND_PREFIX').'.company.categories.update', $category], 'id' => 'category','class'=>'form-horizontal','method' => 'PATCH','enctype'=>'multipart/form-data']) !!}
                     <div class="form-group">
                         <label class="col-xs-2 control-label">
                             名称
                             <span class="required">*</span>
                         </label>
                         <div class="col-xs-7">
-                            <input type="text" class="form-control" name="name" placeholder="名称" value="{!! $category->name !!}">
+                            {{ Form::text('name', null, ['class' => 'form-control', 'autocomplete' => 'true', 'placeholder' => "名称"]) }}
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-xs-2 control-label">
+                            所属公司类型
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-xs-7">
+                            <div class="radio-list">
+                                <label for="" class="radio-inline">
+                                {{ Form::radio('role', 1, true, ['data-title' => '采购商']) }}
+                                采购商
+                                </label>
+                                <label for="" class="radio-inline">
+                                {{ Form::radio('role', 2, false, ['data-title' => '供应商']) }}
+                                供应商
+                                </label>
+                                <label for="" class="radio-inline">
+                                {{ Form::radio('role', 3, false, ['data-title' => '机构']) }}
+                                机构
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="form-group">
                         <label class="col-xs-2 control-label">激活
                             <span class="required">*</span>
                         </label>
                         <div class="col-xs-7">
                             {!! Form::select('is_active', [1=>'是',0=>'否'], null, ['class' => 'select2 form-control','style'=>'width: 100%']) !!}
                         </div>
-                    </div>
-                    <div class="form-group">
+                    </div> --}}
+                    {{-- <div class="form-group">
                         <label class="col-xs-2 control-label">链接
                             <span class="required">*</span>
                         </label>
@@ -46,7 +68,7 @@
                             {!! Form::text('slug', old('slug') ? old('slug') : $category->slug, ['class' => 'form-control','placeholder'=>'链接']) !!}
                             <span class="help-block">“链接”是在URL中使用的，通常使用小写，只能包含字母，数字和连字符（-）。</span>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label class="col-xs-2 control-label">描述</label>
                         <div class="col-xs-7">
@@ -74,6 +96,9 @@
     <script src="{{asset('js/jstree.min.js')}}"></script>
     <script>
         $(function () {
+            $('input').iCheck({
+                radioClass: 'iradio_flat-green'
+            });
             $("#category_tree").jstree({
                 core: {
                     strings: { 
@@ -86,7 +111,7 @@
                     check_callback: true,
                     data: {
                         url: function(e) {
-                            return "{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.children') }}"
+                            return "{{ route(env('APP_BACKEND_PREFIX').'.company.categories.children') }}"
                         },
                         data: function(e) {
                             return {
@@ -144,7 +169,7 @@
                 }
             })
             .on('delete_node.jstree', function (e, data) {
-                $.post("/{{ env('APP_BACKEND_PREFIX') }}/companies/categories/"+data.node.id, { '_method' : 'delete', '_token' : '{{ csrf_token() }}' })
+                $.post("/{{ env('APP_BACKEND_PREFIX') }}/company/categories/"+data.node.id, { '_method' : 'delete', '_token' : '{{ csrf_token() }}' })
                         .fail(function () {
                             data.instance.refresh();
                         })
@@ -153,7 +178,7 @@
                         });
             })
             .on('create_node.jstree', function (e, data) {
-                $.post("{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.store') }}", { 'id' : data.node.parent, 'name' : data.node.text, '_token' : '{{ csrf_token() }}' })
+                $.post("{{ route(env('APP_BACKEND_PREFIX').'.company.categories.store') }}", { 'id' : data.node.parent, 'name' : data.node.text, '_token' : '{{ csrf_token() }}' })
                         .done(function (d) {
                             data.instance.set_id(data.node, d.id);
                             //swal("", "创建成功！", "success");
@@ -163,7 +188,7 @@
                         })
             })
             .on('rename_node.jstree', function (e, data) {
-                $.post("{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.rename') }}", { 'id' : data.node.id, 'name' : data.text, '_token' : '{{ csrf_token() }}' })
+                $.post("{{ route(env('APP_BACKEND_PREFIX').'.company.categories.rename') }}", { 'id' : data.node.id, 'name' : data.text, '_token' : '{{ csrf_token() }}' })
                         .fail(function () {
                             data.instance.refresh();
                         })
@@ -172,7 +197,7 @@
                         });
             })
             .on('move_node.jstree', function (e, data) {
-                $.post("{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.move') }}", { 'id' : data.node.id, 'parent' : data.parent, '_token' : '{{ csrf_token() }}' })
+                $.post("{{ route(env('APP_BACKEND_PREFIX').'.company.categories.move') }}", { 'id' : data.node.id, 'parent' : data.parent, '_token' : '{{ csrf_token() }}' })
                         .fail(function () {
                             data.instance.refresh();
                         })
@@ -184,6 +209,9 @@
                 if(data && data.selected && data.selected.length) {
                     $.get('?id=' + data.selected.join(':'), function (d) {
                         $('.category-company').html($(d).find('.category-company').html());
+                        $('input').iCheck({
+                            radioClass: 'iradio_flat-green'
+                        });
                     });
                 }
             })

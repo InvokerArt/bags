@@ -1,0 +1,118 @@
+.ks-overlay {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    z-index: 999999;
+    width:300px;
+}
+
+.bf-select {
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    outline: 0;
+    position: relative;
+    cursor: pointer;
+    width: 301px;    
+    float: left;
+    margin-right: 10px;
+    .fa {
+        position: absolute;
+        top: 10px;
+        right: 8px;
+        width: 10px;
+        height: 5px;
+    }
+}
+
+.city-title {
+    margin-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333;
+}
+
+.ks-overlay-hidden {
+    visibility: hidden;
+}
+
+.city-select-tab {
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    width: 301px;
+    height: 34px;
+    background: #f0f0f0;
+    a {
+        float: left;
+        display: inline;
+        margin-bottom: -1px;
+        padding: 6px 20px;
+        width: 100px;
+        border-left: 1px solid #ccc;
+        border-bottom: 1px solid transparent;
+        color: #4D4D4D;
+        text-align: center;
+        outline: 0;
+    }
+    .current {
+        background: #fff;
+        border-bottom: 1px solid #fff;
+        color: #f60;
+    }
+}
+
+.bf-select a, .bf-menu-content a {
+    text-decoration: none;
+    color: #333;
+}
+
+.city-select {
+    border: 1px #ccc solid;
+    border-top: 0;
+    padding: 10px 15px;
+    width: 301px;
+    background: #fff;
+    font-size: 12px;
+    dl {
+        display: block;
+        clear: both;
+        padding: 3px 0;
+        margin: 0;
+        overflow: hidden;
+    }
+    dt {
+        display: inline-block;
+        width: 35px;
+        float: left;
+        padding-right: 10px;
+        font-weight: 700;
+        text-align: right;
+    }
+    dd {
+        width: 233px;
+        display: inline;
+        float: left;
+        margin-left: 0;
+    }
+    a {
+        display: inline-block;
+        color: #4D4D4D;
+        padding: 0 10px;
+        outline: 0;
+        text-decoration: none;
+        white-space: nowrap;
+        margin-right: 2px;
+        line-height: 24px;
+    }
+    a.current {
+        background-color: #f60;
+        color: #fff;
+        border-radius: 2px;
+    }
+    a:hover, a:focus {
+        background-color: #fff8f3;
+        border-radius: 2px;
+        color: #f60;
+    }
+} 

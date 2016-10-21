@@ -24,8 +24,8 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => 'required|confirm_mobile_not_change|confirm_rule:check_mobile_unique',
-            'verifyCode' => 'required|verify_code',
+            'mobile' => 'required|is_mobile',//|confirm_mobile_not_change|confirm_rule:check_mobile_unique
+            //'verifyCode' => 'required|verify_code',
             'password' => 'required|min:6'
         ];
     }

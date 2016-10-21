@@ -66,25 +66,6 @@
                                     {{ Form::text('email', null, ['class' => 'form-control', 'autocomplete' => 'off']) }}
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">
-                                    身份
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="col-md-10">
-                                    <div class="radio-list">
-                                        <label for="" class="radio-inline">
-                                        {{ Form::radio('role[]', 1, true,  ['class' => 'form-control', 'autocomplete' => 'off']) }}
-                                        </label>
-                                        <label for="" class="radio-inline">
-                                        {{ Form::radio('role[]', 2, false,  ['class' => 'form-control', 'autocomplete' => 'off']) }}
-                                        </label>
-                                        <label for="" class="radio-inline">
-                                        {{ Form::radio('role[]', 3, false,  ['class' => 'form-control', 'autocomplete' => 'off']) }}
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="tab-pane" id="company">

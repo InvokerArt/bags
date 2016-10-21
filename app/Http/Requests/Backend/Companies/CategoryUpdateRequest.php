@@ -25,8 +25,9 @@ class CategoryUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'is_active' => 'required',
-            'slug' => 'required|alpha_dash'
+            'role' => 'required',
+            //'is_active' => 'required',
+            //'slug' => 'required|alpha_dash'
         ];
     }
 }

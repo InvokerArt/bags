@@ -7,7 +7,7 @@
 <div class="portlet light portlet-fit portlet-datatable bordered">
     <div class="portlet-title">
         <div class="actions">
-            <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.create') }}" class="btn green">
+            <a href="{{ route(env('APP_BACKEND_PREFIX').'.company.create') }}" class="btn green">
                 <i class="fa fa-plus-square-o"></i>
                 <span class="hidden-xs">添加公司</span>
             </a>
@@ -96,14 +96,14 @@
                     pagingType: "bootstrap_extended",
                     autoWidth: false,
                     ajax: {
-                        url: '{{ route(env('APP_BACKEND_PREFIX').".companies.get") }}'
+                        url: '{{ route(env('APP_BACKEND_PREFIX').".company.get") }}'
                     },
                     columns: [
-                        {data: 'ids', name: 'companies.ids',"orderable": false,"searchable": false},
-                        {data: 'id', name: 'companies.id',"orderable": true,"searchable": true},
-                        {data: 'name', name: 'companies.name',"orderable": true,"searchable": true},
+                        {data: 'ids', name: 'company.ids',"orderable": false,"searchable": false},
+                        {data: 'id', name: 'company.id',"orderable": true,"searchable": true},
+                        {data: 'name', name: 'company.name',"orderable": true,"searchable": true},
                         {data: 'categories', name: 'categories.name',"orderable": false,"searchable": true},
-                        {data: 'created_at', name: 'companies.created_at',"orderable": true,"searchable": true},
+                        {data: 'created_at', name: 'company.created_at',"orderable": true,"searchable": true},
                         {data: 'actions', name: '', orderable: false, searchable: false}
                     ],
                     "lengthMenu": [[20, 40, 100, -1], [20, 40, 100, "全部"]],

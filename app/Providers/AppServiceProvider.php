@@ -84,8 +84,8 @@ class AppServiceProvider extends ServiceProvider
          * 公司
          */
         $this->app->bind(
-            \App\Repositories\Backend\Companies\CompaniesInterface::class,
-            \App\Repositories\Backend\Companies\CompaniesRepository::class
+            \App\Repositories\Backend\Companies\CompanyInterface::class,
+            \App\Repositories\Backend\Companies\CompanyRepository::class
         );
 
         /**

@@ -27,6 +27,7 @@ class CreateCategoriesCompaniesTable extends Migration
 
             // Add needed columns here (f.ex: name, slug, path, etc.)
             $table->string('name', 255);
+            $table->tinyInteger('role')->default(1)->comment('用户身份 1采购商 2供应商 3机构');
             $table->boolean('is_active')->default(true);
             $table->string('slug', 100)->unique()->nullable();
             $table->string('description', 255)->default('');

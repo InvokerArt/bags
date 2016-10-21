@@ -2,13 +2,13 @@
 
 namespace App\Models\Backend\Companies\Traits\Relationship;
 
-trait CompaniesRelationship
+trait CompanyRelationship
 {
 
     //分类多对多
     public function categories()
     {
-        return $this->belongsToMany('App\Models\Backend\Companies\CategoriesCompanies', 'category_company', 'companys_id', 'category_id');
+        return $this->belongsToMany('App\Models\Backend\Companies\CategoryCompany', 'category_company', 'company_id', 'category_id');
     }
 
     //用户一对多反向

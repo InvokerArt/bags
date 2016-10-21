@@ -11,6 +11,8 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.'], 
         Route::post('login', 'LoginController@login');
         Route::post('logout', 'LoginController@logout')->name('logout');
     });
+    Route::get('location', 'AreaController@province');
+    Route::get('location/{city}', 'AreaController@cityOrArea');
 });
 
 Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', 'middleware' => 'admin'], function () {
@@ -37,7 +39,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::resource('/permission', 'PermissionController');
     });
 
-    Route::group(['namespace' => 'Companies', 'as' => 'companies.', 'prefix' => 'companies'], function () {
+    Route::group(['namespace' => 'Companies', 'as' => 'company.', 'prefix' => 'company'], function () {
         //公司分类
         Route::resource('categories', 'CategoryController', ['except' => 'show']);
         Route::get('categories/children', 'CategoryController@children')->name('categories.children');
@@ -97,7 +99,8 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
     //普通文件上传
     Route::post('upload', 'UploadController@index')->name('upload.index');
     //营业执照和公司照片文件上传
-    Route::post('upload/company', 'UploadController@company')->name('upload.company');
+    Route::post('upload/company', 'Upload\UploadController@company')->name('upload.company');
+    Route::delete('upload/company', 'Upload\UploadController@companyDelete')->name('upload.companyDelete');
     Route::get('/', 'DashboardController@index')->name('index');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });

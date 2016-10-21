@@ -835,6 +835,59 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   margin-left: -5px;
   margin-right: -5px;
 }
+/*!
+ * Lightbox for Bootstrap 3 by @ashleydw
+ * https://github.com/ashleydw/lightbox
+ *
+ * License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
+ */
+.ekko-lightbox-container {
+  position: relative;
+}
+.ekko-lightbox-nav-overlay {
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.ekko-lightbox-nav-overlay a {
+  opacity: 0;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+  color: #fff;
+  font-size: 30px;
+  height: 100%;
+  width: 49%;
+  display: block;
+  text-shadow: 2px 2px 4px #000;
+  -webkit-filter: dropshadow(color=#000, offx=2, offy=2);
+  filter: dropshadow(color=#000, offx=2, offy=2);
+  z-index: 100;
+}
+.ekko-lightbox-nav-overlay a:empty {
+  width: 49%;
+}
+.ekko-lightbox a:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+.ekko-lightbox .glyphicon-chevron-left {
+  padding-left: 15px;
+  float: left;
+  left: 0;
+  text-align: left;
+}
+.ekko-lightbox .glyphicon-chevron-right {
+  padding-right: 15px;
+  float: right;
+  right: 0;
+  text-align: right;
+}
+.ekko-lightbox .modal-footer {
+  text-align: left;
+}
 
 /*# sourceMappingURL=app.css.map */
 
@@ -14508,6 +14561,109 @@ body.stop-scrolling {
   .iradio_futurico {
     background-image: url(../../../images/icheck/futurico/futurico@2x.png);
     background-size: 144px 19px; } }
+
+.ks-overlay {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  z-index: 999999;
+  width: 300px; }
+
+.bf-select {
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  outline: 0;
+  position: relative;
+  cursor: pointer;
+  width: 301px;
+  float: left;
+  margin-right: 10px; }
+  .bf-select .fa {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    width: 10px;
+    height: 5px; }
+
+.city-title {
+  margin-right: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #333; }
+
+.ks-overlay-hidden {
+  visibility: hidden; }
+
+.city-select-tab {
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  width: 301px;
+  height: 34px;
+  background: #f0f0f0; }
+  .city-select-tab a {
+    float: left;
+    display: inline;
+    margin-bottom: -1px;
+    padding: 6px 20px;
+    width: 100px;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid transparent;
+    color: #4D4D4D;
+    text-align: center;
+    outline: 0; }
+  .city-select-tab .current {
+    background: #fff;
+    border-bottom: 1px solid #fff;
+    color: #f60; }
+
+.bf-select a, .bf-menu-content a {
+  text-decoration: none;
+  color: #333; }
+
+.city-select {
+  border: 1px #ccc solid;
+  border-top: 0;
+  padding: 10px 15px;
+  width: 301px;
+  background: #fff;
+  font-size: 12px; }
+  .city-select dl {
+    display: block;
+    clear: both;
+    padding: 3px 0;
+    margin: 0;
+    overflow: hidden; }
+  .city-select dt {
+    display: inline-block;
+    width: 35px;
+    float: left;
+    padding-right: 10px;
+    font-weight: 700;
+    text-align: right; }
+  .city-select dd {
+    width: 233px;
+    display: inline;
+    float: left;
+    margin-left: 0; }
+  .city-select a {
+    display: inline-block;
+    color: #4D4D4D;
+    padding: 0 10px;
+    outline: 0;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-right: 2px;
+    line-height: 24px; }
+  .city-select a.current {
+    background-color: #f60;
+    color: #fff;
+    border-radius: 2px; }
+  .city-select a:hover, .city-select a:focus {
+    background-color: #fff8f3;
+    border-radius: 2px;
+    color: #f60; }
 
 #poststuff {
   min-width: 763px;

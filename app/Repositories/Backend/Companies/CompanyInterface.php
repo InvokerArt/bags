@@ -4,7 +4,7 @@ namespace App\Repositories\Backend\Companies;
 
 use App\Models\Backend\Companies\Company;
 
-interface CompaniesInterface
+interface CompanyInterface
 {
     public function getForDataTable();
 
