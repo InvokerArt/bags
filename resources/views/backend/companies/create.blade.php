@@ -306,7 +306,7 @@
                         data: function(e) {
                             return {
                                 parent: e.id,
-                                disabled: 1
+                                role: $('[name="role"]:checked').val()
                             }
                         }
                     }
@@ -320,6 +320,9 @@
                     categories.push(this.id);
                 });
                 $('#categories').val(categories);
+            });
+            $('.radio-list input').on('ifChecked', function(event){
+                $('.categories-companies').jstree('refresh');
             });
 
             if (!jQuery().bootstrapWizard) {

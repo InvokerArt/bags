@@ -317,7 +317,7 @@
             var checkNodeIds = "{{ implode(',', $categories) }}".split(",");
 
             //分类
-            $('.categories-companies').jstree({
+            var tree = $('.categories-companies').jstree({
                 core: {
                     strings : { 
                         loading : "加载中 ..."
@@ -334,7 +334,8 @@
                         data: function(e) {
                             return {
                                 parent: e.id,
-                                disabled: 1
+                                role: $('[name="role"]').val(),
+                                role: $('[name="role"]:checked').val()
                             }
                         }
                     }
@@ -360,6 +361,9 @@
                         }
                     }
                 });
+            });
+            $('.radio-list input').on('ifChecked', function(event){
+                $('.categories-companies').jstree('refresh');
             });
 
             if (!jQuery().bootstrapWizard) {

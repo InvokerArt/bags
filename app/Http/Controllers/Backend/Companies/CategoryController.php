@@ -122,9 +122,10 @@ class CategoryController extends Controller
     public function children(Request $request)
     {
         $parent = $request->parent;
+        $role = $request->role;
         $disabled = $request->disabled;
         if ($parent == "#") {
-            $catetories = CategoryCompany::roots()->get();
+            $catetories = CategoryCompany::roots()->where('role', $role)->get();
             foreach ($catetories as $category) {
                 $children = $category->children()->get();
                 $data[] = array(
@@ -138,7 +139,7 @@ class CategoryController extends Controller
                 );
             }
         } else {
-            $catetories = CategoryCompany::root()->find($parent)->getImmediateDescendants();
+            $catetories = CategoryCompany::root()->find($parent)->where('role', $role)->getImmediateDescendants();
             foreach ($catetories as $category) {
                 $children = $category->isLeaf();
                 $data[] = array(

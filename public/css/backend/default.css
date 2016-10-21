@@ -14665,6 +14665,9 @@ body.stop-scrolling {
     border-radius: 2px;
     color: #f60; }
 
+.city-select-province dd, .city-select-city dd, .city-select-street dd, .city-select-district dd {
+  width: 270px; }
+
 #poststuff {
   min-width: 763px;
   margin-right: 300px; }
