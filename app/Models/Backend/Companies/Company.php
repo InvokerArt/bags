@@ -9,7 +9,15 @@ use App\Models\Backend\Companies\Traits\Relationship\CompanyRelationship;
 class Company extends Model
 {
     use CompanyRelationship, CompanyAttribute;
-    protected $guard = [
-        'user_id'
+    protected $fillable = [
+        'user_id',
+        'name',
+        'telephone',
+        'address',
+        'notes',
+        'content',
+        'licenses',
+        'photos',
+        'role',
     ];
 }

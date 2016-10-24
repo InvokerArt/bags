@@ -5,9 +5,41 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class AreasTableSeeder extends Seeder
-{    public function run()
-      {
-      $areas = [
+{
+    public function run()
+    {
+        $areas = [
+            ['code'=>340000,'name'=>'安徽','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>110000,'name'=>'北京','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>500000,'name'=>'重庆','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>350000,'name'=>'福建','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>620000,'name'=>'甘肃','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>440000,'name'=>'广东','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>450000,'name'=>'广西','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>520000,'name'=>'贵州','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>460000,'name'=>'海南','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>130000,'name'=>'河北','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>230000,'name'=>'黑龙江','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>410000,'name'=>'河南','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>420000,'name'=>'湖北','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>430000,'name'=>'湖南','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>320000,'name'=>'江苏','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>360000,'name'=>'江西','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>220000,'name'=>'吉林','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>210000,'name'=>'辽宁','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>150000,'name'=>'内蒙古','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>640000,'name'=>'宁夏','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>630000,'name'=>'青海','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>370000,'name'=>'山东','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>310000,'name'=>'上海','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>140000,'name'=>'山西','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>610000,'name'=>'陕西','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>510000,'name'=>'四川','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>120000,'name'=>'天津','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>650000,'name'=>'新疆','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>540000,'name'=>'西藏','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>530000,'name'=>'云南','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['code'=>330000,'name'=>'浙江','parent_id'=>0,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
             ['code'=>110100,'name'=>'北京','parent_id'=>110000,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
             ['code'=>110101,'name'=>'东城','parent_id'=>110100,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
             ['code'=>110102,'name'=>'西城','parent_id'=>110100,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
@@ -3328,7 +3360,7 @@ class AreasTableSeeder extends Seeder
             ['code'=>659002,'name'=>'阿拉尔','parent_id'=>650000,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
             ['code'=>659003,'name'=>'图木舒克','parent_id'=>650000,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
             ['code'=>659004,'name'=>'五家渠','parent_id'=>650000,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()]
-      ];
-      DB::table('areas')->insert($areas);
+        ];
+        DB::table('areas')->insert($areas);
     }
 }

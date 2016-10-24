@@ -15,13 +15,13 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unique()->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name')->index()->comment('公司名');
             $table->string('slug')->nullable()->unique()->index()->comment('固定链接地址');
             $table->string('telephone', 30)->comment('公司电话');
-            $table->json('licenses')->comment('营业执照');
-            $table->json('photos')->comment('公司照片');
+            $table->json('licenses')->nullable()->comment('营业执照');
+            $table->json('photos')->nullable()->comment('公司照片');
             $table->text('notes')->comment('加盟须知');
             $table->text('content')->comment('公司简介');
             $table->integer('address')->comment('公司地址ID');

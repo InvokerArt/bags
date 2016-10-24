@@ -20,24 +20,36 @@ trait CompanyAttribute
     //设置公司营业执照存储器
     public function setLicensesAttribute($value)
     {
-        $this->attributes['licenses'] = json_encode(serialize($value));
+        if ($value) {
+            $this->attributes['licenses'] = json_encode(serialize($value));
+        }
     }
 
     //设置公司营业执照访问器
     public function getLicensesAttribute($value)
     {
-        return unserialize(json_decode($value));
+        if ($value) {
+            return unserialize(json_decode($value));
+        } else {
+            return [];
+        }
     }
 
     //设置公司照片存储器
     public function setPhotosAttribute($value)
     {
-        $this->attributes['photos'] = json_encode(serialize($value));
+        if ($value) {
+            $this->attributes['photos'] = json_encode(serialize($value));
+        }
     }
 
     //设置公司照片访问器
     public function getPhotosAttribute($value)
     {
-        return unserialize(json_decode($value));
+        if ($value) {
+            return unserialize(json_decode($value));
+        } else {
+            return [];
+        }
     }
 }

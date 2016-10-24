@@ -43,7 +43,7 @@ class CompanyController extends Controller
     {
         return Datatables::of($this->company->getForDataTable())
             // ->filter(function ($query) use ($request) {
-            //     Company::companiesFilter($query, $request);
+            //     Company::companyFilter($query, $request);
             // })
             ->addColumn('ids', function ($company) {
                 return $company->checkbox_button;
@@ -78,7 +78,7 @@ class CompanyController extends Controller
     public function store(CompanyStoreOrUpdateRequest $request)
     {
         $this->company->create($request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.index')->withFlashSuccess('公司添加成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.company.index')->withFlashSuccess('公司添加成功');
     }
 
     /**
@@ -103,8 +103,8 @@ class CompanyController extends Controller
         $categories = $company->categories->pluck('id')->toArray();
         $user = User::where('id', $company->user_id)->first();
         $company->username = $user->username;
-        $city = Area::select('parent_id')->where('code', '=', $company->address)->first();
-        $province = Area::select('parent_id')->where('code', '=', $city->parent_id)->first();
+        $city = Area::select('*')->where('code', $company->address)->first();
+        $province = Area::select('*')->where('code', $city->parent_id)->first();
         $location = json_encode(['province' => $province->parent_id, 'city' => $city->parent_id ,'area' => $company->address]);
         return view('backend.companies.edit', compact(['company', 'categories', 'location']));
     }

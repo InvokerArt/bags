@@ -35,3 +35,9 @@ Route::group(['namespace' => 'Frontend'], function () {
      */
     Route::get('/', 'IndexController@index')->name('frontend.index');
 });
+
+//普通文件上传
+Route::post('upload', 'UploadController@index')->name('upload.index');
+//营业执照和公司照片文件上传
+Route::post('upload/company', 'UploadController@company')->name('upload.company');
+Route::delete('upload/company', 'UploadController@companyDelete')->name('upload.companyDelete');

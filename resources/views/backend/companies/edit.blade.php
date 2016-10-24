@@ -65,7 +65,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'true']) }}
+                                    {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'true', 'readonly' => 'readonly']) }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -579,7 +579,7 @@
             runtimes : 'html5,flash,silverlight,html4',
             browse_button : document.getElementById('licenses_uploader_pickfiles'), // you can pass in id...
             container: document.getElementById('uploader_licenses'), // ... or DOM Element itself
-            url : "{{ route(env("APP_BACKEND_PREFIX").'.upload.company') }}",
+            url : "{{ route('upload.company') }}",
             filters : {
                 max_file_size : '10mb',
                 mime_types: [
@@ -613,7 +613,7 @@
                         }, function(confirmed) {
                             if (confirmed) {
                                 $.post(
-                                    "/{{ env('APP_BACKEND_PREFIX') }}/upload/company/", 
+                                    "{{ route('upload.company') }}", 
                                     { 
                                         '_method' : 'delete', 
                                         '_token' : '{{ csrf_token() }}', 
@@ -667,7 +667,7 @@
             runtimes : 'html5,flash,silverlight,html4',
             browse_button : document.getElementById('photos_uploader_pickfiles'), // you can pass in id...
             container: document.getElementById('uploader_photos'), // ... or DOM Element itself
-            url : "{{ route(env("APP_BACKEND_PREFIX").'.upload.company') }}",
+            url : "{{ route('upload.company') }}",
             filters : {
                 max_file_size : '10mb',
                 mime_types: [
@@ -701,7 +701,7 @@
                         }, function(confirmed) {
                             if (confirmed) {
                                 $.post(
-                                    "/{{ env('APP_BACKEND_PREFIX') }}/upload/company/", 
+                                    "{{ route('upload.company') }}", 
                                     { 
                                         '_method' : 'delete', 
                                         '_token' : '{{ csrf_token() }}', 

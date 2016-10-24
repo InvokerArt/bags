@@ -170,7 +170,7 @@
                     check_callback: !0,
                     data: {
                         url: function(e) {
-                            return "{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.children') }}"
+                            return "{{ route(env('APP_BACKEND_PREFIX').'.company.categories.children') }}"
                         },
                         data: function(e) {
                             return {
