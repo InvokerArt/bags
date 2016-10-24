@@ -6,6 +6,8 @@ use App\Exceptions\GeneralException;
 use App\Models\Access\User\User;
 use App\Repositories\Backend\Access\Role\RoleInterface;
 use Illuminate\Support\Facades\DB;
+use Image;
+use URL;
 
 /**
  * Class EloquentUserRepository

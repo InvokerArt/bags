@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('page-title')
-    普通用户列表
+    管理员列表
 @stop
 @section('content')
 <div class="portlet light portlet-fit portlet-datatable bordered">
@@ -18,30 +18,21 @@
             <table class="table table-striped table-bordered table-hover" id="users-table">
                 <thead>
                 <tr role="row" class="heading">
-                    <th class="check-column">
-                        <input type="checkbox" class="group-checkable">
-                    </th>
-                    <th class="column-id">ID</th>
-                    <th>手机号</th>
                     <th>用户名</th>
-                    <th>邮箱</th>
-                    <th class="column-date">注册时间</th>
-                    <th class="column-actions">操作</th>
+                    <th>邮箱地址</th>
+                    <th>所属角色</th>
+                    <th>注册时间</th>
+                    <th>操作</th>
                 </tr>
                 <tr role="row" class="filter">
                     <td>
-                    </td>
-                    <td>
-                        <input type="text" class="form-control form-filter input-sm" name="id">
-                    </td>
-                    <td>
-                        <input type="text" class="form-control form-filter input-sm" name="mobile">
-                    </td>
-                    <td>
-                        <input type="text" class="form-control form-filter input-sm" name="name">
+                        <input type="text" class="form-control form-filter input-sm" name="username">
                     </td>
                     <td>
                         <input type="text" class="form-control form-filter input-sm" name="email">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control form-filter input-sm" name="role">
                     </td>
                     <td>
                         <div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
@@ -93,14 +84,12 @@
                     pagingType: "bootstrap_extended",
                     autoWidth: false,
                     ajax: {
-                        url: '{{ route(env("APP_BACKEND_PREFIX").".access.user.get") }}',
+                        url: '{{ route(env('APP_BACKEND_PREFIX').".access.user.get") }}',
                     },
                     columns: [
-                        {data: 'ids', name: 'users.ids',"orderable": false,"searchable": false},
-                        {data: 'id', name: 'users.id',"orderable": true,"searchable": true},
-                        {data: 'mobile', name: 'users.mobile',"orderable": true,"searchable": true},
-                        {data: 'username', name: 'roles.username',"orderable": true,"searchable": true},
+                        {data: 'username', name: 'users.username',"orderable": true,"searchable": true},
                         {data: 'email', name: 'users.email',"orderable": true,"searchable": true},
+                        {data: 'role', name: 'roles.name',"orderable": true,"searchable": true},
                         {data: 'created_at', name: 'users.created_at',"orderable": true,"searchable": true},
                         {data: 'actions', name: 'actions', orderable: false, searchable: false}
                     ],
@@ -126,10 +115,11 @@
                 var cancel = (link.attr('data-trans-button-cancel')) ? link.attr('data-trans-button-cancel') : "返回";
                 var confirm = (link.attr('data-trans-button-confirm')) ? link.attr('data-trans-button-confirm') : "确定";
                 var title = (link.attr('data-trans-title')) ? link.attr('data-trans-title') : "警告";
-                var text = (link.attr('data-trans-text')) ? link.attr('data-trans-text') : "你确定要删除这个项目吗？";
+                var text = (link.attr('data-trans-text')) ? link.attr('data-trans-text') : "你确定要删除这个管理员吗？";
 
                 swal({
                     title: title,
+                    text: text,
                     type: "warning",
                     showCancelButton: true,
                     cancelButtonText: cancel,

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Tags;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Tags\TagsRequest;
 use App\Http\Requests\Backend\Tags\TagsStoreOrUpdateRequest;
-use App\Models\Backend\Tags\Tag;
+use App\Models\Tags\Tag;
 use App\Repositories\Backend\Tags\TagsInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Facades\Datatables;

@@ -13,7 +13,7 @@ return [
     |
     */
     'alpha_dash_upr_first'           => ':attribute只能由小写字母组成且首字母必须大写。',
-    'alpha_dash_except_num'           => ':attribute只能由小写字母、横杠组成。',
+    'alpha_dash_except_num'           => ':attribute只能由小写字母、数字、下划线、横杠组成。',
     'is_mobile'            => ':attribute号码不正确。',
     'accepted'             => ':attribute必须接受。',
     'active_url'           => ':attribute不是一个有效的网址。',

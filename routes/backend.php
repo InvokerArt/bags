@@ -24,19 +24,29 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
      * Note: Administrator has all permissions so you do not have to specify the administrator role everywhere.
      */
     Route::group(['namespace' => 'Access', 'as' => 'access.', 'prefix' => 'access'], function () {
-        //用户
-        Route::get('/user/get', 'UserController@get')->name('user.get');
-        Route::post('/user/avatar', 'UserController@avatar')->name('user.avatar');
-        Route::resource('/user', 'UserController');
         //管理员
-        Route::get('/admin/get', 'AdminController@get')->name('admin.get');
-        Route::resource('/admin', 'AdminController');
+        Route::get('/user/get', 'AdminController@get')->name('user.get');
+        Route::resource('/user', 'AdminController');
         //角色
         Route::get('/role/get', 'RoleController@get')->name('role.get');
         Route::resource('/role', 'RoleController');
         //权限
         Route::get('/permission/get', 'PermissionController@get')->name('permission.get');
         Route::resource('/permission', 'PermissionController');
+    });
+
+    Route::group(['namespace' => 'Users', 'as' => 'users.', 'prefix' => 'users'], function () {
+        //用户
+        Route::get('/get', 'UserController@get')->name('get');
+        Route::get('/ajax', 'UserController@info')->name('ajax.info');
+        Route::post('/avatar', 'UserController@avatar')->name('avatar');
+        Route::post('/', 'UserController@store')->name('store');
+        Route::get('/', 'UserController@index')->name('index');
+        Route::get('/create', 'UserController@create')->name('create');
+        Route::match(['put', 'patch'], '/{user}', 'UserController@update')->name('update');
+        Route::delete('/{user}', 'UserController@destroy')->name('destroy');
+        Route::get('/{user}', 'UserController@show')->name('show');
+        Route::get('/{user}/edit', 'UserController@edit')->name('edit');
     });
 
     Route::group(['namespace' => 'Companies', 'as' => 'company.', 'prefix' => 'company'], function () {

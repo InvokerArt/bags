@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Http\Requests\Backend\News\CategoryUpdateRequest;
 use App\Http\Requests\Backend\News\CategoryRequest;
-use App\Models\Backend\News\CategoriesNews;
+use App\Models\News\CategoriesNews;
 use App\Repositories\Backend\News\CategoryInterface;
 use Illuminate\Http\Request;
 

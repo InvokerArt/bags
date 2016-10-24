@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\News;
 
-use App\Models\Backend\News\CategoriesNews;
+use App\Models\News\CategoriesNews;
 use App\Exceptions\GeneralException;
 use App\Helper\Catalog\Image;
 

@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Companies;
 
-use App\Models\Backend\Companies\Company;
+use App\Models\Companies\Company;
 
 interface CompanyInterface
 {

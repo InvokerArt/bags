@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Backend\News;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\News\NewsRequest;
 use App\Http\Requests\Backend\News\NewsStoreOrUpdateRequest;
-use App\Models\Backend\News\CategoriesNews;
-use App\Models\Backend\News\News;
+use App\Models\News\CategoriesNews;
+use App\Models\News\News;
 use App\Repositories\Backend\News\NewsInterface;
 use App\Repositories\Backend\Tags\TagsInterface;
 use Illuminate\Http\Request;
@@ -141,6 +141,7 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->news->destroy($id);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.index')->withFlashSuccess('新闻删除成功');
     }
 }

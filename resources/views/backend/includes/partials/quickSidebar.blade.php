@@ -1,4 +1,4 @@
-<!-- 快速侧边栏开始 -->
+{{-- 快速侧边栏开始
 <a href="javascript:;" class="page-quick-sidebar-toggler"><i class="icon-close"></i></a>
 <div class="page-quick-sidebar-wrapper">
     <div class="page-quick-sidebar">
@@ -648,4 +648,4 @@
         </div>
     </div>
 </div>
-<!-- 快速侧结束 -->
+快速侧结束 --}}

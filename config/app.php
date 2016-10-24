@@ -183,7 +183,7 @@
          */
         //调试分析工具
         Barryvdh\Debugbar\ServiceProvider::class,
-        Lsrur\Inspector\InspectorServiceProvider::class,
+        //Lsrur\Inspector\InspectorServiceProvider::class,
         //Html工具
         Collective\Html\HtmlServiceProvider::class,
         //Datatables插件
@@ -263,7 +263,7 @@
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         //调试分析工具
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Inspector' => Lsrur\Inspector\Facade\Inspector::class,
+        //'Inspector' => Lsrur\Inspector\Facade\Inspector::class,
         //HtmlForm工具
         'Html'        => Collective\Html\HtmlFacade::class,
         'Form'        => Collective\Html\FormFacade::class,

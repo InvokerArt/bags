@@ -15,7 +15,7 @@
     <!-- Styles -->
     @yield('before-styles-end')
     {!! Html::style(elixir('css/backend/default.css'),['id'=>'style_color']) !!}
-    {!! Html::style(elixir('css/backend/components.css'),['id'=>'style_components']) !!}
+{{--     {!! Html::style(elixir('css/backend/components.css'),['id'=>'style_components']) !!} --}}
     @yield('after-styles-end')
     @yield('css')
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->

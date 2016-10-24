@@ -50,7 +50,7 @@ trait UserAttribute
     {
         //创始人不能编辑
         if ($this->id>1) {
-            return '<a href="' . route(env('APP_BACKEND_PREFIX').'.access.admin.edit', $this->id) . '" class="btn btn-xs blue"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="编辑"></i></a> ';
+            return '<a href="' . route(env('APP_BACKEND_PREFIX').'.access.user.edit', $this->id) . '" class="btn btn-xs blue"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="编辑"></i></a> ';
         }
 
         return '';
@@ -63,7 +63,7 @@ trait UserAttribute
     {
         //创始人不能编辑
         if ($this->id>1) {
-            return '<a href="' . route(env('APP_BACKEND_PREFIX').'.access.admin.destroy', $this->id) . '" data-method="delete" class="btn btn-xs red"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="删除"></i></a>';
+            return '<a href="' . route(env('APP_BACKEND_PREFIX').'.access.user.destroy', $this->id) . '" data-method="delete" class="btn btn-xs red"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="删除"></i></a>';
         }
 
         return '';

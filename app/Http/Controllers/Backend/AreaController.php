@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Backend\Area;
+use App\Models\Area;
 use Illuminate\Http\Request;
 
 class AreaController extends Controller

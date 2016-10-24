@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Companies;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Companies\CategoryRequest;
 use App\Http\Requests\Backend\Companies\CategoryUpdateRequest;
-use App\Models\Backend\Companies\CategoryCompany;
+use App\Models\Companies\CategoryCompany;
 use App\Repositories\Backend\Companies\CategoryInterface;
 use Illuminate\Http\Request;
 

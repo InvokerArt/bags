@@ -35,7 +35,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('backend.access.admin.index');
+        return view('backend.access.user.index');
     }
 
     /**
@@ -72,7 +72,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('backend.access.admin.create')
+        return view('backend.access.user.create')
             ->withRoles($this->roles->getAllRoles());
     }
 
@@ -85,7 +85,7 @@ class AdminController extends Controller
     public function store(UserStoreOrUpdateRequest $request)
     {
         $this->users->create($request->all());
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.access.admin.index')->withFlashSuccess('管理员创建成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.access.user.index')->withFlashSuccess('管理员创建成功');
     }
 
     /**
@@ -105,9 +105,9 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(User $user, Request $request)
     {
-        return view('backend.access.admin.edit')
+        return view('backend.access.user.edit')
             ->withUser($user)
             ->withRoles($this->roles->getAllRoles())
             ->withRoleUser($user->roles->pluck('id')->all());
@@ -123,7 +123,7 @@ class AdminController extends Controller
     public function update(UserStoreOrUpdateRequest $request)
     {
         $this->users->update($request->all());
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.access.admin.index')->withFlashSuccess('更新成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.access.user.index')->withFlashSuccess('更新成功');
     }
 
     /**

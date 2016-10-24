@@ -1,0 +1,129 @@
+<?php
+
+namespace App\Http\Controllers\Backend\Users;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Backend\Users\UserStoreOrUpdateRequest;
+use App\Models\Companies\Company;
+use App\Models\Users\User;
+use App\Repositories\Backend\Users\UserInterface;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Facades\Datatables;
+
+class UserController extends Controller
+{
+    private $users;
+
+    public function __construct(UserInterface $users)
+    {
+        $this->users = $users;
+    }
+    /**
+     * 所有用户列表页
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('backend.users.index');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function get(Request $request)
+    {
+        return Datatables::of($this->users->getForDataTable())
+            ->addColumn('ids', function ($user) {
+                return $user->checkbox_button;
+            })
+            ->addColumn('actions', function ($user) {
+                return $user->action_buttons;
+            })
+        ->make(true);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('backend.users.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UserStoreRequest $request)
+    {
+        $this->users->create($request);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.users.index')->withFlashSuccess('会员添加成功');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(User $user)
+    {
+        $company = Company::select('id')->where('user_id', $user->id)->first();
+        return view('backend.users.edit', compact(['user','company']));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        $this->users->update($user, $request);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.users.index')->withFlashSuccess('会员更新成功');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        $this->users->delete($user);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.users.index')->withFlashSuccess('会员删除成功');
+    }
+
+    public function info(Request $request)
+    {
+        $user = User::select('id', 'username', 'name', 'mobile', 'email', 'avatar', 'created_at')->where('username', $request->name)->first();
+        return response()->json($user);
+    }
+
+    public function avatar(Request $request)
+    {
+        $result = $this->users->avatar($request);
+        return response($result);
+    }
+}

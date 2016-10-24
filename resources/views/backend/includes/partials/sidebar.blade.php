@@ -79,18 +79,21 @@
                     </li>
                 </ul>
             </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.users*')) }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.users.index') }}">
+                    <i class="icon-people"></i>
+                    <span class="title">会员管理</span>
+                </a>
+            </li>
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.access*')) }}">
                 <a href="javascript:;">
-                    <i class="icon-people"></i>
-                    <span class="title">用户管理</span>
+                    <i class="icon-user-following"></i>
+                    <span class="title">管理员管理</span>
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.access.user*')) }}">
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.user.index') }}">普通用户</a>
-                    </li>
                     <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.access.admin*')) }}">
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.admin.index') }}">管理员</a>
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.user.index') }}">管理员</a>
                     </li>
                     <li class="{{ active_class(if_route(env('APP_BACKEND_PREFIX').'.access.role*')) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.role.index') }}">角色管理</a>

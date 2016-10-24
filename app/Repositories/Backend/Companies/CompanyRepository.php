@@ -4,8 +4,8 @@ namespace App\Repositories\Backend\Companies;
 
 use App\Exceptions\GeneralException;
 use App\Models\Access\User\User;
-use App\Models\Backend\Companies\CategoriesCompanies;
-use App\Models\Backend\Companies\Company;
+use App\Models\Companies\CategoriesCompanies;
+use App\Models\Companies\Company;
 use Auth;
 use Carbon;
 use DB;
@@ -37,6 +37,7 @@ class CompanyRepository implements CompanyInterface
         if ($user_id) {
             throw new GeneralException("会员已经有拥有公司，请勿重复添加！");
         }
+
         $company = new Company;
         $company->user_id = $user->id;
         $company->name = $input['name'];
@@ -93,5 +94,10 @@ class CompanyRepository implements CompanyInterface
 
     public function delete($id)
     {
+        $company = Company::find($id);
+        if ($company->delete()) {
+            return true;
+        }
+        throw new GeneralException('删除失败！');
     }
 }

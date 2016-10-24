@@ -100,19 +100,19 @@
                     <p class="help-block" v-else="image">
                         <a href="javascript:;" @click="openFromPageImage()">添加特色图片</a>
                     </p>
-
+                </div>
             </div>
         </div>
     </div>
-    {{ Form::close() }}
-    <media-modal :show.sync="showMediaManager">
-        <media-manager
-                :is-modal="true"
-                :selected-event-name.sync="selectedEventName"
-                :show.sync="showMediaManager"
-        >
-        </media-manager>
-    </media-modal>
+{{ Form::close() }}
+<media-modal :show.sync="showMediaManager">
+    <media-manager
+            :is-modal="true"
+            :selected-event-name.sync="selectedEventName"
+            :show.sync="showMediaManager"
+    >
+    </media-manager>
+</media-modal>
 @stop
 
 @section('js')

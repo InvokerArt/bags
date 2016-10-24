@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Companies\CompanyRequest;
 use App\Http\Requests\Backend\Companies\CompanyStoreOrUpdateRequest;
 use App\Models\Access\User\User;
-use App\Models\Backend\Area;
-use App\Models\Backend\Companies\CategoryCompany;
-use App\Models\Backend\Companies\Company;
+use App\Models\Area;
+use App\Models\Companies\CategoryCompany;
+use App\Models\Companies\Company;
 use App\Repositories\Backend\Companies\CompanyInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -103,8 +103,8 @@ class CompanyController extends Controller
         $categories = $company->categories->pluck('id')->toArray();
         $user = User::where('id', $company->user_id)->first();
         $company->username = $user->username;
-        $city = Area::select('*')->where('code', $company->address)->first();
-        $province = Area::select('*')->where('code', $city->parent_id)->first();
+        $city = Area::select('code', 'parent_id')->where('code', $company->address)->first();
+        $province = Area::select('parent_id')->where('code', $city->parent_id)->first();
         $location = json_encode(['province' => $province->parent_id, 'city' => $city->parent_id ,'area' => $company->address]);
         return view('backend.companies.edit', compact(['company', 'categories', 'location']));
     }
@@ -130,6 +130,7 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->company->destroy($id);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.company.index')->withFlashSuccess('公司删除成功');
     }
 }

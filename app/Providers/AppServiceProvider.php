@@ -25,10 +25,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         /**
-         * 自定义验证规则(只能由小写字母、横杠组成)
+         * 自定义验证规则(只能由小写字母、数字、下划线、横杠组成)
          */
         Validator::extend('alpha_dash_except_num', function ($attribute, $value, $parameters) {
-            if (!preg_match('/^[a-z\-]*$/', $value)) {
+            if (!preg_match('/^[\w\d_-]*$/', $value)) {
                 return false;
             }
             return true;
@@ -55,6 +55,14 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() !== 'production') {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
+        
+        /**
+         * 会员
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Users\UserInterface::class,
+            \App\Repositories\Backend\Users\UserRepository::class
+        );
         
         /**
          * 新闻

@@ -9,255 +9,258 @@
 @stop
 
 @section('content')
-    <div class="portlet light portlet-fit portlet-form bordered" id="form_wizard">
+    <div class="portlet light portlet-fit portlet-form bordered">
         <div class="portlet-body">
             {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.company.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'submit_form']) }}
-            <div class="form-wizard" id="company">
-                <div class="form-body">
-                    <ul class="nav nav-pills nav-justified steps">
-                        <li class="active">
-                            <a href="#tab1" data-toggle="tab" class="step active" aria-expanded="true">
-                                <span class="number"> 1 </span>
-                                <span class="desc">
-                                    <i class="fa fa-check"></i>基本信息
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#tab2" data-toggle="tab" class="step">
-                                <span class="number"> 2 </span>
-                                <span class="desc">
-                                    <i class="fa fa-check"></i>公司营业执照
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#tab3" data-toggle="tab" class="step">
-                                <span class="number"> 3 </span>
-                                <span class="desc">
-                                    <i class="fa fa-check"></i>公司照片
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#tab4" data-toggle="tab" class="step">
-                                <span class="number"> 4 </span>
-                                <span class="desc">
-                                    <i class="fa fa-check"></i>确定
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div id="bar" class="progress progress-striped" role="progressbar">
-                        <div class="progress-bar progress-bar-success"> </div>
-                    </div>
-                    <div class="tab-content">
-                        <div class="alert alert-danger display-none">
-                            <button class="close" data-dismiss="alert"></button> 请完成必填项信息输入！
+            <div class="tab-content" id="form_wizard">
+                <div class="form-wizard" id="company">
+                    <div class="form-body">
+                        <ul class="nav nav-pills nav-justified steps">
+                            <li class="active">
+                                <a href="#tab1" data-toggle="tab" class="step active" aria-expanded="true">
+                                    <span class="number"> 1 </span>
+                                    <span class="desc">
+                                        <i class="fa fa-check"></i>基本信息
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#tab2" data-toggle="tab" class="step">
+                                    <span class="number"> 2 </span>
+                                    <span class="desc">
+                                        <i class="fa fa-check"></i>公司营业执照
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#tab3" data-toggle="tab" class="step">
+                                    <span class="number"> 3 </span>
+                                    <span class="desc">
+                                        <i class="fa fa-check"></i>公司照片
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#tab4" data-toggle="tab" class="step">
+                                    <span class="number"> 4 </span>
+                                    <span class="desc">
+                                        <i class="fa fa-check"></i>确定
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="bar" class="progress progress-striped" role="progressbar">
+                            <div class="progress-bar progress-bar-success"> </div>
                         </div>
-                        <div class="alert alert-success display-none">
-                            <button class="close" data-dismiss="alert"></button> 您的表单验证成功！
-                        </div>
-                        <div class="tab-pane active" id="tab1">
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">
-                                    所属会员用户名
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="col-md-10">
-                                    {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'true']) }}
-                                </div>
+                        <div class="tab-content">
+                            <div class="alert alert-danger display-none">
+                                <button class="close" data-dismiss="alert"></button> 请完成必填项信息输入！
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">
-                                    公司名
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="col-md-10">
-                                    {{ Form::text('name', null, ['class' => 'form-control', 'autocomplete' => 'true']) }}
-                                </div>
+                            <div class="alert alert-success display-none">
+                                <button class="close" data-dismiss="alert"></button> 您的表单验证成功！
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">
-                                    公司类型
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="col-md-10">
-                                    <div class="radio-list">
-                                        <label for="" class="radio-inline">
-                                        {{ Form::radio('role', 1, true, ['data-title' => '采购商']) }}
-                                        采购商
-                                        </label>
-                                        <label for="" class="radio-inline">
-                                        {{ Form::radio('role', 2, false, ['data-title' => '供应商']) }}
-                                        供应商
-                                        </label>
-                                        <label for="" class="radio-inline">
-                                        {{ Form::radio('role', 3, false, ['data-title' => '机构']) }}
-                                        机构
-                                        </label>
+                            <div class="tab-pane active" id="tab1">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        所属会员用户名
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-10">
+                                        {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'username']) }}
+                                        <span class="help-block"><a href="javascript:;" class="user-info" style="display:none">用户资料</a></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        公司名
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-10">
+                                        {{ Form::text('name', null, ['class' => 'form-control', 'autocomplete' => 'true']) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        公司类型
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-10">
+                                        <div class="radio-list">
+                                            <label for="" class="radio-inline">
+                                            {{ Form::radio('role', 1, true, ['data-title' => '采购商']) }}
+                                            采购商
+                                            </label>
+                                            <label for="" class="radio-inline">
+                                            {{ Form::radio('role', 2, false, ['data-title' => '供应商']) }}
+                                            供应商
+                                            </label>
+                                            <label for="" class="radio-inline">
+                                            {{ Form::radio('role', 3, false, ['data-title' => '机构']) }}
+                                            机构
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        主营分类
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-10">
+                                        <div class="form-control height-auto">
+                                            <div class="categories-companies"></div>
+                                        </div>
+                                        <input type="hidden" name="categories" id="categories">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        公司电话
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-10">
+                                        {{ Form::text('telephone', null, ['class' => 'form-control', 'autocomplete' => 'true']) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        公司地址
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-10">
+                                        <div id="location"></div>
+                                        {{ Form::hidden('address', null, ['class' => 'form-control address', 'autocomplete' => 'true']) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        加盟须知
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-10">
+                                        {{ Form::textarea('notes', null, ['class' => 'form-control', 'autocomplete' => 'true', 'rows' => '5']) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        公司简介
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-10">
+                                        {{ Form::textarea('content', null, ['class' => 'form-control editor', 'autocomplete' => 'true', 'id' => 'editor']) }}
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">
-                                    公司电话
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="col-md-10">
-                                    {{ Form::text('telephone', null, ['class' => 'form-control', 'autocomplete' => 'true']) }}
+                            <div class="tab-pane" id="tab2">
+                                <div id="uploader_licenses" class="text-align-reverse margin-bottom-10">
+                                    <a id="licenses_uploader_pickfiles" href="javascript:;" class="btn btn-success"> <i class="fa fa-plus"></i>
+                                        选择图片
+                                    </a>
+                                    <a id="licenses_uploader_uploadfiles" href="javascript:;" class="btn btn-primary">
+                                        <i class="fa fa-share"></i>
+                                        上传图片
+                                    </a>
+                                </div>
+                                <div class="row">
+                                    <div id="licenses_uploader_filelist" class="col-md-12"></div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">
-                                    公司地址
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="col-md-10">
-                                    <div id="location"></div>
-                                    {{ Form::hidden('address', null, ['class' => 'form-control address', 'autocomplete' => 'true']) }}
+                            <div class="tab-pane" id="tab3">
+                                <div id="uploader_photos" class="text-align-reverse margin-bottom-10">
+                                    <a id="photos_uploader_pickfiles" href="javascript:;" class="btn btn-success"> <i class="fa fa-plus"></i>
+                                        选择图片
+                                    </a>
+                                    <a id="photos_uploader_uploadfiles" href="javascript:;" class="btn btn-primary">
+                                        <i class="fa fa-share"></i>
+                                        上传图片
+                                    </a>
+                                </div>
+                                <div class="row">
+                                    <div id="photos_uploader_filelist" class="col-md-12"></div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">
-                                    主营分类
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="col-md-10">
-                                    <div class="form-control height-auto">
-                                        <div class="categories-companies"></div>
+                            <div class="tab-pane" id="tab4">
+                                <h3 class="block">确认公司信息</h3>
+                                <h4 class="form-section">基本信息</h4>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">所属会员用户名:</label>
+                                    <div class="col-md-4">
+                                        <p class="form-control-static" data-display="username"></p>
                                     </div>
-                                    <input type="hidden" name="categories" id="categories">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">
-                                    加盟须知
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="col-md-10">
-                                    {{ Form::textarea('notes', null, ['class' => 'form-control', 'autocomplete' => 'true', 'rows' => '5']) }}
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">公司名:</label>
+                                    <div class="col-md-4">
+                                        <p class="form-control-static" data-display="name"></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">
-                                    公司简介
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="col-md-10">
-                                    {{ Form::textarea('content', null, ['class' => 'form-control editor', 'autocomplete' => 'true', 'id' => 'editor']) }}
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">公司类型:</label>
+                                    <div class="col-md-4">
+                                        <p class="form-control-static" data-display="role"></p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="tab2">
-                            <div id="uploader_licenses" class="text-align-reverse margin-bottom-10">
-                                <a id="licenses_uploader_pickfiles" href="javascript:;" class="btn btn-success"> <i class="fa fa-plus"></i>
-                                    选择图片
-                                </a>
-                                <a id="licenses_uploader_uploadfiles" href="javascript:;" class="btn btn-primary">
-                                    <i class="fa fa-share"></i>
-                                    上传图片
-                                </a>
-                            </div>
-                            <div class="row">
-                                <div id="licenses_uploader_filelist" class="col-md-12"></div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="tab3">
-                            <div id="uploader_photos" class="text-align-reverse margin-bottom-10">
-                                <a id="photos_uploader_pickfiles" href="javascript:;" class="btn btn-success"> <i class="fa fa-plus"></i>
-                                    选择图片
-                                </a>
-                                <a id="photos_uploader_uploadfiles" href="javascript:;" class="btn btn-primary">
-                                    <i class="fa fa-share"></i>
-                                    上传图片
-                                </a>
-                            </div>
-                            <div class="row">
-                                <div id="photos_uploader_filelist" class="col-md-12"></div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="tab4">
-                            <h3 class="block">确认公司信息</h3>
-                            <h4 class="form-section">基本信息</h4>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">所属会员用户名:</label>
-                                <div class="col-md-4">
-                                    <p class="form-control-static" data-display="username"></p>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">公司电话:</label>
+                                    <div class="col-md-4">
+                                        <p class="form-control-static" data-display="telephone"></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">公司名:</label>
-                                <div class="col-md-4">
-                                    <p class="form-control-static" data-display="name"></p>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">公司地址:</label>
+                                    <div class="col-md-4">
+                                        <p class="form-control-static" data-display="address"></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">公司类型:</label>
-                                <div class="col-md-4">
-                                    <p class="form-control-static" data-display="role"></p>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">主营分类:</label>
+                                    <div class="col-md-4">
+                                        <p class="form-control-static" data-display="categories"></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">公司电话:</label>
-                                <div class="col-md-4">
-                                    <p class="form-control-static" data-display="telephone"></p>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">加盟须知:</label>
+                                    <div class="col-md-4">
+                                        <p class="form-control-static" data-display="notes"></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">公司地址:</label>
-                                <div class="col-md-4">
-                                    <p class="form-control-static" data-display="address"></p>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">公司简介:</label>
+                                    <div class="col-md-4">
+                                        <p class="form-control-static" data-display="content"></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">主营分类:</label>
-                                <div class="col-md-4">
-                                    <p class="form-control-static" data-display="categories"></p>
+                                <h4 class="form-section">公司营业执照</h4>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">公司营业执照:</label>
+                                    <div class="col-md-4">
+                                        <p class="form-control-static" data-display="licenses[]"></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">加盟须知:</label>
-                                <div class="col-md-4">
-                                    <p class="form-control-static" data-display="notes"></p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">公司简介:</label>
-                                <div class="col-md-4">
-                                    <p class="form-control-static" data-display="content"></p>
-                                </div>
-                            </div>
-                            <h4 class="form-section">公司营业执照</h4>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">公司营业执照:</label>
-                                <div class="col-md-4">
-                                    <p class="form-control-static" data-display="licenses[]"></p>
-                                </div>
-                            </div>
-                            <h4 class="form-section">公司照片</h4>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">公司照片:</label>
-                                <div class="col-md-4">
-                                    <p class="form-control-static" data-display="photos[]"></p>
+                                <h4 class="form-section">公司照片</h4>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">公司照片:</label>
+                                    <div class="col-md-4">
+                                        <p class="form-control-static" data-display="photos[]"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-actions">
-                    <div class="row">
-                        <div class="col-md-offset-2 col-md-10">
-                            <a href="javascript:;" class="btn default button-previous disabled" style="display: none;">
-                                <i class="fa fa-angle-left"></i>返回</a>
-                            <a href="javascript:;" class="btn btn-outline green button-next">
-                                下一步
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                            <a href="javascript:;" class="btn green button-submit" style="display: none;">
-                                提交
-                                <i class="fa fa-check"></i>
-                            </a>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-2 col-md-10">
+                                <a href="javascript:;" class="btn default button-previous disabled" style="display: none;">
+                                    <i class="fa fa-angle-left"></i>返回</a>
+                                <a href="javascript:;" class="btn btn-outline green button-next">
+                                    下一步
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                                <a href="javascript:;" class="btn green button-submit" style="display: none;">
+                                    提交
+                                    <i class="fa fa-check"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -277,10 +280,28 @@
     {{-- {!! JsValidator::formRequest('App\Http\Requests\Backend\Companies\CompanyStoreOrUpdateRequest', '#submit_form') !!} --}}
     <script type="text/javascript">
         $(function(){
+            //地区插件
             $('#location').location();
+            //icheck
             $('input').iCheck({
                 radioClass: 'iradio_flat-green'
             });
+            //用户资料
+            $(document).on('change', '#username', function(){
+                if ($('#username').val()){
+                    $('.user-info').show();
+                } else {
+                    $('.user-info').hide();
+                }
+            })
+            $(document).on('click', '.user-info', function(){
+                var newWindow = window.open("","_blank");
+                if ($('#username').val()){
+                    $.get("{{ route(env('APP_BACKEND_PREFIX').'.users.ajax.info') }}", {name: $('#username').val()}, function(data){
+                        newWindow.location.href = "/"+"{{ env('APP_BACKEND_PREFIX') }}"+"/users/"+data.id+"/edit";
+                    });
+                }
+            })
             //灯箱插件
             $(document).on('click', '[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', function(event) {
                 event.preventDefault();

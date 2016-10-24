@@ -3,9 +3,9 @@
 namespace App\Repositories\Backend\News;
 
 use App\Exceptions\GeneralException;
-use App\Models\Backend\News\News;
-use App\Models\Backend\News\NewsCategory;
-use App\Models\Backend\Tags\Tag;
+use App\Models\News\News;
+use App\Models\News\NewsCategory;
+use App\Models\Tags\Tag;
 use App\Repositories\Backend\Tags\TagsInterface;
 use Carbon;
 use DB;
@@ -124,5 +124,10 @@ class NewsRepository implements NewsInterface
 
     public function delete($id)
     {
+        $news = News::find($id);
+        if ($news->delete()) {
+            return true;
+        }
+        throw new GeneralException('删除失败！');
     }
 }

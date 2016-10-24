@@ -66,6 +66,7 @@
                                 </label>
                                 <div class="col-md-10">
                                     {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'true', 'readonly' => 'readonly']) }}
+                                    <span class="help-block"><a href="{{ route(env('APP_BACKEND_PREFIX').'.users.edit', $company->user_id) }}" class="user-info" target="_blank">会员资料</a></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -101,6 +102,18 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">
+                                    主营分类
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-10">
+                                    <div class="form-control height-auto">
+                                        <div class="categories-companies"></div>
+                                    </div>
+                                    <input type="hidden" name="categories" id="categories">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">
                                     公司电话
                                     <span class="required">*</span>
                                 </label>
@@ -116,18 +129,6 @@
                                 <div class="col-md-10">
                                     <div id="location"></div>
                                     {{ Form::hidden('address', null, ['class' => 'form-control address', 'autocomplete' => 'true']) }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">
-                                    主营分类
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="col-md-10">
-                                    <div class="form-control height-auto">
-                                        <div class="categories-companies"></div>
-                                    </div>
-                                    <input type="hidden" name="categories" id="categories">
                                 </div>
                             </div>
                             <div class="form-group">
