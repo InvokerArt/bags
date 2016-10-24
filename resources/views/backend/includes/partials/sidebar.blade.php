@@ -103,7 +103,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="last">
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'log-viewer*')) }} last">
                 <a href="javascript:;">
                     <i class="icon-settings"></i>
                     <span class="title">系统管理</span>
@@ -111,7 +111,8 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a href="/admin/log/all">操作日志</a>
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.log-viewer::dashboard') }}">主页</a>
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.log-viewer::logs.list') }}">日志</a>
                     </li>
                 </ul>
             </li>

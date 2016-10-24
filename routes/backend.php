@@ -109,3 +109,37 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
     Route::get('/', 'DashboardController@index')->name('index');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });
+
+Route::group(['prefix' => 'log-viewer', 'as' => env('APP_BACKEND_PREFIX').'.', 'middleware' => 'admin'], function () {
+
+    Route::get('/', [
+        'as'   => 'log-viewer::dashboard',
+        'uses' => '\Arcanedev\LogViewer\Http\Controllers\LogViewerController@index',
+    ]);
+
+    Route::group(['prefix' => 'logs',], function () {
+        Route::get('/', [
+            'as'   => 'log-viewer::logs.list',
+            'uses' => '\Arcanedev\LogViewer\Http\Controllers\LogViewerController@listLogs',
+        ]);
+        Route::delete('delete', [
+            'as'   => 'log-viewer::logs.delete',
+            'uses' => '\Arcanedev\LogViewer\Http\Controllers\LogViewerController@delete',
+        ]);
+    });
+
+    Route::group(['prefix' => '{date}'], function () {
+        Route::get('/', [
+            'as'   => 'log-viewer::logs.show',
+            'uses' => '\Arcanedev\LogViewer\Http\Controllers\LogViewerController@show',
+        ]);
+        Route::get('download', [
+            'as'   => 'log-viewer::logs.download',
+            'uses' => '\Arcanedev\LogViewer\Http\Controllers\LogViewerController@download',
+        ]);
+        Route::get('{level}', [
+            'as'   => 'log-viewer::logs.filter',
+            'uses' => '\Arcanedev\LogViewer\Http\Controllers\LogViewerController@showByLevel',
+        ]);
+    });
+});

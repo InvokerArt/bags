@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.19 on 2016-10-19.
+ * Generated for Laravel 5.3.19 on 2016-10-24.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -13909,103 +13909,6 @@ namespace {
         public static function offsetUnset($key){
             //Method inherited from \DebugBar\DebugBar            
             return \Barryvdh\Debugbar\LaravelDebugbar::offsetUnset($key);
-        }
-        
-    }
-
-
-    class Inspector extends \Lsrur\Inspector\Facade\Inspector{
-        
-        /**
-         * Analize
-         *
-         * @param \Lsrur\Inspector\[type] $request [description]
-         * @param \Lsrur\Inspector\[type] $response [description]
-         * @return \Lsrur\Inspector\[type] [description]
-         * @static 
-         */
-        public static function analize($request, $response){
-            return \Lsrur\Inspector\inspector::analize($request, $response);
-        }
-        
-        /**
-         * Show inspector full screen page and die
-         *
-         * @return \Lsrur\Inspector\[type] [description]
-         * @static 
-         */
-        public static function dd($status = 206, $analizeResponse = false){
-            return \Lsrur\Inspector\inspector::dd($status, $analizeResponse);
-        }
-        
-        /**
-         * Turn Inspector Off
-         *
-         * @return \Lsrur\Inspector\[type] [description]
-         * @static 
-         */
-        public static function turnOff(){
-            return \Lsrur\Inspector\inspector::turnOff();
-        }
-        
-        /**
-         * IsOn
-         *
-         * @return boolean 
-         * @static 
-         */
-        public static function isOn(){
-            return \Lsrur\Inspector\inspector::isOn();
-        }
-        
-        /**
-         * GetResponse
-         *
-         * @return \Lsrur\Inspector\[type] [description]
-         * @static 
-         */
-        public static function getResponse(){
-            return \Lsrur\Inspector\inspector::getResponse();
-        }
-        
-        /**
-         * GetRequest
-         *
-         * @return \Lsrur\Inspector\[type] [description]
-         * @static 
-         */
-        public static function getRequest(){
-            return \Lsrur\Inspector\inspector::getRequest();
-        }
-        
-        /**
-         * Inject Inspector into Response
-         *
-         * @param \Lsrur\Inspector\[type] $request [description]
-         * @param \Lsrur\Inspector\[type] $response [description]
-         * @return \Lsrur\Inspector\[type] [description]
-         * @static 
-         */
-        public static function injectInspection($request, $response){
-            return \Lsrur\Inspector\inspector::injectInspection($request, $response);
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function getDump($v){
-            return \Lsrur\Inspector\inspector::getDump($v);
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function getIlluminateAncestor($obj){
-            return \Lsrur\Inspector\inspector::getIlluminateAncestor($obj);
         }
         
     }

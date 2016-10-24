@@ -213,6 +213,8 @@
         Proengsoft\JsValidation\JsValidationServiceProvider::class,
         //上传插件
         JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider::class,
+        //日志插件
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
     ],
 
     /*
