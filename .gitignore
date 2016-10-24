@@ -31,3 +31,4 @@ bootstrap/cache/
 /public/js/backend.js.map
 /storage/app/public
 /.phpstorm.meta.php
+/public/css/*.map
