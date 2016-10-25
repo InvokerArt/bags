@@ -2,13 +2,15 @@
 
 namespace App\Models\Users;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Users\Traits\Attribute\UserAttribute;
 use App\Models\Users\Traits\Relationship\UserRelationship;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
-class User extends Model
+class User extends Authenticatable
 {
-    use UserAttribute, UserRelationship;
+    use HasApiTokens, Notifiable, UserAttribute, UserRelationship;
 
     protected $fillable = [
         'id', 'username', 'name', 'mobile', 'email', 'password', 'avatar', 'status', 'created_at', 'updated_at'

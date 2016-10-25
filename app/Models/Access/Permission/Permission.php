@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models\Access\Permission;
 
@@ -32,11 +32,11 @@ use App\Models\Access\Permission\Traits\Relationship\PermissionRelationship;
  */
 class Permission extends EntrustPermission
 {
-	use Notifiable, PermissionAttribute, PermissionRelationship;
+    use Notifiable, PermissionAttribute, PermissionRelationship;
 
-	/**
-	 * 白名单
-	 * @var array
-	 */
-	protected $fillable = ['name', 'display_name', 'description'];
+    /**
+     * 白名单
+     * @var array
+     */
+    protected $fillable = ['name', 'display_name', 'description'];
 }

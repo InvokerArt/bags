@@ -97,7 +97,7 @@ class CategoryController extends Controller
     public function update($id, CategoryUpdateRequest $request)
     {
         $this->categories->update($id, $request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.company.categories.index')->withFlashSuccess('更新成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.categories.index')->withFlashSuccess('更新成功');
     }
 
     /**
@@ -173,6 +173,6 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         $this->categories->update($id, $request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.company.categories.index')->withFlashSuccess('重命名成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.categories.index')->withFlashSuccess('重命名成功');
     }
 }

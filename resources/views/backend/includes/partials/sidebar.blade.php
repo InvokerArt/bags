@@ -79,24 +79,30 @@
                     <span class="title">收藏管理</span>
                 </a>
             </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.jobs*')) }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.jobs.index') }}">
+                    <i class="icon-like"></i>
+                    <span class="title">招聘管理</span>
+                </a>
+            </li>
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.users*')) }}">
                 <a href="{{ route(env('APP_BACKEND_PREFIX').'.users.index') }}">
                     <i class="icon-people"></i>
                     <span class="title">会员管理</span>
                 </a>
             </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.company*')) }}">
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.companies*')) }}">
                 <a href="javascript:;">
                     <i class="icon-briefcase"></i>
                     <span class="title">公司管理</span>
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.company*')) }}">
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.company.index') }}">公司列表</a>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.companies*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.index') }}">公司列表</a>
                     </li>
-                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.company.categories*')) }}">
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.company.categories.index', 'role=1') }}">分类</a>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.companies.categories*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.index', 'role=1') }}">分类</a>
                     </li>
                 </ul>
             </li>

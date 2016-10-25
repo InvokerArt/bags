@@ -73,7 +73,7 @@ class CompanyController extends Controller
     public function store(CompanyStoreOrUpdateRequest $request)
     {
         $this->company->create($request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.company.index')->withFlashSuccess('公司添加成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.index')->withFlashSuccess('公司添加成功');
     }
 
     /**
@@ -114,7 +114,7 @@ class CompanyController extends Controller
     public function update(Company $company, CompanyStoreOrUpdateRequest $request)
     {
         $this->company->update($company, $request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.company.index')->withFlashSuccess('更新成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.index')->withFlashSuccess('更新成功');
     }
 
     /**
@@ -126,6 +126,12 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         $this->company->destroy($id);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.company.index')->withFlashSuccess('公司删除成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.index')->withFlashSuccess('公司删除成功');
+    }
+
+    public function info(Request $request)
+    {
+        $company = Company::select('id', 'user_id', 'name', 'telephone', 'created_at')->where('name', $request->name)->first();
+        return response()->json($company);
     }
 }

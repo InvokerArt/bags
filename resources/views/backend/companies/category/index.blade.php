@@ -16,13 +16,13 @@
     <div class="tabbable-bordered">
         <ul class="nav nav-tabs">
             <li @if ($role==1) class="active" @endif>
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.company.categories.index', 'role=1') }}">采购商</a>
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.index', 'role=1') }}">采购商</a>
             </li>
             <li @if ($role==2) class="active" @endif>
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.company.categories.index', 'role=2') }}">供应商</a>
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.index', 'role=2') }}">供应商</a>
             </li>
             <li @if ($role==3) class="active" @endif>
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.company.categories.index', 'role=3') }}">机构/单位</a>
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.index', 'role=3') }}">机构/单位</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -32,7 +32,7 @@
                         <div id="category_tree"></div>
                     </div>
                     <div class="col-xs-10 category-company">
-                        {!! Form::model($category,['route' => [env('APP_BACKEND_PREFIX').'.company.categories.update', $category], 'id' => 'category','class'=>'form-horizontal','method' => 'PATCH','enctype'=>'multipart/form-data']) !!}
+                        {!! Form::model($category,['route' => [env('APP_BACKEND_PREFIX').'.companies.categories.update', $category], 'id' => 'category','class'=>'form-horizontal','method' => 'PATCH','enctype'=>'multipart/form-data']) !!}
                             {{ Form::hidden('role', $role) }}
                         <div class="form-group">
                             <label class="col-xs-2 control-label">
@@ -89,7 +89,7 @@
                     check_callback: true,
                     data: {
                         url: function(e) {
-                            return "{{ route(env('APP_BACKEND_PREFIX').'.company.categories.children') }}"
+                            return "{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.children') }}"
                         },
                         data: function(e) {
                             return {
@@ -148,7 +148,7 @@
                 }
             })
             .on('delete_node.jstree', function (e, data) {
-                $.post("/{{ env('APP_BACKEND_PREFIX') }}/company/categories/"+data.node.id, { '_method' : 'delete', '_token' : '{{ csrf_token() }}' })
+                $.post("/{{ env('APP_BACKEND_PREFIX') }}/companies/categories/"+data.node.id, { '_method' : 'delete', '_token' : '{{ csrf_token() }}' })
                         .fail(function () {
                             data.instance.refresh();
                         })
@@ -157,7 +157,7 @@
                         });
             })
             .on('create_node.jstree', function (e, data) {
-                $.post("{{ route(env('APP_BACKEND_PREFIX').'.company.categories.store') }}", { 'id' : data.node.parent, 'name' : data.node.text, '_token' : '{{ csrf_token() }}' })
+                $.post("{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.store') }}", { 'id' : data.node.parent, 'name' : data.node.text, '_token' : '{{ csrf_token() }}' })
                         .done(function (d) {
                             data.instance.set_id(data.node, d.id);
                             //swal("", "创建成功！", "success");
@@ -167,7 +167,7 @@
                         })
             })
             .on('rename_node.jstree', function (e, data) {
-                $.post("{{ route(env('APP_BACKEND_PREFIX').'.company.categories.rename') }}", { 'id' : data.node.id, 'name' : data.text, '_token' : '{{ csrf_token() }}' })
+                $.post("{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.rename') }}", { 'id' : data.node.id, 'name' : data.text, '_token' : '{{ csrf_token() }}' })
                         .fail(function () {
                             data.instance.refresh();
                         })
@@ -176,7 +176,7 @@
                         });
             })
             .on('move_node.jstree', function (e, data) {
-                $.post("{{ route(env('APP_BACKEND_PREFIX').'.company.categories.move') }}", { 'id' : data.node.id, 'parent' : data.parent, '_token' : '{{ csrf_token() }}' })
+                $.post("{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.move') }}", { 'id' : data.node.id, 'parent' : data.parent, '_token' : '{{ csrf_token() }}' })
                         .fail(function () {
                             data.instance.refresh();
                         })

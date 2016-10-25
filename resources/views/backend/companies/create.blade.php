@@ -11,7 +11,7 @@
 @section('content')
     <div class="portlet light portlet-fit portlet-form bordered">
         <div class="portlet-body">
-            {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.company.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'submit_form']) }}
+            {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.companies.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'submit_form']) }}
             <div class="tab-content" id="form_wizard">
                 <div class="form-wizard" id="company">
                     <div class="form-body">
@@ -322,7 +322,7 @@
                     check_callback: !0,
                     data: {
                         url: function(e) {
-                            return "{{ route(env('APP_BACKEND_PREFIX').'.company.categories.children') }}"
+                            return "{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.children') }}"
                         },
                         data: function(e) {
                             return {

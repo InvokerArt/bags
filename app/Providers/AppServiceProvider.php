@@ -119,5 +119,13 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Backend\Companies\CategoryInterface::class,
             \App\Repositories\Backend\Companies\CategoryRepository::class
         );
+
+        /**
+         * 招聘
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Jobs\JobInterface::class,
+            \App\Repositories\Backend\Jobs\JobRepository::class
+        );
     }
 }

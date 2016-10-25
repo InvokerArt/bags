@@ -11,7 +11,7 @@
 @section('content')
     <div class="portlet light portlet-fit portlet-form bordered" id="form_wizard">
         <div class="portlet-body">
-            {{ Form::model($company, ['route' => [env('APP_BACKEND_PREFIX').'.company.update', $company], 'class' => 'form-horizontal', 'method' => 'PATCH', 'id' => 'submit_form']) }}
+            {{ Form::model($company, ['route' => [env('APP_BACKEND_PREFIX').'.companies.update', $company], 'class' => 'form-horizontal', 'method' => 'PATCH', 'id' => 'submit_form']) }}
             <div class="form-wizard" id="company">
                 <div class="form-body">
                     <ul class="nav nav-pills nav-justified steps">
@@ -75,7 +75,7 @@
                                         供应商
                                         </label>
                                         <label for="" class="radio-inline">
-                                        {{ Form::radio('role', 3, false, ['data-title' => '机构']) }}
+                                        {{ Form::radio('role', 3, false, ['data-title' => '机构/单位']) }}
                                         机构/单位
                                         </label>
                                     </div>
@@ -330,7 +330,7 @@
                     check_callback: !0,
                     data: {
                         url: function(e) {
-                            return "{{ route(env('APP_BACKEND_PREFIX').'.company.categories.children') }}"
+                            return "{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.children') }}"
                         },
                         data: function(e) {
                             return {

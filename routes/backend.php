@@ -47,10 +47,10 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{user}', 'UserController@destroy')->name('destroy');
         Route::get('/{user}', 'UserController@show')->name('show');
         Route::get('/{user}/edit', 'UserController@edit')->name('edit');
-        Route::get('/deleted', 'UserController@deleted')->name('deleted');
+        Route::get('/deleted/{user}', 'UserController@deleted')->name('deleted');
     });
 
-    Route::group(['namespace' => 'Companies', 'as' => 'company.', 'prefix' => 'company'], function () {
+    Route::group(['namespace' => 'Companies', 'as' => 'companies.', 'prefix' => 'companies'], function () {
         //公司分类
         Route::resource('categories', 'CategoryController', ['except' => 'show']);
         Route::get('categories/children', 'CategoryController@children')->name('categories.children');
@@ -59,6 +59,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::post('categories/rename', 'CategoryController@rename')->name('categories.rename');
         //公司
         Route::get('/get', 'CompanyController@get')->name('get');
+        Route::get('/ajax', 'CompanyController@info')->name('ajax.info');
         Route::post('/', 'CompanyController@store')->name('store');
         Route::get('/', 'CompanyController@index')->name('index');
         Route::get('/create', 'CompanyController@create')->name('create');
@@ -66,6 +67,20 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{company}', 'CompanyController@destroy')->name('destroy');
         Route::get('/{company}', 'CompanyController@show')->name('show');
         Route::get('/{company}/edit', 'CompanyController@edit')->name('edit');
+        Route::get('/deleted/{company}', 'CompanyController@deleted')->name('deleted');
+    });
+
+    Route::group(['namespace' => 'Jobs', 'as' => 'jobs.', 'prefix' => 'jobs'], function () {
+        //招聘
+        Route::get('/get', 'JobController@get')->name('get');
+        Route::post('/', 'JobController@store')->name('store');
+        Route::get('/', 'JobController@index')->name('index');
+        Route::get('/create', 'JobController@create')->name('create');
+        Route::match(['put', 'patch'], '/{job}', 'JobController@update')->name('update');
+        Route::delete('/{job}', 'JobController@destroy')->name('destroy');
+        Route::get('/{job}', 'JobController@show')->name('show');
+        Route::get('/{job}/edit', 'JobController@edit')->name('edit');
+        Route::get('/deleted/{job}', 'JobController@deleted')->name('deleted');
     });
 
     Route::group(['namespace' => 'News', 'as' => 'news.', 'prefix' => 'news'], function () {
@@ -84,10 +99,10 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{news}', 'NewsController@destroy')->name('destroy');
         Route::get('/{news}', 'NewsController@show')->name('show');
         Route::get('/{news}/edit', 'NewsController@edit')->name('edit');
-        Route::get('/deleted', 'NewsController@deleted')->name('deleted');
+        Route::get('/deleted/{news}', 'NewsController@deleted')->name('deleted');
     });
 
-    Route::group(['namespace' => 'Exhibitions', 'as' => 'exhibitions.', 'prefix' => 'exhibition'], function () {
+    Route::group(['namespace' => 'Exhibitions', 'as' => 'exhibitions.', 'prefix' => 'exhibitions'], function () {
         //展会分类
         Route::resource('categories', 'CategoryController', ['except' => 'show']);
         Route::get('categories/children', 'CategoryController@children')->name('categories.children');
@@ -103,7 +118,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{exhibition}', 'ExhibitionController@destroy')->name('destroy');
         Route::get('/{exhibition}', 'ExhibitionController@show')->name('show');
         Route::get('/{exhibition}/edit', 'ExhibitionController@edit')->name('edit');
-        Route::get('/deleted', 'ExhibitionController@deleted')->name('deleted');
+        Route::get('/deleted/{exhibition}', 'ExhibitionController@deleted')->name('deleted');
     });
 
     //标签

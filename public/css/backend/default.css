@@ -14762,7 +14762,7 @@ body.stop-scrolling {
 .column-author, .column-format, .column-links, .column-parent, .column-posts {
   width: 10%; }
 
-.column-date {
+.column-date, .column-actions {
   width: 12%; }
 
 .column-categories, .column-rel, .column-response, .column-role, .column-tags {
