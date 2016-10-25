@@ -10,20 +10,21 @@
 
 @section('content')
 {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.news.store', 'method' => 'post', 'id' => 'create-user']) }}
-    <div class="row">
-        <div class="col-xs-10">
+    <div id="poststuff">
+        <div class="left-body-content">
             <div class="news-body">
                 <div class="form-group">
-                    <input type="text" name="title" class="form-control" placeholder="在此输入资讯标题"></div>
-                <div class="inside">
+                    <input type="text" name="title" class="form-control" placeholder="在此输入资讯标题">
+                </div>
+                {{-- <div class="inside">
                     <div id="edit-slug-box" class="hide-if-no-js"> <strong>固定链接：</strong>
                         <span id="sample-permalink">
                             {{ env('APP_URL').'news/' }}
                             <span id="editable-post-name">
-                                <input type="text" id="slug" value="" class="form-control" name="slug" autocomplete="off"></span>
+                                <input type="text" id="slug" class="form-control" name="slug" autocomplete="off" value="{{ str_replace(env('APP_URL').'news/', '', $news->slug) }}"></span>
                         </span>
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-group margin-top-15">
                     <textarea name="subtitle" class="form-control" placeholder="在此输入资讯简介"></textarea>
                     <span class="help-block">字数建议控制在100字以内</span>
@@ -33,14 +34,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-2 news-sidebar">
-            <div class="newsbox margin-bottom-15">
+        <div class="right-sidebar">
+            <div class="box margin-bottom-15">
                 <h2>
                     <span>发布</span>
                 </h2>
                 <div class="inside">
                     <input type="text" name="published_at" class="form-control date-timepicker" placeholder="发布时间">
-                    <button href="javascript:;" class="btn btn-default margin-top-10">
+                    <button href="javascript:;" class="btn btn-default  margin-top-10">
                         <i class="fa fa-eye"></i>
                         预览 
                     </button>
@@ -50,7 +51,7 @@
                     </button>
                 </div>
             </div>
-            <div class="newsbox margin-bottom-15">
+            <div class="box margin-bottom-15">
                 <h2>
                     <span>分类目录</span>
                 </h2>
@@ -58,41 +59,55 @@
                 </div>
                 <input type="hidden" name="categories_id" id="categories">
             </div>
-            <div class="newsbox margin-bottom-15">
+            <div class="box margin-bottom-15">
                 <h2>
                     <span>标签</span>
                 </h2>
                 <div class="inside">
                     <div>
-                        <input type="text" name="newtag" class="form-control" placeholder="添加标签">
+                        <input type="text" class="form-control newtag" autocomplete="off">
+                        <input type="hidden" name="tag" class="tag">
+                        <button type="button" class="btn add-tag pull-right">添加</button>
                         <p class="help-block">多个标签请用英文逗号（,）分开</p>
                     </div>
-                    <div class="margin-top-10">
-                        <select class="select2 form-control" name="tags" multiple>
-                            @foreach ($tags as $tag)
-                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                            @endforeach
-                        </select>
+                    <div class="tagchecklist">
+                    </div>
+                    <div class="hide-if-no-js">
+                        <a href="javascript:;" class="tagcloud-link" id="link-post_tag">从常用标签中选择</a>
+                        <p id="tagcloud-post_tag" class="the-tagcloud">
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="newsbox margin-bottom-15">
+            <div class="box margin-bottom-15">
                 <h2>
                     <span>特色图片</span>
                 </h2>
                 <div class="inside">
-                    <a href="javascript:;">
-                        <img width="100%" src="http://www.testwordpress.com/wp-content/uploads/2016/09/mocha-1.jpg">
+                    <input type="hidden" name="image" class="thumbnail" v-model="image">
+                    <a href="javascript:;" class="update-thumbnail" @click="openFromPageImage()">
+                        <img v-if="image" class="img img-responsive" id="page-image-preview" style="width:100%" :src="image">
                     </a>
-                    <p class="help-block" id="set-post-thumbnail-desc">点击图片来修改或更新</p>
-                    <p class="help-block">
-                        <a href="#" id="remove-post-thumbnail" onclick="WPRemoveThumbnail('1529892b00');return false;">移除特色图片</a>
+                    <p class="help-block" id="how-to" v-if="image" @click="openFromPageImage()">点击图片来修改或更新</p>
+                    <p class="help-block" v-if="image">
+                        <a href="javascript:;" class="news-thumbnail" @click="removeImage()">移除特色图片</a>
+                    </p>
+                    <p class="help-block" v-else="image">
+                        <a href="javascript:;" @click="openFromPageImage()">添加特色图片</a>
                     </p>
                 </div>
             </div>
         </div>
     </div>
-    {{ Form::close() }}
+{{ Form::close() }}
+<media-modal :show.sync="showMediaManager">
+    <media-manager
+            :is-modal="true"
+            :selected-event-name.sync="selectedEventName"
+            :show.sync="showMediaManager"
+    >
+    </media-manager>
+</media-modal>
 @stop
 
 @section('js')
@@ -105,6 +120,7 @@
                 placeholder: "从常用标签中选择"
             })
 
+            //分类目录
             $('.news-categories').jstree({
                 core: {
                     strings : { 
@@ -136,6 +152,18 @@
                     categories.push(this.id);
                 });
                 $('#categories').val(categories);
+            })
+            .bind("loaded.jstree", function (event, data) {
+                $('.news-categories').jstree("open_all");
+            })
+            .bind("ready.jstree", function (event, data) {
+                $('.news-categories').find("li").each(function() {
+                    for (var i = 0; i < checkNodeIds.length; i++) {
+                        if ($(this).attr("id") == checkNodeIds[i]) {
+                            $('.news-categories').jstree("check_node", $(this));
+                        }
+                    }
+                });
             });
         })
 
@@ -149,6 +177,120 @@
         });
         ue.ready(function() {
             ue.execCommand('serverparam', '_token', '{{ csrf_token() }}');//此处为支持laravel5 csrf ,根据实际情况修改,目的就是设置 _token 值.
+        })
+
+        //获取常用标签
+        $('.tagcloud-link').on('click', function (){
+            if ($(this).hasClass('has')) {
+                $('.the-tagcloud').toggle();
+            } else {
+                var html = '';
+                $.ajax({
+                    url: '{{ route(env('APP_BACKEND_PREFIX').".tags.popular") }}',
+                    success: function (data){
+                        $.each(data, function(key, val){
+                            html += '<a href="javascript:;" data-id="' + val.id + '" class="tag-link" title="' + val.news_count + '篇资讯">' + val.name + '</a>\n';
+                        })
+                        $('.tagcloud-link').addClass('has');
+                        $('.the-tagcloud').html(html).show();
+
+                    }
+                })
+            }
         });
+
+        //添加标签
+        $(document).on('click', '.the-tagcloud a,.add-tag', function (){
+            var tag_name = $('.tag').val().split(',');
+            if ($(this).hasClass('add-tag')) {
+                var text = $('.newtag').val();
+                $('.newtag').val('');
+            } else {
+                var text = $(this).text();
+            }
+            var html = '';
+            if ($.inArray(text, tag_name) < 0) {
+                if (tag_name.length && $('.tag').val()) {
+                    $('.tag').val(tag_name.join(',') + ',' +text);
+                } else {
+                    $('.tag').val(text);
+                }
+                html += '<span>';
+                html += '<a class="ntdelbutton"><i class="icon-close"></i></a>&nbsp;'+text;
+                html += '</span>';
+                $('.tagchecklist').append(html);
+            } else {
+                $('.newtag').focus();
+            }
+        });
+
+        //删除标签
+        $(document).on('click', '.ntdelbutton', function (){
+            var tag_name = $('.tag').val().split(',');
+            var text = $.trim($(this).closest('span').text());
+            tag_name.splice($.inArray(text, tag_name), 1);
+            if (tag_name.length) {
+                $('.tag').val(tag_name.join(','));
+            } else {
+                $('.tag').val('');
+            }
+            $(this).closest('span').remove();
+        });
+
+        //媒体库逻辑
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+
+        new Vue({
+            el: 'body',
+            data: {
+                image: null,
+                selectedEventName: null,
+                showMediaManager: false,
+                simpleMde: null
+            },
+
+            ready: function () {
+                //移除图片
+                // $(document).on('click', '.news-thumbnail', function(){
+                //     $('.thumbnail').val('');
+                // })
+            },
+
+            events: {
+                'media-manager-selected-image': function (file) {
+                    this.image = file.relativePath;
+                    this.showMediaManager = false;
+                },
+
+                'media-manager-notification' : function(message, type, time)
+                {
+                    swal({   
+                        title: "提示信息",   
+                        text: message,   
+                        timer: 2000,   
+                        showConfirmButton: false 
+                    });
+                }
+
+            },
+
+            methods: {
+
+                openFromPageImage: function()
+                {
+                    this.showMediaManager = true;
+                    this.selectedEventName = 'image';
+                },
+
+                removeImage: function()
+                {
+                    this.image = '';
+                }
+            }
+        });
+
+
     </script>
-    @stop
+@stop

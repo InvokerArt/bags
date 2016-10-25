@@ -14672,7 +14672,7 @@ body.stop-scrolling {
   min-width: 763px;
   margin-right: 300px; }
 
-.news-body-content {
+.left-body-content {
   width: 100%;
   min-width: 463px;
   float: left; }
@@ -14681,17 +14681,17 @@ body.stop-scrolling {
   width: 200px;
   display: inline-block; }
 
-.news-sidebar {
+.right-sidebar {
   float: right;
   margin-right: -300px;
   width: 280px;
   padding-left: 5px; }
 
-.newsbox {
+.box {
   border: 1px solid #e5e5e5;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   background: #fff; }
-  .newsbox h2 {
+  .box h2 {
     font-size: 14px;
     padding: 8px 12px;
     margin: 0;
@@ -14699,18 +14699,18 @@ body.stop-scrolling {
     border-bottom: 1px solid #eee;
     font-weight: 600;
     color: #23282d; }
-  .newsbox .inside {
+  .box .inside {
     padding: 10px; }
-    .newsbox .inside .hide-if-no-js {
+    .box .inside .hide-if-no-js {
       margin-top: 10px; }
-  .newsbox .newtag {
+  .box .newtag {
     width: 75%;
     float: left; }
-  .newsbox .tagchecklist {
+  .box .tagchecklist {
     margin-left: 20px;
     font-size: 12px;
     overflow: auto; }
-    .newsbox .tagchecklist span {
+    .box .tagchecklist span {
       margin-right: 25px;
       font-size: 13px;
       line-height: 1.8em;
@@ -14720,7 +14720,7 @@ body.stop-scrolling {
       display: block;
       float: left;
       overflow: hidden; }
-      .newsbox .tagchecklist span a {
+      .box .tagchecklist span a {
         display: block;
         float: left;
         overflow: hidden;
@@ -14732,17 +14732,17 @@ body.stop-scrolling {
         position: absolute;
         font-size: 16px;
         color: #b4b9be; }
-        .newsbox .tagchecklist span a :hover {
+        .box .tagchecklist span a :hover {
           color: #c00; }
-  .newsbox .the-tagcloud {
+  .box .the-tagcloud {
     margin: 5px 0 10px;
     padding: 8px;
     border: 1px solid #ddd;
     line-height: 1.8em;
     word-spacing: 3px; }
-  .newsbox .the-tagcloud {
+  .box .the-tagcloud {
     display: none; }
-  .newsbox .the-tagcloud a {
+  .box .the-tagcloud a {
     text-decrotion: underline; }
 
 .form-control.edui-default {

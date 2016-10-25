@@ -6,6 +6,7 @@ use App\Models\Access\User\User;
 use App\Models\News\Traits\Attribute\NewsAttribute;
 use App\Models\News\Traits\Relationship\NewsRelationship;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models/News\News
@@ -47,7 +48,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class News extends Model
 {
-    use NewsRelationship, NewsAttribute;
+    use SoftDeletes, NewsRelationship, NewsAttribute;
     /**
      * 默认数据库
      * @var string
@@ -68,7 +69,7 @@ class News extends Model
         'user_id',
     ];
 
-    static function newsFilter($query, $request)
+    public static function newsFilter($query, $request)
     {
         if ($request->has('id')) {
             $query = $query->where('id', '=', $request->get('id'));

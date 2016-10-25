@@ -11,7 +11,7 @@
 @section('content')
 {{ Form::model($news, ['route' => [env('APP_BACKEND_PREFIX').'.news.update', $news], 'method' => 'PATCH', 'id' => 'edit-news']) }}
     <div id="poststuff">
-        <div class="news-body-content">
+        <div class="left-body-content">
             <div class="news-body">
                 <div class="form-group">
                     <input type="text" name="title" class="form-control" placeholder="在此输入资讯标题" value="{{ $news->title }}">
@@ -34,8 +34,8 @@
                 </div>
             </div>
         </div>
-        <div class="news-sidebar">
-            <div class="newsbox margin-bottom-15">
+        <div class="right-sidebar">
+            <div class="box margin-bottom-15">
                 <h2>
                     <span>发布</span>
                 </h2>
@@ -51,7 +51,7 @@
                     </button>
                 </div>
             </div>
-            <div class="newsbox margin-bottom-15">
+            <div class="box margin-bottom-15">
                 <h2>
                     <span>分类目录</span>
                 </h2>
@@ -59,7 +59,7 @@
                 </div>
                 <input type="hidden" name="categories_id" id="categories">
             </div>
-            <div class="newsbox margin-bottom-15">
+            <div class="box margin-bottom-15">
                 <h2>
                     <span>标签</span>
                 </h2>
@@ -84,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class="newsbox margin-bottom-15">
+            <div class="box margin-bottom-15">
                 <h2>
                     <span>特色图片</span>
                 </h2>

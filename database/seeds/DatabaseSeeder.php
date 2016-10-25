@@ -15,8 +15,12 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        //权限
         $this->call(AccessTableSeeder::class);
+        //地区
         $this->call(AreasTableSeeder::class);
+        //分类
+        $this->call(CategoriesTableSeeder::class);
 
         Model::reguard();
     }

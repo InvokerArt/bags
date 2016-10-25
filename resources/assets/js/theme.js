@@ -530,7 +530,7 @@ var Theme = function() {
             $('.select2').select2({ 
                 placeholder: "请选择",
                 width: '100%',
-                allowClear: false
+                allowClear: true
             });
         }
     };

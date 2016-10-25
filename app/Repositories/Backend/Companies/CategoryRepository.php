@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Companies;
 
-use App\Models\Companies\CategoriesCompanies;
+use App\Models\Companies\CategoryCompany;
 use App\Exceptions\GeneralException;
 use App\Helper\Catalog\Image;
 
@@ -15,7 +15,7 @@ class CategoryRepository implements CategoryInterface
     public function delete($id)
     {
 
-        $category = CategoriesCompanies::findOrFail($id);
+        $category = CategoryCompany::findOrFail($id);
         if ($category->delete()) {
             return true;
         }
@@ -25,7 +25,7 @@ class CategoryRepository implements CategoryInterface
 
     public function update($id, $input)
     {
-        $category = CategoriesCompanies::findOrFail($id);
+        $category = CategoryCompany::findOrFail($id);
         if ($category->update($input->except('_token'))) {
             $category->save();
             return true;

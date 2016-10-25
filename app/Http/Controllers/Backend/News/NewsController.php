@@ -81,7 +81,7 @@ class NewsController extends Controller
     public function create()
     {
         $tags = $this->tags->getPopularTags();
-        return view('backend.news.create', compact('tags'));
+        return view('backend.news.create', compact(['tags', 'newsTags']));
     }
 
     /**
@@ -142,6 +142,30 @@ class NewsController extends Controller
     public function destroy($id)
     {
         $this->news->destroy($id);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.index')->withFlashSuccess('新闻删除成功');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $this->news->restore($id);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.index')->withFlashSuccess('新闻删除成功');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        $this->news->delete($id);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.news.index')->withFlashSuccess('新闻删除成功');
     }
 }

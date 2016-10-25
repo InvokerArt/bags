@@ -24,7 +24,7 @@ class CompanyRepository implements CompanyInterface
         /**
          * withCount--统计关联的结果而不实际的加载它们。
          */
-        return Company::all();
+        return Company::select('*');
     }
 
     public function create($input)

@@ -29,7 +29,7 @@ class UserRepository implements UserInterface
 
     public function getForDataTable()
     {
-        return User::all();
+        return User::select('*');
         //原生写法
         // return User::leftJoin("role_user", 'role_user.user_id', '=', 'users.id')
         //     ->whereNull('role_user.user_id')

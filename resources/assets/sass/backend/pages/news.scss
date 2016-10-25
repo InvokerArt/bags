@@ -1,9 +1,9 @@
-//新闻页面
+//新闻和展会页面
 #poststuff {
     min-width: 763px;
     margin-right: 300px;
 }
-.news-body-content {
+.left-body-content {
     width: 100%;
     min-width: 463px;
     float: left;
@@ -12,13 +12,13 @@
     width:200px;
     display: inline-block;
 }
-.news-sidebar{
+.right-sidebar{
     float: right;
     margin-right: -300px;
     width: 280px;
     padding-left:5px;
 }
-.newsbox {
+.box {
     border: 1px solid #e5e5e5;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.04);
     box-shadow: 0 1px 1px rgba(0,0,0,.04);

@@ -3671,7 +3671,7 @@ var Theme = function() {
             $('.select2').select2({ 
                 placeholder: "请选择",
                 width: '100%',
-                allowClear: false
+                allowClear: true
             });
         }
     };
@@ -5650,11 +5650,25 @@ var Customer = function() {
          * 表单删除
          */
         addDeleteForms: function () {
-            $('[data-method]').append(function () {
+            $('[data-method="destroy"]').append(function () {
                 if (! $(this).find('form').length > 0) {
                     return "\n" +
                         "<form action='" + $(this).attr('href') + "' method='POST' name='delete_item' style='display:none'>\n" +
-                        "   <input type='hidden' name='_method' value='" + $(this).attr('data-method') + "'>\n" +
+                        "   <input type='hidden' name='_method' value='delete'>\n" +
+                        "   <input type='hidden' name='_token' value='" + $('meta[name="_token"]').attr('content') + "'>\n" +
+                        "</form>\n";
+                } else {
+                    return "";
+                }
+            })
+            .removeAttr('href')
+            .attr('style', 'cursor:pointer;')
+            .attr('onclick', '$(this).find("form").submit();');
+
+            $('[data-method="delete"]').append(function () {
+                if (! $(this).find('form').length > 0) {
+                    return "\n" +
+                        "<form action='" + $(this).attr('href') + "' method='get' name='delete_item' style='display:none'>\n" +
                         "   <input type='hidden' name='_token' value='" + $('meta[name="_token"]').attr('content') + "'>\n" +
                         "</form>\n";
                 } else {

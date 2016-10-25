@@ -40,25 +40,7 @@ class IndexController extends Controller
     {
         return Datatables::of($this->tags->getForDataTable())
             ->filter(function ($query) use ($request) {
-                if ($request->has('id')) {
-                    $query->where('id', '=', $request->get('id'));
-                }
-
-                if ($request->has('name')) {
-                    $query->where('name', 'like', "%{$request->get('name')}%");
-                }
-
-                if ($request->has('created_from') && !$request->has('created_to')) {
-                    $query->where('created_at', '>=', $request->get('created_from'));
-                }
-
-                if (!$request->has('created_from') && $request->has('created_to')) {
-                    $query->where('created_at', '<=', $request->get('created_to'));
-                }
-
-                if ($request->has('created_from') && $request->has('created_to')) {
-                    $query->whereBetween('created_at', [$request->get('created_from'),$request->get('created_to')]);
-                }
+                Tag::tagFilter($query, $request);
             })
             ->addColumn('ids', function ($tags) {
                 return $tags->checkbox_button;

@@ -14,76 +14,51 @@
     <div class="note note-danger no-margin margin-bottom-10">右键点击分类进行添加、删除、移动分类，想要更新某一个分类则左键点击选中后，在右边编辑相信信息，然后点击更新按钮完成更新分类。</div>
     <div class="portlet-body">
     <div class="tabbable-bordered">
+        <ul class="nav nav-tabs">
+            <li @if ($role==1) class="active" @endif>
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.company.categories.index', 'role=1') }}">采购商</a>
+            </li>
+            <li @if ($role==2) class="active" @endif>
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.company.categories.index', 'role=2') }}">供应商</a>
+            </li>
+            <li @if ($role==3) class="active" @endif>
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.company.categories.index', 'role=3') }}">机构/单位</a>
+            </li>
+        </ul>
         <div class="tab-content">
-            <div class="row">
-                <div class="col-xs-2">
-                    <div id="category_tree"></div>
-                </div>
-                <div class="col-xs-10 category-company">
-                    {!! Form::model($category,['route' => [env('APP_BACKEND_PREFIX').'.company.categories.update', $category], 'id' => 'category','class'=>'form-horizontal','method' => 'PATCH','enctype'=>'multipart/form-data']) !!}
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">
-                            名称
-                            <span class="required">*</span>
-                        </label>
-                        <div class="col-xs-7">
-                            {{ Form::text('name', null, ['class' => 'form-control', 'autocomplete' => 'true', 'placeholder' => "名称"]) }}
-                        </div>
+            <div class="tab-pane active">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <div id="category_tree"></div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">
-                            所属公司类型
-                            <span class="required">*</span>
-                        </label>
-                        <div class="col-xs-7">
-                            <div class="radio-list">
-                                <label for="" class="radio-inline">
-                                {{ Form::radio('role', 1, true, ['data-title' => '采购商']) }}
-                                采购商
-                                </label>
-                                <label for="" class="radio-inline">
-                                {{ Form::radio('role', 2, false, ['data-title' => '供应商']) }}
-                                供应商
-                                </label>
-                                <label for="" class="radio-inline">
-                                {{ Form::radio('role', 3, false, ['data-title' => '机构']) }}
-                                机构
-                                </label>
+                    <div class="col-xs-10 category-company">
+                        {!! Form::model($category,['route' => [env('APP_BACKEND_PREFIX').'.company.categories.update', $category], 'id' => 'category','class'=>'form-horizontal','method' => 'PATCH','enctype'=>'multipart/form-data']) !!}
+                            {{ Form::hidden('role', $role) }}
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label">
+                                名称
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-xs-7">
+                                {{ Form::text('name', null, ['class' => 'form-control', 'autocomplete' => 'true', 'placeholder' => "名称"]) }}
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label">描述</label>
+                            <div class="col-xs-7">
+                                {!! Form::textarea('description', $category->description, ['class' => 'form-control','id' => 'editor','placeholder'=>'描述','rows'=>'4']) !!}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-7 col-xs-offset-2">
+                                <button class="btn btn-success" type="submit">
+                                    <i class="fa fa-check"></i>
+                                    更新
+                                </button>
+                            </div>
+                        </div>
+                        {!! Form::close() !!}
                     </div>
-                    {{-- <div class="form-group">
-                        <label class="col-xs-2 control-label">激活
-                            <span class="required">*</span>
-                        </label>
-                        <div class="col-xs-7">
-                            {!! Form::select('is_active', [1=>'是',0=>'否'], null, ['class' => 'select2 form-control','style'=>'width: 100%']) !!}
-                        </div>
-                    </div> --}}
-                    {{-- <div class="form-group">
-                        <label class="col-xs-2 control-label">链接
-                            <span class="required">*</span>
-                        </label>
-                        <div class="col-xs-7">
-                            {!! Form::text('slug', old('slug') ? old('slug') : $category->slug, ['class' => 'form-control','placeholder'=>'链接']) !!}
-                            <span class="help-block">“链接”是在URL中使用的，通常使用小写，只能包含字母，数字和连字符（-）。</span>
-                        </div>
-                    </div> --}}
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">描述</label>
-                        <div class="col-xs-7">
-                            {!! Form::textarea('description', $category->description, ['class' => 'form-control','id' => 'editor','placeholder'=>'描述','rows'=>'4']) !!}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-7 col-xs-offset-2">
-                            <button class="btn btn-success" type="submit">
-                                <i class="fa fa-check"></i>
-                                更新
-                            </button>
-                        </div>
-                    </div>
-                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -99,6 +74,9 @@
             $('input').iCheck({
                 radioClass: 'iradio_flat-green'
             });
+
+            var role = {{ $role }};
+
             $("#category_tree").jstree({
                 core: {
                     strings: { 
@@ -115,7 +93,8 @@
                         },
                         data: function(e) {
                             return {
-                                parent: e.id
+                                parent: e.id,
+                                role: role
                             }
                         }
                     }
@@ -207,7 +186,7 @@
             })
             .on('changed.jstree', function (e, data) {
                 if(data && data.selected && data.selected.length) {
-                    $.get('?id=' + data.selected.join(':'), function (d) {
+                    $.get('?id=' + data.selected.join(':') + '&role=' + role, function (d) {
                         $('.category-company').html($(d).find('.category-company').html());
                         $('input').iCheck({
                             radioClass: 'iradio_flat-green'

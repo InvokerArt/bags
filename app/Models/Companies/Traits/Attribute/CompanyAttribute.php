@@ -52,4 +52,28 @@ trait CompanyAttribute
             return [];
         }
     }
+
+    //设置公司分类存储器
+    public function setRoleAttribute($value)
+    {
+        if ($value == '采购商') {
+            $this->attributes['role'] = 1;
+        } elseif ($value == '供应商') {
+            $this->attributes['role'] = 2;
+        } elseif ($value == '机构/单位') {
+            $this->attributes['role'] = 3;
+        }
+    }
+
+    //设置公司分类访问器
+    public function getRoleAttribute($value)
+    {
+        if ($value == 1) {
+            return '采购商';
+        } elseif ($value == 2) {
+            return '供应商';
+        } elseif ($value == 3) {
+            return '机构/单位';
+        }
+    }
 }

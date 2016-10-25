@@ -36,6 +36,9 @@ class UserController extends Controller
     public function get(Request $request)
     {
         return Datatables::of($this->users->getForDataTable())
+            ->filter(function ($query) use ($request) {
+                User::userFilter($query, $request);
+            })
             ->addColumn('ids', function ($user) {
                 return $user->checkbox_button;
             })

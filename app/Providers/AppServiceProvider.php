@@ -79,6 +79,22 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Backend\News\CategoryInterface::class,
             \App\Repositories\Backend\News\CategoryRepository::class
         );
+        
+        /**
+         * 展会
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Exhibitions\ExhibitionInterface::class,
+            \App\Repositories\Backend\Exhibitions\ExhibitionRepository::class
+        );
+
+        /**
+         * 展会分类
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Exhibitions\CategoryInterface::class,
+            \App\Repositories\Backend\Exhibitions\CategoryRepository::class
+        );
 
         /**
          * 标签

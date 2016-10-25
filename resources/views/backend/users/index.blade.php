@@ -38,7 +38,7 @@
                         <input type="text" class="form-control form-filter input-sm" name="mobile">
                     </td>
                     <td>
-                        <input type="text" class="form-control form-filter input-sm" name="name">
+                        <input type="text" class="form-control form-filter input-sm" name="username">
                     </td>
                     <td>
                         <input type="text" class="form-control form-filter input-sm" name="email">
@@ -96,12 +96,12 @@
                         url: '{{ route(env("APP_BACKEND_PREFIX").".users.get") }}',
                     },
                     columns: [
-                        {data: 'ids', name: 'users.ids',"orderable": false,"searchable": false},
-                        {data: 'id', name: 'users.id',"orderable": true,"searchable": true},
-                        {data: 'mobile', name: 'users.mobile',"orderable": true,"searchable": true},
-                        {data: 'username', name: 'users.username',"orderable": true,"searchable": true},
-                        {data: 'email', name: 'users.email',"orderable": true,"searchable": true},
-                        {data: 'created_at', name: 'users.created_at',"orderable": true,"searchable": true},
+                        {data: 'ids', name: 'ids',"orderable": false,"searchable": false},
+                        {data: 'id', name: 'id',"orderable": true,"searchable": true},
+                        {data: 'mobile', name: 'mobile',"orderable": true,"searchable": true},
+                        {data: 'username', name: 'username',"orderable": true,"searchable": true},
+                        {data: 'email', name: 'email',"orderable": true,"searchable": true},
+                        {data: 'created_at', name: 'created_at',"orderable": true,"searchable": true},
                         {data: 'actions', name: 'actions', orderable: false, searchable: false}
                     ],
                     "lengthMenu": [[20, 40, 100, -1], [20, 40, 100, "全部"]],

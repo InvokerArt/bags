@@ -30,17 +30,13 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $id = $request->id;
+        $role = isset($request->role) ? $request->role : 1;
         if ($id) {
-            $category = CategoryCompany::root()->find($id);
+            $category = CategoryCompany::root()->where('role', $role)->find($id);
         } else {
-            if (null === CategoryCompany::root()) {
-                //生成默认数据
-                CategoryCompany::create(['name' => '原材料']);
-                CategoryCompany::create(['name' => '包装']);
-            }
-            $category = CategoryCompany::roots()->first();
+            $category = CategoryCompany::roots()->where('role', $role)->first();
         }
-        return view('backend.companies.category.index', compact('category'));
+        return view('backend.companies.category.index', compact(['category', 'role']));
     }
 
     /**
@@ -101,7 +97,7 @@ class CategoryController extends Controller
     public function update($id, CategoryUpdateRequest $request)
     {
         $this->categories->update($id, $request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.categories.index')->withFlashSuccess('更新成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.company.categories.index')->withFlashSuccess('更新成功');
     }
 
     /**
@@ -177,6 +173,6 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         $this->categories->update($id, $request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.categories.index')->withFlashSuccess('重命名成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.company.categories.index')->withFlashSuccess('重命名成功');
     }
 }

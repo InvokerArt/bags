@@ -42,16 +42,11 @@ class CompanyController extends Controller
     public function get(CompanyRequest $request)
     {
         return Datatables::of($this->company->getForDataTable())
-            // ->filter(function ($query) use ($request) {
-            //     Company::companyFilter($query, $request);
-            // })
+            ->filter(function ($query) use ($request) {
+                Company::companyFilter($query, $request);
+            })
             ->addColumn('ids', function ($company) {
                 return $company->checkbox_button;
-            })
-            ->editColumn('categories', function ($company) {
-                return $company->categories->map(function ($category) {
-                    return $category->name;
-                })->implode('<br>');
             })
             ->addColumn('actions', function ($company) {
                 return $company->action_buttons;

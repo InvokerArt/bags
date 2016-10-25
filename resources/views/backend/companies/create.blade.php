@@ -62,6 +62,28 @@
                             <div class="tab-pane active" id="tab1">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
+                                        公司类型
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-10">
+                                        <div class="radio-list">
+                                            <label for="" class="radio-inline">
+                                            {{ Form::radio('role', 1, true, ['data-title' => '采购商']) }}
+                                            采购商
+                                            </label>
+                                            <label for="" class="radio-inline">
+                                            {{ Form::radio('role', 2, false, ['data-title' => '供应商']) }}
+                                            供应商
+                                            </label>
+                                            <label for="" class="radio-inline">
+                                            {{ Form::radio('role', 3, false, ['data-title' => '机构/单位']) }}
+                                            机构/单位
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
                                         所属会员用户名
                                         <span class="required">*</span>
                                     </label>
@@ -81,28 +103,6 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">
-                                        公司类型
-                                        <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-10">
-                                        <div class="radio-list">
-                                            <label for="" class="radio-inline">
-                                            {{ Form::radio('role', 1, true, ['data-title' => '采购商']) }}
-                                            采购商
-                                            </label>
-                                            <label for="" class="radio-inline">
-                                            {{ Form::radio('role', 2, false, ['data-title' => '供应商']) }}
-                                            供应商
-                                            </label>
-                                            <label for="" class="radio-inline">
-                                            {{ Form::radio('role', 3, false, ['data-title' => '机构']) }}
-                                            机构
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
                                         主营分类
                                         <span class="required">*</span>
                                     </label>
@@ -118,7 +118,7 @@
                                         公司电话
                                         <span class="required">*</span>
                                     </label>
-                                    <div class="col-md-10">
+                                    <div class="col-md-3">
                                         {{ Form::text('telephone', null, ['class' => 'form-control', 'autocomplete' => 'true']) }}
                                     </div>
                                 </div>

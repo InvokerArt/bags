@@ -28,7 +28,6 @@ class TagsRepository implements TagsInterface
         //ORM获取
         return Tag::select('id', 'name')
         ->withCount('news')
-        ->has('news', '>', 0)
         ->limit($limit)
         ->get()
         ->sortByDesc(function ($query) {
@@ -51,7 +50,7 @@ class TagsRepository implements TagsInterface
 
     public function getForDataTable()
     {
-        $tags = Tag::withCount('news')->get();
+        $tags = Tag::select('*')->withCount('news');
         return $tags;
     }
 

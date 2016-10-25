@@ -47,7 +47,7 @@ class NewsRepository implements NewsInterface
         $news->published_at = $input['published_at'] ? $input['published_at'] : Carbon::now();
 
         DB::transaction(function () use ($news, $input) {
-            if ($news->update()) {
+            if ($news->save()) {
                 $tag = $input['tag'] ? $input['tag'] : [];
                 $categories_id = explode(',', $input['categories_id']);
                 $attachTags = [];
@@ -116,16 +116,26 @@ class NewsRepository implements NewsInterface
 
     public function destroy($id)
     {
+        $news = News::find($id);
+        if ($news->delete()) {
+            return true;
+        }
+        throw new GeneralException('删除失败！');
     }
 
     public function restore($id)
     {
+        $news = News::find($id);
+        if ($news->restore()) {
+            return true;
+        }
+        throw new GeneralException('返回失败！');
     }
 
     public function delete($id)
     {
         $news = News::find($id);
-        if ($news->delete()) {
+        if ($news->forceDelete()) {
             return true;
         }
         throw new GeneralException('删除失败！');

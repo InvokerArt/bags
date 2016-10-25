@@ -47,6 +47,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{user}', 'UserController@destroy')->name('destroy');
         Route::get('/{user}', 'UserController@show')->name('show');
         Route::get('/{user}/edit', 'UserController@edit')->name('edit');
+        Route::get('/deleted', 'UserController@deleted')->name('deleted');
     });
 
     Route::group(['namespace' => 'Companies', 'as' => 'company.', 'prefix' => 'company'], function () {
@@ -83,6 +84,26 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{news}', 'NewsController@destroy')->name('destroy');
         Route::get('/{news}', 'NewsController@show')->name('show');
         Route::get('/{news}/edit', 'NewsController@edit')->name('edit');
+        Route::get('/deleted', 'NewsController@deleted')->name('deleted');
+    });
+
+    Route::group(['namespace' => 'Exhibitions', 'as' => 'exhibitions.', 'prefix' => 'exhibition'], function () {
+        //展会分类
+        Route::resource('categories', 'CategoryController', ['except' => 'show']);
+        Route::get('categories/children', 'CategoryController@children')->name('categories.children');
+        Route::post('categories/move', 'CategoryController@move')->name('categories.move');
+        Route::post('categories/copy', 'CategoryController@copy')->name('categories.copy');
+        Route::post('categories/rename', 'CategoryController@rename')->name('categories.rename');
+        //展会
+        Route::get('/get', 'ExhibitionController@get')->name('get');
+        Route::post('/', 'ExhibitionController@store')->name('store');
+        Route::get('/', 'ExhibitionController@index')->name('index');
+        Route::get('/create', 'ExhibitionController@create')->name('create');
+        Route::match(['put', 'patch'], '/{exhibition}', 'ExhibitionController@update')->name('update');
+        Route::delete('/{exhibition}', 'ExhibitionController@destroy')->name('destroy');
+        Route::get('/{exhibition}', 'ExhibitionController@show')->name('show');
+        Route::get('/{exhibition}/edit', 'ExhibitionController@edit')->name('edit');
+        Route::get('/deleted', 'ExhibitionController@deleted')->name('deleted');
     });
 
     //标签

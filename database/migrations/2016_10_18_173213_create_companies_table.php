@@ -27,7 +27,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('address')->comment('公司地址ID');
             $table->integer('view_count')->unsigned()->default(0)->index()->comment('浏览数');
             $table->integer('comment_count')->unsigned()->default(0)->index()->comment('评论数');
-            $table->tinyInteger('role')->default(1)->comment('用户身份 1采购商 2供应商 3机构');
+            $table->tinyInteger('role')->default(1)->comment('用户身份 1采购商 2供应商 3机构/单位');
             $table->timestamps();
             $table->softDeletes();
         });

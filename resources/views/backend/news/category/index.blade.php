@@ -30,7 +30,7 @@
                             <input type="text" class="form-control" name="name" placeholder="名称" value="{!! $category->name !!}">
                         </div>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label class="col-xs-2 control-label">激活
                             <span class="required">*</span>
                         </label>
@@ -46,7 +46,7 @@
                             {!! Form::text('slug', old('slug') ? old('slug') : $category->slug, ['class' => 'form-control','placeholder'=>'链接']) !!}
                             <span class="help-block">“链接”是在URL中使用的，通常使用小写，只能包含字母，数字和连字符（-）。</span>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label class="col-xs-2 control-label">描述</label>
                         <div class="col-xs-7">

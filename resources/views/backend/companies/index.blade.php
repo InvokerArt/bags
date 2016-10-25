@@ -24,7 +24,7 @@
                         </th>
                         <th class="column-id">ID</th>
                         <th>公司名</th>
-                        <th class="column-categories">分类</th>
+                        <th class="column-categories">公司类型</th>
                         <th class="column-date">创建日期</th>
                         <th class="column-actions">操作</th>
                     </tr>
@@ -38,11 +38,11 @@
                             <input type="text" class="form-control form-filter input-sm" name="name">
                         </td>
                         <td>
-                            <select name="categories" class="form-control form-filter input-sm select2">
+                            <select name="role" class="form-control form-filter input-sm select2">
                                 <option value="">请选择</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
+                                <option value="1">采购商</option>
+                                <option value="2">供应商</option>
+                                <option value="3">机构/单位</option>
                             </select>
                         </td>
                         <td>
@@ -99,11 +99,11 @@
                         url: '{{ route(env('APP_BACKEND_PREFIX').".company.get") }}'
                     },
                     columns: [
-                        {data: 'ids', name: 'company.ids',"orderable": false,"searchable": false},
-                        {data: 'id', name: 'company.id',"orderable": true,"searchable": true},
-                        {data: 'name', name: 'company.name',"orderable": true,"searchable": true},
-                        {data: 'categories', name: 'categories.name',"orderable": false,"searchable": true},
-                        {data: 'created_at', name: 'company.created_at',"orderable": true,"searchable": true},
+                        {data: 'ids', name: 'ids',"orderable": false,"searchable": false},
+                        {data: 'id', name: 'id',"orderable": true,"searchable": true},
+                        {data: 'name', name: 'name',"orderable": true,"searchable": true},
+                        {data: 'role', name: 'role',"orderable": false,"searchable": true},
+                        {data: 'created_at', name: 'created_at',"orderable": true,"searchable": true},
                         {data: 'actions', name: '', orderable: false, searchable: false}
                     ],
                     "lengthMenu": [[20, 40, 100, -1], [20, 40, 100, "全部"]],
