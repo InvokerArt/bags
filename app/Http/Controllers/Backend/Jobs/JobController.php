@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Backend\Jobs;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Jobs\JobStoreOrUpdateRequest;
 use App\Models\Access\User\User;
+use App\Models\Jobs\Job;
 use App\Repositories\Backend\Jobs\JobInterface;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\HtmlString;
 use Yajra\Datatables\Datatables;
 
 class JobController extends Controller
@@ -40,8 +42,14 @@ class JobController extends Controller
     public function get(Request $request)
     {
         return Datatables::of($this->jobs->getForDataTable())
+            ->filter(function ($query) use ($request) {
+                Job::jobFilter($query, $request);
+            })
             ->addColumn('ids', function ($jobs) {
                 return $jobs->checkbox_button;
+            })
+            ->editColumn('content', function ($jobs) {
+                return str_limit(strip_tags($jobs->content), 100, '...');
             })
             ->addColumn('actions', function ($jobs) {
                 return $jobs->action_buttons;
@@ -88,9 +96,11 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Job $job)
     {
-        return view('backend.jobs.edit');
+        $user = User::select('username')->where('id', $job->user_id)->first();
+        $job->username = $user->username;
+        return view('backend.jobs.edit', compact('job'));
     }
 
     /**

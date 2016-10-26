@@ -3,8 +3,8 @@
 namespace App\Repositories\Backend\Jobs;
 
 use App\Exceptions\GeneralException;
-use App\Models\Companies\Company;
 use App\Models\Jobs\Job;
+use App\Models\Users\User;
 use DB;
 
 /**
@@ -15,20 +15,20 @@ class JobRepository implements JobInterface
 {
     public function getForDataTable()
     {
-        return Job::select('jobs.*', 'companies.name as companyName')
-                ->leftJoin('companies', 'companies.id', '=', 'jobs.company_id');
+        return Job::select('jobs.*', 'users.username')
+                ->leftJoin('users', 'users.id', '=', 'jobs.user_id');
     }
 
     public function create($input)
     {
-        $company = Company::where('name', $input['name'])->first();
+        $user = User::where('username', $input['username'])->first();
 
-        if (!$company) {
-            throw new GeneralException("公司名不存在！");
+        if (!$user) {
+            throw new GeneralException("会员不存在！");
         }
 
         $job = new Job;
-        $job->company_id = $company->id;
+        $job->user_id = $user->id;
         $job->content = $input['content'];
 
         DB::transaction(function () use ($job) {
@@ -85,7 +85,7 @@ class JobRepository implements JobInterface
 
     public function findOrThrowException($id)
     {
-        $job = Job::withTrashed($id);
+        $job = Job::withTrashed()->find($id);
 
         if (!is_null($job)) {
             return $job;

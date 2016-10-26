@@ -47,7 +47,6 @@
                                                 <input type="text" class="form-control form-filter input-sm" name="name">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control form-filter input-sm" name="num">
                                             </td>
                                             <td>
                                                 <div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
@@ -110,7 +109,7 @@
                         {data: 'ids', name: '',"orderable": false,"searchable": false},
                         {data: 'id', name: '',"orderable": true,"searchable": true},
                         {data: 'name', name: '',"orderable": true,"searchable": true},
-                        {data: 'num', name: '',"orderable": true,"searchable": false},
+                        {data: 'news_count', name: '',"orderable": true,"searchable": false},
                         {data: 'created_at', name: '',"orderable": true,"searchable": true},
                         {data: 'actions', name: '', orderable: false, searchable: false}
                     ],

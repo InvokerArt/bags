@@ -30,12 +30,12 @@
                         <div class="form-body">
                             <div class="form-group">
                                 <label class="col-md-2 control-label">
-                                    所属公司名
+                                    会员用户名
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('name', null, ['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'name']) }}
-                                    <span class="help-block"><a href="javascript:;" class="company-info" style="display:none">公司资料</a></span>
+                                    {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'username']) }}
+                                    <span class="help-block"><a href="javascript:;" class="user-info" style="display:none">会员资料</a></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -60,19 +60,19 @@
     @include('UEditor::head')
     <script type="text/javascript">
         $(function(){
-            //公司资料
-            $(document).on('change', '#name', function(){
-                if ($('#name').val()){
-                    $('.company-info').show();
+            //用户资料
+            $(document).on('change', '#username', function(){
+                if ($('#username').val()){
+                    $('.user-info').show();
                 } else {
-                    $('.company-info').hide();
+                    $('.user-info').hide();
                 }
             })
-            $(document).on('click', '.company-info', function(){
+            $(document).on('click', '.user-info', function(){
                 var newWindow = window.open("","_blank");
-                if ($('#name').val()){
-                    $.get("{{ route(env('APP_BACKEND_PREFIX').'.companies.ajax.info') }}", {name: $('#name').val()}, function(data){
-                        newWindow.location.href = "/"+"{{ env('APP_BACKEND_PREFIX') }}"+"/companies/"+data.id+"/edit";
+                if ($('#username').val()){
+                    $.get("{{ route(env('APP_BACKEND_PREFIX').'.users.ajax.info') }}", {username: $('#username').val()}, function(data){
+                        newWindow.location.href = "/"+"{{ env('APP_BACKEND_PREFIX') }}"+"/users/"+data.id+"/edit";
                     });
                 }
             })

@@ -127,5 +127,21 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Backend\Jobs\JobInterface::class,
             \App\Repositories\Backend\Jobs\JobRepository::class
         );
+
+        /**
+         * 认证
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Certifications\CertificationInterface::class,
+            \App\Repositories\Backend\Certifications\CertificationRepository::class
+        );
+
+        /**
+         * 产品
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Products\ProductInterface::class,
+            \App\Repositories\Backend\Products\ProductRepository::class
+        );
     }
 }

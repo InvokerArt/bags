@@ -41,3 +41,6 @@ Route::post('upload', 'UploadController@index')->name('upload.index');
 //营业执照和公司照片文件上传
 Route::post('upload/company', 'UploadController@company')->name('upload.company');
 Route::delete('upload/company', 'UploadController@companyDelete')->name('upload.companyDelete');
+//产品上传
+Route::post('upload/product', 'UploadController@product')->name('upload.product');
+Route::delete('upload/product', 'UploadController@productDelete')->name('upload.productDelete');

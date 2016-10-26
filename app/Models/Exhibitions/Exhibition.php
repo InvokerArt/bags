@@ -16,12 +16,6 @@ class Exhibition extends Model
     use SoftDeletes, ExhibitionRelationship, ExhibitionAttribute;
 
     /**
-     * 发布日期属性
-     * @var array
-     */
-    protected $dates = ['published_at'];
-
-    /**
      * 参数黑名单
      * @var array
      */

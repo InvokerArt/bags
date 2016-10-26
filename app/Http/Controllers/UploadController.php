@@ -33,4 +33,22 @@ class UploadController extends Controller
         $url = $request->url;
         Storage::delete(str_replace('/storage/', '', $url));
     }
+
+    public function product()
+    {
+        return Plupload::receive('file', function ($file) {
+            $filePath = 'uploads/products/'.date('Y').'/'.date('m').'/';
+            $fileName = date('His').str_random(4).'.'.$file->guessExtension();
+            $file->move($filePath, $fileName);
+            $url = '/'.$filePath.$fileName;
+
+            return ['message' => 'OK', 'url' => $url];
+        });
+    }
+
+    public function productDelete(Request $request)
+    {
+        $url = $request->url;
+        unlink(substr($url, 1));
+    }
 }

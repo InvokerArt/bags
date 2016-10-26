@@ -67,6 +67,24 @@
                     <span class="title">标签管理</span>
                 </a>
             </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.jobs*')) }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.jobs.index') }}">
+                    <i class="icon-notebook"></i>
+                    <span class="title">招聘管理</span>
+                </a>
+            </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.certifications*')) }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.certifications.index') }}">
+                    <i class="icon-trophy"></i>
+                    <span class="title">认证管理</span>
+                </a>
+            </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.products*')) }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.products.index') }}">
+                    <i class="icon-list"></i>
+                    <span class="title">产品管理</span>
+                </a>
+            </li>
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.comments*')) }}">
                 <a href="{{ route(env('APP_BACKEND_PREFIX').'.comments.index') }}">
                     <i class="icon-bubble"></i>
@@ -77,12 +95,6 @@
                 <a href="{{ route(env('APP_BACKEND_PREFIX').'.favorites.index') }}">
                     <i class="icon-like"></i>
                     <span class="title">收藏管理</span>
-                </a>
-            </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.jobs*')) }}">
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.jobs.index') }}">
-                    <i class="icon-like"></i>
-                    <span class="title">招聘管理</span>
                 </a>
             </li>
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.users*')) }}">

@@ -113,7 +113,7 @@ return [
     'attributes' => [
         /*权限验证*/
         'name' => '名称',
-        'username' => '账户',
+        'username' => '用户名',
         'email' => '邮箱',
         'mobile' => '手机',
         'password' => '密码',

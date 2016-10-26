@@ -45,9 +45,6 @@ class IndexController extends Controller
             ->addColumn('ids', function ($tags) {
                 return $tags->checkbox_button;
             })
-            ->addColumn('count', function ($tags) {
-                return $tags->news()->count();
-            })
             ->addColumn('actions', function ($tags) {
                 return $tags->action_buttons;
             })

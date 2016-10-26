@@ -87,7 +87,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'true', 'readonly' => 'readonly']) }}
+                                    {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'true', 'readonly' => true]) }}
                                     <span class="help-block"><a href="{{ route(env('APP_BACKEND_PREFIX').'.users.edit', $company->user_id) }}" class="user-info" target="_blank">会员资料</a></span>
                                 </div>
                             </div>
@@ -126,7 +126,7 @@
                                     公司地址
                                     <span class="required">*</span>
                                 </label>
-                                <div class="col-md-10">
+                                <div class="col-md-3">
                                     <div id="location"></div>
                                     {{ Form::hidden('address', null, ['class' => 'form-control address', 'autocomplete' => 'true']) }}
                                 </div>

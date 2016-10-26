@@ -14567,7 +14567,7 @@ body.stop-scrolling {
   left: -9999px;
   top: -9999px;
   z-index: 999999;
-  width: 300px; }
+  width: 100%; }
 
 .bf-select {
   border: 1px solid #ccc;
@@ -14575,7 +14575,7 @@ body.stop-scrolling {
   outline: 0;
   position: relative;
   cursor: pointer;
-  width: 301px;
+  width: 100%;
   float: left;
   margin-right: 10px; }
   .bf-select .fa {
@@ -14595,78 +14595,80 @@ body.stop-scrolling {
 .ks-overlay-hidden {
   visibility: hidden; }
 
+.city-select-wrap {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5); }
+
 .city-select-tab {
   border-bottom: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  border-top: 1px solid #ccc;
-  width: 301px;
-  height: 34px;
-  background: #f0f0f0; }
+  background: #f0f0f0;
+  font-size: 13px; }
   .city-select-tab a {
-    float: left;
-    display: inline;
-    margin-bottom: -1px;
-    padding: 6px 20px;
-    width: 100px;
+    display: inline-block;
+    padding: 8px 22px;
     border-left: 1px solid #ccc;
     border-bottom: 1px solid transparent;
     color: #4D4D4D;
     text-align: center;
-    outline: 0; }
+    outline: 0;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: -1px; }
+    .city-select-tab a:first-child {
+      border-left: none; }
+    .city-select-tab a:last-child.active {
+      border-right: 1px solid #ccc; }
   .city-select-tab .current {
     background: #fff;
     border-bottom: 1px solid #fff;
-    color: #f60; }
+    color: #46A4FF; }
 
 .bf-select a, .bf-menu-content a {
   text-decoration: none;
   color: #333; }
 
+.city-select-content {
+  width: 100%;
+  min-height: 10px;
+  background-color: #fff;
+  padding: 10px 15px; }
+
 .city-select {
-  border: 1px #ccc solid;
-  border-top: 0;
-  padding: 10px 15px;
-  width: 301px;
-  background: #fff;
-  font-size: 12px; }
+  font-size: 13px; }
   .city-select dl {
-    display: block;
+    line-height: 2;
     clear: both;
     padding: 3px 0;
-    margin: 0;
-    overflow: hidden; }
+    margin: 0; }
   .city-select dt {
-    display: inline-block;
-    width: 35px;
-    float: left;
-    padding-right: 10px;
-    font-weight: 700;
-    text-align: right; }
+    position: absolute;
+    width: 2.5em;
+    font-weight: 500;
+    text-align: right;
+    line-height: 2; }
   .city-select dd {
-    width: 233px;
-    display: inline;
-    float: left;
-    margin-left: 0; }
+    margin-left: 0;
+    line-height: 2; }
   .city-select a {
     display: inline-block;
-    color: #4D4D4D;
     padding: 0 10px;
     outline: 0;
     text-decoration: none;
     white-space: nowrap;
     margin-right: 2px;
-    line-height: 24px; }
+    text-decoration: none;
+    color: #333;
+    cursor: pointer; }
   .city-select a.current {
-    background-color: #f60;
+    background-color: #46A4FF;
     color: #fff;
     border-radius: 2px; }
   .city-select a:hover, .city-select a:focus {
-    background-color: #fff8f3;
+    background-color: #f1f8ff;
     border-radius: 2px;
-    color: #f60; }
-
-.city-select-province dd, .city-select-city dd, .city-select-street dd, .city-select-district dd {
-  width: 270px; }
+    color: #46A4FF; }
+  .city-select.city-province dd {
+    margin-left: 3em; }
 
 #poststuff {
   min-width: 763px;
@@ -14759,6 +14761,12 @@ body.stop-scrolling {
 .check-column, .column-id {
   width: 2em; }
 
+.column-status {
+  width: 5em; }
+
+.column-price {
+  width: 10em; }
+
 .column-author, .column-format, .column-links, .column-parent, .column-posts {
   width: 10%; }
 
@@ -14770,6 +14778,15 @@ body.stop-scrolling {
 
 .column-comments {
   width: 5.5em; }
+
+.input-group#price .form-control {
+  width: 200px;
+  height: 30px;
+  border-right: none;
+  float: left; }
+
+.input-group#price .select2 {
+  width: 80px !important; }
 
 @charset "UTF-8";
 /******************************
@@ -15824,15 +15841,6 @@ li {
 /***
 General reset
 ***/
-/* Set default body */
-body {
-  color: #333333;
-  font-family: "Open Sans", sans-serif;
-  padding: 0px !important;
-  margin: 0px !important;
-  direction: "ltr";
-  font-size: 14px; }
-
 /*
  Internet Explorer 10 doesn't differentiate device width from viewport width, and thus doesn't 
  properly apply the media queries in Bootstrap's CSS. To address this, 

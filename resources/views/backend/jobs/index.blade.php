@@ -23,7 +23,7 @@
                             <input type="checkbox" class="group-checkable">
                         </th>
                         <th class="column-id">ID</th>
-                        <th class="column-author">发布公司</th>
+                        <th class="column-author">发布者</th>
                         <th>内容</th>
                         <th class="column-date">发布日期</th>
                         <th class="column-actions">操作</th>
@@ -35,13 +35,13 @@
                             <input type="text" class="form-control form-filter input-sm" name="id">
                         </td>
                         <td>
-                            <input type="text" class="form-control form-filter input-sm" name="author">
+                            <input type="text" class="form-control form-filter input-sm" name="username">
                         </td>
                         <td>
                         </td>
                         <td>
                             <div class="input-group date margin-bottom-5">
-                                <input type="text" class="form-control form-filter input-sm date-timepicker" readonly="" name="published_from" placeholder="开始时间">
+                                <input type="text" class="form-control form-filter input-sm date-timepicker" readonly="" name="created_from" placeholder="开始时间">
                                 <span class="input-group-btn">
                                     <button class="btn btn-sm default" type="button">
                                         <i class="fa fa-calendar"></i>
@@ -49,7 +49,7 @@
                                 </span>
                             </div>
                             <div class="input-group date">
-                                <input type="text" class="form-control form-filter input-sm date-timepicker" readonly="" name="published_to" placeholder="结束时间">
+                                <input type="text" class="form-control form-filter input-sm date-timepicker" readonly="" name="created_to" placeholder="结束时间">
                                 <span class="input-group-btn">
                                     <button class="btn btn-sm default" type="button">
                                         <i class="fa fa-calendar"></i>
@@ -95,7 +95,7 @@
                     columns: [
                         {data: 'ids', name: 'jobs.ids',"orderable": false,"searchable": false},
                         {data: 'id', name: 'jobs.id',"orderable": true,"searchable": true},
-                        {data: 'companyName', name: 'companies.id',"orderable": false,"searchable": true},
+                        {data: 'username', name: 'users.username',"orderable": false,"searchable": true},
                         {data: 'content', name: 'jobs.content',"orderable": false,"searchable": false},
                         {data: 'created_at', name: 'jobs.created_at',"orderable": true,"searchable": true},
                         {data: 'actions', name: '', orderable: false, searchable: false}

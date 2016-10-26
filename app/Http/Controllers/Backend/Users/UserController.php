@@ -120,7 +120,7 @@ class UserController extends Controller
 
     public function info(Request $request)
     {
-        $user = User::select('id', 'username', 'name', 'mobile', 'email', 'avatar', 'created_at')->where('username', $request->name)->first();
+        $user = User::select('id', 'username', 'name', 'mobile', 'email', 'avatar', 'created_at')->where('username', $request->username)->first();
         return response()->json($user);
     }
 

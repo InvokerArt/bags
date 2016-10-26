@@ -37,7 +37,7 @@
                     </li>
                     @if ($company)
                     <li>
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.company.edit', $company->id) }}">公司信息</a>
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.edit', $company->id) }}">公司信息</a>
                     </li>
                     @endif
                 </ul>

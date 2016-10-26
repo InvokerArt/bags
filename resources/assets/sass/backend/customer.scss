@@ -12,6 +12,12 @@
 .check-column, .column-id {
     width: 2em;
 }
+.column-status {
+    width: 5em;
+}
+.column-price {
+    width: 10em;
+}
 .column-author, .column-format, .column-links, .column-parent, .column-posts {
     width: 10%;
 }
@@ -23,4 +29,15 @@
 }
 .column-comments {
     width: 5.5em;
+}
+.input-group#price {
+    .form-control{
+        width:200px;
+        height: 30px;
+        border-right:none;
+        float:left;
+    }
+    .select2{
+        width: 80px !important;
+    }
 }

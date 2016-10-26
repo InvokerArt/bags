@@ -40,6 +40,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/get', 'UserController@get')->name('get');
         Route::get('/ajax', 'UserController@info')->name('ajax.info');
         Route::post('/avatar', 'UserController@avatar')->name('avatar');
+        Route::get('/deleted/{user}', 'UserController@deleted')->name('deleted');
         Route::post('/', 'UserController@store')->name('store');
         Route::get('/', 'UserController@index')->name('index');
         Route::get('/create', 'UserController@create')->name('create');
@@ -48,6 +49,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/{user}', 'UserController@show')->name('show');
         Route::get('/{user}/edit', 'UserController@edit')->name('edit');
         Route::get('/deleted/{user}', 'UserController@deleted')->name('deleted');
+        Route::get('/{user}/restore', 'UserController@restore')->name('restore');
     });
 
     Route::group(['namespace' => 'Companies', 'as' => 'companies.', 'prefix' => 'companies'], function () {
@@ -68,6 +70,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/{company}', 'CompanyController@show')->name('show');
         Route::get('/{company}/edit', 'CompanyController@edit')->name('edit');
         Route::get('/deleted/{company}', 'CompanyController@deleted')->name('deleted');
+        Route::get('/{company}/restore', 'CompanyController@restore')->name('restore');
     });
 
     Route::group(['namespace' => 'Jobs', 'as' => 'jobs.', 'prefix' => 'jobs'], function () {
@@ -81,6 +84,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/{job}', 'JobController@show')->name('show');
         Route::get('/{job}/edit', 'JobController@edit')->name('edit');
         Route::get('/deleted/{job}', 'JobController@deleted')->name('deleted');
+        Route::get('/{job}/restore', 'JobController@restore')->name('restore');
     });
 
     Route::group(['namespace' => 'News', 'as' => 'news.', 'prefix' => 'news'], function () {
@@ -100,6 +104,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/{news}', 'NewsController@show')->name('show');
         Route::get('/{news}/edit', 'NewsController@edit')->name('edit');
         Route::get('/deleted/{news}', 'NewsController@deleted')->name('deleted');
+        Route::get('/{news}/restore', 'NewsController@restore')->name('restore');
     });
 
     Route::group(['namespace' => 'Exhibitions', 'as' => 'exhibitions.', 'prefix' => 'exhibitions'], function () {
@@ -119,13 +124,50 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/{exhibition}', 'ExhibitionController@show')->name('show');
         Route::get('/{exhibition}/edit', 'ExhibitionController@edit')->name('edit');
         Route::get('/deleted/{exhibition}', 'ExhibitionController@deleted')->name('deleted');
+        Route::get('/{exhibition}/restore', 'ExhibitionController@restore')->name('restore');
+    });
+
+    Route::group(['namespace' => 'Certifications', 'as' => 'certifications.', 'prefix' => 'certifications'], function () {
+        //机构认证
+        Route::get('/get', 'CertificationController@get')->name('get');
+        Route::post('/', 'CertificationController@store')->name('store');
+        Route::get('/', 'CertificationController@index')->name('index');
+        Route::get('/create', 'CertificationController@create')->name('create');
+        Route::match(['put', 'patch'], '/{certification}', 'CertificationController@update')->name('update');
+        Route::delete('/{certification}', 'CertificationController@destroy')->name('destroy');
+        Route::get('/{certification}', 'CertificationController@show')->name('show');
+        Route::get('/{certification}/edit', 'CertificationController@edit')->name('edit');
+        Route::get('/deleted/{certification}', 'CertificationController@deleted')->name('deleted');
+        Route::get('/{certification}/restore', 'CertificationController@restore')->name('restore');
+    });
+
+    Route::group(['namespace' => 'Products', 'as' => 'products.', 'prefix' => 'products'], function () {
+        //产品管理
+        Route::get('/get', 'ProductController@get')->name('get');
+        Route::post('/', 'ProductController@store')->name('store');
+        Route::get('/', 'ProductController@index')->name('index');
+        Route::get('/create', 'ProductController@create')->name('create');
+        Route::match(['put', 'patch'], '/{product}', 'ProductController@update')->name('update');
+        Route::delete('/{product}', 'ProductController@destroy')->name('destroy');
+        Route::get('/{product}', 'ProductController@show')->name('show');
+        Route::get('/{product}/edit', 'ProductController@edit')->name('edit');
+        Route::get('/deleted/{product}', 'ProductController@deleted')->name('deleted');
+        Route::get('/{product}/restore', 'ProductController@restore')->name('restore');
     });
 
     //标签
     Route::group(['namespace' => 'Tags', 'as' => 'tags.', 'prefix' => 'tags'], function () {
         Route::get('/get', 'IndexController@get')->name('get');
         Route::get('/popular', 'IndexController@popular')->name('popular');
-        Route::resource('/', 'IndexController');
+        Route::post('/', 'IndexController@store')->name('store');
+        Route::get('/', 'IndexController@index')->name('index');
+        Route::get('/create', 'IndexController@create')->name('create');
+        Route::match(['put', 'patch'], '/{tag}', 'IndexController@update')->name('update');
+        Route::delete('/{tag}', 'IndexController@destroy')->name('destroy');
+        Route::get('/{tag}', 'IndexController@show')->name('show');
+        Route::get('/{tag}/edit', 'IndexController@edit')->name('edit');
+        Route::get('/deleted/{tag}', 'IndexController@deleted')->name('deleted');
+        Route::get('/{tag}/restore', 'IndexController@restore')->name('restore');
     });
 
     //评论

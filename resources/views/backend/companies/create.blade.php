@@ -127,7 +127,7 @@
                                         公司地址
                                         <span class="required">*</span>
                                     </label>
-                                    <div class="col-md-10">
+                                    <div class="col-md-3">
                                         <div id="location"></div>
                                         {{ Form::hidden('address', null, ['class' => 'form-control address', 'autocomplete' => 'true']) }}
                                     </div>
@@ -271,7 +271,6 @@
 @stop
 
 @section('js')
-    <script src="{{asset('js/vendor/cityselect/jquery.cxselect.min.js')}}"></script>
     <script src="{{asset('js/location.js')}}"></script>
     <script src="{{asset('js/vendor/plupload/plupload.full.min.js')}}"></script>
     <script src="{{asset('js/vendor/plupload/i18n/zh_CN.js')}}"></script>
@@ -297,7 +296,7 @@
             $(document).on('click', '.user-info', function(){
                 var newWindow = window.open("","_blank");
                 if ($('#username').val()){
-                    $.get("{{ route(env('APP_BACKEND_PREFIX').'.users.ajax.info') }}", {name: $('#username').val()}, function(data){
+                    $.get("{{ route(env('APP_BACKEND_PREFIX').'.users.ajax.info') }}", {username: $('#username').val()}, function(data){
                         newWindow.location.href = "/"+"{{ env('APP_BACKEND_PREFIX') }}"+"/users/"+data.id+"/edit";
                     });
                 }
