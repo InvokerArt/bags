@@ -85,6 +85,18 @@
                     <span class="title">产品管理</span>
                 </a>
             </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.demands*')) }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.demands.index') }}">
+                    <i class="icon-magnifier-add"></i>
+                    <span class="title">需求管理</span>
+                </a>
+            </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.supplies*')) }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.supplies.index') }}">
+                    <i class="icon-magnifier-remove"></i>
+                    <span class="title">供应管理</span>
+                </a>
+            </li>
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.comments*')) }}">
                 <a href="{{ route(env('APP_BACKEND_PREFIX').'.comments.index') }}">
                     <i class="icon-bubble"></i>

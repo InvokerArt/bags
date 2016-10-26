@@ -143,5 +143,21 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Backend\Products\ProductInterface::class,
             \App\Repositories\Backend\Products\ProductRepository::class
         );
+
+        /**
+         * 需求
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Demands\DemandInterface::class,
+            \App\Repositories\Backend\Demands\DemandRepository::class
+        );
+
+        /**
+         * 供应
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Supplies\SupplyInterface::class,
+            \App\Repositories\Backend\Supplies\SupplyRepository::class
+        );
     }
 }

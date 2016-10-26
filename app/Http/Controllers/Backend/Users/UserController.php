@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Backend\Users;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\Users\UserStoreOrUpdateRequest;
+use App\Http\Requests\Backend\Users\UserUpdateRequest;
+use App\Http\Requests\Backend\Users\UserStoreRequest;
 use App\Models\Companies\Company;
 use App\Models\Users\User;
 use App\Repositories\Backend\Users\UserInterface;
@@ -100,7 +101,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
         $this->users->update($user, $request);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.users.index')->withFlashSuccess('会员更新成功');

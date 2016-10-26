@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Backend\Companies;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\Companies\CompanyRequest;
-use App\Http\Requests\Backend\Companies\CompanyStoreOrUpdateRequest;
+use App\Http\Requests\Backend\Companies\CompanyStoreRequest;
+use App\Http\Requests\Backend\Companies\CompanyUpdateRequest;
 use App\Models\Access\User\User;
 use App\Models\Area;
 use App\Models\Companies\CategoryCompany;
@@ -39,7 +39,7 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function get(CompanyRequest $request)
+    public function get(Request $request)
     {
         return Datatables::of($this->company->getForDataTable())
             ->filter(function ($query) use ($request) {
@@ -70,7 +70,7 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CompanyStoreOrUpdateRequest $request)
+    public function store(CompanyStoreRequest $request)
     {
         $this->company->create($request);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.index')->withFlashSuccess('公司添加成功');
@@ -111,7 +111,7 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Company $company, CompanyStoreOrUpdateRequest $request)
+    public function update(Company $company, CompanyUpdateRequest $request)
     {
         $this->company->update($company, $request);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.index')->withFlashSuccess('更新成功');

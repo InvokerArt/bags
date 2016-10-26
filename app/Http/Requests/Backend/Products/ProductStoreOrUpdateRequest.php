@@ -26,7 +26,7 @@ class ProductStoreOrUpdateRequest extends Request
         return [
             'title' => 'required',
             //'slug' => 'required|alpha_dash',
-            'price' => 'required',
+            'price' => 'required|numeric',
             'unit' => 'required',
             'images' => 'required',
             'content' => 'required'

@@ -155,6 +155,34 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/{product}/restore', 'ProductController@restore')->name('restore');
     });
 
+    Route::group(['namespace' => 'Demands', 'as' => 'demands.', 'prefix' => 'demands'], function () {
+        //需求管理
+        Route::get('/get', 'DemandController@get')->name('get');
+        Route::post('/', 'DemandController@store')->name('store');
+        Route::get('/', 'DemandController@index')->name('index');
+        Route::get('/create', 'DemandController@create')->name('create');
+        Route::match(['put', 'patch'], '/{demand}', 'DemandController@update')->name('update');
+        Route::delete('/{demand}', 'DemandController@destroy')->name('destroy');
+        Route::get('/{demand}', 'DemandController@show')->name('show');
+        Route::get('/{demand}/edit', 'DemandController@edit')->name('edit');
+        Route::get('/deleted/{demand}', 'DemandController@deleted')->name('deleted');
+        Route::get('/{demand}/restore', 'DemandController@restore')->name('restore');
+    });
+
+    Route::group(['namespace' => 'Supplies', 'as' => 'supplies.', 'prefix' => 'supplies'], function () {
+        //供应管理
+        Route::get('/get', 'SupplyController@get')->name('get');
+        Route::post('/', 'SupplyController@store')->name('store');
+        Route::get('/', 'SupplyController@index')->name('index');
+        Route::get('/create', 'SupplyController@create')->name('create');
+        Route::match(['put', 'patch'], '/{supply}', 'SupplyController@update')->name('update');
+        Route::delete('/{supply}', 'SupplyController@destroy')->name('destroy');
+        Route::get('/{supply}', 'SupplyController@show')->name('show');
+        Route::get('/{supply}/edit', 'SupplyController@edit')->name('edit');
+        Route::get('/deleted/{supply}', 'SupplyController@deleted')->name('deleted');
+        Route::get('/{supply}/restore', 'SupplyController@restore')->name('restore');
+    });
+
     //标签
     Route::group(['namespace' => 'Tags', 'as' => 'tags.', 'prefix' => 'tags'], function () {
         Route::get('/get', 'IndexController@get')->name('get');

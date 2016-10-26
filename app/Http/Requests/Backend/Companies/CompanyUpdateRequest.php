@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Backend\Users;
+namespace App\Http\Requests\Backend\Companies;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends FormRequest
+class CompanyUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|alpha_dash_except_num|unique:users',
-            'mobile' => 'required|is_mobile|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'username' => 'required',
+            'name' => 'required|unique:companies,name,'.$this->route('company')->id
         ];
     }
 }

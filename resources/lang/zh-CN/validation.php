@@ -123,6 +123,10 @@ return [
         'sort' => '排序',
         'verifyCode' => '验证码',
         'slug' => '链接',
+        'title' => '标题',
+        'price' => '价格',
+        'quantity' => '数量',
+        'images' => '图片'
     ],
 
 ];

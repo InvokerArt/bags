@@ -77,14 +77,20 @@ class UserRepository implements UserInterface
      */
     public function update(User $user, $input)
     {
-        $user->username = $input['username'];
-        $user->name = $input['name'];
+        $user->username = $input->username;
+        $user->mobile = $input->mobile;
+        $user->name = $input->name;
+        $user->email = $input->email;
+        if ($input->avatar) {
+            $user->avatar = $input->avatar;
+        }
+        if ($input->password) {
+            $user->password = bcrypt($input->password);
+        }
 
-        DB::transaction(function () use ($company, $input) {
+        DB::transaction(function () use ($user) {
 
-            if ($company->update()) {
-                $categories = explode(',', $input['categories']);
-                $company->syncCategories($categories);
+            if ($user->update()) {
                 return true;
             }
 

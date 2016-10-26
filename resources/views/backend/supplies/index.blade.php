@@ -1,29 +1,29 @@
 @extends('backend.layouts.app')
 
 @section('page-title')
-    产品列表
+    供应列表
 @stop
 @section('content')
 <div class="portlet light portlet-fit portlet-datatable bordered">
     <div class="portlet-title">
         <div class="actions">
-            <a href="{{ route(env('APP_BACKEND_PREFIX').'.products.create') }}" class="btn green">
+            <a href="{{ route(env('APP_BACKEND_PREFIX').'.supplies.create') }}" class="btn green">
                 <i class="fa fa-plus-square-o"></i>
-                <span class="hidden-xs">添加产品</span>
+                <span class="hidden-xs">添加供应</span>
             </a>
         </div>
     </div>
     <div class="portlet-body">
         <div class="table-container">
             <form method="POST" role="form">
-                <table class="table table-striped table-bordered table-hover" id="products-table">
+                <table class="table table-striped table-bordered table-hover" id="supplies-table">
                     <thead>
                     <tr role="row" class="heading">
                         <th class="check-column">
                             <input type="checkbox" class="group-checkable">
                         </th>
                         <th class="column-id">ID</th>
-                        <th>产品标题</th>
+                        <th>标题</th>
                         <th class="column-author">发布者</th>
                         <th class="column-price">单价</th>
                         <th class="column-date">发布日期</th>
@@ -82,7 +82,7 @@
             $.fn.dataTableExt.oStdClasses.sWrapper = "dataTables_wrapper";
             var grid = new Datatable();
             grid.init({
-                src: $('#products-table'),
+                src: $('#supplies-table'),
                 dataTable: {
                     serverSide: true,
                     bFilter: false,
@@ -94,15 +94,15 @@
                     pagingType: "bootstrap_extended",
                     autoWidth: false,
                     ajax: {
-                        url: '{{ route(env('APP_BACKEND_PREFIX').".products.get") }}'
+                        url: '{{ route(env('APP_BACKEND_PREFIX').".supplies.get") }}'
                     },
                     columns: [
-                        {data: 'ids', name: 'products.ids',"orderable": false,"searchable": false},
-                        {data: 'id', name: 'products.id',"orderable": true,"searchable": true},
-                        {data: 'title', name: 'products.title',"orderable": true,"searchable": true},
+                        {data: 'ids', name: 'supplies.ids',"orderable": false,"searchable": false},
+                        {data: 'id', name: 'supplies.id',"orderable": true,"searchable": true},
+                        {data: 'title', name: 'supplies.title',"orderable": true,"searchable": true},
                         {data: 'username', name: 'users.username',"orderable": false,"searchable": true},
-                        {data: 'price', name: 'products.price',"orderable": false,"searchable": false},
-                        {data: 'created_at', name: 'products.created_at',"orderable": true,"searchable": true},
+                        {data: 'price', name: 'supplies.price',"orderable": false,"searchable": false},
+                        {data: 'created_at', name: 'supplies.created_at',"orderable": true,"searchable": true},
                         {data: 'actions', name: '', orderable: false, searchable: false}
                     ],
                     "lengthMenu": [[20, 40, 100, -1], [20, 40, 100, "全部"]],
