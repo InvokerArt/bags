@@ -98,19 +98,21 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    <div class="radio-list">
-                                        <label for="" class="radio-inline">
-                                        {{ Form::radio('status', 2, true, ['data-title' => '通过']) }}
-                                        通过
-                                        </label>
-                                        <label for="" class="radio-inline">
-                                        {{ Form::radio('status', 1, false, ['data-title' => '待审核']) }}
-                                        待审核
-                                        </label>
-                                        <label for="" class="radio-inline">
-                                        {{ Form::radio('status', 0, false, ['data-title' => '驳回']) }}
-                                        驳回
-                                        </label>
+                                    <div class="input-group">
+                                        <div class="icheck-inline">
+                                            <label>
+                                            {{ Form::radio('status', 2, true, ['data-title' => '通过']) }}
+                                            通过
+                                            </label>
+                                            <label>
+                                            {{ Form::radio('status', 1, false, ['data-title' => '待审核']) }}
+                                            待审核
+                                            </label>
+                                            <label>
+                                            {{ Form::radio('status', 0, false, ['data-title' => '驳回']) }}
+                                            驳回
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

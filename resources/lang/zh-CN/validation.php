@@ -126,7 +126,11 @@ return [
         'title' => '标题',
         'price' => '价格',
         'quantity' => '数量',
-        'images' => '图片'
+        'images' => '图片',
+        'identity_card' => '身份证',
+        'licenses' => '营业执照',
+        'banner_id' => '广告位',
+        'image' => '图片'
     ],
 
 ];

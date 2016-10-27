@@ -52,4 +52,19 @@ trait CertificationAttribute
             return [];
         }
     }
+
+    public function getStatusButtonAttribute()
+    {
+        switch ($this->status) {
+            case 0:
+                return '<span class="label label-sm label-danger">驳回</span>';
+                break;
+            case 1:
+                return '<span class="label label-sm label-info">待审核</span>';
+                break;
+            case 2:
+                return '<span class="label label-sm label-success">通过</span>';
+                break;
+        }
+    }
 }

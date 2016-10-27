@@ -132,6 +132,14 @@ class AppServiceProvider extends ServiceProvider
          * 认证
          */
         $this->app->bind(
+            \App\Repositories\Backend\Joins\JoinInterface::class,
+            \App\Repositories\Backend\Joins\JoinRepository::class
+        );
+
+        /**
+         * 认证
+         */
+        $this->app->bind(
             \App\Repositories\Backend\Certifications\CertificationInterface::class,
             \App\Repositories\Backend\Certifications\CertificationRepository::class
         );
@@ -158,6 +166,22 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\Backend\Supplies\SupplyInterface::class,
             \App\Repositories\Backend\Supplies\SupplyRepository::class
+        );
+
+        /**
+         * 广告位设置
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Banners\BannerInterface::class,
+            \App\Repositories\Backend\Banners\BannerRepository::class
+        );
+
+        /**
+         * 轮播图列表
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Banners\ImageInterface::class,
+            \App\Repositories\Backend\Banners\ImageRepository::class
         );
     }
 }

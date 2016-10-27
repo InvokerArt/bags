@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
         $this->call(AreasTableSeeder::class);
         //分类
         $this->call(CategoriesTableSeeder::class);
-
+        //广告位
+        $this->call(BannersTableSeeder::class);
         Model::reguard();
     }
 }

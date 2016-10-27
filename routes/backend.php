@@ -127,6 +127,20 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/{exhibition}/restore', 'ExhibitionController@restore')->name('restore');
     });
 
+    Route::group(['namespace' => 'Joins', 'as' => 'joins.', 'prefix' => 'joins'], function () {
+        //加盟
+        Route::get('/get', 'JoinController@get')->name('get');
+        Route::post('/', 'JoinController@store')->name('store');
+        Route::get('/', 'JoinController@index')->name('index');
+        Route::get('/create', 'JoinController@create')->name('create');
+        Route::match(['put', 'patch'], '/{join}', 'JoinController@update')->name('update');
+        Route::delete('/{join}', 'JoinController@destroy')->name('destroy');
+        Route::get('/{join}', 'JoinController@show')->name('show');
+        Route::get('/{join}/edit', 'JoinController@edit')->name('edit');
+        Route::get('/deleted/{join}', 'JoinController@deleted')->name('deleted');
+        Route::get('/{join}/restore', 'JoinController@restore')->name('restore');
+    });
+
     Route::group(['namespace' => 'Certifications', 'as' => 'certifications.', 'prefix' => 'certifications'], function () {
         //机构认证
         Route::get('/get', 'CertificationController@get')->name('get');
@@ -208,6 +222,25 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
     Route::group(['namespace' => 'Favorites', 'as' => 'favorites.', 'prefix' => 'favorites'], function () {
         Route::get('/get', 'FavoriteController@get')->name('get');
         Route::resource('/', 'FavoriteController');
+    });
+
+    //广告
+    Route::group(['namespace' => 'Banners', 'as' => 'banners.', 'prefix' => 'banners'], function () {
+        //广告位
+        Route::get('/get', 'BannerController@get')->name('get');
+        Route::post('/', 'BannerController@store')->name('store');
+        Route::get('/', 'BannerController@index')->name('index');
+        Route::get('/create', 'BannerController@create')->name('create');
+        Route::match(['put', 'patch'], '/{banner}', 'BannerController@update')->name('update');
+        Route::delete('/{banner}', 'BannerController@destroy')->name('destroy');
+        Route::get('/{banner}/edit', 'BannerController@edit')->name('edit');
+        Route::get('/deleted/{banner}', 'BannerController@deleted')->name('deleted');
+        Route::get('/{banner}/restore', 'BannerController@restore')->name('restore');
+        //轮播图
+        Route::get('/image/get', 'ImageController@get')->name('image.get');
+        Route::resource('/image', 'ImageController');
+        Route::get('/image/deleted/{image}', 'ImageController@deleted')->name('image.deleted');
+        Route::get('/image/{image}/restore', 'ImageController@restore')->name('image.restore');
     });
 
     //媒体库

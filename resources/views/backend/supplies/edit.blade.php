@@ -66,7 +66,7 @@
                                 </label>
                                 <div class="col-md-10">
                                     <div class="form-control height-auto">
-                                        <div id="uploader_photos" class="text-align-reverse">
+                                        <div id="uploader_photos">
                                             <a id="photos_uploader_pickfiles" href="javascript:;" class="btn btn-success"> <i class="fa fa-plus"></i>
                                                 选择图片
                                             </a>

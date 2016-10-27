@@ -48,6 +48,9 @@ class CompanyController extends Controller
             ->addColumn('ids', function ($company) {
                 return $company->checkbox_button;
             })
+            ->editColumn('role', function ($company) {
+                return $company->role_button;
+            })
             ->addColumn('actions', function ($company) {
                 return $company->action_buttons;
             })

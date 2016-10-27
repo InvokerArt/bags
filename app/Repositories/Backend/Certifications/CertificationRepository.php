@@ -31,6 +31,13 @@ class CertificationRepository implements CertificationInterface
         if (!$company) {
             throw new GeneralException("机构不存在！");
         }
+        if ($company && $company->role != 3) {
+            throw new GeneralException('该公司不属于机构/单位！');
+        }
+        $isCertification = Certification::where('company_id', $company->id)->first();
+        if ($isCertification) {
+            throw new GeneralException('请勿重复认证！');
+        }
 
         $certification = new Certification;
         $certification->user_id = $user->id;

@@ -5707,12 +5707,12 @@ $(function(){
     });
 
     //表单提交搜索
-    $('.filter-submit').on('click', function(e) {
-        $(this).closest('form').submit(function(){
-            grid.draw();
-            e.preventDefault();
-        })
-    });
+    // $('.filter-submit').on('click', function(e) {
+    //     $(this).closest('form').submit(function(){
+    //         grid.draw();
+    //         e.preventDefault();
+    //     })
+    // });
 
     /**
      * 删除操作

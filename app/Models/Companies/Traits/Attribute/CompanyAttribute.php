@@ -52,4 +52,23 @@ trait CompanyAttribute
             return [];
         }
     }
+
+    public function getRoleButtonAttribute()
+    {
+        switch ($this->role) {
+            case 1:
+                $role = '采购商';
+                break;
+            case 2:
+                $role = '供应商';
+                break;
+            case 3:
+                $role = '机构/单位';
+                break;
+            default:
+                # code...
+                break;
+        }
+        return $role;
+    }
 }
