@@ -24,7 +24,7 @@
                     <span class="title">首页</span>
                 </a>
             </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.news*'), 'active open') }}">
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.news*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.tags*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.comments*'), 'active open') }}">
                 <a href="javascript:;">
                     <i class="icon-pencil"></i>
                     <span class="title">行业资讯</span>
@@ -33,6 +33,12 @@
                 <ul class="sub-menu">
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.news*')) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.news.index') }}">资讯</a>
+                    </li>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.comments*'), 'active open') }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.comments.index') }}">评论</a>
+                    </li>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.tags*'), 'active open') }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.tags.index') }}">标签</a>
                     </li>
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.news.categories*')) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.news.categories.index') }}">分类</a>
@@ -68,60 +74,12 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.banners.image*')) }}">
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.banners.image.index') }}">广告管理</a>
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.banners.image.index') }}">广告</a>
                     </li>
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.banners*')) }}">
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.banners.index') }}">广告位管理</a>
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.banners.index') }}">广告位</a>
                     </li>
                 </ul>
-            </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.tags*'), 'active open') }}">
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.tags.index') }}">
-                    <i class="icon-tag"></i>
-                    <span class="title">标签管理</span>
-                </a>
-            </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.jobs*'), 'active open') }}">
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.jobs.index') }}">
-                    <i class="icon-notebook"></i>
-                    <span class="title">招聘管理</span>
-                </a>
-            </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.joins*'), 'active open') }}">
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.joins.index') }}">
-                    <i class="icon-paper-plane"></i>
-                    <span class="title">加盟管理</span>
-                </a>
-            </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.certifications*'), 'active open') }}">
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.certifications.index') }}">
-                    <i class="icon-trophy"></i>
-                    <span class="title">认证管理</span>
-                </a>
-            </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.products*'), 'active open') }}">
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.products.index') }}">
-                    <i class="icon-list"></i>
-                    <span class="title">产品管理</span>
-                </a>
-            </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.demands*'), 'active open') }}">
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.demands.index') }}">
-                    <i class="icon-magnifier-add"></i>
-                    <span class="title">需求管理</span>
-                </a>
-            </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.supplies*'), 'active open') }}">
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.supplies.index') }}">
-                    <i class="icon-magnifier-remove"></i>
-                    <span class="title">供应管理</span>
-                </a>
-            </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.comments*'), 'active open') }}">
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.comments.index') }}">
-                    <i class="icon-bubble"></i>
-                    <span class="title">评论管理</span>
-                </a>
             </li>
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.favorites*'), 'active open') }}">
                 <a href="{{ route(env('APP_BACKEND_PREFIX').'.favorites.index') }}">
@@ -129,26 +87,62 @@
                     <span class="title">收藏管理</span>
                 </a>
             </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.users*'), 'active open') }}">
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.users.index') }}">
-                    <i class="icon-people"></i>
-                    <span class="title">会员管理</span>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.topics*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.replies*'), 'active open') }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.topics.index') }}">
+                    <i class="icon-support"></i>
+                    <span class="title">论坛管理</span>
+                    <span class="arrow{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.topics*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.replies*'), ' open') }}"></span>
                 </a>
+                <ul class="sub-menu">
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.topics*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.topics.index') }}">话题</a>
+                    </li>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.replies*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.replies.index') }}">回复</a>
+                    </li>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.topics.categories*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.topics.categories.index') }}">分类</a>
+                    </li>
+                </ul>
             </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.companies*'), 'active open') }}">
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.companies*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.jobs*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.joins*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.certifications*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.products*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.demands*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.supplies*'), 'active open') }}">
                 <a href="javascript:;">
                     <i class="icon-briefcase"></i>
                     <span class="title">公司管理</span>
-                    <span class="arrow{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.companies*'), ' open') }}"></span>
+                    <span class="arrow{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.companies*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.jobs*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.joins*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.certifications*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.products*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.demands*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.supplies*'), ' open') }}"></span>
                 </a>
                 <ul class="sub-menu">
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.companies*')) }}">
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.index') }}">公司列表</a>
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.index') }}">公司</a>
+                    </li>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.jobs*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.jobs.index') }}">招聘</a>
+                    </li>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.joins*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.joins.index') }}">加盟</a>
+                    </li>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.certifications*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.certifications.index') }}">认证</a>
+                    </li>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.products*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.products.index') }}">产品</a>
+                    </li>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.demands*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.demands.index') }}">需求</a>
+                    </li>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.supplies*')) }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.supplies.index') }}">供应</a>
                     </li>
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.companies.categories*')) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.categories.index', 'role=1') }}">分类</a>
                     </li>
                 </ul>
+            </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.users*'), 'active open') }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.users.index') }}">
+                    <i class="icon-people"></i>
+                    <span class="title">会员管理</span>
+                </a>
             </li>
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.access*'), 'active open') }}">
                 <a href="javascript:;">

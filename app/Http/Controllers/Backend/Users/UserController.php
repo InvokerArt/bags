@@ -121,8 +121,8 @@ class UserController extends Controller
 
     public function info(Request $request)
     {
-        $user = User::select('id', 'username', 'name', 'mobile', 'email', 'avatar', 'created_at')->where('username', $request->username)->first();
-        return response()->json($user);
+        $users = User::select('id', 'username', 'name', 'mobile', 'email', 'avatar', 'created_at')->where('username', 'like', "%$request->q%")->orWhere('name', 'like', "%$request->q%")->orWhere('mobile', 'like', "%$request->q%")->paginate();
+        return response()->json($users);
     }
 
     public function avatar(Request $request)

@@ -243,6 +243,40 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/image/{image}/restore', 'ImageController@restore')->name('image.restore');
     });
 
+    Route::group(['namespace' => 'Topics', 'as' => 'topics.', 'prefix' => 'topics'], function () {
+        //论坛分类
+        Route::resource('categories', 'CategoryController', ['except' => 'show']);
+        Route::get('categories/children', 'CategoryController@children')->name('categories.children');
+        Route::post('categories/move', 'CategoryController@move')->name('categories.move');
+        Route::post('categories/copy', 'CategoryController@copy')->name('categories.copy');
+        Route::post('categories/rename', 'CategoryController@rename')->name('categories.rename');
+        //论坛
+        Route::get('/get', 'TopicController@get')->name('get');
+        Route::post('/', 'TopicController@store')->name('store');
+        Route::get('/', 'TopicController@index')->name('index');
+        Route::get('/create', 'TopicController@create')->name('create');
+        Route::match(['put', 'patch'], '/{topic}', 'TopicController@update')->name('update');
+        Route::delete('/{topic}', 'TopicController@destroy')->name('destroy');
+        Route::get('/{topic}', 'TopicController@show')->name('show');
+        Route::get('/{topic}/edit', 'TopicController@edit')->name('edit');
+        Route::get('/deleted/{topic}', 'TopicController@deleted')->name('deleted');
+        Route::get('/{topic}/restore', 'TopicController@restore')->name('restore');
+    });
+
+    //回帖
+    Route::group(['namespace' => 'Topics', 'as' => 'replies.', 'prefix' => 'replies'], function () {
+        Route::get('/get', 'RepliyController@get')->name('get');
+        Route::post('/', 'RepliyController@store')->name('store');
+        Route::get('/', 'RepliyController@index')->name('index');
+        Route::get('/create', 'RepliyController@create')->name('create');
+        Route::match(['put', 'patch'], '/{repliy}', 'RepliyController@update')->name('update');
+        Route::delete('/{repliy}', 'RepliyController@destroy')->name('destroy');
+        Route::get('/{repliy}', 'RepliyController@show')->name('show');
+        Route::get('/{repliy}/edit', 'RepliyController@edit')->name('edit');
+        Route::get('/deleted/{repliy}', 'RepliyController@deleted')->name('deleted');
+        Route::get('/{repliy}/restore', 'RepliyController@restore')->name('restore');
+    });
+
     //媒体库
     Route::get('/media', 'Media\IndexController@index')->name('media.index');
     Route::get('/', 'DashboardController@index')->name('index');

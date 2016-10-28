@@ -14,6 +14,7 @@ class CategoriesTableSeeder extends Seeder
         $this->call(CategoriesNewsTableSeeder::class);
         $this->call(CategoriesExhibitionsTableSeeder::class);
         $this->call(CategoriesCompaniesTableSeeder::class);
+        $this->call(CategoriesTopicsTableSeeder::class);
 
         if (DB::connection()->getDriverName() == 'mysql') {
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Backend\Companies;
+namespace App\Http\Requests\Backend\Topics;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CompanyUpdateRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class CompanyUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|unique:companies,user_id,'.$this->route('company')->id,
-            'name' => 'required|unique:companies,name,'.$this->route('company')->id
+            //
         ];
     }
 }

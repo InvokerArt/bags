@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Comments;
+namespace App\Http\Controllers\Backend\Topics;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class CommentController extends Controller
+class ActiveUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,16 +15,6 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        dd('评论管理');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function get()
     {
         //
     }

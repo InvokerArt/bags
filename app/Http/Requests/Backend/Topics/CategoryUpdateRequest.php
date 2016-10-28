@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Backend\Companies;
+namespace App\Http\Requests\Backend\Topics;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Request;
 
-class CompanyUpdateRequest extends FormRequest
+class CategoryUpdateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class CompanyUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|unique:companies,user_id,'.$this->route('company')->id,
-            'name' => 'required|unique:companies,name,'.$this->route('company')->id
+            'name' => 'required',
+            'is_active' => 'required',
+            //'slug' => 'required|alpha_dash'
         ];
     }
 }

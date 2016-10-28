@@ -67,7 +67,7 @@
                                     <span class="help-block">例：{{ env('APP_URL') }}</span>
                                 </div>
                             </div>
-                            {{-- <div class="form-group">
+                            <div class="form-group">
                                 <label class="col-md-2 control-label">
                                     广告打开方式
                                     <span class="required">*</span>
@@ -86,7 +86,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">
                                     广告时间

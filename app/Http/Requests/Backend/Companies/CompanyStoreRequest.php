@@ -24,7 +24,7 @@ class CompanyStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required',
+            'user_id' => 'required|unique:companies',
             'name' => 'required|unique:companies'
         ];
     }

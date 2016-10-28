@@ -169,7 +169,7 @@ class AppServiceProvider extends ServiceProvider
         );
 
         /**
-         * 广告位设置
+         * 广告位
          */
         $this->app->bind(
             \App\Repositories\Backend\Banners\BannerInterface::class,
@@ -177,11 +177,27 @@ class AppServiceProvider extends ServiceProvider
         );
 
         /**
-         * 轮播图列表
+         * 轮播图
          */
         $this->app->bind(
             \App\Repositories\Backend\Banners\ImageInterface::class,
             \App\Repositories\Backend\Banners\ImageRepository::class
+        );
+
+        /**
+         * 话题
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Topics\TopicInterface::class,
+            \App\Repositories\Backend\Topics\TopicRepository::class
+        );
+
+        /**
+         * 话题分类
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Topics\CategoryInterface::class,
+            \App\Repositories\Backend\Topics\CategoryRepository::class
         );
     }
 }

@@ -29,17 +29,13 @@ class CompanyRepository implements CompanyInterface
 
     public function create($input)
     {
-        $user = User::where('username', $input['username'])->first();
+        $user = User::where('id', $input['user_id'])->first();
         if (!$user) {
-            throw new GeneralException("会员用户名不存在！");
-        }
-        $user_id = Company::select('user_id')->where('user_id', $user->id)->first();
-        if ($user_id) {
-            throw new GeneralException("会员已经有拥有公司，请勿重复添加！");
+            throw new GeneralException("会员不存在！");
         }
 
         $company = new Company;
-        $company->user_id = $user->id;
+        $company->user_id = $input['user_id'];
         $company->name = $input['name'];
         $company->telephone = $input['telephone'];
         $company->address = $input['address'];
@@ -50,7 +46,6 @@ class CompanyRepository implements CompanyInterface
         $company->role = $input['role'];
 
         DB::transaction(function () use ($company, $input) {
-
             if ($company->save()) {
                 $categories = explode(',', $input['categories']);
                 $company->attachCategories($categories);

@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Comments;
+namespace App\Http\Controllers\Backend\Topics;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Topics\CategoriesTopics;
+use App\Models\Topics\Topic;
+use App\Repositories\Backend\Topics\TopicInterface;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
-class CommentController extends Controller
+class TopicController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    protected $topics;
+    protected $categories;
+
+    public function __construct(TopicInterface $topics, CategoriesTopics $categories)
     {
-        dd('评论管理');
+        $this->topics = $topics;
+        $this->categories = $categories;
     }
 
     /**
@@ -24,9 +25,30 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function get()
+    public function index()
     {
-        //
+        $categories = $this->categories->all();
+        return view('backend.topics.index', compact('categories'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function get(Request $request)
+    {
+        return Datatables::of($this->topics->getForDataTable())
+            ->filter(function ($query) use ($request) {
+                Topic::topicFilter($query, $request);
+            })
+            ->addColumn('ids', function ($topics) {
+                return $topics->checkbox_button;
+            })
+            ->addColumn('actions', function ($topics) {
+                return $topics->action_buttons;
+            })
+        ->make(true);
     }
 
     /**
@@ -36,7 +58,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.topics.create');
     }
 
     /**
