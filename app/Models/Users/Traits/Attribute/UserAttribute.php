@@ -30,7 +30,7 @@ trait UserAttribute
      */
     public function getDeleteButtonAttribute()
     {
-        return '<a href="' . route(env('APP_BACKEND_PREFIX').'.users.destroy', $this->id) . '" data-method="delete" class="btn btn-xs red"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="删除"></i></a>';
+        return '<a href="' . route(env('APP_BACKEND_PREFIX').'.users.destroy', $this->id) . '" data-method="destroy" class="btn btn-xs red"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="删除"></i></a>';
     }
 
     /**

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Backend\Topics;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Backend\Topics\TopicStoreOrUpdateRequest;
 use App\Models\Topics\CategoriesTopics;
 use App\Models\Topics\Topic;
+use App\Models\Users\User;
 use App\Repositories\Backend\Topics\TopicInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -45,6 +47,20 @@ class TopicController extends Controller
             ->addColumn('ids', function ($topics) {
                 return $topics->checkbox_button;
             })
+            ->editColumn('is_excellent', function ($topics) {
+                if ($topics->is_excellent === 'yes') {
+                    return '<span class="label lable-sm bg-green">是</span>';
+                } else {
+                    return '<span class="label lable-sm bg-red">否</span>';
+                }
+            })
+            ->editColumn('is_blocked', function ($topics) {
+                if ($topics->is_blocked === 'yes') {
+                    return '<span class="label lable-sm bg-green">是</span>';
+                } else {
+                    return '<span class="label lable-sm bg-red">否</span>';
+                }
+            })
             ->addColumn('actions', function ($topics) {
                 return $topics->action_buttons;
             })
@@ -67,9 +83,10 @@ class TopicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TopicStoreOrUpdateRequest $request)
     {
-        //
+        $this->topics->create($request);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.topics.index')->withFlashSuccess('话题添加成功');
     }
 
     /**
@@ -89,9 +106,12 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Topic $topic)
     {
-        //
+        $categories = $this->categories->all();
+        $user = $topic->user()->select('username')->first();
+        $topic->username = $user->username;
+        return view('backend.topics.edit', compact('topic'));
     }
 
     /**
@@ -101,19 +121,51 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Topic $topic, TopicStoreOrUpdateRequest $request)
     {
-        //
+        $this->topics->update($topic, $request);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.topics.index')->withFlashSuccess('话题更新成功');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 回收站
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $this->topics->destroy($id);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.topics.index')->withFlashSuccess('话题删除成功');
+    }
+
+    /**
+     * 还原
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $this->topics->restore($id);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.topics.index')->withFlashSuccess('话题还原成功');
+    }
+
+    /**
+     * 彻底删除
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        $this->topics->delete($id);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.topics.index')->withFlashSuccess('话题删除成功');
+    }
+
+    public function info(Request $request)
+    {
+        $topics = Topic::select('id', 'title', 'created_at')->where('title', 'like', "%$request->q%")->paginate();
+        return response()->json($topics);
     }
 }

@@ -4,11 +4,10 @@ namespace App\Models\Topics\Traits\Relationship;
 
 trait TopicRelationship
 {
-
-    //分类多对多
+    //分类一对一
     public function categories()
     {
-        return $this->belongsTo('App\Models\Topics\CategoriesTopics');
+        return $this->belongsTo('App\Models\Topics\CategoriesTopics', 'category_id');
     }
 
     //用户一对多反向
@@ -18,8 +17,8 @@ trait TopicRelationship
     }
 
     //评论一对多
-    public function comments()
+    public function replies()
     {
-        return $this->morphMany('App\Models\Comments\Comment', 'commentable');
+        return $this->hasMany('App\Models\Topics\Repliy');
     }
 }

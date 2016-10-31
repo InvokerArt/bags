@@ -5,17 +5,14 @@
 @stop
 
 @section('page-title')
-添加话题
+添加回复
 @stop
 
 @section('content')
-{{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.topics.store', 'method' => 'post', 'id' => 'create-topic']) }}
+{{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.replies.store', 'method' => 'post', 'id' => 'create-reply']) }}
     <div id="poststuff">
         <div class="left-body-content">
-            <div class="topics-body">
-                <div class="form-group">
-                    {{ Form::text('title', null, ['class' => 'form-control']) }}
-                </div>
+            <div class="replies-body">
                 <div class="form-group">
                     {{ Form::textarea('content', null, ['class' => 'form-control', 'id' => 'editor']) }}
                 </div>
@@ -24,7 +21,7 @@
         <div class="right-sidebar">
             <div class="box margin-bottom-15">
                 <h2>
-                    <span>话题属性</span>
+                    <span>回复属性</span>
                 </h2>
                 <div class="inside">
                     <div class="form-group">
@@ -32,28 +29,17 @@
                         {{ Form::select('user_id', [], null, ['class' => 'form-control user-ajax']) }}
                     </div>
                     <div class="form-group">
-                        <label class="control-label">分类</label>
-                        <div class="form-control height-auto">
-                            <div class="topics-categories">
-                            </div>
-                            {{ Form::hidden('category_id', null, ['class' => 'form-control', 'id' => 'categories']) }}
-                        </div>
+                        <label class="control-label">话题</label>
+                        {{ Form::select('topic_id', [], null, ['class' => 'form-control topic-ajax']) }}
                     </div>
                     <div class="form-group">
-                        <label class="control-label">是否推荐</label>
-                        {{ Form::select('is_excellent', ['' => '请选择', 'yes' => '是','no' => '否'], 'no', ['class' => 'form-control input-sm select2']) }}
+                        <label class="control-label">回复用户</label>
+                        {{ Form::select('parent_id', [], null, ['class' => 'form-control user-ajax']) }}
+                        <span class="help-block font-red">可为空</span>
                     </div>
                     <div class="form-group">
                         <label class="control-label">是否屏蔽</label>
                         {{ Form::select('is_blocked', ['' => '请选择', 'yes' => '是','no' => '否'], 'no', ['class' => 'form-control input-sm select2']) }}
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">查看数</label>
-                        {{ Form::text('view_count', 0, ['class' => 'form-control']) }}
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">回复数</label>
-                        {{ Form::text('reply_count', 0, ['class' => 'form-control']) }}
                     </div>
                     <div class="form-group">
                         <label class="control-label">赞数</label>
@@ -78,44 +64,6 @@
     <script src="{{asset('js/jstree.min.js')}}"></script>
     <script type="text/javascript">
         $(function(){
-
-            //分类目录
-            $('.topics-categories').jstree({
-                core: {
-                    multiple: false,
-                    strings : { 
-                        loading : "加载中 ..."
-                    },
-                    themes : {
-                        responsive: false,
-                        icons:false
-                    },
-                    check_callback: !0,
-                    data: {
-                        url: function(e) {
-                            return "{{ route(env('APP_BACKEND_PREFIX').'.topics.categories.children') }}"
-                        },
-                        data: function(e) {
-                            return {
-                                parent: e.id,
-                                disabled: 1
-                            }
-                        }
-                    }
-                },
-                'plugins': ["wholerow", "checkbox", "types"]
-            })
-            .on("changed.jstree", function (e, data){
-                var categories = [];
-                var categoriesElms = $('.topics-categories').jstree("get_selected", true);
-                $.each(categoriesElms, function() {
-                    categories.push(this.id);
-                });
-                $('#categories').val(categories);
-            })
-            .bind("loaded.jstree", function (event, data) {
-                $('.topics-categories').jstree("open_all");
-            });
             
             //用户资料
             function formatUser(user) {
@@ -134,6 +82,7 @@
             function formatUserSelection(user) {
                 return user.username || user.mobile || user.text;
             }
+
             $.fn.select2.defaults.set("theme", "bootstrap");
             $(".user-ajax").select2({
                 ajax: {
@@ -159,6 +108,47 @@
                 minimumInputLength: 1,
                 templateResult: formatUser,
                 templateSelection: formatUserSelection
+            }); 
+
+            //话题资料
+            function formatTopic(topic) {
+                if (topic.loading) return topic.text;
+                var markup = "<div class='select2-result-label'>" +
+                "<span class='select2-match'>" + topic.title + "</span>" +
+                "</div>";
+                return markup;
+            }
+
+            function formatTopicSelection(topic) {
+                return topic.title;
+            }
+            $(".topic-ajax").select2({
+                ajax: {
+                    url: "{{ route(env('APP_BACKEND_PREFIX').'.topics.ajax.info') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page || 1
+                        };
+                    },
+                    processResults: function(data, page) {
+                        return {
+                            results: data.data
+                        };
+                    },
+                    cache: true,
+                    pagination: {
+                        more: true
+                    }
+                },
+                escapeMarkup: function(markup) {
+                    return markup;
+                }, // let our custom formatter work
+                minimumInputLength: 1,
+                templateResult: formatTopic,
+                templateSelection: formatTopicSelection
             });
         })
 

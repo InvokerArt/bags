@@ -1,33 +1,32 @@
 @extends('backend.layouts.app')
 
 @section('page-title')
-    资讯列表
+    评论
 @stop
 @section('content')
 <div class="portlet light portlet-fit portlet-datatable bordered">
     <div class="portlet-title">
         <div class="actions">
-            <a href="{{ route(env('APP_BACKEND_PREFIX').'.news.create') }}" class="btn green">
+            <a href="{{ route(env('APP_BACKEND_PREFIX').'.news.comments.create') }}" class="btn green">
                 <i class="fa fa-plus-square-o"></i>
-                <span class="hidden-xs">添加资讯</span>
+                <span class="hidden-xs">添加评论</span>
             </a>
         </div>
     </div>
     <div class="portlet-body">
         <div class="table-container">
             <form method="POST" role="form">
-                <table class="table table-striped table-bordered table-hover" id="news-table">
+                <table class="table table-striped table-bordered table-hover" id="comments-table">
                     <thead>
                     <tr role="row" class="heading">
                         <th class="check-column">
                             <input type="checkbox" class="group-checkable">
                         </th>
                         <th class="column-id">ID</th>
-                        <th>标题</th>
-                        <th class="column-author">作者</th>
-                        <th class="column-categories">分类目录</th>
-                        <th class="column-tags">标签</th>
-                        <th class="column-comments">评论</th>
+                        <th class="column-author">用户</th>
+                        <th>评论</th>
+                        <th class="column-response">评论至</th>
+                        <th class="column-blocked">屏蔽</th>
                         <th class="column-date">发布日期</th>
                         <th class="column-actions">操作</th>
                     </tr>
@@ -38,27 +37,24 @@
                             <input type="text" class="form-control form-filter input-sm" name="id">
                         </td>
                         <td>
-                            <input type="text" class="form-control form-filter input-sm" name="title">
-                        </td>
-                        <td>
                             <input type="text" class="form-control form-filter input-sm" name="username">
                         </td>
                         <td>
-                            <select name="categories" class="form-control form-filter input-sm select2">
+                            <input type="text" class="form-control form-filter input-sm" name="content">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control form-filter input-sm" name="title">
+                        </td>
+                        <td>
+                            <select name="is_blocked" class="form-control form-filter input-sm select2">
                                 <option value="">请选择</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
+                                <option value="yes"> 是 </option>
+                                <option value="no"> 否 </option>
                             </select>
                         </td>
                         <td>
-                            <input type="text" class="form-control form-filter input-sm" name="tags">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
                             <div class="input-group date margin-bottom-5">
-                                <input type="text" class="form-control form-filter input-sm date-timepicker" readonly="" name="published_from" placeholder="开始时间">
+                                <input type="text" class="form-control form-filter input-sm date-timepicker" readonly="" name="created_from" placeholder="开始时间">
                                 <span class="input-group-btn">
                                     <button class="btn btn-sm default" type="button">
                                         <i class="fa fa-calendar"></i>
@@ -66,7 +62,7 @@
                                 </span>
                             </div>
                             <div class="input-group date">
-                                <input type="text" class="form-control form-filter input-sm date-timepicker" readonly="" name="published_to" placeholder="结束时间">
+                                <input type="text" class="form-control form-filter input-sm date-timepicker" readonly="" name="created_to" placeholder="结束时间">
                                 <span class="input-group-btn">
                                     <button class="btn btn-sm default" type="button">
                                         <i class="fa fa-calendar"></i>
@@ -95,7 +91,7 @@
             $.fn.dataTableExt.oStdClasses.sWrapper = "dataTables_wrapper";
             var grid = new Datatable();
             grid.init({
-                src: $('#news-table'),
+                src: $('#comments-table'),
                 dataTable: {
                     serverSide: true,
                     bFilter: false,
@@ -107,17 +103,16 @@
                     pagingType: "bootstrap_extended",
                     autoWidth: false,
                     ajax: {
-                        url: '{{ route(env('APP_BACKEND_PREFIX').".news.get") }}'
+                        url: '{{ route(env('APP_BACKEND_PREFIX').".news.comments.get") }}'
                     },
                     columns: [
                         {data: 'ids',"orderable": false,"searchable": false},
                         {data: 'id',"orderable": true,"searchable": true},
+                        {data: 'user.username',"orderable": false,"searchable": true},
+                        {data: 'content',"orderable": true,"searchable": true},
                         {data: 'title',"orderable": true,"searchable": true},
-                        {data: 'username',"orderable": false,"searchable": true},
-                        {data: 'categories',"orderable": false,"searchable": true},
-                        {data: 'tags',"orderable": false,"searchable": true},
-                        {data: 'comments_count',"orderable": true,"searchable": false},
-                        {data: 'published_at',"orderable": true,"searchable": true},
+                        {data: 'is_blocked', name: 'is_blocked',"orderable": false,"searchable": true},
+                        {data: 'created_at',"orderable": true,"searchable": true},
                         {data: 'actions', orderable: false, searchable: false}
                     ],
                     "lengthMenu": [[20, 40, 100, -1], [20, 40, 100, "全部"]],

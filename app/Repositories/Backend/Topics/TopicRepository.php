@@ -16,10 +16,9 @@ class TopicRepository implements TopicInterface
 {
     public function getForDataTable()
     {
-        /**
-         * withCount--统计关联的结果而不实际的加载它们。
-         */
-        return Topic::with(['tags', 'categories'])->withCount('comments');
+        return Topic::select('topics.*', 'categories_topics.name as category', 'users.username as username')
+        ->leftJoin('categories_topics', 'categories_topics.id', 'topics.category_id')
+        ->leftJoin('users', 'users.id', 'topics.user_id');
     }
 
     public function create($input)
@@ -27,35 +26,18 @@ class TopicRepository implements TopicInterface
         $topic = new Topic;
         $topic->title = $input['title'];
         //$topic->slug = $input['slug'];
-        $topic->user_id = Auth::guard('admin')->id();
-        $topic->subtitle = $input['subtitle'];
+        $topic->excerpt = $input['excerpt'];
         $topic->content = $input['content'];
-        $topic->image = $input['image'];
-        $topic->published_at = $input['published_at'] ? $input['published_at'] : Carbon::now();
+        $topic->user_id = $input['user_id'];
+        $topic->category_id = $input['category_id'];
+        $topic->is_excellent = $input['is_excellent'];
+        $topic->is_blocked = $input['is_blocked'];
+        $topic->view_count = $input['view_count'];
+        $topic->reply_count = $input['reply_count'];
+        $topic->vote_count = $input['vote_count'];
 
-        DB::transaction(function () use ($topic, $input) {
+        DB::transaction(function () use ($topic) {
             if ($topic->save()) {
-                $tag = $input['tag'] ? $input['tag'] : [];
-                $categories_id = explode(',', $input['categories_id']);
-                $attachTags = [];
-                if ($tag) {
-                    $tags = explode(',', $tag);
-                    foreach ($tags as $tag) {
-                        $hasTag = Tag::where('name', $tag)->first();
-                        if ($hasTag) {
-                            array_push($attachTags, $hasTag->id);
-                        } else {
-                            $newTag['name'] = $tag;
-                            //新标签
-                            $tag = $this->tags->create($newTag);
-                            array_push($attachTags, $tag->id);
-                        }
-                    }
-                    //更新标签记录
-                    $topic->attachTags($attachTags);
-                }
-                $topic->attachCategories($categories_id);
-
                 return true;
             }
 
@@ -66,34 +48,19 @@ class TopicRepository implements TopicInterface
     public function update(Topic $topic, $input)
     {
         $topic->title = $input['title'];
-        $topic->subtitle = $input['subtitle'];
+        //$topic->slug = $input['slug'];
+        $topic->excerpt = $input['excerpt'];
         $topic->content = $input['content'];
-        $topic->image = $input['image'];
-        $topic->published_at = $input['published_at'] ? $input['published_at'] : Carbon::now();
+        $topic->user_id = $input['user_id'];
+        $topic->category_id = $input['category_id'];
+        $topic->is_excellent = $input['is_excellent'];
+        $topic->is_blocked = $input['is_blocked'];
+        $topic->view_count = $input['view_count'];
+        $topic->reply_count = $input['reply_count'];
+        $topic->vote_count = $input['vote_count'];
 
-        DB::transaction(function () use ($topic, $input) {
+        DB::transaction(function () use ($topic) {
             if ($topic->update()) {
-                $tag = $input['tag'] ? $input['tag'] : [];
-                $categories_id = explode(',', $input['categories_id']);
-                $attachTags = [];
-                if ($tag) {
-                    $tags = explode(',', $tag);
-                    foreach ($tags as $tag) {
-                        $hasTag = Tag::where('name', $tag)->first();
-                        if ($hasTag) {
-                            array_push($attachTags, $hasTag->id);
-                        } else {
-                            $newTag['name'] = $tag;
-                            //新标签
-                            $tag = $this->tags->create($newTag);
-                            array_push($attachTags, $tag->id);
-                        }
-                    }
-                    //更新标签记录
-                    $topic->syncTags($attachTags);
-                }
-                $topic->syncCategories($categories_id);
-
                 return true;
             }
 
@@ -103,7 +70,7 @@ class TopicRepository implements TopicInterface
 
     public function destroy($id)
     {
-        $topic = Topic::find($id);
+        $topic = $this->findOrThrowException($id);
         if ($topic->delete()) {
             return true;
         }
@@ -112,7 +79,7 @@ class TopicRepository implements TopicInterface
 
     public function restore($id)
     {
-        $topic = Topic::find($id);
+        $topic = $this->findOrThrowException($id);
         if ($topic->restore()) {
             return true;
         }
@@ -121,10 +88,21 @@ class TopicRepository implements TopicInterface
 
     public function delete($id)
     {
-        $topic = Topic::find($id);
+        $topic = $this->findOrThrowException($id);
         if ($topic->forceDelete()) {
             return true;
         }
         throw new GeneralException('删除失败！');
+    }
+
+    public function findOrThrowException($id)
+    {
+        $demand = Topic::withTrashed()->find($id);
+
+        if (!is_null($demand)) {
+            return $demand;
+        }
+
+        throw new GeneralException('未找到需求信息');
     }
 }

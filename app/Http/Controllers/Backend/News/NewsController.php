@@ -54,8 +54,8 @@ class NewsController extends Controller
             ->editColumn('title', function ($news) {
                 return str_limit($news->title, 30, '...');
             })
-            ->addColumn('author', function ($news) {
-                return $news->user->name;
+            ->addColumn('username', function ($news) {
+                return $news->user->username;
             })
             ->editColumn('categories', function ($news) {
                 return $news->categories->map(function ($category) {
@@ -167,5 +167,11 @@ class NewsController extends Controller
     {
         $this->news->delete($id);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.news.index')->withFlashSuccess('新闻删除成功');
+    }
+
+    public function info(Request $request)
+    {
+        $news = News::select('id', 'title', 'created_at')->where('title', 'like', "%$request->q%")->paginate();
+        return response()->json($news);
     }
 }

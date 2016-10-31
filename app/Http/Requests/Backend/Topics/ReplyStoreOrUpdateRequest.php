@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Backend\Comments;
+namespace App\Http\Requests\Backend\Topics;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CommentStoreOrUpdateRequest extends FormRequest
+class ReplyStoreOrUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class CommentStoreOrUpdateRequest extends FormRequest
         return [
             'content' => 'required',
             'user_id' => 'required',
-            'news_id' => 'required',
+            'topic_id' => 'required',
             'is_blocked' => 'required'
         ];
     }
@@ -34,9 +34,9 @@ class CommentStoreOrUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'content.required' => '评论内容不能为空',
+            'content.required' => '回复内容不能为空',
             'user_id.required' => '用户不能为空',
-            'topic_id.required' => '新闻不能为空'
+            'topic_id.required' => '话题不能为空'
         ];
     }
 }

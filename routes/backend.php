@@ -94,8 +94,22 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::post('categories/move', 'CategoryController@move')->name('categories.move');
         Route::post('categories/copy', 'CategoryController@copy')->name('categories.copy');
         Route::post('categories/rename', 'CategoryController@rename')->name('categories.rename');
+        //评论
+        Route::group(['as' => 'comments.', 'prefix' => 'comments'], function () {
+            Route::get('/get', 'CommentController@get')->name('get');
+            Route::post('/', 'CommentController@store')->name('store');
+            Route::get('/', 'CommentController@index')->name('index');
+            Route::get('/create', 'CommentController@create')->name('create');
+            Route::match(['put', 'patch'], '/{comment}', 'CommentController@update')->name('update');
+            Route::delete('/{comment}', 'CommentController@destroy')->name('destroy');
+            Route::get('/{comment}', 'CommentController@show')->name('show');
+            Route::get('/{comment}/edit', 'CommentController@edit')->name('edit');
+            Route::get('/deleted/{comment}', 'CommentController@deleted')->name('deleted');
+            Route::get('/{comment}/restore', 'CommentController@restore')->name('restore');
+        });
         //新闻
         Route::get('/get', 'NewsController@get')->name('get');
+        Route::get('/ajax', 'NewsController@info')->name('ajax.info');
         Route::post('/', 'NewsController@store')->name('store');
         Route::get('/', 'NewsController@index')->name('index');
         Route::get('/create', 'NewsController@create')->name('create');
@@ -212,12 +226,6 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/{tag}/restore', 'IndexController@restore')->name('restore');
     });
 
-    //评论
-    Route::group(['namespace' => 'Comments', 'as' => 'comments.', 'prefix' => 'comments'], function () {
-        Route::get('/get', 'CommentController@get')->name('get');
-        Route::resource('/', 'CommentController');
-    });
-
     //收藏
     Route::group(['namespace' => 'Favorites', 'as' => 'favorites.', 'prefix' => 'favorites'], function () {
         Route::get('/get', 'FavoriteController@get')->name('get');
@@ -255,6 +263,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::post('/', 'TopicController@store')->name('store');
         Route::get('/', 'TopicController@index')->name('index');
         Route::get('/create', 'TopicController@create')->name('create');
+        Route::get('/ajax', 'TopicController@info')->name('ajax.info');
         Route::match(['put', 'patch'], '/{topic}', 'TopicController@update')->name('update');
         Route::delete('/{topic}', 'TopicController@destroy')->name('destroy');
         Route::get('/{topic}', 'TopicController@show')->name('show');
@@ -265,16 +274,16 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
 
     //回帖
     Route::group(['namespace' => 'Topics', 'as' => 'replies.', 'prefix' => 'replies'], function () {
-        Route::get('/get', 'RepliyController@get')->name('get');
-        Route::post('/', 'RepliyController@store')->name('store');
-        Route::get('/', 'RepliyController@index')->name('index');
-        Route::get('/create', 'RepliyController@create')->name('create');
-        Route::match(['put', 'patch'], '/{repliy}', 'RepliyController@update')->name('update');
-        Route::delete('/{repliy}', 'RepliyController@destroy')->name('destroy');
-        Route::get('/{repliy}', 'RepliyController@show')->name('show');
-        Route::get('/{repliy}/edit', 'RepliyController@edit')->name('edit');
-        Route::get('/deleted/{repliy}', 'RepliyController@deleted')->name('deleted');
-        Route::get('/{repliy}/restore', 'RepliyController@restore')->name('restore');
+        Route::get('/get', 'ReplyController@get')->name('get');
+        Route::post('/', 'ReplyController@store')->name('store');
+        Route::get('/', 'ReplyController@index')->name('index');
+        Route::get('/create', 'ReplyController@create')->name('create');
+        Route::match(['put', 'patch'], '/{reply}', 'ReplyController@update')->name('update');
+        Route::delete('/{reply}', 'ReplyController@destroy')->name('destroy');
+        Route::get('/{reply}', 'ReplyController@show')->name('show');
+        Route::get('/{reply}/edit', 'ReplyController@edit')->name('edit');
+        Route::get('/deleted/{reply}', 'ReplyController@deleted')->name('deleted');
+        Route::get('/{reply}/restore', 'ReplyController@restore')->name('restore');
     });
 
     //媒体库

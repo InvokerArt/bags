@@ -18,10 +18,10 @@ class CreateCommentsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('parent_id')->nullable();
-            $table->text('body');
+            $table->text('content');
             $table->integer('commentable_id');
             $table->string('commentable_type');
-            $table->tinyInteger('status')->default(1)->comment('状态//0回收站//1待审核//2通过');
+            $table->enum('is_blocked', ['yes',  'no'])->default('no')->index();
             $table->timestamps();
             $table->softDeletes();
         });

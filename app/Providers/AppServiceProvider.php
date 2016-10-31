@@ -79,6 +79,14 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Backend\News\CategoryInterface::class,
             \App\Repositories\Backend\News\CategoryRepository::class
         );
+
+        /**
+         * 评论
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Comments\CommentInterface::class,
+            \App\Repositories\Backend\Comments\CommentRepository::class
+        );
         
         /**
          * 展会
@@ -198,6 +206,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\Backend\Topics\CategoryInterface::class,
             \App\Repositories\Backend\Topics\CategoryRepository::class
+        );
+
+        /**
+         * 回复
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Topics\ReplyInterface::class,
+            \App\Repositories\Backend\Topics\ReplyRepository::class
         );
     }
 }

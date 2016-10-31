@@ -54,17 +54,17 @@
                             </select>
                         </td>
                         <td>
-                            <select name="excellent" class="form-control form-filter input-sm select2">
+                            <select name="is_excellent" class="form-control form-filter input-sm select2">
                                 <option value="">请选择</option>
                                 <option value="yes"> 是 </option>
-                                <option value="yes"> 否 </option>
+                                <option value="no"> 否 </option>
                             </select>
                         </td>
                         <td>
-                            <select name="blocked" class="form-control form-filter input-sm select2">
+                            <select name="is_blocked" class="form-control form-filter input-sm select2">
                                 <option value="">请选择</option>
                                 <option value="yes"> 是 </option>
-                                <option value="yes"> 否 </option>
+                                <option value="no"> 否 </option>
                             </select>
                         </td>
                         <td>
@@ -129,11 +129,11 @@
                         {data: 'id', name: 'id',"orderable": true,"searchable": true},
                         {data: 'title', name: 'title',"orderable": true,"searchable": true},
                         {data: 'username', name: 'username',"orderable": false,"searchable": true},
-                        {data: 'category', name: 'category_id',"orderable": false,"searchable": true},
-                        {data: 'excellent', name: 'excellent',"orderable": false,"searchable": true},
-                        {data: 'blocked', name: 'blocked',"orderable": false,"searchable": true},
-                        {data: 'repliy', name: 'repliy',"orderable": true,"searchable": false},
-                        {data: 'vote', name: 'vote',"orderable": true,"searchable": false},
+                        {data: 'category', name: 'category',"orderable": false,"searchable": true},
+                        {data: 'is_excellent', name: 'is_excellent',"orderable": false,"searchable": true},
+                        {data: 'is_blocked', name: 'is_blocked',"orderable": false,"searchable": true},
+                        {data: 'reply_count', name: 'reply_count',"orderable": true,"searchable": false},
+                        {data: 'vote_count', name: 'vote_count',"orderable": true,"searchable": false},
                         {data: 'created_at', name: 'created_at',"orderable": true,"searchable": true},
                         {data: 'actions', name: '', orderable: false, searchable: false}
                     ],

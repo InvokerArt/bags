@@ -8,44 +8,6 @@ use App\Models\News\Traits\Relationship\NewsRelationship;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * App\Models/News\News
- *
- * @property integer $id
- * @property integer $user_id
- * @property string $slug 固定链接地址
- * @property string $title 标题
- * @property string $subtitle 副标题
- * @property string $content 内容
- * @property string $image 标题图片
- * @property integer $hits 浏览数
- * @property \Illuminate\Database\Eloquent\Collection|\App\Models/Comments\Comment[] $comments 评论数
- * @property boolean $status 状态//0回收站//1已发布//2未来发布
- * @property \Carbon\Carbon $published_at 发布于
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property string $deleted_at
- * @property-read \Baum\Extensions\Eloquent\Collection|\App\Models/News\CategoriesNews[] $categories
- * @property-read \App\Models\Access\User\User $user
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models/Tags\Tag[] $tags
- * @property-read mixed $checkbox_button
- * @property-read mixed $action_buttons
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereSlug($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereTitle($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereSubtitle($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereContent($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereImage($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereHits($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereComments($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News wherePublishedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/News\News whereDeletedAt($value)
- * @mixin \Eloquent
- */
 class News extends Model
 {
     use SoftDeletes, NewsRelationship, NewsAttribute;

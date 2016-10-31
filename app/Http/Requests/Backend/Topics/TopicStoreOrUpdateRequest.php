@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Backend\Topics;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class TopicStoreOrUpdateRequest extends Request
+class TopicStoreOrUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,18 @@ class TopicStoreOrUpdateRequest extends Request
         return [
             'title' => 'required',
             //'slug' => 'required|alpha_dash',
-            'subtitle' => 'required',
             'content' => 'required',
-            'categories_id' => 'required'
+            'user_id' => 'required',
+            'is_excellent' => 'required',
+            'is_blocked' => 'required',
+            'category_id' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'category_id.required' => '分类不能为空',
         ];
     }
 }

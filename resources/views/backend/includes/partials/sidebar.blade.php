@@ -31,11 +31,11 @@
                     <span class="arrow{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.news*'), ' open') }}""></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.news*')) }}">
+                    <li class="{{ active_class(if_route_pattern([env('APP_BACKEND_PREFIX').'.news.index', env('APP_BACKEND_PREFIX').'.news.create', env('APP_BACKEND_PREFIX').'.news.edit'])) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.news.index') }}">资讯</a>
                     </li>
-                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.comments*'), 'active open') }}">
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.comments.index') }}">评论</a>
+                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.news.comments*'), 'active open') }}">
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.news.comments.index') }}">评论</a>
                     </li>
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.tags*'), 'active open') }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.tags.index') }}">标签</a>
@@ -52,7 +52,7 @@
                     <span class="arrow{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.exhibitions*'), ' open') }}"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.exhibitions*')) }}">
+                    <li class="{{ active_class(if_route_pattern([env('APP_BACKEND_PREFIX').'.exhibitions.index', env('APP_BACKEND_PREFIX').'.exhibitions.create', env('APP_BACKEND_PREFIX').'.exhibitions.edit'])) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.exhibitions.index') }}">展会</a>
                     </li>
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.exhibitions.categories*')) }}">
@@ -94,7 +94,7 @@
                     <span class="arrow{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.topics*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.replies*'), ' open') }}"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.topics*')) }}">
+                    <li class="{{ active_class(if_route_pattern([env('APP_BACKEND_PREFIX').'.topics.index', env('APP_BACKEND_PREFIX').'.topics.create', env('APP_BACKEND_PREFIX').'.topics.edit'])) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.topics.index') }}">话题</a>
                     </li>
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.replies*')) }}">
@@ -112,7 +112,7 @@
                     <span class="arrow{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.companies*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.jobs*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.joins*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.certifications*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.products*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.demands*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.supplies*'), ' open') }}"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.companies*')) }}">
+                    <li class="{{ active_class(if_route_pattern([env('APP_BACKEND_PREFIX').'.companies.index', env('APP_BACKEND_PREFIX').'.companies.create', env('APP_BACKEND_PREFIX').'.companies.edit'])) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.companies.index') }}">公司</a>
                     </li>
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.jobs*')) }}">

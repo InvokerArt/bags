@@ -2,35 +2,35 @@
 
 namespace App\Models\Comments;
 
+use App\Models\Comments\Traits\Attribute\CommentAttribute;
+use App\Models\Comments\Traits\Relationship\CommentRelationship;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Comments\Traits\Relationship\CommentsRelationship;
 
-/**
- * App\Models/Comments\Comment
- *
- * @property integer $id
- * @property integer $user_id
- * @property integer $parent_id
- * @property string $body
- * @property integer $commentable_id
- * @property string $commentable_type
- * @property boolean $status 状态//0回收站//1待审核//2通过
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property string $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Models/Comments\Comment whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/Comments\Comment whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/Comments\Comment whereParentId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/Comments\Comment whereBody($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/Comments\Comment whereCommentableId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/Comments\Comment whereCommentableType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/Comments\Comment whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/Comments\Comment whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/Comments\Comment whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models/Comments\Comment whereDeletedAt($value)
- * @mixin \Eloquent
- */
 class Comment extends Model
 {
-    use CommentsRelationship;
+    use CommentAttribute, CommentRelationship;
+
+    public static function commentFilter($query, $request)
+    {
+        if ($request->has('id')) {
+            $query = $query->where('comments.id', $request->get('id'));
+        }
+
+        if ($request->has('username')) {
+            $query->whereHas('user', function($query) use ($request)
+            {
+                $query = $query->where('username', 'like', "%{$request->get('username')}%");
+            });
+        }
+
+        if ($request->has('content')) {
+            $query = $query->where('comments.content', 'like', "%{$request->get('content')}%");
+        }
+
+        if ($request->has('title')) {
+            $query = $query->select('comments.*', 'news.title')->leftJoin('news', 'news.id', 'comments.commentable_id')->where('news.title', 'like', "%{$request->get('title')}%")->orderBy('comments.id');
+        }
+
+        return $query;
+    }
 }
