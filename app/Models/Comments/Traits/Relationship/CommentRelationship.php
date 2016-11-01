@@ -17,8 +17,8 @@ trait CommentRelationship
     }
 
     //评论一对一反向
-    public function commentToUser()
+    public function commentTo()
     {
-        return $this->belongsTo('App\Models\Users\User', 'parent_id');
+        return $this->belongsTo('App\Models\Comments\comment', 'parent_id');
     }
 }

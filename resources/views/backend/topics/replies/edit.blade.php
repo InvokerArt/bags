@@ -10,6 +10,7 @@
 
 @section('content')
 {{ Form::model($reply, ['route' => [env('APP_BACKEND_PREFIX').'.replies.update', $reply], 'method' => 'PATCH', 'id' => 'edit-reply']) }}
+    {{ Form::hidden('parent_id', $reply->id) }}
     <div id="poststuff">
         <div class="left-body-content">
             <div class="replies-body">
@@ -30,12 +31,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">话题</label>
-                        {{ Form::select('topic_id', [$reply->topic_id => $reply->title], $reply->topic_id, ['class' => 'form-control topic-ajax']) }}
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">回复用户</label>
-                        {{ Form::select('topic_id', [$reply->parent_id => $reply->replyToUser], $reply->parent_id, ['class' => 'form-control user-ajax']) }}
-                        <span class="help-block font-red">可为空</span>
+                        {{ Form::select('topic_id', [$reply->topic_id => $reply->title], $reply->topic_id, ['class' => 'form-control topic-ajax', 'readonly' => true]) }}
                     </div>
                     <div class="form-group">
                         <label class="control-label">是否屏蔽</label>
@@ -108,47 +104,6 @@
                 minimumInputLength: 1,
                 templateResult: formatUser,
                 templateSelection: formatUserSelection
-            }); 
-
-            //话题资料
-            function formatTopic(topic) {
-                if (topic.loading) return topic.text;
-                var markup = "<div class='select2-result-label'>" +
-                "<span class='select2-match'>" + topic.title + "</span>" +
-                "</div>";
-                return markup;
-            }
-
-            function formatTopicSelection(topic) {
-                return topic.title || topic.text;
-            }
-            $(".topic-ajax").select2({
-                ajax: {
-                    url: "{{ route(env('APP_BACKEND_PREFIX').'.topics.ajax.info') }}",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            q: params.term, // search term
-                            page: params.page || 1
-                        };
-                    },
-                    processResults: function(data, page) {
-                        return {
-                            results: data.data
-                        };
-                    },
-                    cache: true,
-                    pagination: {
-                        more: true
-                    }
-                },
-                escapeMarkup: function(markup) {
-                    return markup;
-                }, // let our custom formatter work
-                minimumInputLength: 1,
-                templateResult: formatTopic,
-                templateSelection: formatTopicSelection
             });
         })
 

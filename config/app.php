@@ -215,6 +215,7 @@
         JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider::class,
         //日志插件
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
+        App\Providers\ExceptionsServiceProvider::class,
     ],
 
     /*

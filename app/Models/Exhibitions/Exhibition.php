@@ -23,6 +23,10 @@ class Exhibition extends Model
         'user_id',
     ];
 
+    protected $dates = [
+        'published_at'
+    ];
+
     public static function exhibitionsFilter($query, $request)
     {
         if ($request->has('id')) {

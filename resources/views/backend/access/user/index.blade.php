@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('page-title')
-    管理员列表
+    管理员
 @stop
 @section('content')
 <div class="portlet light portlet-fit portlet-datatable bordered">

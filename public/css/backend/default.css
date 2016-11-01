@@ -14788,6 +14788,9 @@ body.stop-scrolling {
 .input-group#price .select2 {
   width: 80px !important; }
 
+#comments-table p, #replies-table p {
+  margin: .6em 0; }
+
 @charset "UTF-8";
 /******************************
  3RD PARTY PLUGIN CUSTOMIZATION 

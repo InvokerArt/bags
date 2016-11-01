@@ -2,7 +2,7 @@
 
 namespace App\Models\Topics;
 
-use App\Models\Access\User\User;
+use App\Models\Users\User;
 use App\Models\Topics\Traits\Attribute\ReplyAttribute;
 use App\Models\Topics\Traits\Relationship\ReplyRelationship;
 use Illuminate\Database\Eloquent\Model;

@@ -14,7 +14,7 @@ trait CompanyRelationship
     //用户一对多反向
     public function user()
     {
-        return $this->belongsTo('App\Models\Access\User\User');
+        return $this->belongsTo('App\Models\Users\User');
     }
 
     //添加分类数据到中间表

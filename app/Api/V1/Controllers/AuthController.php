@@ -8,11 +8,10 @@ use App\Api\V1\Requests\UserResetRequest;
 use App\Api\V1\Requests\UserStoreRequest;
 use App\Api\V1\Requests\UserUpdateRequest;
 use App\Api\V1\Transformers\UserTransformer;
-use App\Models\Access\User\User;
+use App\Models\Users\User;
 use Auth;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Hash;
+use Illuminate\Http\Request;
 use SmsManager;
 
 class AuthController extends BaseController
@@ -54,7 +53,7 @@ class AuthController extends BaseController
             ],
         ]);
 
-        return json_decode((string) $response->getBody(), true);
+        return $this->response->array(json_decode((string) $response->getBody(), true));
     }
 
     /**
@@ -85,7 +84,7 @@ class AuthController extends BaseController
         try {
             // 创建用户成功
             $user->save();
-            return response($user);
+            return $this->response->created($user);
         } catch (\Exception $e) {
             return $this->response->errorBadRequest($e->getMessage());
         }
@@ -189,7 +188,7 @@ class AuthController extends BaseController
 
         $res = SmsManager::requestVerifySms();
 
-        return response()->json($res);
+        return $this->response->array($res);
     }
 
     //刷新token
@@ -204,7 +203,7 @@ class AuthController extends BaseController
             ],
         ]);
 
-        return json_decode((string) $response->getBody(), true);
+        return $this->response->array(json_decode((string) $response->getBody(), true));
     }
 
     /**
@@ -216,22 +215,21 @@ class AuthController extends BaseController
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
-     *      {
-     *          "id": 1,
-     *          "name": "test",
-     *          "mobile": "xxxxxxxxxxx",
-     *          "email": "test@test.com",
-     *          "avatar": "",
-     *          "status": 1,
-     *          "created_at": "2016-10-14 13:26:59",
-     *          "updated_at": "2016-10-14 13:26:59",
-     *          "deleted_at": ""
-     *      }
+    {
+        "data": {
+            "id": 1,
+            "username": "13111111111",
+            "mobile": "13111111111",
+            "email": "admin@admin.com",
+            "avatar": "/uploads/avatars/20161101205749.png",
+            "created_at": "2016-10-28 16:01:50"
+        }
+    }
      */
     public function userme(Request $request)
     {
-        $user = $request->user()->toArray();
-        return response(formatArray($user));
+        $user = $request->user()->first();
+        return $this->response->item($user, new UserTransformer());
     }
 
     // public function users(Request $request)

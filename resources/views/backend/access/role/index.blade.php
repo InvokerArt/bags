@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('page-title')
-    角色列表
+    角色
 @stop
 
 @section('content')

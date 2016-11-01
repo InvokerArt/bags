@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('page-title')
-    权限列表
+    权限
 @stop
 
 @section('content')

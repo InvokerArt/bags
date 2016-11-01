@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('page-title')
-    产品列表
+    产品
 @stop
 @section('content')
 <div class="portlet light portlet-fit portlet-datatable bordered">

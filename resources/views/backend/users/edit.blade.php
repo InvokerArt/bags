@@ -50,6 +50,7 @@
                                         <img src="{{ $user->avatar }}" class="user-profile-image" />
                                     </div>
                                 </div>
+                                <input type="hidden" name="avatar" id="avatar">
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">

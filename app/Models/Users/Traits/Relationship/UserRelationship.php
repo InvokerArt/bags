@@ -23,6 +23,16 @@ trait UserRelationship
         return $this->hasMany('App\Models\News\News');
     }
 
+    public function jobs()
+    {
+        return $this->hasMany('App\Models\Jobs\Job');
+    }
+
+    public function products()
+    {
+        return $this->hasMany('App\Models\Products\Product');
+    }
+
     public function company()
     {
         return $this->hasOne('App\Models\Companies\company');

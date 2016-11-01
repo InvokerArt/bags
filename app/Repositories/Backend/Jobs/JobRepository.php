@@ -21,14 +21,14 @@ class JobRepository implements JobInterface
 
     public function create($input)
     {
-        $user = User::where('username', $input['username'])->first();
+        $user = User::where('id', $input['user_id'])->first();
 
         if (!$user) {
             throw new GeneralException("会员不存在！");
         }
 
         $job = new Job;
-        $job->user_id = $user->id;
+        $job->user_id = $input['user_id'];
         $job->content = $input['content'];
 
         DB::transaction(function () use ($job) {

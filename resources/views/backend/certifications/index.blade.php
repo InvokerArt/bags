@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('page-title')
-    认证列表
+    认证
 @stop
 @section('content')
 <div class="portlet light portlet-fit portlet-datatable bordered">

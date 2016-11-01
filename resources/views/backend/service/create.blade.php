@@ -1,6 +1,6 @@
 @extends('backend.layout')
 @section('page_title')
-<h1>添加一级分类服务<span class="middle-sep mg-x-10"></span><a href="{{ asset('/admin/service/all') }}" class="btn btn-info">返回列表</a></h1>
+<h1>添加一级分类服务<span class="middle-sep mg-x-10"></span><a href="{{ asset('/admin/service/all') }}" class="btn btn-info">返回</a></h1>
 @stop
 @section('content')
 <div class="row">

@@ -1,6 +1,6 @@
 @extends('backend.layout')
 @section('page_title')
-<h1>编辑服务“{{$service->name}}”<span class="middle-sep mg-x-10"></span><a href="{{url('/admin/service/all')}}" class="btn btn-info">返回列表</a></h1>
+<h1>编辑服务“{{$service->name}}”<span class="middle-sep mg-x-10"></span><a href="{{url('/admin/service/all')}}" class="btn btn-info">返回</a></h1>
 @stop
 @section('content')
 <div class="row">

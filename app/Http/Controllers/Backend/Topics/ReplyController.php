@@ -105,12 +105,21 @@ class ReplyController extends Controller
         $user = $reply->user()->select('username')->first();
         $topic = $reply->topic()->select('title')->first();
         $reply->username = $user->username;
-        if ($reply->parent_id) {
-            $replyToUser = $reply->replyToUser()->select('username')->first();
-            $reply->replyToUser = $replyToUser->username;
-        }
         $reply->title = $topic->title;
         return view('backend.topics.replies.edit', compact('reply'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function replyto(Reply $reply)
+    {
+        $topic = $reply->topic()->select('title')->first();
+        $reply->title = $topic->title;
+        return view('backend.topics.replies.replyto', compact('reply'));
     }
 
     /**

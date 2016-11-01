@@ -25,8 +25,6 @@ class NewsRepository implements NewsInterface
         $this->tags = $tags;
     }
 
-
-
     public function getForDataTable()
     {
         /**
@@ -116,7 +114,7 @@ class NewsRepository implements NewsInterface
 
     public function destroy($id)
     {
-        $news = News::find($id);
+        $news = $this->findOrThrowException($id);
         if ($news->delete()) {
             return true;
         }
@@ -125,7 +123,7 @@ class NewsRepository implements NewsInterface
 
     public function restore($id)
     {
-        $news = News::find($id);
+        $news = $this->findOrThrowException($id);
         if ($news->restore()) {
             return true;
         }
@@ -134,10 +132,21 @@ class NewsRepository implements NewsInterface
 
     public function delete($id)
     {
-        $news = News::find($id);
+        $news = $this->findOrThrowException($id);
         if ($news->forceDelete()) {
             return true;
         }
         throw new GeneralException('删除失败！');
+    }
+
+    public function findOrThrowException($id)
+    {
+        $news = News::withTrashed()->find($id);
+
+        if (!is_null($news)) {
+            return $news;
+        }
+
+        throw new GeneralException('未找到需求信息');
     }
 }

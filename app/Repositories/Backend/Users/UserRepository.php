@@ -81,6 +81,7 @@ class UserRepository implements UserInterface
         $user->mobile = $input->mobile;
         $user->name = $input->name;
         $user->email = $input->email;
+
         if ($input->avatar) {
             $user->avatar = $input->avatar;
         }
@@ -89,7 +90,6 @@ class UserRepository implements UserInterface
         }
 
         DB::transaction(function () use ($user) {
-
             if ($user->update()) {
                 return true;
             }

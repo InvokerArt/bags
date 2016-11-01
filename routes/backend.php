@@ -104,6 +104,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
             Route::delete('/{comment}', 'CommentController@destroy')->name('destroy');
             Route::get('/{comment}', 'CommentController@show')->name('show');
             Route::get('/{comment}/edit', 'CommentController@edit')->name('edit');
+            Route::get('/{comment}/commentto', 'CommentController@commentto')->name('commentto');
             Route::get('/deleted/{comment}', 'CommentController@deleted')->name('deleted');
             Route::get('/{comment}/restore', 'CommentController@restore')->name('restore');
         });
@@ -282,6 +283,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{reply}', 'ReplyController@destroy')->name('destroy');
         Route::get('/{reply}', 'ReplyController@show')->name('show');
         Route::get('/{reply}/edit', 'ReplyController@edit')->name('edit');
+        Route::get('/{reply}/replyto', 'ReplyController@replyto')->name('replyto');
         Route::get('/deleted/{reply}', 'ReplyController@deleted')->name('deleted');
         Route::get('/{reply}/restore', 'ReplyController@restore')->name('restore');
     });

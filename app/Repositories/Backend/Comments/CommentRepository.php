@@ -23,18 +23,20 @@ class CommentRepository implements CommentInterface
         }
         if ($input['parent_id']) {
             //查询评论新闻和用户是否存在
-            $commentReady = Comment::where('news_id', $input['news_id'])->where('user_id', $input['parent_id'])->first();
-            if ($commentReady) {
-                $comment->parent_id = $commentReady->id;
-            } else {
+            $commentReady = Comment::where('commentable_id', $input['news_id'])->where('id', $input['parent_id'])->first();
+            if (!$commentReady) {
                 throw new GeneralException("添加失败，评论用户不存在！");
             }
+            $comment->parent_id = $input['parent_id'];
         }
         $comment->content = $input['content'];
         $comment->is_blocked = $input['is_blocked'];
         $comment->user_id = $input['user_id'];
+
         DB::transaction(function () use ($news, $comment) {
             if ($news->comments()->save($comment)) {
+                $news->comment_count++;
+                $news->save();
                 return true;
             }
 
@@ -44,24 +46,21 @@ class CommentRepository implements CommentInterface
 
     public function update(Comment $comment, $input)
     {
-        $topic = Topic::find($input['news_id']);
-        if (!$topic) {
-            throw new GeneralException("更新失败，评论新闻不存在！");
+        $news = News::find($input['news_id']);
+        if (!$news) {
+            throw new GeneralException("添加失败，评论新闻不存在！");
         }
         if ($input['parent_id']) {
             //查询评论新闻和用户是否存在
-            $commentReady = Comment::where('news_id', $input['news_id'])->where('user_id', $input['parent_id'])->first();
-            if ($commentReady) {
-                $comment->parent_id = $commentReady->id;
-            } else {
-                throw new GeneralException("更新失败，评论用户不存在！");
+            $commentReady = Comment::where('commentable_id', $input['news_id'])->where('id', $input['parent_id'])->first();
+            if (!$commentReady) {
+                throw new GeneralException("添加失败，评论用户不存在！");
             }
+            $comment->parent_id = $input['parent_id'];
         }
         $comment->content = $input['content'];
-        $comment->news_id = $input['news_id'];
-        $comment->user_id = $input['user_id'];
         $comment->is_blocked = $input['is_blocked'];
-        $comment->vote_count = $input['vote_count'];
+        $comment->user_id = $input['user_id'];
 
         DB::transaction(function () use ($comment) {
             if ($comment->update()) {
@@ -76,6 +75,7 @@ class CommentRepository implements CommentInterface
     {
         $comment = $this->findOrThrowException($id);
         if ($comment->delete()) {
+            $comment->commentable()->decrement('comment_count', 1);
             return true;
         }
         throw new GeneralException('删除失败！');
@@ -85,6 +85,7 @@ class CommentRepository implements CommentInterface
     {
         $comment = $this->findOrThrowException($id);
         if ($comment->restore()) {
+            $comment->commentable()->increment('comment_count', 1);
             return true;
         }
         throw new GeneralException('返回失败！');

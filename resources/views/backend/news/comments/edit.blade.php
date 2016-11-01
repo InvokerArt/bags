@@ -9,7 +9,8 @@
 @stop
 
 @section('content')
-{{ Form::model($comment, ['route' => [env('APP_BACKEND_PREFIX').'.comments.update', $comment], 'method' => 'PATCH', 'id' => 'edit-comment']) }}
+{{ Form::model($comment, ['route' => [env('APP_BACKEND_PREFIX').'.news.comments.update', $comment], 'method' => 'PATCH', 'id' => 'edit-comment']) }}
+    {{ Form::hidden('parent_id', $comment->parent_id) }}
     <div id="poststuff">
         <div class="left-body-content">
             <div class="comments-body">
@@ -29,13 +30,8 @@
                         {{ Form::select('user_id', [$comment->user_id => $comment->username], $comment->user_id, ['class' => 'form-control user-ajax']) }}
                     </div>
                     <div class="form-group">
-                        <label class="control-label">话题</label>
-                        {{ Form::select('topic_id', [$comment->topic_id => $comment->title], $comment->topic_id, ['class' => 'form-control topic-ajax']) }}
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">评论用户</label>
-                        {{ Form::select('topic_id', [$comment->parent_id => $comment->commentToUser], $comment->parent_id, ['class' => 'form-control user-ajax']) }}
-                        <span class="help-block font-red">可为空</span>
+                        <label class="control-label">新闻</label>
+                        {{ Form::select('news_id', [$comment->commentable_id => $comment->title], $comment->commentable_id, ['class' => 'form-control news-ajax', 'readonly' => true]) }}
                     </div>
                     <div class="form-group">
                         <label class="control-label">是否屏蔽</label>
@@ -104,47 +100,6 @@
                 minimumInputLength: 1,
                 templateResult: formatUser,
                 templateSelection: formatUserSelection
-            }); 
-
-            //话题资料
-            function formatTopic(topic) {
-                if (topic.loading) return topic.text;
-                var markup = "<div class='select2-result-label'>" +
-                "<span class='select2-match'>" + topic.title + "</span>" +
-                "</div>";
-                return markup;
-            }
-
-            function formatTopicSelection(topic) {
-                return topic.title || topic.text;
-            }
-            $(".topic-ajax").select2({
-                ajax: {
-                    url: "{{ route(env('APP_BACKEND_PREFIX').'.topics.ajax.info') }}",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            q: params.term, // search term
-                            page: params.page || 1
-                        };
-                    },
-                    processResults: function(data, page) {
-                        return {
-                            results: data.data
-                        };
-                    },
-                    cache: true,
-                    pagination: {
-                        more: true
-                    }
-                },
-                escapeMarkup: function(markup) {
-                    return markup;
-                }, // let our custom formatter work
-                minimumInputLength: 1,
-                templateResult: formatTopic,
-                templateSelection: formatTopicSelection
             });
         })
 

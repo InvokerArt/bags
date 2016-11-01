@@ -33,11 +33,6 @@
                         {{ Form::select('topic_id', [], null, ['class' => 'form-control topic-ajax']) }}
                     </div>
                     <div class="form-group">
-                        <label class="control-label">回复用户</label>
-                        {{ Form::select('parent_id', [], null, ['class' => 'form-control user-ajax']) }}
-                        <span class="help-block font-red">可为空</span>
-                    </div>
-                    <div class="form-group">
                         <label class="control-label">是否屏蔽</label>
                         {{ Form::select('is_blocked', ['' => '请选择', 'yes' => '是','no' => '否'], 'no', ['class' => 'form-control input-sm select2']) }}
                     </div>

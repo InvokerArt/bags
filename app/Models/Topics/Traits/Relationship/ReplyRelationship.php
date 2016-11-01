@@ -7,7 +7,7 @@ trait ReplyRelationship
     //用户一对多反向
     public function user()
     {
-        return $this->belongsTo('App\Models\Access\User\User');
+        return $this->belongsTo('App\Models\Users\User');
     }
 
     //话题一对一反向
@@ -17,8 +17,8 @@ trait ReplyRelationship
     }
 
     //话题一对一反向
-    public function replyToUser()
+    public function replyTo()
     {
-        return $this->belongsTo('App\Models\Access\User\User', 'parent_id');
+        return $this->belongsTo('App\Models\Topics\Reply', 'parent_id');
     }
 }

@@ -154,7 +154,7 @@ class NewsController extends Controller
     public function restore($id)
     {
         $this->news->restore($id);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.index')->withFlashSuccess('新闻删除成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.index')->withFlashSuccess('新闻恢复成功');
     }
 
     /**

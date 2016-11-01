@@ -4,9 +4,8 @@ namespace App\Repositories\Backend\Topics;
 
 use App\Exceptions\GeneralException;
 use App\Models\Topics\Reply;
-use App\Models\Topics\ReplyCategory;
+use App\Models\Topics\Topic;
 use DB;
-use Auth;
 
 /**
  * Class EloquentUserRepository
@@ -30,12 +29,11 @@ class ReplyRepository implements ReplyInterface
         }
         if ($input['parent_id']) {
             //查询回复话题和用户是否存在
-            $replyReady = Reply::where('topic_id', $input['topic_id'])->where('user_id', $input['parent_id'])->first();
-            if ($replyReady) {
-                $reply->parent_id = $replyReady->id;
-            } else {
+            $replyReady = Reply::where('topic_id', $input['topic_id'])->where('id', $input['parent_id'])->first();
+            if (!$replyReady) {
                 throw new GeneralException("添加失败，回复用户不存在！");
             }
+            $reply->parent_id = $input['parent_id'];
         }
         $reply->content = $input['content'];
         $reply->topic_id = $input['topic_id'];
@@ -43,8 +41,11 @@ class ReplyRepository implements ReplyInterface
         $reply->is_blocked = $input['is_blocked'];
         $reply->vote_count = $input['vote_count'];
 
-        DB::transaction(function () use ($reply) {
+        DB::transaction(function () use ($reply, $topic) {
             if ($reply->save()) {
+                $topic->reply_count++;
+                $topic->last_reply_user_id = $reply->user_id;
+                $topic->save();
                 return true;
             }
 
@@ -56,16 +57,15 @@ class ReplyRepository implements ReplyInterface
     {
         $topic = Topic::find($input['topic_id']);
         if (!$topic) {
-            throw new GeneralException("更新失败，回复话题不存在！");
+            throw new GeneralException("添加失败，回复话题不存在！");
         }
         if ($input['parent_id']) {
             //查询回复话题和用户是否存在
-            $replyReady = Reply::where('topic_id', $input['topic_id'])->where('user_id', $input['parent_id'])->first();
-            if ($replyReady) {
-                $reply->parent_id = $replyReady->id;
-            } else {
-                throw new GeneralException("更新失败，回复用户不存在！");
+            $replyReady = Reply::where('topic_id', $input['topic_id'])->where('id', $input['parent_id'])->first();
+            if (!$replyReady) {
+                throw new GeneralException("添加失败，回复用户不存在！");
             }
+            $reply->parent_id = $input['parent_id'];
         }
         $reply->content = $input['content'];
         $reply->topic_id = $input['topic_id'];
@@ -73,8 +73,10 @@ class ReplyRepository implements ReplyInterface
         $reply->is_blocked = $input['is_blocked'];
         $reply->vote_count = $input['vote_count'];
 
-        DB::transaction(function () use ($reply) {
+        DB::transaction(function () use ($reply, $topic) {
             if ($reply->update()) {
+                $topic->last_reply_user_id = $reply->user_id;
+                $topic->save();
                 return true;
             }
 
@@ -86,6 +88,7 @@ class ReplyRepository implements ReplyInterface
     {
         $reply = $this->findOrThrowException($id);
         if ($reply->delete()) {
+            $reply->topic()->decrement('reply_count', 1);
             return true;
         }
         throw new GeneralException('删除失败！');
@@ -95,6 +98,7 @@ class ReplyRepository implements ReplyInterface
     {
         $reply = $this->findOrThrowException($id);
         if ($reply->restore()) {
+            $reply->topic()->increment('reply_count', 1);
             return true;
         }
         throw new GeneralException('返回失败！');

@@ -5,10 +5,11 @@ namespace App\Models\Comments;
 use App\Models\Comments\Traits\Attribute\CommentAttribute;
 use App\Models\Comments\Traits\Relationship\CommentRelationship;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
-    use CommentAttribute, CommentRelationship;
+    use SoftDeletes, CommentAttribute, CommentRelationship;
 
     public static function commentFilter($query, $request)
     {
@@ -17,8 +18,7 @@ class Comment extends Model
         }
 
         if ($request->has('username')) {
-            $query->whereHas('user', function($query) use ($request)
-            {
+            $query->whereHas('user', function ($query) use ($request) {
                 $query = $query->where('username', 'like', "%{$request->get('username')}%");
             });
         }

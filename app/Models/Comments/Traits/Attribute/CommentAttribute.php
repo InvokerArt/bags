@@ -21,16 +21,17 @@ trait CommentAttribute
     public function getParentContentAttribute()
     {
         if ($this->parent_id) {
-            $commentToUser = $this->commentToUser()->first();
-            return '评论给 <a href="' . route(env('APP_BACKEND_PREFIX').'.users.edit', $this->parent_id) . '" target="_blank">'.$commentToUser->username.'</a>'.$this->content;
+            $commentTo = $this->commentTo()->first();
+            $commentToUser = $commentTo->user()->first();
+            return '评论给 <a href="' . route(env('APP_BACKEND_PREFIX').'.users.edit', $this->parent_id) . '" target="_blank">'.$commentToUser->username.'</a>'.$this->content.'<a href="' . route(env('APP_BACKEND_PREFIX').'.news.comments.commentto', $this->id) . '">回复</a>';
         } else {
-            return $this->content;
+            return $this->content.'<a href="' . route(env('APP_BACKEND_PREFIX').'.news.comments.commentto', $this->id) . '">回复</a>';
         }
     }
 
     //评论标题链接
     public function getNewsUrlAttribute()
     {
-        return '<a href="' . route(env('APP_BACKEND_PREFIX').'.news.edit', $this->topic_id) . '" target="_blank">'.$this->commentable->title.'</a>';
+        return '<a href="' . route(env('APP_BACKEND_PREFIX').'.news.edit', $this->commentable_id) . '" target="_blank">'.$this->commentable->title.'</a>';
     }
 }

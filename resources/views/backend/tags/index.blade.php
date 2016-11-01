@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('page-title')
-    标签列表
+    标签
 @stop
 @section('content')
 <div class="portlet">

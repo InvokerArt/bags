@@ -6,7 +6,7 @@
 <div class="portlet light portlet-fit portlet-datatable bordered">
     <div class="portlet-title">
         <div class="caption">
-            服务列表
+            服务
         </div>
         <div class="actions">
             <a href="javascript:;" class="btn btn-circle btn-info">

@@ -21,10 +21,11 @@ trait ReplyAttribute
     public function getParentContentAttribute()
     {
         if ($this->parent_id) {
-            $replyToUser = $this->replyToUser()->first();
-            return '回复给 <a href="' . route(env('APP_BACKEND_PREFIX').'.users.edit', $this->parent_id) . '" target="_blank">'.$replyToUser->username.'</a>'.$this->content;
+            $replyTo = $this->replyTo()->first();
+            $replyToUser = $replyTo->user()->first();
+            return '回复给 <a href="' . route(env('APP_BACKEND_PREFIX').'.users.edit', $this->parent_id) . '" target="_blank">'.$replyToUser->username.'</a>'.$this->content.'<a href="' . route(env('APP_BACKEND_PREFIX').'.replies.replyto', $this->id) . '">回复</a>';
         } else {
-            return $this->content;
+            return $this->content.'<a href="' . route(env('APP_BACKEND_PREFIX').'.replies.replyto', $this->id) . '">回复</a>';
         }
     }
 

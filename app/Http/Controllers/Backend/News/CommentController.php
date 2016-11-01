@@ -80,7 +80,7 @@ class CommentController extends Controller
     public function store(CommentStoreOrUpdateRequest $request)
     {
         $this->comments->create($request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.comments.index')->withFlashSuccess('回复添加成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.comments.index')->withFlashSuccess('评论添加成功');
     }
 
     /**
@@ -100,17 +100,26 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Comment $reply)
+    public function edit(Comment $comment)
     {
-        $user = $reply->user()->select('username')->first();
-        $topic = $reply->topic()->select('title')->first();
-        $reply->username = $user->username;
-        if ($reply->parent_id) {
-            $replyToUser = $reply->replyToUser()->select('username')->first();
-            $reply->replyToUser = $replyToUser->username;
-        }
-        $reply->title = $topic->title;
-        return view('backend.news.comments.edit', compact('reply'));
+        $user = $comment->user()->select('username')->first();
+        $news = $comment->commentable()->select('title')->first();
+        $comment->username = $user->username;
+        $comment->title = $news->title;
+        return view('backend.news.comments.edit', compact('comment'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function commentto(Comment $comment)
+    {
+        $news = $comment->commentable()->select('title')->first();
+        $comment->title = $news->title;
+        return view('backend.news.comments.commentto', compact('comment'));
     }
 
     /**
@@ -120,10 +129,10 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Comment $reply, CommentStoreOrUpdateRequest $request)
+    public function update(Comment $comment, CommentStoreOrUpdateRequest $request)
     {
-        $this->comments->update($reply, $request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.comments.index')->withFlashSuccess('回复更新成功');
+        $this->comments->update($comment, $request);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.comments.index')->withFlashSuccess('评论更新成功');
     }
 
     /**
@@ -135,7 +144,7 @@ class CommentController extends Controller
     public function destroy($id)
     {
         $this->comments->destroy($id);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.comments.index')->withFlashSuccess('回复删除成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.comments.index')->withFlashSuccess('评论删除成功');
     }
 
     /**
@@ -147,7 +156,7 @@ class CommentController extends Controller
     public function restore($id)
     {
         $this->comments->restore($id);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.comments.index')->withFlashSuccess('回复还原成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.comments.index')->withFlashSuccess('评论还原成功');
     }
 
     /**
@@ -159,6 +168,6 @@ class CommentController extends Controller
     public function delete($id)
     {
         $this->comments->delete($id);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.comments.index')->withFlashSuccess('回复删除成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.news.comments.index')->withFlashSuccess('评论删除成功');
     }
 }

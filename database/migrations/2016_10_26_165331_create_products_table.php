@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('title')->index()->comment('产品标题');
             $table->string('slug')->nullable()->index()->comment('固定链接地址');
             $table->double('price', 10, 2)->comment('产品价格');
-            $table->tinyInteger('unit')->default(1)->comment('价格单位 //1 个//2 袋//3 箱');
+            $table->tinyInteger('unit')->default(1)->comment('价格单位 //1 只 //2 个 //3 扎 //4 袋 //5 箱');
             $table->text('content')->comment('内容');
             $table->json('images')->comment('轮播图');
             $table->timestamps();
