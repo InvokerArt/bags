@@ -34,8 +34,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'username']) }}
-                                    <span class="help-block"><a href="javascript:;" class="user-info" style="display:none">会员资料</a></span>
+                                    {{ Form::select('user_id', [], null, ['class' => 'form-control user-ajax']) }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -55,7 +54,7 @@
                                 <div class="col-md-3">
                                     <div class="input-group" id="price">
                                         {{ Form::text('quantity', null, ['class' => 'form-control', 'autocomplete' => 'off']) }}
-                                        {{ Form::select('unit', ['1'=>'个', '2'=>'袋', '3'=>'箱'], null, ['class' => 'form-control select2', 'id' => 'unit']) }}
+                                        {{ Form::select('unit', ['1'=>'只', '2'=>'个', '3'=>'扎', '4'=>'袋', '5'=>'箱'], null, ['class' => 'form-control select2', 'id' => 'unit']) }}
                                     </div>
                                 </div>
                             </div>
@@ -104,22 +103,51 @@
     <script src="{{asset('js/vendor/plupload/i18n/zh_CN.js')}}"></script>
     <script type="text/javascript">
         $(function(){
+            
             //用户资料
-            $(document).on('change', '#username', function(){
-                if ($('#username').val()){
-                    $('.user-info').show();
-                } else {
-                    $('.user-info').hide();
+            function formatUser(user) {
+                if (user.loading) return user.text;
+                var markup = "<div class='select2-result-repository clearfix'>" +
+                "<div class='select2-result-repository__avatar'><img src='" + user.avatar + "' /></div>" +
+                "<div class='select2-result-repository__meta'>" +
+                "<div class='select2-result-repository__title'>" + user.mobile + "</div>";
+                if (user.username) {
+                    markup += "<div class='select2-result-repository__description'>用户名：" + user.username + "</div>";
                 }
-            })
-            $(document).on('click', '.user-info', function(){
-                var newWindow = window.open("","_blank");
-                if ($('#username').val()){
-                    $.get("{{ route(env('APP_BACKEND_PREFIX').'.users.ajax.info') }}", {username: $('#username').val()}, function(data){
-                        newWindow.location.href = "/"+"{{ env('APP_BACKEND_PREFIX') }}"+"/users/"+data.id+"/edit";
-                    });
-                }
-            })
+                markup += "</div></div>";
+                return markup;
+            }
+
+            function formatUserSelection(user) {
+                return user.username || user.mobile || user.text;
+            }
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".user-ajax").select2({
+                ajax: {
+                    url: "{{ route(env('APP_BACKEND_PREFIX').'.users.ajax.info') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function(data, page) {
+                        return {
+                            results: data.data
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function(markup) {
+                    return markup;
+                }, // let our custom formatter work
+                minimumInputLength: 1,
+                templateResult: formatUser,
+                templateSelection: formatUserSelection
+            });
+
             //灯箱插件
             $(document).on('click', '[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', function(event) {
                 event.preventDefault();

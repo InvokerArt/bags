@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Exceptions\GeneralException;
 use Illuminate\Support\ServiceProvider;
 
 class ExceptionsServiceProvider extends ServiceProvider
@@ -25,6 +26,9 @@ class ExceptionsServiceProvider extends ServiceProvider
     {
         app('Dingo\Api\Exception\Handler')->register(function (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
             throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+        });
+        app('Dingo\Api\Exception\Handler')->register(function (GeneralException $exception) {
+            throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException($exception->getMessage());
         });
     }
 }

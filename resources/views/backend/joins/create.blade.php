@@ -34,8 +34,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'username']) }}
-                                    <span class="help-block"><a href="javascript:;" class="user-info" style="display:none">会员资料</a></span>
+                                    {{ Form::select('user_id', [], null, ['class' => 'form-control user-ajax']) }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -44,8 +43,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('companyname', null, ['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'companyname']) }}
-                                    <span class="help-block"><a href="javascript:;" class="company-info" style="display:none">公司资料</a></span>
+                                    {{ Form::select('company_id', [], null, ['class' => 'form-control company-ajax']) }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -139,38 +137,89 @@
                 return $(this).ekkoLightbox({
                 });
             });
+
             //用户资料
-            $(document).on('change', '#username', function(){
-                if ($('#username').val()){
-                    $('.user-info').show();
-                } else {
-                    $('.user-info').hide();
+            function formatUser(user) {
+                if (user.loading) return user.text;
+                var markup = "<div class='select2-result-repository clearfix'>" +
+                "<div class='select2-result-repository__avatar'><img src='" + user.avatar + "' /></div>" +
+                "<div class='select2-result-repository__meta'>" +
+                "<div class='select2-result-repository__title'>" + user.mobile + "</div>";
+                if (user.username) {
+                    markup += "<div class='select2-result-repository__description'>用户名：" + user.username + "</div>";
                 }
-            })
-            $(document).on('click', '.user-info', function(){
-                var newWindow = window.open("","_blank");
-                if ($('#username').val()){
-                    $.get("{{ route(env('APP_BACKEND_PREFIX').'.users.ajax.info') }}", {username: $('#username').val()}, function(data){
-                        newWindow.location.href = "/"+"{{ env('APP_BACKEND_PREFIX') }}"+"/users/"+data.id+"/edit";
-                    });
-                }
-            })
+                markup += "</div></div>";
+                return markup;
+            }
+
+            function formatUserSelection(user) {
+                return user.username || user.mobile || user.text;
+            }
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".user-ajax").select2({
+                ajax: {
+                    url: "{{ route(env('APP_BACKEND_PREFIX').'.users.ajax.info') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function(data, page) {
+                        return {
+                            results: data.data
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function(markup) {
+                    return markup;
+                }, // let our custom formatter work
+                minimumInputLength: 1,
+                templateResult: formatUser,
+                templateSelection: formatUserSelection
+            });
+
             //公司资料
-            $(document).on('change', '#companyname', function(){
-                if ($('#companyname').val()){
-                    $('.company-info').show();
-                } else {
-                    $('.company-info').hide();
-                }
-            })
-            $(document).on('click', '.company-info', function(){
-                var newWindow = window.open("","_blank");
-                if ($('#companyname').val()){
-                    $.get("{{ route(env('APP_BACKEND_PREFIX').'.companies.ajax.info') }}", {name: $('#companyname').val()}, function(data){
-                        newWindow.location.href = "/"+"{{ env('APP_BACKEND_PREFIX') }}"+"/companies/"+data.id+"/edit";
-                    });
-                }
-            })
+            function formatCompany(company) {
+                if (company.loading) return company.text;
+                var markup = "<div class='select2-result-label'>" +
+                "<span class='select2-match'>" + company.name + "</span>" +
+                "</div>";
+                return markup;
+            }
+
+            function formatCompanySelection(company) {
+                return company.name || company.text;
+            }
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".company-ajax").select2({
+                ajax: {
+                    url: "{{ route(env('APP_BACKEND_PREFIX').'.companies.ajax.info') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function(data, page) {
+                        return {
+                            results: data.data
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function(markup) {
+                    return markup;
+                }, // let our custom formatter work
+                minimumInputLength: 1,
+                templateResult: formatCompany,
+                templateSelection: formatCompanySelection
+            });
 
         //身份证
         var photoer = new plupload.Uploader({

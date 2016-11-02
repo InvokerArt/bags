@@ -7,9 +7,9 @@ use App\Models\News\News;
 use App\Models\News\NewsCategory;
 use App\Models\Tags\Tag;
 use App\Repositories\Backend\Tags\TagsInterface;
-use Carbon;
-use DB;
 use Auth;
+use Carbon\Carbon;
+use DB;
 
 /**
  * Class EloquentUserRepository

@@ -8,4 +8,6 @@ use Exception;
  * Class GeneralException
  * @package App\Exceptions
  */
-class GeneralException extends Exception {}
+class GeneralException extends Exception
+{
+}

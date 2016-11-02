@@ -2,10 +2,6 @@
 
 namespace App\Models\Users\Traits\Relationship;
 
-/**
- * Class UserRelationship
- * @package App\Models\Users\Traits\Relationship
- */
 trait UserRelationship
 {
     public function roles()
@@ -35,7 +31,7 @@ trait UserRelationship
 
     public function company()
     {
-        return $this->hasOne('App\Models\Companies\company');
+        return $this->hasOne('App\Models\Companies\Company');
     }
 
     public function detachCompany($company)

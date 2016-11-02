@@ -24,7 +24,7 @@ class SupplyRepository implements SupplyInterface
 
     public function create($input)
     {
-        $user = User::where('username', $input['username'])->first();
+        $user = User::where('id', $input['user_id'])->first();
 
         if (!$user) {
             throw new GeneralException("会员不存在！");

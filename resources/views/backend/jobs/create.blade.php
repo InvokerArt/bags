@@ -59,7 +59,7 @@
     @include('UEditor::head')
     <script type="text/javascript">
         $(function(){
-                       //用户资料
+            //用户资料
             function formatUser(user) {
                 if (user.loading) return user.text;
                 var markup = "<div class='select2-result-repository clearfix'>" +

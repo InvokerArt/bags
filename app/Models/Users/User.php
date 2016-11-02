@@ -56,4 +56,15 @@ class User extends Authenticatable
 
         return $query;
     }
+
+    /**
+     * 修改Passport 认证方式为手机
+     *
+     * @param $username
+     * @return object
+     */
+    public function findForPassport($username)
+    {
+        return User::where('mobile', $username)->first();
+    }
 }

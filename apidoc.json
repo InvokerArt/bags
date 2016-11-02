@@ -5,7 +5,7 @@
   "title": "接口文档",
   "url" : "http://stone.dev/api",
   "header": {
-    "title": "接口概述",
+    "title": "接口说明",
     "filename": "header.md"
   },
   "order": [

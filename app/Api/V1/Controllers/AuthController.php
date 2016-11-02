@@ -17,7 +17,7 @@ use SmsManager;
 class AuthController extends BaseController
 {
     /**
-     * @apiDefine Auth 认证
+     * @apiDefine Auth 用户
      */
 
     /**
@@ -67,7 +67,7 @@ class AuthController extends BaseController
      * @apiParam {String} password_confirmation  密码
      * @apiVersion 1.0.0
      * @apiSuccessExample {json} Success-Response:
-     *      HTTP/1.1 200 OK
+     *      HTTP/1.1 201 Created
      *      {
      *          "mobile": "xxxxxxxxxx",
      *          "updated_at": "2016-10-14 13:28:36",
@@ -84,14 +84,14 @@ class AuthController extends BaseController
         try {
             // 创建用户成功
             $user->save();
-            return $this->response->created($user);
+            return $this->response->created(env('APP_URL').'api/login/', $user);
         } catch (\Exception $e) {
             return $this->response->errorBadRequest($e->getMessage());
         }
     }
 
     /**
-     * @api {put} /password/reset 忘记密码
+     * @api {PATCH} /password/reset 忘记密码
      * @apiDescription 忘记密码
      * @apiGroup Auth
      * @apiPermission 无
@@ -125,7 +125,7 @@ class AuthController extends BaseController
     }
 
     /**
-     * @api {put} /user/password 修改密码
+     * @api {PATCH} /user/password 修改密码
      * @apiDescription 修改密码
      * @apiGroup Auth
      * @apiPermission 认证
@@ -218,17 +218,17 @@ class AuthController extends BaseController
     {
         "data": {
             "id": 1,
-            "username": "13111111111",
+            "username": "admin",
             "mobile": "13111111111",
             "email": "admin@admin.com",
-            "avatar": "/uploads/avatars/20161101205749.png",
-            "created_at": "2016-10-28 16:01:50"
+            "avatar": "http://stone.dev/uploads/avatars/default/medium.png",
+            "created_at": "2016-11-02 15:57:24",
         }
     }
      */
     public function userme(Request $request)
     {
-        $user = $request->user()->first();
+        $user = $request->user();
         return $this->response->item($user, new UserTransformer());
     }
 

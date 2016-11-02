@@ -5,9 +5,9 @@ namespace App\Api\V1\Transformers;
 use App\Models\Area;
 use Storage;
 
-class CompanyShowTransformer extends BaseTransformer
+class JoinTransformer extends BaseTransformer
 {
-    protected $defaultIncludes = ['categories', 'products'];
+    protected $defaultIncludes = ['user', 'company'];
 
     public function transformData($model)
     {
@@ -18,22 +18,20 @@ class CompanyShowTransformer extends BaseTransformer
         return [
             'id' => $model->id,
             'name' => $model->name,
-            'address' => $location.$model->addressDetail,
+            'address' => $location,
             'telephone' => $model->telephone,
-            'content' => $model->content,
-            'photos' => $model->photos,
-            'licenses' => $model->licenses,
-            'created_at' => $model->created_at->toDateTimeString()
+            'notes' => $model->notes,
+            'image' => $model->photos
         ];
     }
 
-    public function includeCategories($model)
+    public function includeUser($model)
     {
-        return $this->collection($model->categories, new CategoryTransformer);
+        return $this->item($model->user, new UserTransformer);
     }
 
-    public function includeProducts($model)
+    public function includeCompany($model)
     {
-        return $this->collection($model->products, new ProductTransformer);
+        return $this->item($model->company, new CompanyTransformer);
     }
 }

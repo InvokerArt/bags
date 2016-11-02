@@ -3,8 +3,8 @@
 namespace App\Repositories\Backend\Joins;
 
 use App\Exceptions\GeneralException;
-use App\Models\Joins\Join;
 use App\Models\Companies\Company;
+use App\Models\Joins\Join;
 use App\Models\Users\User;
 use DB;
 
@@ -23,13 +23,16 @@ class JoinRepository implements JoinInterface
 
     public function create($input)
     {
-        $user = User::where('username', $input['username'])->first();
+        $user = User::where('id', $input['user_id'])->first();
         if (!$user) {
             throw new GeneralException("会员不存在！");
         }
-        $company = Company::where('name', $input['companyname'])->first();
+        $company = Company::where('id', $input['company_id'])->first();
         if (!$company) {
             throw new GeneralException("公司不存在！");
+        }
+        if ($company->user_id == $user->id) {
+            throw new GeneralException('不能加盟自己的公司！');
         }
         if ($company && $company->role === 3) {
             throw new GeneralException('该公司不属于采购商或加盟商！');
@@ -44,7 +47,7 @@ class JoinRepository implements JoinInterface
         $join->company_id = $company->id;
         $join->identity_card = $input['identity_card'];
         $join->licenses = $input['licenses'];
-        $join->status = $input['status'];
+        $join->status = isset($input['status']) ? $input['status'] : 2;
 
         DB::transaction(function () use ($join) {
             if ($join->save()) {

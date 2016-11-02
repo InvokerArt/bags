@@ -4,6 +4,7 @@ namespace App\Api\V1\Controllers;
 
 use App\Api\V1\Transformers\BannerTransformer;
 use App\Api\V1\Transformers\CategoryTransformer;
+use App\Api\V1\Transformers\NewsShowTransformer;
 use App\Api\V1\Transformers\NewsTransformer;
 use App\Models\Banners\Image;
 use App\Models\News\CategoriesNews;
@@ -72,13 +73,13 @@ class NewsController extends BaseController
                     "id": 2,
                     "title": "quia ducimus corrupti",
                     "subtitle": "vel quibusdam animi",
-                    "image": "/storage/app/public/images/ceef70d1f78032082cbea75ba3acf59c.jpg",
+                    "image": "/storage/images/ceef70d1f78032082cbea75ba3acf59c.jpg",
                 },
                 {
                     "id": 3,
                     "title": "eos molestiae aut",
                     "subtitle": "eveniet dolorem cum",
-                    "image": "/storage/app/public/images/6f9326f09fe1cb83d01c74d5cce7cc41.jpg",
+                    "image": "/storage/images/6f9326f09fe1cb83d01c74d5cce7cc41.jpg",
                 },
                 {
                     "id": 4,

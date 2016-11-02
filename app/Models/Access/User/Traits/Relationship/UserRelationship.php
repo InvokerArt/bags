@@ -20,7 +20,7 @@ trait UserRelationship
 
     public function company()
     {
-        return $this->hasOne('App\Models\Companies\company');
+        return $this->hasOne('App\Models\Companies\Company');
     }
 
     public function detachCompany($company)

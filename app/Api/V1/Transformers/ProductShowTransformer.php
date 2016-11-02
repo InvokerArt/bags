@@ -5,7 +5,7 @@ namespace App\Api\V1\Transformers;
 use App\Models\Area;
 use Storage;
 
-class CompanyTransformer extends BaseTransformer
+class ProductShowTransformer extends BaseTransformer
 {
     public function transformData($model)
     {
@@ -15,10 +15,13 @@ class CompanyTransformer extends BaseTransformer
         $location = $province->name.$city->name.$area->name;
         return [
             'id' => $model->id,
-            'name' => $model->name,
-            'address' => $location.$model->addressDetail,
+            'title' => $model->title,
+            'address' => $location,
             'telephone' => $model->telephone,
-            'photos' => $model->photos,
+            'price' => $model->price,
+            'unit' => $model->unit,
+            'content' => $model->content,
+            'images' => $model->images
         ];
     }
 }

@@ -55,6 +55,19 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     $api->get('companies/{company}', 'CompanyController@show');
     $api->get('companies/{company}/jobs', 'CompanyController@job');
     $api->get('companies/{company}/products', 'CompanyController@product');
+    $api->get('companies/{company}/products/{product}', 'CompanyController@productShow');
+
+    /**
+     * 需求
+     */
+    $api->get('demands', 'DemandController@index');
+    $api->get('demands/{demand}', 'DemandController@show');    
+
+    /**
+     * 供应
+     */
+    $api->get('supplies', 'SupplyController@index');
+    $api->get('supplies/{supply}', 'SupplyController@show');
 
     //收藏
     $api->resource('/favorites', 'FavoriteController', ['except' => 'index']);
@@ -69,5 +82,12 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->put('user/password', 'AuthController@editPassword');
         //评论
         $api->post('news/{id}/comment', 'CommentController@store');
+        //加盟
+        $api->get('companies/{company}/joins', 'CompanyController@join');
+        $api->post('companies/{company}/joins', 'CompanyController@joinStore');
+        //发布需求
+        $api->post('demands', 'DemandController@store');
+        //发布供应
+        $api->post('supplies', 'SupplyController@store');
     });
 });

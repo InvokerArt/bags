@@ -9,4 +9,9 @@ trait SupplyRelationship
     {
         return $this->belongsTo('App\Models\Users\User');
     }
+
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Companies\Company', 'user_id', 'user_id');
+    }
 }

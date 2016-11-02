@@ -6,7 +6,6 @@ use Storage;
 
 class ExhibitionTransformer extends BaseTransformer
 {
-
     public function transformData($model)
     {
         return [

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Backend\Products;
+namespace App\Api\V1\Requests;
 
-use App\Http\Requests\Request;
+use Dingo\Api\Http\FormRequest;
 
-class ProductStoreOrUpdateRequest extends Request
+class DemandStoreOrUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,12 @@ class ProductStoreOrUpdateRequest extends Request
     public function rules()
     {
         return [
-            'user_id' => 'required',
             'title' => 'required',
             //'slug' => 'required|alpha_dash',
-            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
             'unit' => 'required',
-            'images' => 'required',
-            'content' => 'required'
+            'content' => 'required',
+            'images' => 'required'
         ];
     }
 }

@@ -2,19 +2,15 @@
 
 namespace App\Api\V1\Transformers;
 
-use App\Models\Area;
-use Storage;
-
-class ProductTransformer extends BaseTransformer
+class DemandTransformer extends BaseTransformer
 {
     public function transformData($model)
     {
         return [
             'id' => $model->id,
             'title' => $model->title,
-            'price' => $model->price,
+            'quantity' => $model->quantity,
             'unit' => $model->unit,
-            'content' => $model->content,
             'images' => $model->images
         ];
     }

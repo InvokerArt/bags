@@ -17,6 +17,12 @@ trait CompanyRelationship
         return $this->belongsTo('App\Models\Users\User');
     }
 
+    //产品一对多
+    public function products()
+    {
+        return $this->hasMany('App\Models\Products\Product', 'user_id');
+    }
+
     //添加分类数据到中间表
     public function attachCategory($Category)
     {

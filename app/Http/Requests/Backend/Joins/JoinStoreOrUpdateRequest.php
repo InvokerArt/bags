@@ -24,8 +24,8 @@ class JoinStoreOrUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required',
-            'companyname' => 'required',
+            'user_id' => 'required',
+            'company_id' => 'required',
             'identity_card' => 'required',
             'licenses' => 'required',
         ];

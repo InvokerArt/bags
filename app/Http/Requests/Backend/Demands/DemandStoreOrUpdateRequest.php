@@ -24,6 +24,7 @@ class DemandStoreOrUpdateRequest extends Request
     public function rules()
     {
         return [
+            'user_id' => 'required',
             'title' => 'required',
             //'slug' => 'required|alpha_dash',
             'quantity' => 'required|integer',

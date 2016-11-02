@@ -24,7 +24,7 @@ class ProductRepository implements ProductInterface
 
     public function create($input)
     {
-        $user = User::where('username', $input['username'])->first();
+        $user = User::where('id', $input['user_id'])->first();
 
         if (!$user) {
             throw new GeneralException("会员不存在！");
@@ -33,7 +33,7 @@ class ProductRepository implements ProductInterface
         $product = new Product;
         $product->title = $input['title'];
         //$product->slug = $input['slug'];
-        $product->user_id = $user->id;
+        $product->user_id = $input['user_id'];
         $product->price = $input['price'];
         $product->unit = $input['unit'];
         $product->content = $input['content'];

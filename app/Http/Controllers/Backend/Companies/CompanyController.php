@@ -134,7 +134,7 @@ class CompanyController extends Controller
 
     public function info(Request $request)
     {
-        $company = Company::select('id', 'user_id', 'name', 'telephone', 'created_at')->where('name', $request->name)->first();
+        $company = Company::select('id', 'user_id', 'name', 'telephone', 'created_at')->where('name', 'like', "%$request->q%")->paginate();
         return response()->json($company);
     }
 }

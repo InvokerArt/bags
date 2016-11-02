@@ -47,12 +47,18 @@ class DemandController extends Controller
             ->editColumn('price', function ($demands) {
                 switch ($demands->unit) {
                     case 1:
+                        $unit = '只';
+                        break;
+                    case 2:
                         $unit = '个';
                         break;
                     case 2:
+                        $unit = '扎';
+                        break;
+                    case 4:
                         $unit = '袋';
                         break;
-                    case 3:
+                    case 5:
                         $unit = '箱';
                         break;
                 }

@@ -34,8 +34,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'username', 'readonly' => true]) }}
-                                    <span class="help-block"><a href="javascript:;" class="user-info">会员资料</a></span>
+                                    {{ Form::select('user_id', [$join->user_id => $join->username], $join->user_id, ['class' => 'form-control', 'readonly' => true]) }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -44,8 +43,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('companyname', null, ['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'companyname', 'readonly' => true]) }}
-                                    <span class="help-block"><a href="javascript:;" class="company-info">公司资料</a></span>
+                                    {{ Form::select('company_id', [$join->company_id => $join->companyname], $join->company_id, ['class' => 'form-control', 'readonly' => true]) }}
                                 </div>
                             </div>
                             <div class="form-group">

@@ -34,8 +34,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'username', 'readonly' => true]) }}
-                                    <span class="help-block"><a href="javascript:;" class="user-info" style="display:none">会员资料</a></span>
+                                    {{ Form::select('user_id', [$demand->user_id => $demand->username], $demand->user_id, ['class' => 'form-control', 'readonly' => true]) }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -55,7 +54,7 @@
                                 <div class="col-md-3">
                                     <div class="input-group" id="price">
                                         {{ Form::text('quantity', null, ['class' => 'form-control', 'autocomplete' => 'off']) }}
-                                        {{ Form::select('unit', ['1'=>'个', '2'=>'袋', '3'=>'箱'], null, ['class' => 'form-control select2', 'id' => 'unit']) }}
+                                        {{ Form::select('unit', ['1'=>'只', '2'=>'个', '3'=>'扎', '4'=>'袋', '5'=>'箱'], null, ['class' => 'form-control select2', 'id' => 'unit']) }}
                                     </div>
                                 </div>
                             </div>

@@ -2,19 +2,17 @@
 
 namespace App\Api\V1\Transformers;
 
-use Storage;
-
-class NewsShowTransformer extends BaseTransformer
+class DemandShowTransformer extends BaseTransformer
 {
     public function transformData($model)
     {
         return [
             'id' => $model->id,
             'title' => $model->title,
-            'subtitle' => $model->subtitle,
+            'quantity' => $model->quantity,
+            'unit' => $model->unit,
             'content' => $model->content,
-            'image' => $model->image,
-            'created_at' => $model->created_at->toDateTimeString(),
+            'images' => $model->images
         ];
     }
 }

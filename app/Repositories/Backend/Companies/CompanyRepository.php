@@ -39,6 +39,7 @@ class CompanyRepository implements CompanyInterface
         $company->name = $input['name'];
         $company->telephone = $input['telephone'];
         $company->address = $input['address'];
+        $company->addressDetail = $input['addressDetail'];
         $company->notes = $input['notes'];
         $company->content = $input['content'];
         $company->licenses = $input['licenses'];
@@ -61,6 +62,7 @@ class CompanyRepository implements CompanyInterface
         $company->name = $input['name'];
         $company->telephone = $input['telephone'];
         $company->address = $input['address'];
+        $company->addressDetail = $input['addressDetail'];
         $company->notes = $input['notes'];
         $company->content = $input['content'];
         $company->licenses = $input['licenses'];

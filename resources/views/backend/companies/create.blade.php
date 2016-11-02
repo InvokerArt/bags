@@ -105,6 +105,15 @@
                                     {{ Form::hidden('address', null, ['class' => 'form-control address', 'autocomplete' => 'true']) }}
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">
+                                    详细地址
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-3">
+                                    {{ Form::textarea('addressDetail', null, ['class' => 'form-control margin-top-10', 'autocomplete' => 'false', 'placeholder' => '建议您如实填写详细地址，例如街道名称，门牌号码，楼层和房间号等信息', 'rows' =>3]) }}
+                                </div>
+                            </div>
                             <div class="form-group" id="licenses">
                                 <label class="col-md-2 control-label">
                                     公司营业执照
