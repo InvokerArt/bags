@@ -45,6 +45,7 @@ class CompanyRepository implements CompanyInterface
         $company->licenses = $input['licenses'];
         $company->photos = $input['photos'];
         $company->role = $input['role'];
+        $topic->is_extension = $input['is_extension'];
 
         DB::transaction(function () use ($company, $input) {
             if ($company->save()) {
@@ -68,6 +69,7 @@ class CompanyRepository implements CompanyInterface
         $company->licenses = $input['licenses'];
         $company->photos = $input['photos'];
         $company->role = $input['role'];
+        $topic->is_extension = $input['is_extension'];
 
         DB::transaction(function () use ($company, $input) {
 

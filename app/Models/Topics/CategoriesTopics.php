@@ -3,7 +3,6 @@
 namespace App\Models\Topics;
 
 use Baum\Node;
-use Illuminate\Database\Eloquent\Model;
 
 class CategoriesTopics extends Node
 {

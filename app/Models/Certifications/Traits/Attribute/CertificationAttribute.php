@@ -53,6 +53,14 @@ trait CertificationAttribute
         }
     }
 
+    //设置状态存储器
+    public function setStatusAttribute($value)
+    {
+        if (!$value) {
+            $this->attributes['status'] = 2;
+        }
+    }
+
     public function getStatusButtonAttribute()
     {
         switch ($this->status) {

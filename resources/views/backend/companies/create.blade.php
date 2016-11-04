@@ -176,6 +176,15 @@
                                     {{ Form::textarea('content', null, ['class' => 'form-control editor', 'autocomplete' => 'true', 'id' => 'editor']) }}
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">
+                                    是否推广
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-10">
+                                    {{ Form::select('is_extension', ['' => '请选择', 'yes' => '是','no' => '否'], null, ['class' => 'form-control input-sm select2']) }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

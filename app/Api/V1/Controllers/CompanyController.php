@@ -2,6 +2,7 @@
 
 namespace App\Api\V1\Controllers;
 
+use App\Api\V1\Requests\CertificationStoreRequest;
 use App\Api\V1\Requests\JoinStoreRequest;
 use App\Api\V1\Transformers\BannerTransformer;
 use App\Api\V1\Transformers\CategoryTransformer;
@@ -16,16 +17,20 @@ use App\Models\Companies\CategoryCompany;
 use App\Models\Companies\Company;
 use App\Models\Jobs\Job;
 use App\Models\Products\Product;
+use App\Repositories\Backend\Certifications\CertificationInterface;
 use App\Repositories\Backend\Joins\JoinInterface;
 use Illuminate\Http\Request;
+use Auth;
 
 class CompanyController extends BaseController
 {
     protected $joins;
+    protected $certifications;
 
-    public function __construct(JoinInterface $joins)
+    public function __construct(JoinInterface $joins, CertificationInterface $certifications)
     {
         $this->joins = $joins;
+        $this->certifications = $certifications;
     }
 
     /**
@@ -47,6 +52,7 @@ class CompanyController extends BaseController
                 "title": "我是招商加盟轮播1",
                 "image_url": "/storage/banners/f53014b75d5d55c2509a462581f49433.png",
                 "order": 7,
+                "link": "",
                 "published_from": "2016-11-30 17:49:05",
                 "published_to": "2016-12-31 17:49:05"
             },
@@ -55,6 +61,7 @@ class CompanyController extends BaseController
                 "title": "我是招商加盟轮播2",
                 "image_url": "/storage/banners/a766a4fb33a03664caaad1017937f404.png",
                 "order": 8,
+                "link": "",
                 "published_from": "2016-11-30 17:49:26",
                 "published_to": "2016-12-31 17:49:26"
             }
@@ -74,6 +81,8 @@ class CompanyController extends BaseController
      * @apiGroup Company
      * @apiPermission 无
      * @apiVersion 1.0.0
+     * @apiSuccess is_validate 认证 1//已认证  0//未认证
+     * @apiSuccess is_extension 推广 1//已认证  0//未认证
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
     {
@@ -81,37 +90,23 @@ class CompanyController extends BaseController
             {
                 "id": 1,
                 "name": "航运城",
-                "address": 350203,
+                "province": "福建省",
+                "city": "厦门市",
+                "area": "思明区",
+                "addressDetail": "软件园二期24号之二306B",
                 "telephone": "0592-5928529",
-                "image": [
+                "photos": [
                     "/storage/companies/2016/11/192246tXXv.png",
                     "/storage/companies/2016/11/192247z703.png"
-                ]
-            },
-            {
-                "id": 2,
-                "name": "淘宝公司",
-                "address": 460323,
-                "telephone": "0592-5928529",
-                "image": [
-                    "/storage/companies/2016/11/19231089Kl.png",
-                    "/storage/companies/2016/11/192311fmt8.png"
-                ]
-            },
-            {
-                "id": 3,
-                "name": "测试公司",
-                "address": 110107,
-                "telephone": "0592-5928529",
-                "image": [
-                    "/storage/companies/2016/11/192330UhMQ.png"
-                ]
+                ],
+                "is_validate": 0,
+                "is_extension": 0
             }
         ],
         "meta": {
             "pagination": {
-                "total": 3,
-                "count": 3,
+                "total": 1,
+                "count": 1,
                 "per_page": 15,
                 "current_page": 1,
                 "total_pages": 1,
@@ -123,7 +118,9 @@ class CompanyController extends BaseController
      */
     public function index($id)
     {
-        $company = Company::where('role', $id)->paginate();
+        $company = Company::where('role', $id)->with(['certifications' => function ($query) {
+            $query->validate();
+        }])->paginate();
         return $this->response()->paginator($company, new CompanyTransformer());
     }
 
@@ -255,12 +252,16 @@ class CompanyController extends BaseController
         "data": [
             {
                 "id": 1,
-                "content": "<p>招聘职位： &nbsp; 销售代表&nbsp;</p><p>招聘人数： &nbsp; 6人</p><p>学历要求： &nbsp; 不限&nbsp;</p><p>工作年限： &nbsp; 不限&nbsp;</p><p>薪资待遇： &nbsp; 5000-8000元&nbsp;</p><p>&nbsp; &nbsp; 其他 &nbsp;： &nbsp;&nbsp;</p><p>&nbsp;1、五险+无责任底薪+高提成&nbsp;</p><p>&nbsp;2、</p><p><br/></p>"
+                "job": "销售代表",
+                "total": "10人",
+                "education": "本科大学",
+                "experience": "2-3年",
+                "minsalary": "50000",
+                "content": "<p>要求就是不要命</p>"
             }
         ]
     }
-
-
+    
     没有招聘内容的时候为
     {
         "data": []
@@ -306,40 +307,8 @@ class CompanyController extends BaseController
     }
 
     /**
-     * @api {get} /companies/:id/products/:id 产品详情
-     * @apiDescription 产品详情 第一个:id 公司ID 第二个:id为产品ID
-     * @apiGroup Company
-     * @apiPermission 无
-     * @apiVersion 1.0.0
-     * @apiSuccessExample {json} Success-Response:
-     *      HTTP/1.1 200 OK
-     *
-    {
-        "data": {
-            "id": 1,
-            "title": "产品标题",
-            "address": "福建厦门思明",
-            "telephone": "0592-5928529",
-            "price": 1.2,
-            "unit": 1,
-            "content": "<p>产品很好很好产品很好很好产品很好很好产品很好很好</p>",
-            "images": [
-                "/uploads/products/2016/11/092739rqKq.png"
-            ]
-        }
-    }
-     * @apiSampleRequest /api/companies/1/products/1
-     */
-    public function productShow(Company $company, Product $product)
-    {
-        $product->address = $company->address;
-        $product->telephone = $company->telephone;
-        return $this->response->item($product, new ProductShowTransformer());
-    }
-
-    /**
-     * @api {get} /companies/:id/joins 公司加盟
-     * @apiDescription 公司加盟:id 公司ID user 申请者用户信息 company 申请者公司信息
+     * @api {get} /companies/:id/join-certification 公司加盟或机构认证
+     * @apiDescription 公司加盟或机构认证 :id 公司ID user 申请者用户信息 company 申请者公司信息
      * @apiGroup Company
      * @apiPermission 认证
      * @apiVersion 1.0.0
@@ -380,12 +349,12 @@ class CompanyController extends BaseController
             }
         }
     }
-     * @apiSampleRequest /api/companies/1/joins
+     * @apiSampleRequest /api/companies/1/join-certification
      */
-    public function join(Company $company, Request $request)
+    public function joinAndValidate(Company $company, Request $request)
     {
-        $company->company = $request->user()->company()->first();
-        $company->user = $request->user();
+        $company->company = Auth::user()->company()->first();
+        $company->user = Auth::user();
         return $this->response->item($company, new JoinTransformer());
     }
 
@@ -404,9 +373,30 @@ class CompanyController extends BaseController
      */
     public function joinStore(Company $company, JoinStoreRequest $request)
     {
-        $user = $request->user();
+        $user = Auth::user();
         $request->merge(['user_id' => $user->id, 'company_id' => $company->id]);
         $this->joins->create($request);
+        return $this->response->created();
+    }
+
+    /**
+     * @api {post} /companies/:id/certifications 申请认证
+     * @apiDescription 申请认证:id 公司ID
+     * @apiGroup Company
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {String[]} identity_card[] 身份证
+     * @apiParam {String[]} licenses[] 营业执照
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     * @apiSampleRequest /api/companies/1/certifications
+     */
+    public function certificationStore(Company $company, CertificationStoreRequest $request)
+    {
+        $user = Auth::user();
+        $request->merge(['user_id' => $user->id, 'company_id' => $company->id]);
+        $this->certifications->create($request);
         return $this->response->created();
     }
 }

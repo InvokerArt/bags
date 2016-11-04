@@ -50,4 +50,9 @@ trait CompanyRelationship
     {
         $this->Categories()->sync($Categories);
     }
+
+    public function certifications()
+    {
+        return $this->hasMany('App\Models\Certifications\Certification', 'user_id', 'user_id');
+    }
 }

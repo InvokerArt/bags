@@ -38,11 +38,12 @@ class TopicRepository implements TopicInterface
 
         DB::transaction(function () use ($topic) {
             if ($topic->save()) {
-                return true;
+                return $topic;
             }
 
             throw new GeneralException("添加失败");
         });
+        return $topic;
     }
 
     public function update(Topic $topic, $input)

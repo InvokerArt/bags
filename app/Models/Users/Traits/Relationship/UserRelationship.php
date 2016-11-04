@@ -46,4 +46,24 @@ trait UserRelationship
 
         $this->company()->detach($company);
     }
+
+    public function votedTopics()
+    {
+        return $this->morphedByMany('App\Models\Topics\Topic', 'votable', 'votes')->withPivot('created_at');
+    }
+
+    public function topics()
+    {
+        return $this->hasMany('App\Models\Topics\Topic');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany('App\Models\Topics\Reply');
+    }
+
+    public function scopeWithoutBanned($query)
+    {
+        return $query->where('is_banned', '=', 'no');
+    }
 }

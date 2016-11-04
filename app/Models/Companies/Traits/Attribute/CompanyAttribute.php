@@ -71,4 +71,11 @@ trait CompanyAttribute
         }
         return $role;
     }
+
+    public function setIsExtensionAttribute($value)
+    {
+        if (!$value) {
+            $this->attributes['is_extension'] = 'no';
+        }
+    }
 }

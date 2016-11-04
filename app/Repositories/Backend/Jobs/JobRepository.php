@@ -29,6 +29,11 @@ class JobRepository implements JobInterface
 
         $job = new Job;
         $job->user_id = $input['user_id'];
+        $job->job = $input['job'];
+        $job->total = $input['total'];
+        $job->education = $input['education'];
+        $job->experience = $input['experience'];
+        $job->minsalary = $input['minsalary'];
         $job->content = $input['content'];
 
         DB::transaction(function () use ($job) {
@@ -42,6 +47,11 @@ class JobRepository implements JobInterface
 
     public function update(Job $job, $input)
     {
+        $job->job = $input['job'];
+        $job->total = $input['total'];
+        $job->education = $input['education'];
+        $job->experience = $input['experience'];
+        $job->minsalary = $input['minsalary'];
         $job->content = $input['content'];
 
         DB::transaction(function () use ($job) {

@@ -23,11 +23,11 @@ class CertificationRepository implements CertificationInterface
 
     public function create($input)
     {
-        $user = User::where('username', $input['username'])->first();
+        $user = User::where('id', $input['user_id'])->first();
         if (!$user) {
             throw new GeneralException("会员不存在！");
         }
-        $company = Company::where('name', $input['companyname'])->first();
+        $company = Company::where('id', $input['company_id'])->first();
         if (!$company) {
             throw new GeneralException("机构不存在！");
         }

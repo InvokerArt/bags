@@ -16,9 +16,14 @@ class CompanyTransformer extends BaseTransformer
         return [
             'id' => $model->id,
             'name' => $model->name,
-            'address' => $location.$model->addressDetail,
+            'province' => $province->name,
+            'city' => $city->name,
+            'area' => $area->name,
+            'addressDetail' => $model->addressDetail,
             'telephone' => $model->telephone,
             'photos' => $model->photos,
+            'is_validate' => (boolean)count($model->certifications),
+            'is_extension' => (boolean)$model->is_extension,
         ];
     }
 }

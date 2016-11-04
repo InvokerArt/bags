@@ -33,4 +33,14 @@ trait ProductAttribute
             return [];
         }
     }
+
+    //产品里面插入公司信息
+    public function getInsertCompanyAttribute()
+    {
+        $company = $this->company()->first();
+        $this->address = $company->address;
+        $this->addressDetail = $company->addressDetail;
+        $this->telephone = $company->telephone;
+        return $this;
+    }
 }

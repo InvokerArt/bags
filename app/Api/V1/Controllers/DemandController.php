@@ -7,6 +7,7 @@ use App\Api\V1\Transformers\DemandShowTransformer;
 use App\Api\V1\Transformers\DemandTransformer;
 use App\Models\Demands\Demand;
 use App\Repositories\Backend\Demands\DemandInterface;
+use Auth;
 
 class DemandController extends BaseController
 {
@@ -70,6 +71,46 @@ class DemandController extends BaseController
     }
 
     /**
+     * @api {get} /users/demands 需求列表
+     * @apiDescription 需求列表
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 1,
+                "title": "我需求质量好的袋子",
+                "quantity": 1000,
+                "unit": 5,
+                "images": [
+                    "/uploads/products/2016/11/165305Y37a.png"
+                ]
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 2,
+                "count": 2,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
+     * @apiSampleRequest /api/users/demands
+     */
+    public function indexByUser()
+    {
+        $demands = Demand::where('user_id', Auth::id())->paginate();
+        return $this->response()->paginator($demands, new DemandTransformer());
+    }
+
+    /**
      * @api {get} /demands/:id 需求详情
      * @apiDescription 需求详情 :id 需求ID
      * @apiGroup Demand
@@ -114,9 +155,71 @@ class DemandController extends BaseController
      */
     public function store(DemandStoreOrUpdateRequest $request)
     {
-        $user = $request->user();
+        $user = Auth::user();
         $request->merge(['user_id' => $user->id]);
         $this->demands->create($request);
         return $this->response->created();
+    }
+
+    /**
+     * @api {PATCH} /demands/:id 更新需求
+     * @apiDescription 更新需求 :id为需求ID
+     * @apiGroup Demand
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {String} title 标题
+     * @apiParam {Int} quantity 数量
+     * @apiParam {Number=1,2,3,4,5} unit 单位
+     * @apiParam {String[]} images[] 图片
+     * @apiParam {String} content 内容
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": {
+            "id": 3,
+            "title": "我需求100袋包装袋",
+            "quantity": "1000",
+            "unit": "5",
+            "content": "我就需要这么多包装袋",
+            "images": [
+                "/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+            ]
+        }
+    }
+     * @apiSampleRequest /api/demands/1
+     */
+    public function update(Demand $demand, DemandStoreOrUpdateRequest $request)
+    {
+        $user = Auth::user();
+
+        if (!$user->can('update', $demand)) {
+            return $this->response->errorForbidden();
+        }
+
+        $this->demands->update($demand, $request);
+        return $this->response->item($demand, new DemandShowTransformer());
+    }
+
+    /**
+     * @api {delete} /demands/:id 删除需求
+     * @apiDescription 删除需求 :id 需要删除需求的ID
+     * @apiGroup Demand
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 204 No Content
+     */
+    public function destroy(Demand $demand)
+    {
+        $user = Auth::user();
+
+        if (!$user->can('delete', $demand)) {
+            return $this->response->errorForbidden();
+        }
+
+        $demand->delete();
+        return $this->response->noContent();
     }
 }

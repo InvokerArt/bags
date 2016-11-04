@@ -34,8 +34,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('username', null, ['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'username']) }}
-                                    <span class="help-block"><a href="javascript:;" class="user-info" style="display:none">会员资料</a></span>
+                                    {{ Form::select('user_id', [], null, ['class' => 'form-control user-ajax']) }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -44,8 +43,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::text('companyname', null, ['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'companyname']) }}
-                                    <span class="help-block"><a href="javascript:;" class="company-info" style="display:none">公司资料</a></span>
+                                    {{ Form::select('company_id', [], null, ['class' => 'form-control company-ajax']) }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -133,45 +131,8 @@
             $('input').iCheck({
                 radioClass: 'iradio_flat-green'
             });
-            //灯箱插件
-            $(document).on('click', '[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', function(event) {
-                event.preventDefault();
-                return $(this).ekkoLightbox({
-                });
-            });
-            //用户资料
-            $(document).on('change', '#username', function(){
-                if ($('#username').val()){
-                    $('.user-info').show();
-                } else {
-                    $('.user-info').hide();
-                }
-            })
-            $(document).on('click', '.user-info', function(){
-                var newWindow = window.open("","_blank");
-                if ($('#username').val()){
-                    $.get("{{ route(env('APP_BACKEND_PREFIX').'.users.ajax.info') }}", {username: $('#username').val()}, function(data){
-                        newWindow.location.href = "/"+"{{ env('APP_BACKEND_PREFIX') }}"+"/users/"+data.id+"/edit";
-                    });
-                }
-            })
-            //公司资料
-            $(document).on('change', '#companyname', function(){
-                if ($('#companyname').val()){
-                    $('.company-info').show();
-                } else {
-                    $('.company-info').hide();
-                }
-            })
-            $(document).on('click', '.company-info', function(){
-                var newWindow = window.open("","_blank");
-                if ($('#companyname').val()){
-                    $.get("{{ route(env('APP_BACKEND_PREFIX').'.companies.ajax.info') }}", {name: $('#companyname').val()}, function(data){
-                        newWindow.location.href = "/"+"{{ env('APP_BACKEND_PREFIX') }}"+"/companies/"+data.id+"/edit";
-                    });
-                }
-            })
-
+        })
+        
         //身份证
         var photoer = new plupload.Uploader({
             // add X-CSRF-TOKEN in headers attribute to fix this issue
@@ -245,7 +206,6 @@
             }
         });
         photoer.init();
-        })
 
         //执照
         var licenses = new plupload.Uploader({

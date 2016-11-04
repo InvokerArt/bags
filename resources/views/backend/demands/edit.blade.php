@@ -115,28 +115,7 @@
     <script src="{{asset('js/vendor/plupload/i18n/zh_CN.js')}}"></script>
     <script type="text/javascript">
         $(function(){
-            //用户资料
-            $(document).on('change', '#username', function(){
-                if ($('#username').val()){
-                    $('.user-info').show();
-                } else {
-                    $('.user-info').hide();
-                }
-            })
-            $(document).on('click', '.user-info', function(){
-                var newWindow = window.open("","_blank");
-                if ($('#username').val()){
-                    $.get("{{ route(env('APP_BACKEND_PREFIX').'.users.ajax.info') }}", {username: $('#username').val()}, function(data){
-                        newWindow.location.href = "/"+"{{ env('APP_BACKEND_PREFIX') }}"+"/users/"+data.id+"/edit";
-                    });
-                }
-            })
-            //灯箱插件
-            $(document).on('click', '[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', function(event) {
-                event.preventDefault();
-                return $(this).ekkoLightbox({
-                });
-            });
+        })
 
         //照片
         var photoer = new plupload.Uploader({
@@ -211,7 +190,6 @@
             }
         });
         photoer.init();
-        })
 
         /**
          * 百度编辑器

@@ -43,6 +43,14 @@ trait JoinAttribute
         }
     }
 
+    //设置状态存储器
+    public function setStatusAttribute($value)
+    {
+        if (!$value) {
+            $this->attributes['status'] = 2;
+        }
+    }
+
     //设置身份证访问器
     public function getIdentityCardAttribute($value)
     {

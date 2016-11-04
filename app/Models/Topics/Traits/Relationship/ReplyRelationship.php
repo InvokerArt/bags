@@ -21,4 +21,19 @@ trait ReplyRelationship
     {
         return $this->belongsTo('App\Models\Topics\Reply', 'parent_id');
     }
+
+    public function votes()
+    {
+        return $this->morphMany('App\Models\Topics\Vote', 'votable');
+    }
+
+    public function scopeWhose($query, $user_id)
+    {
+        return $query->where('user_id', '=', $user_id)->with('topic');
+    }
+
+    public function scopeRecent($query)
+    {
+        return $query->orderBy('created_at', 'desc');
+    }
 }

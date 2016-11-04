@@ -7,6 +7,7 @@ use App\Api\V1\Transformers\SupplyShowTransformer;
 use App\Api\V1\Transformers\SupplyTransformer;
 use App\Models\Supplies\Supply;
 use App\Repositories\Backend\Supplies\SupplyInterface;
+use Auth;
 
 class SupplyController extends BaseController
 {
@@ -56,6 +57,44 @@ class SupplyController extends BaseController
     public function index()
     {
         $supplies = Supply::paginate();
+        return $this->response()->paginator($supplies, new SupplyTransformer());
+    }
+    /**
+     * @api {get} /supplies 供应列表
+     * @apiDescription 供应列表
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 1,
+                "title": "我有100袋包装袋",
+                "images": [
+                    "/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+                ],
+                "content": "我就需要这么多包装袋"
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 1,
+                "count": 1,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
+     * @apiSampleRequest /api/supplies
+     */
+    public function indexByUser()
+    {
+        $supplies = Supply::where('user_id', Auth::id())->paginate();
         return $this->response()->paginator($supplies, new SupplyTransformer());
     }
 
@@ -131,9 +170,59 @@ class SupplyController extends BaseController
      */
     public function store(SupplyStoreOrUpdateRequest $request)
     {
-        $user = $request->user();
+        $user = Auth::user();
         $request->merge(['user_id' => $user->id]);
         $this->supplies->create($request);
         return $this->response->created();
+    }
+
+    /**
+     * @api {PATCH} /supplies/:id 更新供应
+     * @apiDescription 更新供应 :id为供应ID
+     * @apiGroup Supply
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {String} title 标题
+     * @apiParam {Number} price 价格 Number(10,2)
+     * @apiParam {Number=1,2,3,4,5} unit 单位
+     * @apiParam {String[]} images[] 图片
+     * @apiParam {String} content 内容
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+     * @apiSampleRequest /api/supplies/1
+     */
+    public function update(Supply $supply, SupplyStoreOrUpdateRequest $request)
+    {
+        $user = Auth::user();
+
+        if (!$user->can('update', $supply)) {
+            return $this->response->errorForbidden();
+        }
+
+        $this->supplies->update($supply, $request);
+        return $this->response->item($supply, new SupplyShowTransformer());
+    }
+
+    /**
+     * @api {delete} /supplies/:id 删除供应
+     * @apiDescription 删除供应 :id 需要删除供应的ID
+     * @apiGroup Supply
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 204 No Content
+     */
+    public function destroy(Supply $supply)
+    {
+        $user = Auth::user();
+
+        if (!$user->can('delete', $supply)) {
+            return $this->response->errorForbidden();
+        }
+
+        $supply->delete();
+        return $this->response->noContent();
     }
 }

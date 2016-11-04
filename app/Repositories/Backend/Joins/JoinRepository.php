@@ -47,7 +47,7 @@ class JoinRepository implements JoinInterface
         $join->company_id = $company->id;
         $join->identity_card = $input['identity_card'];
         $join->licenses = $input['licenses'];
-        $join->status = isset($input['status']) ? $input['status'] : 2;
+        $join->status = $input['status'];
 
         DB::transaction(function () use ($join) {
             if ($join->save()) {

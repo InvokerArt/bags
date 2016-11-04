@@ -2,8 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\Demands\Demand;
 use App\Models\Jobs\Job;
+use App\Models\Products\Product;
+use App\Models\Supplies\Supply;
+use App\Models\Topics\Topic;
+use App\Policies\DemandPolicy;
 use App\Policies\JobPolicy;
+use App\Policies\ProductPolicy;
+use App\Policies\SupplyPolicy;
+use App\Policies\TopicPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -17,6 +25,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Job::class => JobPolicy::class,
+        Topic::class => TopicPolicy::class,
+        Product::class => ProductPolicy::class,
+        Demand::class => DemandPolicy::class,
+        Supply::class => SupplyPolicy::class,
     ];
 
     /**

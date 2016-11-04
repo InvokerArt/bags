@@ -31,6 +31,7 @@ class ExhibitionController extends BaseController
                 "title": "我是展会轮播",
                 "image_url": "/storage/banners/f53014b75d5d55c2509a462581f49433.png",
                 "order": 5,
+                "link": "",
                 "published_from": "2016-11-30 17:48:21",
                 "published_to": "2016-12-31 17:48:21"
             },
@@ -39,6 +40,7 @@ class ExhibitionController extends BaseController
                 "title": "我是展会轮播2",
                 "image_url": "/storage/banners/a766a4fb33a03664caaad1017937f404.png",
                 "order": 6,
+                "link": "",
                 "published_from": "2016-11-30 17:48:42",
                 "published_to": "2016-12-31 17:48:42"
             }

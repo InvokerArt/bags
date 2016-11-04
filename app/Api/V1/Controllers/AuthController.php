@@ -121,11 +121,11 @@ class AuthController extends BaseController
 
     public function update(UserUpdateRequest $request)
     {
-        $user = $request->user();
+        $user = Auth::user();
     }
 
     /**
-     * @api {PATCH} /user/password 修改密码
+     * @api {PATCH} /users/password 修改密码
      * @apiDescription 修改密码
      * @apiGroup Auth
      * @apiPermission 认证
@@ -138,7 +138,7 @@ class AuthController extends BaseController
      */
     public function editPassword(UserPasswordRequest $request)
     {
-        $user = $request->user();
+        $user = Auth::user();
         if (Hash::check($request->old_password, $user->password)) {
             $user->password = bcrypt($request->password);
             try {
@@ -192,7 +192,7 @@ class AuthController extends BaseController
     }
 
     //刷新token
-    protected function refreshToken(Request $request)
+    public function refreshToken(Request $request)
     {
         $response = $client->request('POST', env('APP_URL').'oauth/token', [
             'form_params' => [
@@ -206,9 +206,39 @@ class AuthController extends BaseController
         return $this->response->array(json_decode((string) $response->getBody(), true));
     }
 
+    public function index()
+    {
+        $users = User::WithoutBanned()->paginate();
+        return $this->response->paginator($users, new UserTransformer());
+    }
+
     /**
-     * @api {get} /user 用户信息
-     * @apiDescription 用户信息
+     * @api {post} /users/:id 单个用户信息
+     * @apiDescription 单个用户信息
+     * @apiGroup Auth
+     * @apiPermission 无
+     * @apiVersion 1.0.0
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": {
+            "id": 1,
+            "username": "admin",
+            "mobile": "13111111111",
+            "email": "admin@admin.com",
+            "avatar": "http://stone.dev/uploads/avatars/default/medium.png",
+            "created_at": "2016-11-02 15:57:24"
+        }
+    }
+     */
+    public function userInfo(User $user)
+    {
+        return $this->response->item($user, new UserTransformer());
+    }
+
+    /**
+     * @api {get} /users 当前用户信息
+     * @apiDescription 当前用户信息
      * @apiGroup Auth
      * @apiPermission 认证
      * @apiVersion 1.0.0
@@ -226,16 +256,9 @@ class AuthController extends BaseController
         }
     }
      */
-    public function userme(Request $request)
+    public function me(Request $request)
     {
-        $user = $request->user();
+        $user = Auth::user();
         return $this->response->item($user, new UserTransformer());
     }
-
-    // public function users(Request $request)
-    // {
-    //     $users = User::paginate();
-    //     //return response()->json(formatArray($users));
-    //     return $this->response->paginator($users, new UserTransformer());
-    // }
 }

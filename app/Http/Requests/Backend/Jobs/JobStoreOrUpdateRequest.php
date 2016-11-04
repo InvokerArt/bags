@@ -25,6 +25,11 @@ class JobStoreOrUpdateRequest extends FormRequest
     {
         return [
             'user_id' => 'required',
+            'job' => 'required',
+            'total' => 'required',
+            'education' => 'required',
+            'experience' => 'required',
+            'minsalary' => 'required',
             'content' => 'required'
         ];
     }

@@ -39,7 +39,52 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">
-                                    招聘简介
+                                    招聘职位
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-10">
+                                    {{ Form::text('job', null, ['class' => 'form-control']) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">
+                                    招聘人数
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-10">
+                                    {{ Form::text('total', null, ['class' => 'form-control']) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">
+                                    学历要求
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-10">
+                                    {{ Form::text('education', null, ['class' => 'form-control']) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">
+                                    工作年限
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-10">
+                                    {{ Form::text('experience', null, ['class' => 'form-control']) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">
+                                    薪资待遇
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-10">
+                                    {{ Form::text('minsalary', null, ['class' => 'form-control']) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">
+                                    其他
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">

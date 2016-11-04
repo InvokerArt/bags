@@ -9,7 +9,7 @@ use App\Models\Companies\Traits\Relationship\CompanyRelationship;
 class Company extends Model
 {
     use CompanyRelationship, CompanyAttribute;
-    protected $fillable = ['user_id', 'name', 'telephone', 'address', 'notes', 'content', 'licenses', 'photos', 'role'];
+    protected $fillable = ['user_id', 'name', 'telephone', 'address', 'addressDetail', 'notes', 'content', 'licenses', 'photos', 'role'];
 
     public static function companyFilter($query, $request)
     {

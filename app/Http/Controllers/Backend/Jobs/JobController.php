@@ -110,9 +110,10 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Job $job, JobStoreOrUpdateRequest $request)
     {
-        //
+        $this->jobs->update($job, $request);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.jobs.index')->withFlashSuccess('招聘更新成功');
     }
 
     /**

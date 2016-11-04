@@ -52,7 +52,7 @@ class ProductController extends Controller
                     case 2:
                         $unit = '个';
                         break;
-                    case 2:
+                    case 3:
                         $unit = '扎';
                         break;
                     case 4:
