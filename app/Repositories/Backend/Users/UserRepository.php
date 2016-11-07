@@ -85,6 +85,7 @@ class UserRepository implements UserInterface
         if ($input->avatar) {
             $user->avatar = $input->avatar;
         }
+        
         if ($input->password) {
             $user->password = bcrypt($input->password);
         }

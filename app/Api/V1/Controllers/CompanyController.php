@@ -3,6 +3,7 @@
 namespace App\Api\V1\Controllers;
 
 use App\Api\V1\Requests\CertificationStoreRequest;
+use App\Api\V1\Requests\CompanyStoreRequest;
 use App\Api\V1\Requests\JoinStoreRequest;
 use App\Api\V1\Transformers\BannerTransformer;
 use App\Api\V1\Transformers\CategoryTransformer;
@@ -18,19 +19,23 @@ use App\Models\Companies\Company;
 use App\Models\Jobs\Job;
 use App\Models\Products\Product;
 use App\Repositories\Backend\Certifications\CertificationInterface;
+use App\Repositories\Backend\Companies\CompanyInterface;
 use App\Repositories\Backend\Joins\JoinInterface;
-use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Http\Request;
+use Validator;
 
 class CompanyController extends BaseController
 {
     protected $joins;
     protected $certifications;
+    protected $companies;
 
-    public function __construct(JoinInterface $joins, CertificationInterface $certifications)
+    public function __construct(JoinInterface $joins, CertificationInterface $certifications, CompanyInterface $companies)
     {
         $this->joins = $joins;
         $this->certifications = $certifications;
+        $this->companies = $companies;
     }
 
     /**
@@ -261,7 +266,7 @@ class CompanyController extends BaseController
             }
         ]
     }
-    
+
     没有招聘内容的时候为
     {
         "data": []
@@ -397,6 +402,99 @@ class CompanyController extends BaseController
         $user = Auth::user();
         $request->merge(['user_id' => $user->id, 'company_id' => $company->id]);
         $this->certifications->create($request);
+        return $this->response->created();
+    }
+
+    /**
+     * @api {post} /companies/ 创建公司
+     * @apiDescription 创建公司
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {Number{1,2,3}} role 身份
+     * @apiParam {String} name 公司名
+     * @apiParam {String} telephone 电话
+     * @apiParam {Number} address 地区code
+     * @apiParam {String} addressDetail 详细地区
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     * @apiSampleRequest /api/companies/1/certifications
+     */
+    public function store(CompanyStoreRequest $request)
+    {
+        $user = Auth::user();
+        $request->merge(['user_id' => $user->id]);
+        $messages = [
+            'user_id.unique' => '请勿重复创建公司！',
+            'name.unique' => '公司名已存在！',
+        ];
+        $validator = Validator::make($request->all(), ['user_id' => 'required|unique:companies', 'name' => 'required|unique:companies'], $messages);
+        if ($validator->fails()) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('422 Unprocessable Entity', $validator->errors());
+        }
+        $this->companies->create($request);
+        return $this->response->created();
+    }
+
+    /**
+     * @api {PATCH} /companies/ 更新公司信息
+     * @apiDescription 更新公司时下面参数不是必传项
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {Number{1,2,3}} role 身份
+     * @apiParam {String} name 公司名或单位名
+     * @apiParam {String} telephone 电话
+     * @apiParam {Number} address 地区code
+     * @apiParam {String} addressDetail 详细地区
+     * @apiParam {Number{1,2,3,4,5,6,7,8}} categories 分类ID 当为机构单位时为1，2,3,4
+     * @apiParam {String} licenses 营业执照
+     * @apiParam {String} photos 公司照片或单位照片
+     * @apiParam {String} notes 公司加盟须知或单位认证须知
+     * @apiParam {String} content 公司简介或单位简介
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     * @apiSampleRequest /api/companies/1/certifications
+     */
+    public function update(Company $company, Request $request)
+    {
+        $user = Auth::user();
+        if (!$user->can('update', $company)) {
+            return $this->response->errorForbidden();
+        }
+        $request->merge(['user_id' => $user->id]);
+        $messages = [
+            'name.unique' => '公司名已存在！',
+        ];
+        $validator = Validator::make($request->all(), ['user_id' => 'required|unique:companies,user_id,'.$company->id, 'name' => 'required|unique:companies,name,'.$company->id], $messages);
+        if ($validator->fails()) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('422 Unprocessable Entity', $validator->errors());
+        }
+        $this->companies->update($company, $request);
+        return $this->response->item($company, new CompanyShowTransformer());
+    }
+
+    /**
+     * @api {post} /companies/:id/favorites 公司收藏
+     * @apiDescription 公司收藏
+     * @apiGroup Company
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     */
+    public function favorite(Company $company)
+    {
+        $favorites = $company->whereHas('favorites', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->first();
+        if ($favorites) {
+            return $this->response->errorBadRequest('你已经收藏！');
+        }
+        $company->favorites()->create(['user_id' => Auth::id()]);
         return $this->response->created();
     }
 }

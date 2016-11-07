@@ -48,20 +48,24 @@ class TopicRepository implements TopicInterface
 
     public function update(Topic $topic, $input)
     {
-        $topic->title = $input['title'];
-        //$topic->slug = $input['slug'];
-        $topic->excerpt = $input['excerpt'];
-        $topic->content = $input['content'];
-        $topic->user_id = $input['user_id'];
-        $topic->category_id = $input['category_id'];
-        $topic->is_excellent = $input['is_excellent'];
-        $topic->is_blocked = $input['is_blocked'];
-        $topic->view_count = $input['view_count'];
-        $topic->reply_count = $input['reply_count'];
-        $topic->vote_count = $input['vote_count'];
+        $data = [
+            'title' => $input['title'],
+            //'slug' => $input['slug'],
+            'excerpt' => $input['excerpt'],
+            'content' => $input['content'],
+            'user_id' => $input['user_id'],
+            'category_id' => $input['category_id'],
+            'is_excellent' => $input['is_excellent'],
+            'is_blocked' => $input['is_blocked'],
+            'view_count' => $input['view_count'],
+            'reply_count' => $input['reply_count'],
+            'vote_count' => $input['vote_count']
+        ];
 
-        DB::transaction(function () use ($topic) {
-            if ($topic->update()) {
+        $data = array_filter($data, 'strlen');
+
+        DB::transaction(function () use ($topic, $data) {
+            if ($topic->update($data)) {
                 return true;
             }
 

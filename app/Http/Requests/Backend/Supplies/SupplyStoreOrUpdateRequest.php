@@ -29,7 +29,8 @@ class SupplyStoreOrUpdateRequest extends Request
             'price' => 'required|numeric',
             'unit' => 'required',
             'images' => 'required',
-            'content' => 'required'
+            'content' => 'required',
+            'is_excellent' => 'required'
         ];
     }
 }

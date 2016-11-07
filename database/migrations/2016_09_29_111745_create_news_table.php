@@ -25,6 +25,7 @@ class CreateNewsTable extends Migration
             $table->integer('view_count')->unsigned()->default(0)->index()->comment('浏览数');
             $table->integer('comment_count')->unsigned()->default(0)->index()->comment('评论数');
             $table->tinyInteger('status')->default(1)->comment('状态//0回收站//1已发布//2未来发布');
+            $table->enum('is_excellent', ['yes',  'no'])->default('no')->index();
             $table->timestamp('published_at')->index()->comment('发布于');
             $table->timestamps();
             $table->softDeletes();

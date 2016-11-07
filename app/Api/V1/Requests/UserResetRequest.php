@@ -24,7 +24,7 @@ class UserResetRequest extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => 'required|confirm_mobile_not_change|confirm_rule:check_mobile_unique',
+            'mobile' => 'confirm_rule:check_mobile_exists|confirm_mobile_not_change',
             'verifyCode' => 'required|verify_code',
             'password' => 'required|confirmed|min:6',
         ];

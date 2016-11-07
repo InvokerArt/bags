@@ -33,4 +33,11 @@ trait DemandAttribute
             return [];
         }
     }
+
+    public function setIsExcellentAttribute($value)
+    {
+        if (!$value) {
+            $this->attributes['is_excellent'] = 'no';
+        }
+    }
 }

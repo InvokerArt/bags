@@ -38,6 +38,7 @@ class DemandRepository implements DemandInterface
         $demand->unit = $input['unit'];
         $demand->content = $input['content'];
         $demand->images = $input['images'];
+        $demand->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($demand) {
             if ($demand->save()) {
@@ -56,6 +57,7 @@ class DemandRepository implements DemandInterface
         $demand->unit = $input['unit'];
         $demand->content = $input['content'];
         $demand->images = $input['images'];
+        $demand->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($demand) {
             if ($demand->update()) {

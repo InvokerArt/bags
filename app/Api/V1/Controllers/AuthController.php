@@ -9,6 +9,7 @@ use App\Api\V1\Requests\UserStoreRequest;
 use App\Api\V1\Requests\UserUpdateRequest;
 use App\Api\V1\Transformers\UserTransformer;
 use App\Models\Users\User;
+use App\Repositories\Backend\Users\UserInterface;
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
@@ -16,6 +17,13 @@ use SmsManager;
 
 class AuthController extends BaseController
 {
+    protected $users;
+
+    public function __construct(UserInterface $users)
+    {
+        $this->users = $users;
+    }
+
     /**
      * @apiDefine Auth 用户
      */
@@ -119,9 +127,36 @@ class AuthController extends BaseController
         }
     }
 
+    /**
+     * @api {PATCH} /users 更新用户信息
+     * @apiDescription 更新用户信息
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {String} avatar  头像
+     * @apiParam {String} username  用户名
+     * @apiParam {String} name  真实姓名
+     * @apiParam {Number} mobile  电话
+     * @apiParam {String} email  邮箱
+     * @apiVersion 1.0.0
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": {
+            "id": 3,
+            "username": "test",
+            "mobile": "13111111111",
+            "email": "test@test.com",
+            "avatar": "http://stone.dev/uploads/avatars/20161107085531.png",
+            "created_at": "2016-11-02 15:57:24"
+        }
+    }
+     */
     public function update(UserUpdateRequest $request)
     {
         $user = Auth::user();
+        $this->users->update($user, $request);
+        return $this->response->item($user, new UserTransformer());
     }
 
     /**

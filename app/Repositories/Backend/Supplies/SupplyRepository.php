@@ -38,6 +38,7 @@ class SupplyRepository implements SupplyInterface
         $supply->unit = $input['unit'];
         $supply->content = $input['content'];
         $supply->images = $input['images'];
+        $demand->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($supply) {
             if ($supply->save()) {
@@ -56,6 +57,7 @@ class SupplyRepository implements SupplyInterface
         $supply->unit = $input['unit'];
         $supply->content = $input['content'];
         $supply->images = $input['images'];
+        $demand->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($supply) {
             if ($supply->update()) {

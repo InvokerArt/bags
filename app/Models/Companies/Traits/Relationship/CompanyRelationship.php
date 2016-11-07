@@ -23,6 +23,11 @@ trait CompanyRelationship
         return $this->hasMany('App\Models\Products\Product', 'user_id');
     }
 
+    public function favorites()
+    {
+        return $this->morphMany('App\Models\Favorites\Favorite', 'favorite');
+    }
+
     //添加分类数据到中间表
     public function attachCategory($Category)
     {

@@ -12,7 +12,7 @@ return [
     */
     'routeAttributes' => [
         'prefix'     => 'laravel-sms',
-        'middleware' => 'web',
+        'middleware' => 'api',
     ],
 
     /*
@@ -77,8 +77,8 @@ return [
     |
     */
     'verifyCode' => [
-        'length'        => 5,
-        'validMinutes'  => 5,
+        'length'        => 6,
+        'validMinutes'  => 10,
         'repeatIfValid' => false,
         'maxAttempts'   => 0,
     ],
@@ -100,7 +100,7 @@ return [
     |
     */
     'verifySmsContent' => function ($code, $minutes, $input) {
-        return '您的验证码是：' . $code . '，请不要把验证码泄露给其他人。【航运城】';
+        return $code;
     },
 
     /*
@@ -123,7 +123,7 @@ return [
     |
     */
     'templateData' => [
-        'code' => function ($code) {
+        'mobile_code' => function ($code) {
             return $code;
         },
         'minutes' => function ($code, $minutes) {

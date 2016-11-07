@@ -19,7 +19,12 @@ trait TopicRelationship
     //评论一对多
     public function replies()
     {
-        return $this->hasMany('App\Models\Topics\Repliy');
+        return $this->hasMany('App\Models\Topics\Reply');
+    }
+
+    public function favorites()
+    {
+        return $this->morphMany('App\Models\Favorites\Favorite', 'favorite');
     }
 
     public function lastReplyUser()

@@ -35,4 +35,18 @@ trait ReplyAttribute
         
         return '<a href="' . route(env('APP_BACKEND_PREFIX').'.topics.edit', $this->topic_id) . '" target="_blank">'.$this->title.'</a>';
     }
+
+    public function setIsBlockedAttribute($value)
+    {
+        if (!$value) {
+            $this->attributes['is_blocked'] = 'no';
+        }
+    }
+
+    public function setVoteCountAttribute($value)
+    {
+        if (!$value) {
+            $this->attributes['vote_count'] = 0;
+        }
+    }
 }

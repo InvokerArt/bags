@@ -112,6 +112,7 @@ return [
 
     'attributes' => [
         /*权限验证*/
+        'avatar' => '头像',
         'name' => '名称',
         'username' => '用户名',
         'email' => '邮箱',
@@ -130,7 +131,11 @@ return [
         'identity_card' => '身份证',
         'licenses' => '营业执照',
         'banner_id' => '广告位',
-        'image' => '图片'
+        'image' => '图片',
+        'role' => '角色',
+        'telephone' => '电话',
+        'address' => '地址',
+        'addressDetail' => '详细地址'
     ],
 
 ];

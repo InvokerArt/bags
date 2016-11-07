@@ -18,7 +18,9 @@ return [
      * 'Luosimao', 'YunTongXun', 'YunPian', 'SubMail', 'Ucpaas', 'JuHe', 'Alidayu', 'Log'
      */
     'scheme' => [
-        'ChangZhuo',
+        'Aliyuncs' => [
+            'agentClass' => 'App\Hanlder\AliyuncsAgent'
+        ]
     ],
 
     /*
@@ -187,9 +189,27 @@ return [
             //SMS_KEY
             'smsKey'  => 'your SMS_KEY',
         ],
-        'ChangZhuo' => [
-            'account' => env('CHANGZHUO_ACCOUNT'),
-            'password' => env('CHANGZHUO_PASSWORD'),
+        'Aliyuncs' => [
+            //阿里云颁发给用户的访问服务所用的密钥ID
+            'accessKeyID' => env('ALIYUNCS_ACCESS_KEY_ID'),
+            //阿里云颁发给用户的，用于加密签名字符串和服务器端验证签名字符串的密钥
+            'accessKeySecret' => env('ALIYUNCS_ACCESS_KEY_SECRET'),
+            //签名方式，目前支持HMAC-SHA1
+            'signatureMethod' => env('ALIYUNCS_SINGNATURE_METHOD'),
+            //返回值的类型，支持JSON与XML。默认为XML
+            'format' => env('ALIYUNCS_FORMAT'),
+            //短信模板中的变量；数字需要转换为字符串；个人用户每个变量长度必须小于15个字符。 例如:短信模板为：“接受短信验证码${no}”,此参数传递{“no”:”123456”}
+            'paramString' => env('ALIYUNCS_PARAM_STRING'),
+            //签名算法版本，目前版本是1.0
+            'signatureVersion' => env('ALIYUNCS_SINGNATURE_VERSION'),
+            //API版本号，为日期形式：YYYY-MM-DD，本版本对应为2016-09-27
+            'version' => env('ALIYUNCS_VERSION'),
+            'verifySmsTemplateId' => [
+                //管理控制台中配置的短信签名（状态必须是验证通过）
+                'signName' => env('ALIYUNCS_SIGNNAME'),
+                //管理控制台中配置的审核通过的短信模板的模板CODE（状态必须是验证通过）
+                'templateCode' => env('ALIYUNCS_TEMPLATE_CODE'),
+            ]
         ]
     ],
 ];

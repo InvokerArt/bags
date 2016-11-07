@@ -23,6 +23,7 @@ class CreateSuppliesTable extends Migration
             $table->tinyInteger('unit')->default(1)->comment('价格单位 //1 个//2 袋//3 箱');
             $table->text('content')->comment('内容');
             $table->json('images')->comment('轮播图');
+            $table->enum('is_excellent', ['yes',  'no'])->default('no')->index();
             $table->timestamps();
             $table->softDeletes();
         });

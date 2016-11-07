@@ -2,6 +2,7 @@
 
 namespace App\Api\V1\Controllers;
 
+use App\Api\V1\Requests\ReplyStoreOrUpdateRequest;
 use App\Api\V1\Requests\TopicStoreOrUpdateRequest;
 use App\Api\V1\Transformers\CategoryTransformer;
 use App\Api\V1\Transformers\TopicTransformer;
@@ -9,6 +10,7 @@ use App\Models\Topics\CategoriesTopics;
 use App\Models\Topics\Topic;
 use App\Models\Topics\Voter;
 use App\Models\Users\User;
+use App\Repositories\Backend\Topics\ReplyInterface;
 use App\Repositories\Backend\Topics\TopicInterface;
 use Auth;
 use Gate;
@@ -17,10 +19,12 @@ use Illuminate\Http\Request;
 class TopicController extends BaseController
 {
     protected $topics;
+    protected $replies;
 
-    public function __construct(TopicInterface $topics)
+    public function __construct(TopicInterface $topics, ReplyInterface $replies)
     {
         $this->topics = $topics;
+        $this->replies = $replies;
     }
 
     /**
@@ -208,7 +212,7 @@ class TopicController extends BaseController
     }
 
     /**
-     * @api {delete} /topics/:id/vote-up 话题点赞
+     * @api {post} /topics/:id/vote-up 话题点赞
      * @apiDescription 话题点赞 :id
      * @apiGroup Topic
      * @apiPermission 认证
@@ -227,5 +231,47 @@ class TopicController extends BaseController
     {
         Voter::topicDownVote($topic);
         return $this->response->noContent();
+    }
+
+    /**
+     * @api {post} /topics/:id/favorites 话题收藏
+     * @apiDescription 话题收藏 
+     * @apiGroup Topic
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     */
+    public function favorite(Topic $topic)
+    {
+        $favorites = $topic->whereHas('favorites', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->first();
+        if ($favorites) {
+            return $this->response->errorBadRequest('你已经收藏！');
+        }
+        $topic->favorites()->create(['user_id' => Auth::id()]);
+        return $this->response->created();
+    }
+
+    /**
+     * @api {post} /topics/:id/reply 话题回复
+     * @apiDescription 话题回复 :id
+     * @apiGroup Topic
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {Number} parent_id 回复给某条回复 此ID为回复的ID 不回复用户则为0
+     * @apiParam {String} content 回复内容
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     */
+    public function reply(Topic $topic, ReplyStoreOrUpdateRequest $request)
+    {
+        $user = Auth::user();
+        $request->merge(['user_id' => $user->id, 'topic_id' => $topic->id]);
+        $this->replies->create($request);
+        return $this->response->created();
     }
 }

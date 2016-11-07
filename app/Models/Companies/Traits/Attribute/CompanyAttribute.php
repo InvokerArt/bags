@@ -78,4 +78,25 @@ trait CompanyAttribute
             $this->attributes['is_extension'] = 'no';
         }
     }
+
+    public function setAddressDetailAttribute($value)
+    {
+        if (!$value) {
+            $this->attributes['addressDetail'] = '';
+        }
+    }
+
+    public function setNotesAttribute($value)
+    {
+        if (!$value) {
+            $this->attributes['notes'] = '';
+        }
+    }
+
+    public function setContentAttribute($value)
+    {
+        if (!$value) {
+            $this->attributes['content'] = '';
+        }
+    }
 }

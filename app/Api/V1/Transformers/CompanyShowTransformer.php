@@ -18,7 +18,10 @@ class CompanyShowTransformer extends BaseTransformer
         return [
             'id' => $model->id,
             'name' => $model->name,
-            'address' => $location.$model->addressDetail,
+            'province' => $province->name,
+            'city' => $city->name,
+            'area' => $area->name,
+            'addressDetail' => $model->addressDetail,
             'telephone' => $model->telephone,
             'content' => $model->content,
             'photos' => $model->photos,

@@ -45,12 +45,13 @@ class CompanyRepository implements CompanyInterface
         $company->licenses = $input['licenses'];
         $company->photos = $input['photos'];
         $company->role = $input['role'];
-        $topic->is_extension = $input['is_extension'];
+        $company->is_extension = $input['is_extension'];
 
         DB::transaction(function () use ($company, $input) {
             if ($company->save()) {
-                $categories = explode(',', $input['categories']);
-                $company->attachCategories($categories);
+                if (isset($input['categories'])) {
+                    $company->attachCategories($input['categories']);
+                }
                 return true;
             }
 
@@ -60,22 +61,25 @@ class CompanyRepository implements CompanyInterface
 
     public function update(Company $company, $input)
     {
-        $company->name = $input['name'];
-        $company->telephone = $input['telephone'];
-        $company->address = $input['address'];
-        $company->addressDetail = $input['addressDetail'];
-        $company->notes = $input['notes'];
-        $company->content = $input['content'];
-        $company->licenses = $input['licenses'];
-        $company->photos = $input['photos'];
-        $company->role = $input['role'];
-        $topic->is_extension = $input['is_extension'];
+        $data = [
+            'name' => $input['name'],
+            'telephone' => $input['telephone'],
+            'address' => $input['address'],
+            'addressDetail' => $input['addressDetail'],
+            'notes' => $input['notes'],
+            'content' => $input['content'],
+            'licenses' => $input['licenses'],
+            'photos' => $input['photos'],
+            'role' => $input['role'],
+            'is_extension' => $input['is_extension']
+        ];
+        $data = array_filter($data, 'strlen');
+        DB::transaction(function () use ($company, $data, $input) {
 
-        DB::transaction(function () use ($company, $input) {
-
-            if ($company->update()) {
-                $categories = explode(',', $input['categories']);
-                $company->syncCategories($categories);
+            if ($company->update($data)) {
+                if (isset($input['categories'])) {
+                    $company->attachCategories($input['categories']);
+                }
                 return true;
             }
 

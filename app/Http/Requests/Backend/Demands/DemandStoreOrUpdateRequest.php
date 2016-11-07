@@ -29,7 +29,8 @@ class DemandStoreOrUpdateRequest extends Request
             //'slug' => 'required|alpha_dash',
             'quantity' => 'required|integer',
             'unit' => 'required',
-            'content' => 'required'
+            'content' => 'required',
+            'is_excellent' => 'required'
         ];
     }
 }

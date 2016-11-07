@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Companies\Company;
 use App\Models\Demands\Demand;
 use App\Models\Jobs\Job;
 use App\Models\Products\Product;
 use App\Models\Supplies\Supply;
 use App\Models\Topics\Topic;
+use App\Policies\CompanyPolicy;
 use App\Policies\DemandPolicy;
 use App\Policies\JobPolicy;
 use App\Policies\ProductPolicy;
@@ -29,6 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         Product::class => ProductPolicy::class,
         Demand::class => DemandPolicy::class,
         Supply::class => SupplyPolicy::class,
+        Company::class => CompanyPolicy::class,
     ];
 
     /**

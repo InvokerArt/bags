@@ -120,6 +120,10 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->get('companies/{company}/join-certification', 'CompanyController@joinAndCertification');
         $api->post('companies/{company}/joins', 'CompanyController@joinStore');
         $api->post('companies/{company}/certifications', 'CompanyController@certificationStore');
+        $api->post('companies', 'CompanyController@store');
+        $api->put('companies/{company}', 'CompanyController@update');
+        $api->patch('companies/{company}', 'CompanyController@update');
+        $api->post('companies/{company}/favorites', 'CompanyController@favorite');
         //需求
         $api->resource('demands', 'DemandController', ['except' => ['index', 'create', 'show']]);
         $api->get('users/demands', 'DemandController@indexByUser');
@@ -132,6 +136,8 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         //点赞和取消赞
         $api->post('topics/{topic}/vote-up', 'TopicController@voteUp');
         $api->post('topics/{topic}/vote-down', 'TopicController@voteDown');
+        $api->post('topics/{topic}/favorites', 'TopicController@favorite');
+        $api->post('topics/{topic}/reply', 'TopicController@reply');
         //产品
         $api->resource('products', 'ProductController', ['except' => ['create', 'show']]);
     });

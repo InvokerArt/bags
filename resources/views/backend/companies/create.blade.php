@@ -83,7 +83,7 @@
                                     <div class="form-control height-auto">
                                         <div class="categories-companies"></div>
                                     </div>
-                                    <input type="hidden" name="categories" id="categories">
+                                    <div id="categories"></div>
                                 </div>
                             </div>
                             <div class="form-group" id="telephone">
@@ -319,9 +319,9 @@
                 var categories = [];
                 var categoriesElms = $('.categories-companies').jstree("get_selected", true);
                 $.each(categoriesElms, function() {
-                    categories.push(this.id);
+                    categories.push('<input type="hidden" value=' + this.id + ' name=categories[]>');
                 });
-                $('#categories').val(categories);
+                $('#categories').html('').html(categories);
             });
 
             var form = $('#submit_form');
