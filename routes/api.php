@@ -58,9 +58,10 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     $api->get('companies/role/{role}', 'CompanyController@index');
     $api->get('companies/banner', 'CompanyController@banner');
     $api->get('companies/categories/{category}', 'CompanyController@categories');
-    $api->get('companies/{company}', 'CompanyController@show');
     $api->get('companies/{company}/jobs', 'CompanyController@job');
     $api->get('companies/{company}/products', 'CompanyController@product');
+    $api->get('companies/search', 'CompanyController@search');
+    $api->get('companies/{company}', 'CompanyController@show');
 
     /**
      * 需求
@@ -86,9 +87,6 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
      */
     $api->get('products/{product}', 'ProductController@show');
 
-    //收藏
-    $api->resource('/favorites', 'FavoriteController', ['except' => 'index']);
-
     /**
      * 用户
      */
@@ -97,8 +95,6 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     $api->get('users', 'AuthController@index');
     //单个用户
     $api->put('password/reset', 'AuthController@reset');
-    //单个用户
-    $api->get('users/{user}', 'AuthController@userInfo');
     //发送验证码
     $api->post('verifycode', 'AuthController@verifyCode');
     //获取用户话题
@@ -123,7 +119,6 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->post('companies', 'CompanyController@store');
         $api->put('companies/{company}', 'CompanyController@update');
         $api->patch('companies/{company}', 'CompanyController@update');
-        $api->post('companies/{company}/favorites', 'CompanyController@favorite');
         //需求
         $api->resource('demands', 'DemandController', ['except' => ['index', 'create', 'show']]);
         $api->get('users/demands', 'DemandController@indexByUser');
@@ -136,9 +131,29 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         //点赞和取消赞
         $api->post('topics/{topic}/vote-up', 'TopicController@voteUp');
         $api->post('topics/{topic}/vote-down', 'TopicController@voteDown');
-        $api->post('topics/{topic}/favorites', 'TopicController@favorite');
         $api->post('topics/{topic}/reply', 'TopicController@reply');
         //产品
         $api->resource('products', 'ProductController', ['except' => ['create', 'show']]);
+        //收藏
+        $api->get('favorites/companies/role/{id}', 'FavoriteController@indexForCompanyRole');
+        $api->get('favorites/exhibitions/', 'FavoriteController@indexForExhibition');
+        $api->get('favorites/news/', 'FavoriteController@indexForNews');
+        $api->get('favorites/products/', 'FavoriteController@indexForProduct');
+        $api->get('favorites/jobs/', 'FavoriteController@indexForJob');
+        $api->get('favorites/topics/', 'FavoriteController@indexForTopic');
+        $api->post('topics/{topic}/favorites', 'TopicController@favorite');
+        $api->post('companies/{company}/favorites', 'CompanyController@favorite');
+        $api->post('jobs/{job}/favorites', 'CompanyController@jobFavorite');
+        $api->post('products/{product}/favorites', 'CompanyController@productFavorite');
+        $api->post('news/{news}/favorites', 'NewsController@favorite');
+        $api->post('exhibitions/{exhibition}/favorites', 'ExhibitionController@favorite');
+        $api->post('demands/{demand}/favorites', 'DemandController@favorite');
+        $api->post('supplies/{supply}/favorites', 'SupplyController@favorite');
+        $api->delete('favorites/{favorite}', 'FavoriteController@destroy');
+        //消息
+        $api->get('notifications', 'NotificationController@index');
+        $api->post('notifications/{id}', 'NotificationController@makeAsRead');
     });
+    //单个用户
+    $api->get('users/{user}', 'AuthController@userInfo');
 });

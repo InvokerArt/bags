@@ -29,6 +29,11 @@ trait NewsRelationship
         return $this->morphMany('App\Models\Comments\Comment', 'commentable');
     }
 
+    public function favorites()
+    {
+        return $this->morphMany('App\Models\Favorites\Favorite', 'favorite');
+    }
+
     //添加标签数据到中间表
     public function attachTag($tag)
     {

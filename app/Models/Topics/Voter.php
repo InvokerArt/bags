@@ -2,6 +2,7 @@
 
 namespace App\Models\Topics;
 
+use App\Hanlder\VotePush;
 use App\Models\Topics\Topic;
 use App\Models\Users\User;
 use App\Notifications\VoteNotification;
@@ -9,7 +10,6 @@ use Auth;
 
 class Voter
 {
-
     public static function topicUpVote(Topic $topic)
     {
         if ($topic->votes()->ByWhom(Auth::id())->WithType('upvote')->count()) {
@@ -32,6 +32,7 @@ class Voter
                 }
             }
             $fromUser->notify(new VoteNotification($topic));
+            VotePush::send($topic);
         }
     }
 

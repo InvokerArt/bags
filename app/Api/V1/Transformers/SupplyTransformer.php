@@ -10,7 +10,8 @@ class SupplyTransformer extends BaseTransformer
             'id' => $model->id,
             'title' => $model->title,
             'images' => $model->images,
-            'content' => $model->content
+            'content' => $model->content,
+            'is_excellent' => $model->is_excellent == 'yes' ? 1 : 0,
         ];
     }
 }

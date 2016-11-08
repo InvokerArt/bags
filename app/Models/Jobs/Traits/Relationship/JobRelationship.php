@@ -8,4 +8,9 @@ trait JobRelationship
     {
         $this->belongsTo('App\Models\Users\User');
     }
+
+    public function favorites()
+    {
+        return $this->morphMany('App\Models\Favorites\Favorite', 'favorite');
+    }
 }

@@ -485,6 +485,7 @@ class CompanyController extends BaseController
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 201 Created
+     * @apiSampleRequest /api/companies/1/favorites
      */
     public function favorite(Company $company)
     {
@@ -496,5 +497,57 @@ class CompanyController extends BaseController
         }
         $company->favorites()->create(['user_id' => Auth::id()]);
         return $this->response->created();
+    }
+
+    /**
+     * @api {post} /jobs/:id/favorites 招聘收藏
+     * @apiDescription 招聘收藏
+     * @apiGroup Company
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     * @apiSampleRequest /api//jobs/1/favorites
+     */
+    public function jobFavorite(Job $job)
+    {
+        $favorites = $job->whereHas('favorites', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->first();
+        if ($favorites) {
+            return $this->response->errorBadRequest('你已经收藏！');
+        }
+        $job->favorites()->create(['user_id' => Auth::id()]);
+        return $this->response->created();
+    }
+
+    /**
+     * @api {post} /products/:id/favorites 产品收藏
+     * @apiDescription 产品收藏
+     * @apiGroup Company
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     * @apiSampleRequest /api/products/1/favorites
+     */
+    public function productFavorite(Product $product)
+    {
+        $favorites = $product->whereHas('favorites', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->first();
+        if ($favorites) {
+            return $this->response->errorBadRequest('你已经收藏！');
+        }
+        $product->favorites()->create(['user_id' => Auth::id()]);
+        return $this->response->created();
+    }
+
+    public function search(Request $request)
+    {
+        $companys = Company::search($request->q)->get();
+        return $this->response->collection($companys, new CompanyTransformer());
     }
 }

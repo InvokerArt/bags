@@ -29,6 +29,17 @@ http://www.xxx.com/api/companies/role/:id
 #### Unit单位
 ['1'=>'只', '2'=>'个', '3'=>'扎', '4'=>'袋', '5'=>'箱']
 
+#### 消息说明
+##### 互动消息
+id - 话题ID  
+'type' => 'App\Models\Topics\Topic' - 论坛话题  
+接口请求地址 get http://stone.dev/api/topics/:id
+##### 系统消息
+'type' => 'App\Models\Joins\Join' - 申请加盟  
+接口请求地址 get http://stone.dev/api/users/joins  
+'type' => 'App\Models\Certifications\Certification - 申请认证  
+接口请求地址 get http://stone.dev/api/users/certifications  
+
 #### meta说明
 
 ````

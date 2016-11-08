@@ -11,7 +11,8 @@ class DemandTransformer extends BaseTransformer
             'title' => $model->title,
             'quantity' => $model->quantity,
             'unit' => $model->unit,
-            'images' => $model->images
+            'images' => $model->images,
+            'is_excellent' => $model->is_excellent == 'yes' ? 1 : 0,
         ];
     }
 }

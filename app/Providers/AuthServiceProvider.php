@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\Models\Companies\Company;
 use App\Models\Demands\Demand;
+use App\Models\Favorites\Favorite;
 use App\Models\Jobs\Job;
 use App\Models\Products\Product;
 use App\Models\Supplies\Supply;
 use App\Models\Topics\Topic;
 use App\Policies\CompanyPolicy;
 use App\Policies\DemandPolicy;
+use App\Policies\FavoritePolicy;
 use App\Policies\JobPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\SupplyPolicy;
@@ -32,6 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         Demand::class => DemandPolicy::class,
         Supply::class => SupplyPolicy::class,
         Company::class => CompanyPolicy::class,
+        Favorite::class => FavoritePolicy::class,
     ];
 
     /**

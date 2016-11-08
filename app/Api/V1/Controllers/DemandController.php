@@ -106,7 +106,7 @@ class DemandController extends BaseController
      */
     public function indexByUser()
     {
-        $demands = Demand::where('user_id', Auth::id())->paginate();
+        $demands = Demand::where('user_id', Auth::id())->orderBy('is_excellent')->paginate();
         return $this->response()->paginator($demands, new DemandTransformer());
     }
 
@@ -221,5 +221,27 @@ class DemandController extends BaseController
 
         $demand->delete();
         return $this->response->noContent();
+    }
+
+    /**
+     * @api {post} /demands/:id/favorites 需求收藏
+     * @apiDescription 需求收藏
+     * @apiGroup Demand
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     */
+    public function favorite(Demand $demand)
+    {
+        $favorites = $demand->whereHas('favorites', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->first();
+        if ($favorites) {
+            return $this->response->errorBadRequest('你已经收藏！');
+        }
+        $demand->favorites()->create(['user_id' => Auth::id()]);
+        return $this->response->created();
     }
 }

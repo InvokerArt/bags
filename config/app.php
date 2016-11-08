@@ -1,3 +1,4 @@
+
  <?php
 
  return [
@@ -176,8 +177,10 @@
         /**
          * PassportServiceProvider 官方Passport认证插件
          * SocialiteServiceProvider官方社会化登录插件
+         * Scout官方全文搜索插件
          */
         Laravel\Passport\PassportServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class,
         /*
          * 第三方组件
          */
@@ -216,6 +219,8 @@
         //日志插件
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         App\Providers\ExceptionsServiceProvider::class,
+        //Jpush
+        App\Providers\JpushServiceProvider::class,
     ],
 
     /*
@@ -289,6 +294,7 @@
         //jquery validate
         'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
         'Plupload' => JildertMiedema\LaravelPlupload\Facades\Plupload::class,
+        'Jpush' => App\Facades\Jpush::class,
     ],
 
  ];

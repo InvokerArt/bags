@@ -11,9 +11,11 @@ use App\Api\V1\Transformers\UserTransformer;
 use App\Models\Users\User;
 use App\Repositories\Backend\Users\UserInterface;
 use Auth;
+use GuzzleHttp\Exception\RequestException;
 use Hash;
 use Illuminate\Http\Request;
 use SmsManager;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class AuthController extends BaseController
 {
@@ -48,20 +50,22 @@ class AuthController extends BaseController
      */
     public function authenticate(UserRequest $request)
     {
-        $client = new \GuzzleHttp\Client();
-
-        $response = $client->request('POST', env('APP_URL').'oauth/token', [
-            'form_params' => [
-                'grant_type' => 'password',
-                'client_id' => env('API_CLIENT_ID'),
-                'client_secret' => env('API_CLIENT_SECRET'),
-                'username' => $request->mobile,
-                'password' => $request->password,
-                'scope' => '',
-            ],
-        ]);
-
-        return $this->response->array(json_decode((string) $response->getBody(), true));
+        try {
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('POST', env('APP_URL').'oauth/token', [
+                'form_params' => [
+                    'grant_type' => 'password',
+                    'client_id' => env('API_CLIENT_ID'),
+                    'client_secret' => env('API_CLIENT_SECRET'),
+                    'username' => $request->mobile,
+                    'password' => $request->password,
+                    'scope' => '',
+                ],
+            ]);
+            return $this->response->array(json_decode((string) $response->getBody(), true));
+        } catch (RequestException $e) {
+            throw new UnauthorizedHttpException('Unauthenticated.', '认证失败');
+        }
     }
 
     /**
@@ -248,8 +252,8 @@ class AuthController extends BaseController
     }
 
     /**
-     * @api {post} /users/:id 单个用户信息
-     * @apiDescription 单个用户信息
+     * @api {get} /users/:id 获取用户信息
+     * @apiDescription 获取单个用户信息
      * @apiGroup Auth
      * @apiPermission 无
      * @apiVersion 1.0.0

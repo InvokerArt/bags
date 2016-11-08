@@ -9,6 +9,7 @@ use App\Api\V1\Transformers\NewsTransformer;
 use App\Models\Banners\Image;
 use App\Models\News\CategoriesNews;
 use App\Models\News\News;
+use Auth;
 
 class NewsController extends BaseController
 {
@@ -228,5 +229,27 @@ class NewsController extends BaseController
     {
         $news->increment('view_count', 1);
         return $this->response->item($news, new NewsShowTransformer());
+    }
+
+    /**
+     * @api {post} /news/:id/favorites 新闻收藏
+     * @apiDescription 新闻收藏
+     * @apiGroup News
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     */
+    public function favorite(News $news)
+    {
+        $favorites = $news->whereHas('favorites', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->first();
+        if ($favorites) {
+            return $this->response->errorBadRequest('你已经收藏！');
+        }
+        $news->favorites()->create(['user_id' => Auth::id()]);
+        return $this->response->created();
     }
 }

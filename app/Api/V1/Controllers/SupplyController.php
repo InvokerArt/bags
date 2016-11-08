@@ -94,7 +94,7 @@ class SupplyController extends BaseController
      */
     public function indexByUser()
     {
-        $supplies = Supply::where('user_id', Auth::id())->paginate();
+        $supplies = Supply::where('user_id', Auth::id())->orderBy('is_excellent')->paginate();
         return $this->response()->paginator($supplies, new SupplyTransformer());
     }
 
@@ -224,5 +224,27 @@ class SupplyController extends BaseController
 
         $supply->delete();
         return $this->response->noContent();
+    }
+
+    /**
+     * @api {post} /supplies/:id/favorites 供应收藏
+     * @apiDescription 供应收藏
+     * @apiGroup Supply
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     */
+    public function favorite(Supply $supply)
+    {
+        $favorites = $supply->whereHas('favorites', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->first();
+        if ($favorites) {
+            return $this->response->errorBadRequest('你已经收藏！');
+        }
+        $supply->favorites()->create(['user_id' => Auth::id()]);
+        return $this->response->created();
     }
 }

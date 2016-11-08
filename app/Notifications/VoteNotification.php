@@ -2,10 +2,12 @@
 
 namespace App\Notifications;
 
+use Auth;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class VoteNotification extends Notification
 {
@@ -45,9 +47,11 @@ class VoteNotification extends Notification
     {
         return [
             'id' => $this->topic->id,
-            'title' => $this->topic->title,
-            'user_id' => $this->topic->user_id,
-            'content' => $this->topic->content
+            'title' => '互动消息',
+            'message' => '有人赞了您的帖子，去查看。',
+            'type' => 'App\Models\Topics\Vote',
+            'date' => Carbon::now()->format('Y-m-d H:i:s'),
+            'user_id' => Auth::id()
         ];
     }
 }

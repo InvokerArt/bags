@@ -8,6 +8,7 @@ use App\Api\V1\Transformers\ExhibitionTransformer;
 use App\Models\Banners\Image;
 use App\Models\Exhibitions\CategoriesExhibitions;
 use App\Models\Exhibitions\Exhibition;
+use Auth;
 
 class ExhibitionController extends BaseController
 {
@@ -165,5 +166,27 @@ class ExhibitionController extends BaseController
     {
         $exhibition->increment('view_count', 1);
         return $this->response->item($exhibition, new ExhibitionShowTransformer());
+    }
+
+    /**
+     * @api {post} /news/:id/favorites 展会收藏
+     * @apiDescription 展会收藏
+     * @apiGroup Exhibition
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     */
+    public function favorite(Exhibition $exhibition)
+    {
+        $favorites = $exhibition->whereHas('favorites', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->first();
+        if ($favorites) {
+            return $this->response->errorBadRequest('你已经收藏！');
+        }
+        $exhibition->favorites()->create(['user_id' => Auth::id()]);
+        return $this->response->created();
     }
 }

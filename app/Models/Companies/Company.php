@@ -2,13 +2,14 @@
 
 namespace App\Models\Companies;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Companies\Traits\Attribute\CompanyAttribute;
 use App\Models\Companies\Traits\Relationship\CompanyRelationship;
 
 class Company extends Model
 {
-    use CompanyRelationship, CompanyAttribute;
+    use Searchable, CompanyRelationship, CompanyAttribute;
     protected $fillable = ['user_id', 'name', 'telephone', 'address', 'addressDetail', 'notes', 'content', 'licenses', 'photos', 'role'];
 
     public static function companyFilter($query, $request)

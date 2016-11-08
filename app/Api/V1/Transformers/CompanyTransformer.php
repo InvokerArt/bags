@@ -22,8 +22,8 @@ class CompanyTransformer extends BaseTransformer
             'addressDetail' => $model->addressDetail,
             'telephone' => $model->telephone,
             'photos' => $model->photos,
-            'is_validate' => (boolean)count($model->certifications),
-            'is_extension' => (boolean)$model->is_extension,
+            'is_validate' => (bool)count($model->certifications),
+            'is_excellent' => $model->is_excellent == 'yes' ? 1 : 0,
         ];
     }
 }

@@ -95,6 +95,24 @@ class TopicController extends BaseController
     }
 
     /**
+     * @api {get} /users/topics 用户话题列表
+     * @apiDescription 用户话题列表 :id 用户ID
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+     * @apiSampleRequest /api/users/topics
+     */
+    public function indexByUser()
+    {
+        $user = Auth::user();
+        $topics = Topic::whose($user->id)->recent()->paginate();
+        return $this->response()->paginator($topics, new TopicTransformer());
+    }
+
+    /**
      * @api {get} /users/:id/topics 用户话题列表
      * @apiDescription 用户话题列表 :id 用户ID
      * @apiGroup Auth
@@ -235,7 +253,7 @@ class TopicController extends BaseController
 
     /**
      * @api {post} /topics/:id/favorites 话题收藏
-     * @apiDescription 话题收藏 
+     * @apiDescription 话题收藏
      * @apiGroup Topic
      * @apiPermission 认证
      * @apiVersion 1.0.0
