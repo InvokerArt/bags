@@ -5768,7 +5768,7 @@ $(function(){
     $.fn.select2.defaults.set("theme", "bootstrap");
     $(".user-ajax").select2({
         ajax: {
-            url: "{{ route(env('APP_BACKEND_PREFIX').'.users.ajax.info') }}",
+            url: "/backend/users/ajax",
             dataType: 'json',
             delay: 250,
             data: function(params) {
@@ -5807,7 +5807,7 @@ $(function(){
     $.fn.select2.defaults.set("theme", "bootstrap");
     $(".company-ajax").select2({
         ajax: {
-            url: "{{ route(env('APP_BACKEND_PREFIX').'.companies.ajax.info') }}",
+            url: "/backend/companies/ajax",
             dataType: 'json',
             delay: 250,
             data: function(params) {

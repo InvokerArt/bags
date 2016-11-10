@@ -28,7 +28,7 @@ class ExceptionsServiceProvider extends ServiceProvider
     {
         //模型未找到的错误消息监管
         app('Dingo\Api\Exception\Handler')->register(function (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
-            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('未找到信息');
         });
         //自定义错误消息监管
         app('Dingo\Api\Exception\Handler')->register(function (GeneralException $exception) {
@@ -36,7 +36,7 @@ class ExceptionsServiceProvider extends ServiceProvider
         });
         //认证失败监管
         app('Dingo\Api\Exception\Handler')->register(function (AuthenticationException $exception) {
-            throw new UnauthorizedHttpException('Unauthenticated.', '认证失败');
+            throw new UnauthorizedHttpException('Unauthenticated.', '用户名、密码错误');
         });
     }
 }

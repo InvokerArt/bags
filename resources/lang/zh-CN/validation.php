@@ -125,6 +125,7 @@ return [
         'verifyCode' => '验证码',
         'slug' => '链接',
         'title' => '标题',
+        'content' => '内容',
         'price' => '价格',
         'quantity' => '数量',
         'images' => '图片',

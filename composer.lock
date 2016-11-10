@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bc01c3a584a6ec05e6e7327346a727e4",
-    "content-hash": "d16c720db287c54de70ee24b62e6d755",
+    "hash": "3c61a9189313e98e48cd0bd463b040f6",
+    "content-hash": "cfc861e382ba7c43ba416fec397dc8a3",
     "packages": [
         {
             "name": "arcanedev/log-viewer",
-            "version": "4.0.1",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ARCANEDEV/LogViewer.git",
-                "reference": "adb8c3f99068270b5c8642fd04a9662ef4185dd0"
+                "reference": "d72efb0ff2dec5d7b3b04542b69bc5bb1defccd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/ARCANEDEV/LogViewer/adb8c3f99068270b5c8642fd04a9662ef4185dd0.zip",
-                "reference": "adb8c3f99068270b5c8642fd04a9662ef4185dd0",
+                "url": "https://packagist.phpcomposer.com/files/ARCANEDEV/LogViewer/d72efb0ff2dec5d7b3b04542b69bc5bb1defccd7.zip",
+                "reference": "d72efb0ff2dec5d7b3b04542b69bc5bb1defccd7",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,7 @@
                 "log-viewer",
                 "logviewer"
             ],
-            "time": "2016-10-06 16:26:16"
+            "time": "2016-11-08 10:46:48"
         },
         {
             "name": "arcanedev/support",
@@ -2035,16 +2035,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v1.0.9",
+            "version": "v1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "e5b96c9da0b2ee8c080a35647e01587fd8c2263b"
+                "reference": "0c5b9a51426a2d8bb08a186126dbd8532cf1a126"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/laravel/passport/e5b96c9da0b2ee8c080a35647e01587fd8c2263b.zip",
-                "reference": "e5b96c9da0b2ee8c080a35647e01587fd8c2263b",
+                "url": "https://packagist.phpcomposer.com/files/laravel/passport/0c5b9a51426a2d8bb08a186126dbd8532cf1a126.zip",
+                "reference": "0c5b9a51426a2d8bb08a186126dbd8532cf1a126",
                 "shasum": ""
             },
             "require": {
@@ -2095,20 +2095,20 @@
                 "oauth",
                 "passport"
             ],
-            "time": "2016-10-27 19:10:18"
+            "time": "2016-11-09 16:11:18"
         },
         {
             "name": "laravel/scout",
-            "version": "v1.1.8",
+            "version": "v1.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "31e07d8734d0b0c9d7311d762cef9b9f39840251"
+                "reference": "71ec4eca2c58080d5ed90ff33f545a0d48f51262"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/laravel/scout/31e07d8734d0b0c9d7311d762cef9b9f39840251.zip",
-                "reference": "31e07d8734d0b0c9d7311d762cef9b9f39840251",
+                "url": "https://packagist.phpcomposer.com/files/laravel/scout/71ec4eca2c58080d5ed90ff33f545a0d48f51262.zip",
+                "reference": "71ec4eca2c58080d5ed90ff33f545a0d48f51262",
                 "shasum": ""
             },
             "require": {
@@ -2158,7 +2158,7 @@
                 "laravel",
                 "search"
             ],
-            "time": "2016-10-17 21:22:21"
+            "time": "2016-11-09 18:53:27"
         },
         {
             "name": "laravelcollective/html",
@@ -2898,16 +2898,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.3",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "c0125896dbb151380ab47e96c621741e79623beb"
+                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/paragonie/random_compat/c0125896dbb151380ab47e96c621741e79623beb.zip",
-                "reference": "c0125896dbb151380ab47e96c621741e79623beb",
+                "url": "https://packagist.phpcomposer.com/files/paragonie/random_compat/a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e.zip",
+                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
                 "shasum": ""
             },
             "require": {
@@ -2942,7 +2942,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-10-17 15:23:22"
+            "time": "2016-11-07 23:38:38"
         },
         {
             "name": "phenx/php-font-lib",
@@ -3359,16 +3359,16 @@
         },
         {
             "name": "proengsoft/laravel-jsvalidation",
-            "version": "v1.3.1",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/proengsoft/laravel-jsvalidation.git",
-                "reference": "d659e05837a705b55c8bfe1e54eee0b93c7ccf11"
+                "reference": "1df7dcbba8491a39a263e1017a277b74c803857f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/proengsoft/laravel-jsvalidation/d659e05837a705b55c8bfe1e54eee0b93c7ccf11.zip",
-                "reference": "d659e05837a705b55c8bfe1e54eee0b93c7ccf11",
+                "url": "https://packagist.phpcomposer.com/files/proengsoft/laravel-jsvalidation/1df7dcbba8491a39a263e1017a277b74c803857f.zip",
+                "reference": "1df7dcbba8491a39a263e1017a277b74c803857f",
                 "shasum": ""
             },
             "require": {
@@ -3398,9 +3398,9 @@
             "authors": [
                 {
                     "name": "Albert Moreno",
-                    "email": "albert@memorylimit.net",
-                    "homepage": "http://memorylimit.net",
-                    "role": "DevOps"
+                    "email": "a.moreno@proengsoft.com",
+                    "homepage": "http://www.proengsoft.com",
+                    "role": "Developer"
                 }
             ],
             "description": "Validate forms transparently with Javascript reusing your Laravel Validation Rules, Messages, and FormRequest",
@@ -3414,7 +3414,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2016-01-04 00:23:38"
+            "time": "2015-12-29 23:56:41"
         },
         {
             "name": "psr/http-message",
@@ -6855,7 +6855,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "zizaco/entrust": 20,
-        "dingo/api": 20
+        "dingo/api": 20,
+        "proengsoft/laravel-jsvalidation": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

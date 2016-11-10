@@ -26,7 +26,7 @@ class UserResetRequest extends FormRequest
         return [
             'mobile' => 'confirm_rule:check_mobile_exists|confirm_mobile_not_change',
             'verifyCode' => 'required|verify_code',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|min:6',
         ];
     }
 }

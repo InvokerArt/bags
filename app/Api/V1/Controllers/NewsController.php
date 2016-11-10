@@ -52,7 +52,7 @@ class NewsController extends BaseController
      */
     public function banner()
     {
-        $images = Image::where('banner_id', 4)->get();
+        $images = Image::where('banner_id', 4)->orderBy('order', 'desc')->get();
         return $this->response->collection($images, new BannerTransformer());
     }
 

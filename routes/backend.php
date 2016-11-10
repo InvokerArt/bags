@@ -292,6 +292,15 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
     Route::get('/media', 'Media\IndexController@index')->name('media.index');
     Route::get('/', 'DashboardController@index')->name('index');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+    //通知
+    Route::group(['namespace' => 'Notifications', 'as' => 'notifications.', 'prefix' => 'notifications'], function () {
+        Route::get('/get', 'NotificationController@get')->name('get');
+        Route::get('/', 'NotificationController@index')->name('index');
+        Route::get('create', 'NotificationController@create')->name('create');
+        Route::post('/', 'NotificationController@store')->name('store');
+        Route::delete('/{message}', 'NotificationController@destroy')->name('destroy');
+    });
 });
 
 Route::group(['prefix' => 'log-viewer', 'as' => env('APP_BACKEND_PREFIX').'.', 'middleware' => 'admin'], function () {

@@ -46,7 +46,7 @@ class HomepageController extends BaseController
      */
     public function banner()
     {
-        $images = Image::where('banner_id', 1)->get();
+        $images = Image::where('banner_id', 1)->orderBy('order', 'desc')->get();
         return $this->response->collection($images, new BannerTransformer());
     }
 }

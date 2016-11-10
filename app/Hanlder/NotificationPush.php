@@ -6,33 +6,36 @@ use Carbon\Carbon;
 use Jpush;
 use Auth;
 
-class VotePush
+class NotificationPush
 {
-    public static function send($topic)
+    public static function send($data)
     {
-        $toUser = $topic->user()->first();
-        foreach ($toUser->unreadNotifications as $notification) {
-            if ($topic->id == $notification->data['id']) {
-                $data['notify_id'] = $notification->id;
-                $data['content'] = $notification->data;
-            }
+        if ($data['type'] == 'system') {
+            $message = '系统消息';
+        } else {
+            $message = '互动消息';
         }
+        unset($data['type'], $data['to']);
         $push = Jpush::push()
         ->setPlatform('all')
-        //->addAllAudience() 发布所有
-        ->addAlias(json_encode($topic->user_id))
-        ->androidNotification('互动消息', array(
-            'title' => 'hello jpush',
+        ->androidNotification($message, array(
             'build_id' => 2,
             'extras' => json_encode($data),
         ))
-        ->iosNotification('互动消息', array(
+        ->iosNotification($message, array(
             'sound' => 'sound.caf',
             'content-available' => true,
             'mutable-content' => true,
             'extras' => json_encode($data),
         ))
         ->message(json_encode($data));
+
+        if ($message == '系统消息') {
+            $push->addAllAudience();
+        } else {
+            $push->addAlias();
+        }
+
         try {
             $response = $push->send();
         } catch (\JPush\Exceptions\APIConnectionException $e) {

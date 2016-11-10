@@ -4,7 +4,7 @@ namespace App\Api\V1\Transformers;
 
 use Storage;
 
-class ExhibitionTransformer extends BaseTransformer
+class ExhibitionShowTransformer extends BaseTransformer
 {
     public function transformData($model)
     {

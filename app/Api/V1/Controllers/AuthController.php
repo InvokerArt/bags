@@ -7,7 +7,12 @@ use App\Api\V1\Requests\UserRequest;
 use App\Api\V1\Requests\UserResetRequest;
 use App\Api\V1\Requests\UserStoreRequest;
 use App\Api\V1\Requests\UserUpdateRequest;
+use App\Api\V1\Transformers\AuthenticateTransformer;
+use App\Api\V1\Transformers\CertificationTransformer;
+use App\Api\V1\Transformers\JoinTransformer;
 use App\Api\V1\Transformers\UserTransformer;
+use App\Models\Certifications\Certification;
+use App\Models\Joins\Join;
 use App\Models\Users\User;
 use App\Repositories\Backend\Users\UserInterface;
 use Auth;
@@ -76,16 +81,9 @@ class AuthController extends BaseController
      * @apiParam {Number} mobile     手机
      * @apiParam {Number} verifyCode     验证码
      * @apiParam {String} password  密码
-     * @apiParam {String} password_confirmation  密码
      * @apiVersion 1.0.0
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 201 Created
-     *      {
-     *          "mobile": "xxxxxxxxxx",
-     *          "updated_at": "2016-10-14 13:28:36",
-     *          "created_at": "2016-10-14 13:28:36",
-     *          "id": 3
-     *      }
      */
     public function register(UserStoreRequest $request)
     {
@@ -96,7 +94,7 @@ class AuthController extends BaseController
         try {
             // 创建用户成功
             $user->save();
-            return $this->response->created(env('APP_URL').'api/login/', $user);
+            return $this->response->created();
         } catch (\Exception $e) {
             return $this->response->errorBadRequest($e->getMessage());
         }
@@ -110,7 +108,6 @@ class AuthController extends BaseController
      * @apiParam {Number} mobile     手机
      * @apiParam {Number} verifyCode  验证码
      * @apiParam {String} password  新密码
-     * @apiParam {String} password_confirmation  确认新密码
      * @apiVersion 1.0.0
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 204 No Content
@@ -170,7 +167,6 @@ class AuthController extends BaseController
      * @apiPermission 认证
      * @apiParam {String} old_password  旧密码
      * @apiParam {String} password  新密码
-     * @apiParam {String} password_confirmation  确认新密码
      * @apiVersion 1.0.0
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 204 No Content
@@ -196,7 +192,7 @@ class AuthController extends BaseController
      * @apiDescription 发送验证码
      * @apiGroup Auth
      * @apiPermission 无
-     * @apiParam {String} mobile_rule  验证方式(默认值check_mobile_unique)
+     * @apiParam {String} mobile_rule  验证方式(注册check_mobile_unique  忘记密码check_mobile_exists)
      * @apiParam {Number} mobile     手机
      * @apiVersion 1.0.0
      * @apiSuccessExample {json} Success-Response:
@@ -299,5 +295,153 @@ class AuthController extends BaseController
     {
         $user = Auth::user();
         return $this->response->item($user, new UserTransformer());
+    }
+
+    /**
+     * @api {get} /users/join-in 我收到的加盟
+     * @apiDescription 我收到的加盟
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 15,
+                "status": 2,
+                "company": {
+                    "data": {
+                        "id": 3,
+                        "name": "测试公司",
+                        "province": "北京市",
+                        "city": "北京市",
+                        "area": "石景山区",
+                        "addressDetail": "",
+                        "telephone": "0592-5928529",
+                        "photos": [
+                            "/storage/companies/2016/11/192330UhMQ.png"
+                        ],
+                        "is_validate": 0,
+                        "is_excellent": 0
+                    }
+                }
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 1,
+                "count": 1,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
+     * @apiSampleRequest /api/users/join-in
+     */
+    public function indexJoinIn()
+    {
+        $joins = Join::whereHas('company', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->paginate();
+        return $this->response->paginator($joins, new JoinTransformer());
+    }
+
+    /**
+     * @api {get} /users/join-out 我申请的加盟
+     * @apiDescription 我申请的加盟
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 15,
+                "status": 2,
+                "company": {
+                    "data": {
+                        "id": 1,
+                        "name": "航运城",
+                        "province": "福建省",
+                        "city": "厦门市",
+                        "area": "思明区",
+                        "addressDetail": "软件园二期24号之二306B",
+                        "telephone": "0592-5928529",
+                        "photos": [
+                            "/storage/companies/2016/11/192246tXXv.png",
+                            "/storage/companies/2016/11/192247z703.png"
+                        ],
+                        "is_validate": 0,
+                        "is_excellent": 0
+                    }
+                }
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 1,
+                "count": 1,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
+     * @apiSampleRequest /api/users/join-out
+     */
+    public function indexJoinOut()
+    {
+        $joins = Join::where('user_id', Auth::id())->with('company')->paginate();
+        return $this->response->paginator($joins, new JoinTransformer());
+    }
+
+    /**
+     * @api {get} /users/certification-in 我收到的认证
+     * @apiDescription 我收到的认证
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+
+     * @apiSampleRequest /api/users/certification-in
+     */
+    public function indexCertificationIn()
+    {
+        $certifications = Certification::whereHas('company', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->paginate();
+        return $this->response->paginator($certifications, new CertificationTransformer());
+    }
+
+    /**
+     * @api {get} /users/certification-out 我申请的认证
+     * @apiDescription 我申请的认证
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+
+     * @apiSampleRequest /api/users/certification-out
+     */
+    public function indexCertificationOut()
+    {
+        $certifications = Certification::where('user_id', Auth::id())->with('company')->paginate();
+        return $this->response->paginator($certifications, new CertificationTransformer());
+    }
+
+    public function test()
+    {
+        return $this->response->created();
     }
 }

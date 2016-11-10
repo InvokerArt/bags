@@ -5,7 +5,7 @@ namespace App\Api\V1\Transformers;
 use App\Models\Area;
 use Storage;
 
-class JoinTransformer extends BaseTransformer
+class CertificationTransformer extends BaseTransformer
 {
     protected $defaultIncludes = ['company'];
 

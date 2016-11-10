@@ -6,10 +6,11 @@ use App\Api\V1\Requests\ReplyStoreOrUpdateRequest;
 use App\Api\V1\Requests\TopicStoreOrUpdateRequest;
 use App\Api\V1\Transformers\CategoryTransformer;
 use App\Api\V1\Transformers\TopicTransformer;
+use App\Events\TopicEvent;
 use App\Models\Topics\CategoriesTopics;
 use App\Models\Topics\Topic;
-use App\Models\Topics\Voter;
 use App\Models\Users\User;
+use App\Repositories\Backend\Notifications\NotificationInterface;
 use App\Repositories\Backend\Topics\ReplyInterface;
 use App\Repositories\Backend\Topics\TopicInterface;
 use Auth;
@@ -20,11 +21,13 @@ class TopicController extends BaseController
 {
     protected $topics;
     protected $replies;
+    protected $notification;
 
-    public function __construct(TopicInterface $topics, ReplyInterface $replies)
+    public function __construct(TopicInterface $topics, ReplyInterface $replies, NotificationInterface $notification)
     {
         $this->topics = $topics;
         $this->replies = $replies;
+        $this->notification = $notification;
     }
 
     /**
@@ -230,7 +233,7 @@ class TopicController extends BaseController
     }
 
     /**
-     * @api {post} /topics/:id/vote-up 话题点赞
+     * @api {post} /topics/:id/vote 话题点赞
      * @apiDescription 话题点赞 :id
      * @apiGroup Topic
      * @apiPermission 认证
@@ -239,15 +242,9 @@ class TopicController extends BaseController
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 204 No Content
      */
-    public function voteUp(Topic $topic)
+    public function topicUp(Topic $topic)
     {
-        Voter::topicUpVote($topic);
-        return $this->response->noContent();
-    }
-
-    public function voteDown(Topic $topic)
-    {
-        Voter::topicDownVote($topic);
+        $this->notification->createNotificationUser($topic);
         return $this->response->noContent();
     }
 
@@ -273,8 +270,13 @@ class TopicController extends BaseController
         return $this->response->created();
     }
 
+    public function indexTopicsReply()
+    {
+        //
+    }
+
     /**
-     * @api {post} /topics/:id/reply 话题回复
+     * @api {post} /topics/:id/replies 话题回复
      * @apiDescription 话题回复 :id
      * @apiGroup Topic
      * @apiPermission 认证
@@ -291,5 +293,22 @@ class TopicController extends BaseController
         $request->merge(['user_id' => $user->id, 'topic_id' => $topic->id]);
         $this->replies->create($request);
         return $this->response->created();
+    }
+
+    /**
+     * @api {post} /topics/reply/:id 回复点赞
+     * @apiDescription 回复点赞 :id
+     * @apiGroup Topic
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 204 No Content
+     */
+    public function replyUp(Topic $topic)
+    {
+        //Voter::topicUpVote($topic);
+        event(new TopicEvent($topic));
+        return $this->response->noContent();
     }
 }

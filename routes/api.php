@@ -19,6 +19,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         'limit'      => config('api.rate_limits.access.limits'),
         'expires'    => config('api.rate_limits.access.expires'),
 ], function ($api) {
+    $api->get('test', 'AuthController@test');
     /**
      * 主页
      */
@@ -94,7 +95,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     $api->post('register', 'AuthController@register');
     $api->get('users', 'AuthController@index');
     //单个用户
-    $api->put('password/reset', 'AuthController@reset');
+    $api->patch('password/reset', 'AuthController@reset');
     //发送验证码
     $api->post('verifycode', 'AuthController@verifyCode');
     //获取用户话题
@@ -109,11 +110,15 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         //更新个人信息
         $api->patch('users', 'AuthController@update');
         //修改密码
-        $api->put('users/password', 'AuthController@editPassword');
+        $api->patch('users/password', 'AuthController@editPassword');
+        $api->get('users/join-in', 'AuthController@indexJoinIn');
+        $api->get('users/join-out', 'AuthController@indexJoinOut');
+        $api->get('users/certification-in', 'AuthController@indexCertificationIn');
+        $api->get('users/certification-out', 'AuthController@indexCertificationOut');
         //评论
         $api->post('news/{id}/comment', 'CommentController@store');
-        //加盟
-        $api->get('companies/{company}/join-certification', 'CompanyController@joinAndCertification');
+        //加盟和认证
+        $api->get('companies/{company}/join-certification', 'CompanyController@joinAndValidate');
         $api->post('companies/{company}/joins', 'CompanyController@joinStore');
         $api->post('companies/{company}/certifications', 'CompanyController@certificationStore');
         $api->post('companies', 'CompanyController@store');
@@ -128,10 +133,13 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         //话题
         $api->resource('topics', 'TopicController', ['except' => ['index', 'create', 'show']]);
         $api->get('users/topics', 'TopicController@indexByUser');
-        //点赞和取消赞
-        $api->post('topics/{topic}/vote-up', 'TopicController@voteUp');
-        $api->post('topics/{topic}/vote-down', 'TopicController@voteDown');
-        $api->post('topics/{topic}/reply', 'TopicController@reply');
+        //话题点赞和取消赞
+        $api->post('topics/{topic}/vote', 'TopicController@topicUp');
+        //回复
+        $api->get('topics/{topic}/replies', 'TopicController@indexTopicsReply');
+        $api->post('topics/{topic}/replies', 'TopicController@reply');
+        //回复点赞和取消赞
+        $api->post('topics/replies/{reply}', 'TopicController@replyUp');
         //产品
         $api->resource('products', 'ProductController', ['except' => ['create', 'show']]);
         //收藏
@@ -153,6 +161,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         //消息
         $api->get('notifications', 'NotificationController@index');
         $api->post('notifications/{id}', 'NotificationController@makeAsRead');
+        $api->post('notifications', 'NotificationController@store');
     });
     //单个用户
     $api->get('users/{user}', 'AuthController@userInfo');

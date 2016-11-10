@@ -76,7 +76,7 @@ class CompanyController extends BaseController
      */
     public function banner()
     {
-        $images = Image::where('banner_id', 2)->get();
+        $images = Image::where('banner_id', 2)->orderBy('order', 'desc')->get();
         return $this->response->collection($images, new BannerTransformer());
     }
 
@@ -360,7 +360,7 @@ class CompanyController extends BaseController
     {
         $company->company = Auth::user()->company()->first();
         $company->user = Auth::user();
-        return $this->response->item($company, new JoinTransformer());
+        return $this->response->item($company, new JoinAndValidateTransformer());
     }
 
     /**

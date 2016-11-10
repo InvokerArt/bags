@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Api\V1\Requests;
+namespace App\Http\Requests\Backend\Notifications;
 
-use Dingo\Api\Http\FormRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends FormRequest
+class NotificationStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,16 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => 'required|zh_mobile|unique:users,mobile|confirm_mobile_not_change',
-            'verifyCode' => 'required|verify_code',
-            'password' => 'required|min:6'
+            'data' => 'required',
+            'notification_type' => 'required',
+            'notification_id' => 'required',
         ];
     }
 
-    public function messages()
+    public function message()
     {
         return [
-            'mobile.confirm_rule' => '手机号已存在'
+            'notification_id.required' => '目标ID'
         ];
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.22 on 2016-11-08.
+ * Generated for Laravel 5.3.22 on 2016-11-10.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -16642,6 +16642,74 @@ namespace {
          */
         public static function receive($name, $handler){
             return \JildertMiedema\LaravelPlupload\Manager::receive($name, $handler);
+        }
+        
+    }
+
+
+    class Jpush extends \App\Facades\Jpush{
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function push(){
+            return \JPush\Client::push();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function report(){
+            return \JPush\Client::report();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function device(){
+            return \JPush\Client::device();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function schedule(){
+            return \JPush\Client::schedule();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getAuthStr(){
+            return \JPush\Client::getAuthStr();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getRetryTimes(){
+            return \JPush\Client::getRetryTimes();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getLogFile(){
+            return \JPush\Client::getLogFile();
         }
         
     }

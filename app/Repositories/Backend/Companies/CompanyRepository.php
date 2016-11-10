@@ -21,9 +21,6 @@ class CompanyRepository implements CompanyInterface
 
     public function getForDataTable()
     {
-        /**
-         * withCount--统计关联的结果而不实际的加载它们。
-         */
         return Company::select('*');
     }
 

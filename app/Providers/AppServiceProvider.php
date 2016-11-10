@@ -215,5 +215,13 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Backend\Topics\ReplyInterface::class,
             \App\Repositories\Backend\Topics\ReplyRepository::class
         );
+
+        /**
+         * 通知
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Notifications\NotificationInterface::class,
+            \App\Repositories\Backend\Notifications\NotificationRepository::class
+        );
     }
 }

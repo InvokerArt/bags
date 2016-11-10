@@ -4,6 +4,7 @@ namespace App\Api\V1\Controllers;
 
 use App\Api\V1\Transformers\BannerTransformer;
 use App\Api\V1\Transformers\CategoryTransformer;
+use App\Api\V1\Transformers\ExhibitionShowTransformer;
 use App\Api\V1\Transformers\ExhibitionTransformer;
 use App\Models\Banners\Image;
 use App\Models\Exhibitions\CategoriesExhibitions;
@@ -51,7 +52,7 @@ class ExhibitionController extends BaseController
      */
     public function banner()
     {
-        $images = Image::where('banner_id', 3)->get();
+        $images = Image::where('banner_id', 3)->orderBy('order', 'desc')->get();
         return $this->response->collection($images, new BannerTransformer());
     }
 

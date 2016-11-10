@@ -138,6 +138,12 @@
                     </li>
                 </ul>
             </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.notifications*'), 'active open') }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.notifications.index') }}">
+                    <i class="icon-bell"></i>
+                    <span class="title">推送管理</span>
+                </a>
+            </li>
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.users*'), 'active open') }}">
                 <a href="{{ route(env('APP_BACKEND_PREFIX').'.users.index') }}">
                     <i class="icon-people"></i>
