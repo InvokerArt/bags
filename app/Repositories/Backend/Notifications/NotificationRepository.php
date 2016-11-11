@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Backend\Notifications;
 
-use App\Events\TopicSystemEvent;
-use App\Events\TopicUserEvent;
+use App\Events\NotificationSystemEvent;
+use App\Events\NotificationVoteEvent;
 use App\Models\Notifications\Notification;
 use App\Models\Notifications\NotificationUser;
 use Auth;
@@ -32,23 +32,23 @@ class NotificationRepository implements NotificationInterface
 
             throw new GeneralException("添加失败");
         });
-        event(new TopicSystemEvent($notification));
+        event(new NotificationSystemEvent($notification));
     }
     
-    public function createNotificationUser($input)
+    //话题点赞或回复点赞
+    public function createVote($input)
     {
-        if ($input->votes()->ByWhom(Auth::id())->WithType('vote')->count()) {
+        if ($input->votes()->ByWhom(Auth::id())->WithType($input->action)->count()) {
             // 已经点过赞
-            $input->votes()->ByWhom(Auth::id())->WithType('vote')->delete();
+            $input->votes()->ByWhom(Auth::id())->WithType($input->action)->delete();
             $input->decrement('vote_count', 1);
         } else {
             // 第一次点击
-            $input->votes()->create(['user_id' => Auth::id(), 'is' => 'vote']);
+            $input->votes()->create(['user_id' => Auth::id(), 'is' => $input->action]);
             $input->increment('vote_count', 1);
             $type = get_class($input);
-            $action = request()->segment(4);
             //判断是否发送过通知
-            $hasNotification = Notification::where('notification_id', $input->id)->where('notification_id', $type)->where('type', '!=', 'user')->first();
+            $hasNotification = Notification::where('notification_id', $input->id)->where('notification_type', $type)->where('type', '!=', 'user')->first();
             if ($hasNotification) {
                 return;
             }
@@ -56,7 +56,7 @@ class NotificationRepository implements NotificationInterface
             $notification->type = 'user';
             $notification->notification_id = $input->id;
             $notification->notification_type = $type;
-            $notification->action = $action;
+            $notification->action = $input->action;
             $notification->sender = Auth::id();
             $notificationUser = new NotificationUser(['user_id' => $input->user_id]);
 
@@ -68,7 +68,7 @@ class NotificationRepository implements NotificationInterface
 
                 throw new GeneralException("添加失败");
             });
-            event(new TopicUserEvent($notification));
+            event(new NotificationVoteEvent($notification));
         }
     }
 

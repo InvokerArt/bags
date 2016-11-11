@@ -23,7 +23,6 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $subscribe = [
-        'App\Listeners\TopicEventListener',
         'App\Listeners\NotificationEventListener'
     ];
 

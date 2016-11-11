@@ -8,6 +8,7 @@ use App\Api\V1\Requests\UserResetRequest;
 use App\Api\V1\Requests\UserStoreRequest;
 use App\Api\V1\Requests\UserUpdateRequest;
 use App\Api\V1\Transformers\AuthenticateTransformer;
+use App\Api\V1\Transformers\AuthorizationTransformer;
 use App\Api\V1\Transformers\CertificationTransformer;
 use App\Api\V1\Transformers\JoinTransformer;
 use App\Api\V1\Transformers\UserTransformer;
@@ -50,6 +51,14 @@ class AuthController extends BaseController
      *          "expires_in": 3155673600,
      *          "access_token": "eyJ0eXAiOiJKV1Qi",
      *          "refresh_token": "SYtfODuI03lgKyh"
+                "user": {
+                    "id": 16,
+                    "username": "username8",
+                    "mobile": "15960838225",
+                    "email": "",
+                    "avatar": "http://stone.dev/uploads/avatars/default/medium.png",
+                    "created_at": "2016-11-07 07:49:28"
+                }
      *      }
      * @apiSampleRequest /api/login
      */
@@ -67,7 +76,11 @@ class AuthController extends BaseController
                     'scope' => '',
                 ],
             ]);
-            return $this->response->array(json_decode((string) $response->getBody(), true));
+            $data = json_decode((string) $response->getBody(), true);
+            $user = User::where('mobile', $request->mobile)->first();
+            $userTransformer = new UserTransformer();
+            $data['user'] = $userTransformer->transform($user);
+            return $this->response->array($data);
         } catch (RequestException $e) {
             throw new UnauthorizedHttpException('Unauthenticated.', '认证失败');
         }

@@ -5,9 +5,11 @@ namespace App\Api\V1\Controllers;
 use App\Api\V1\Requests\ReplyStoreOrUpdateRequest;
 use App\Api\V1\Requests\TopicStoreOrUpdateRequest;
 use App\Api\V1\Transformers\CategoryTransformer;
+use App\Api\V1\Transformers\ReplyTransformer;
 use App\Api\V1\Transformers\TopicTransformer;
 use App\Events\TopicEvent;
 use App\Models\Topics\CategoriesTopics;
+use App\Models\Topics\Reply;
 use App\Models\Topics\Topic;
 use App\Models\Users\User;
 use App\Repositories\Backend\Notifications\NotificationInterface;
@@ -241,10 +243,11 @@ class TopicController extends BaseController
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 204 No Content
+     * @apiSampleRequest /api/topics/1/vote
      */
-    public function topicUp(Topic $topic)
+    public function topicVote(Topic $topic)
     {
-        $this->notification->createNotificationUser($topic);
+        $this->notification->createVote($topic);
         return $this->response->noContent();
     }
 
@@ -257,6 +260,7 @@ class TopicController extends BaseController
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 201 Created
+     * @apiSampleRequest /api/topics/1/favorites
      */
     public function favorite(Topic $topic)
     {
@@ -270,9 +274,87 @@ class TopicController extends BaseController
         return $this->response->created();
     }
 
-    public function indexTopicsReply()
+    /**
+     * @api {get} /topics/:id/replies 话题所有回复
+     * @apiDescription 话题所有回复
+     * @apiGroup Topic
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
     {
-        //
+        "data": [
+            {
+                "id": 1,
+                "topic_id": 1,
+                "user_id": 1,
+                "content": "<p>您好，这是一条评论。<br>\r\n要删除评论，请先登录，然后再查看这篇文章的评论。登录后您可以看到编辑或者删除评论的选项。</p>",
+                "created_at": "2016-10-31 16:11:43",
+                "updated_at": "2016-10-31 16:47:44",
+                "replyTo_userid": "",
+                "replyTo_username": "",
+                "user": {
+                    "data": {
+                        "id": 1,
+                        "username": "admin",
+                        "mobile": "13111111111",
+                        "email": "admin@admin.com",
+                        "avatar": "http://stone.dev/uploads/avatars/20161107085531.png",
+                        "created_at": "2016-11-02 15:57:24"
+                    }
+                }
+            },
+            {
+                "id": 2,
+                "topic_id": 1,
+                "user_id": 2,
+                "content": "<p>我是回复给admin的回复内容</p>",
+                "created_at": "2016-10-31 17:31:05",
+                "updated_at": "2016-11-01 10:39:04",
+                "replyTo_userid": 1,
+                "replyTo_username": "admin",
+                "user": {
+                    "data": {
+                        "id": 2,
+                        "username": "user",
+                        "mobile": "13113113111",
+                        "email": "user@user.com",
+                        "avatar": "http://stone.dev/uploads/avatars/default/medium.png",
+                        "created_at": "2016-11-02 15:57:24"
+                    }
+                }
+            },
+            {
+                "id": 7,
+                "topic_id": 1,
+                "user_id": 2,
+                "content": "我又来回复第一篇文章了",
+                "created_at": "2016-11-07 12:02:13",
+                "updated_at": "2016-11-07 12:02:13",
+                "replyTo_userid": "",
+                "replyTo_username": "",
+                "user": {
+                    "data": {
+                        "id": 2,
+                        "username": "user",
+                        "mobile": "13113113111",
+                        "email": "user@user.com",
+                        "avatar": "http://stone.dev/uploads/avatars/default/medium.png",
+                        "created_at": "2016-11-02 15:57:24"
+                    }
+                }
+            }
+        ]
+    }
+     * @apiSampleRequest /api/topics/1/replies
+     */
+    public function indexTopicsReply(Topic $topic)
+    {
+        $replies = $topic->replies()->withoutBlocked()->with(['user', 'replyTo' => function ($query) {
+            $query->with('user');
+        }])->get();
+        return $this->response->collection($replies, new ReplyTransformer());
     }
 
     /**
@@ -286,6 +368,7 @@ class TopicController extends BaseController
      * @apiParam {String} content 回复内容
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 201 Created
+     * @apiSampleRequest /api/topics/1/replies
      */
     public function reply(Topic $topic, ReplyStoreOrUpdateRequest $request)
     {
@@ -296,7 +379,7 @@ class TopicController extends BaseController
     }
 
     /**
-     * @api {post} /topics/reply/:id 回复点赞
+     * @api {post} /topics/replies/:id 回复点赞
      * @apiDescription 回复点赞 :id
      * @apiGroup Topic
      * @apiPermission 认证
@@ -304,11 +387,12 @@ class TopicController extends BaseController
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 204 No Content
+     * @apiSampleRequest /api/topics/replies/1
      */
-    public function replyUp(Topic $topic)
+    public function replyVote(Reply $reply)
     {
-        //Voter::topicUpVote($topic);
-        event(new TopicEvent($topic));
+        $reply->action = snake_case(__FUNCTION__);
+        $this->notification->createVote($reply);
         return $this->response->noContent();
     }
 }

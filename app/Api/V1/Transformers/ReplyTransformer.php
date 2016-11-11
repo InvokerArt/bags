@@ -4,7 +4,7 @@ namespace App\Api\V1\Transformers;
 
 class ReplyTransformer extends BaseTransformer
 {
-    protected $availableIncludes = ['user'];
+    protected $defaultIncludes = ['user'];
 
     public function transformData($model)
     {
@@ -12,9 +12,11 @@ class ReplyTransformer extends BaseTransformer
             "id" => $model->id,
             "topic_id" => $model->topic_id,
             "user_id" => $model->user_id,
-            "body" => $model->body,
+            "content" => $model->content,
             'created_at' => $model->created_at->toDateTimeString(),
             'updated_at'=> $model->updated_at->toDateTimeString(),
+            'replyTo_userid' => ($model->replyTo) ? $model->replyTo->user->id : '',
+            'replyTo_username' => ($model->replyTo) ? $model->replyTo->user->username : '',
         ];
     }
 

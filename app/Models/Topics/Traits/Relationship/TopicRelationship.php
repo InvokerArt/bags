@@ -37,6 +37,11 @@ trait TopicRelationship
         return $this->morphMany('App\Models\Topics\Vote', 'votable');
     }
 
+    public function notifications()
+    {
+        return $this->morphMany('App\Models\Notifications\Notification', 'notification');
+    }
+
     public function voteby()
     {
         $user_ids = Vote::where('votable_type', 'Topic')
@@ -83,5 +88,10 @@ trait TopicRelationship
     public function scopeRecent($query)
     {
         return $query->orderBy('created_at', 'desc');
+    }
+
+    public function scopeWithOutBlank($query, $user_id)
+    {
+        return $query->where('user_id', '=', $user_id);
     }
 }

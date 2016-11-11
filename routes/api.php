@@ -134,12 +134,12 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->resource('topics', 'TopicController', ['except' => ['index', 'create', 'show']]);
         $api->get('users/topics', 'TopicController@indexByUser');
         //话题点赞和取消赞
-        $api->post('topics/{topic}/vote', 'TopicController@topicUp');
+        $api->post('topics/{topic}/vote', 'TopicController@topicVote');
         //回复
         $api->get('topics/{topic}/replies', 'TopicController@indexTopicsReply');
         $api->post('topics/{topic}/replies', 'TopicController@reply');
         //回复点赞和取消赞
-        $api->post('topics/replies/{reply}', 'TopicController@replyUp');
+        $api->post('topics/replies/{reply}/vote', 'TopicController@replyVote');
         //产品
         $api->resource('products', 'ProductController', ['except' => ['create', 'show']]);
         //收藏

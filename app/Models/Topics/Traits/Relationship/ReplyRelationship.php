@@ -36,4 +36,9 @@ trait ReplyRelationship
     {
         return $query->orderBy('created_at', 'desc');
     }
+
+    public function scopeWithoutBlocked($query)
+    {
+        return $query->where('is_blocked', '=', 'no');
+    }
 }

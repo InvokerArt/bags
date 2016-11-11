@@ -8,11 +8,10 @@ use App\Models\Topics\Traits\Relationship\TopicRelationship;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
 
 class Topic extends Model
 {
-    use Notifiable, SoftDeletes, TopicRelationship, TopicAttribute;
+    use SoftDeletes, TopicRelationship, TopicAttribute;
 
     public static function topicFilter($query, $request)
     {

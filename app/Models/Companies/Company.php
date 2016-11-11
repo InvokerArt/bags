@@ -10,6 +10,7 @@ use App\Models\Companies\Traits\Relationship\CompanyRelationship;
 class Company extends Model
 {
     use Searchable, CompanyRelationship, CompanyAttribute;
+
     protected $fillable = ['user_id', 'name', 'telephone', 'address', 'addressDetail', 'notes', 'content', 'licenses', 'photos', 'role'];
 
     public static function companyFilter($query, $request)

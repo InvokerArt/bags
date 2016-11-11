@@ -11,18 +11,15 @@ class NotificationPush
     public static function send($data)
     {
         if ($data['type'] == 'system') {
-            $message = '系统消息';
+            $title = '系统消息';
         } else {
-            $message = '互动消息';
+            $title = $data['title'];
+            $to = $data['to'];
         }
-        unset($data['type'], $data['to']);
+        unset($data['type'], $data['to'], $data['title']);
         $push = Jpush::push()
         ->setPlatform('all')
-        ->androidNotification($message, array(
-            'build_id' => 2,
-            'extras' => json_encode($data),
-        ))
-        ->iosNotification($message, array(
+        ->iosNotification($title, array(
             'sound' => 'sound.caf',
             'content-available' => true,
             'mutable-content' => true,
@@ -30,10 +27,10 @@ class NotificationPush
         ))
         ->message(json_encode($data));
 
-        if ($message == '系统消息') {
+        if ($title == '系统消息') {
             $push->addAllAudience();
         } else {
-            $push->addAlias();
+            $push->addAlias(json_encode($to));
         }
 
         try {

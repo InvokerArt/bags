@@ -8,4 +8,9 @@ trait NotificationRelationship
     {
         return $this->hasOne('App\Models\Notifications\NotificationUser');
     }
+    
+    public function notification()
+    {
+        return $this->morphTo();
+    }
 }

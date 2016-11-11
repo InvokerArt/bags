@@ -10,7 +10,7 @@ interface NotificationInterface
     
     public function create($input);
     
-    public function createNotificationUser($input);
+    public function createVote($input);
 
     public function destroy($id);
 }
