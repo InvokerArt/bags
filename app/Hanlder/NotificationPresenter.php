@@ -8,7 +8,7 @@ trait NotificationPresenter
     {
         switch ($this->action) {
             case 'new_reply':
-                $lable = trans('notification.New reply subject');
+                $subject = trans('notification.New reply subject');
                 break;
             case 'topic_vote':
                 $subject = trans('notification.Topic vote subject');

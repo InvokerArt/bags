@@ -5,6 +5,7 @@ namespace App\Repositories\Backend\Topics;
 use App\Exceptions\GeneralException;
 use App\Models\Topics\Reply;
 use App\Models\Topics\Topic;
+use App\Repositories\Backend\Notifications\NotificationInterface;
 use DB;
 
 /**
@@ -13,6 +14,13 @@ use DB;
  */
 class ReplyRepository implements ReplyInterface
 {
+    private $notification;
+
+    public function __construct(NotificationInterface $notification)
+    {
+        $this->notification = $notification;
+    }
+
     public function getForDataTable()
     {
         return Reply::select('replies.*', 'topics.title as title', 'users.username as username')
@@ -41,11 +49,15 @@ class ReplyRepository implements ReplyInterface
         $reply->is_blocked = $input['is_blocked'];
         $reply->vote_count = $input['vote_count'];
 
-        DB::transaction(function () use ($reply, $topic) {
+        DB::transaction(function () use ($reply, $topic, $input) {
             if ($reply->save()) {
                 $topic->reply_count++;
                 $topic->last_reply_user_id = $reply->user_id;
                 $topic->save();
+                if ($input['action']) {
+                    $reply->action = $input['action'];
+                    $this->notification->createReply($reply);
+                }
                 return true;
             }
 

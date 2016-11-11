@@ -370,10 +370,10 @@ class TopicController extends BaseController
      *      HTTP/1.1 201 Created
      * @apiSampleRequest /api/topics/1/replies
      */
-    public function reply(Topic $topic, ReplyStoreOrUpdateRequest $request)
+    public function newReply(Topic $topic, ReplyStoreOrUpdateRequest $request)
     {
         $user = Auth::user();
-        $request->merge(['user_id' => $user->id, 'topic_id' => $topic->id]);
+        $request->merge(['user_id' => $user->id, 'topic_id' => $topic->id, 'action' => snake_case(__FUNCTION__)]);
         $this->replies->create($request);
         return $this->response->created();
     }

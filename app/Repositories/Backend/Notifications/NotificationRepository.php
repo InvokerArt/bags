@@ -71,6 +71,29 @@ class NotificationRepository implements NotificationInterface
             event(new NotificationVoteEvent($notification));
         }
     }
+    
+    //话题回复
+    public function createReply($input)
+    {
+        $type = get_class($input);
+        $notification = new Notification;
+        $notification->type = 'user';
+        $notification->notification_id = $input->id;
+        $notification->notification_type = $type;
+        $notification->action = $input->action;
+        $notification->sender = Auth::id();
+        $notificationUser = new NotificationUser(['user_id' => $input->user_id]);
+
+        DB::transaction(function () use ($notification, $notificationUser) {
+            if ($notification->save()) {
+                $notification->notificationUser()->save($notificationUser);
+                return $notification;
+            }
+
+            throw new GeneralException("添加失败");
+        });
+        event(new NotificationVoteEvent($notification));
+    }
 
     public function destroy($id)
     {

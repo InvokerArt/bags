@@ -137,7 +137,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->post('topics/{topic}/vote', 'TopicController@topicVote');
         //回复
         $api->get('topics/{topic}/replies', 'TopicController@indexTopicsReply');
-        $api->post('topics/{topic}/replies', 'TopicController@reply');
+        $api->post('topics/{topic}/replies', 'TopicController@newReply');
         //回复点赞和取消赞
         $api->post('topics/replies/{reply}/vote', 'TopicController@replyVote');
         //产品
