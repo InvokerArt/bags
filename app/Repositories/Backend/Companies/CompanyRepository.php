@@ -42,7 +42,7 @@ class CompanyRepository implements CompanyInterface
         $company->licenses = $input['licenses'];
         $company->photos = $input['photos'];
         $company->role = $input['role'];
-        $company->is_extension = $input['is_extension'];
+        $company->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($company, $input) {
             if ($company->save()) {
@@ -68,7 +68,7 @@ class CompanyRepository implements CompanyInterface
             'licenses' => $input['licenses'],
             'photos' => $input['photos'],
             'role' => $input['role'],
-            'is_extension' => $input['is_extension']
+            'is_excellent' => $input['is_excellent']
         ];
         $data = array_filter($data, 'strlen');
         DB::transaction(function () use ($company, $data, $input) {

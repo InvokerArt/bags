@@ -61,4 +61,9 @@ trait UserRelationship
     {
         return $this->hasMany('App\Models\Topics\Reply');
     }
+
+    public function scopeWithOutBanned($query)
+    {
+        return $query->where('is_banned', '=', 'no');
+    }
 }

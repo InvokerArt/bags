@@ -23,7 +23,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     /**
      * 主页
      */
-    $api->get('banners', 'HomepageController@banner');
+    $api->get('home', 'HomepageController@index');
 
 
     /**
@@ -107,6 +107,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     $api->group(['middleware' => 'passport:api'], function ($api) {
         //登录用户信息
         $api->get('users/me', 'AuthController@me');
+        $api->get('users/companies', 'AuthController@company');
         //更新个人信息
         $api->patch('users', 'AuthController@update');
         //修改密码
@@ -119,8 +120,8 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->post('news/{id}/comment', 'CommentController@store');
         //加盟和认证
         $api->get('companies/{company}/join-certification', 'CompanyController@joinAndValidate');
-        $api->post('companies/{company}/joins', 'CompanyController@joinStore');
-        $api->post('companies/{company}/certifications', 'CompanyController@certificationStore');
+        $api->post('companies/{company}/joins', 'CompanyController@joinCompany');
+        $api->post('companies/{company}/certifications', 'CompanyController@certificationCompany');
         $api->post('companies', 'CompanyController@store');
         $api->put('companies/{company}', 'CompanyController@update');
         $api->patch('companies/{company}', 'CompanyController@update');

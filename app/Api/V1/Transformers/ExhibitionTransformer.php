@@ -13,7 +13,9 @@ class ExhibitionTransformer extends BaseTransformer
             'title' => $model->title,
             'address' => $model->address,
             'telephone' => $model->telephone,
-            'image' => $model->image
+            'image' => $model->image,
+            'is_excellent' => $model->is_excellent == 'yes' ? 1 : 0,
+            'is_top' => $model->is_excellent == 'yes' ? 1 : 0
         ];
     }
 }

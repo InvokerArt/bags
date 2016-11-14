@@ -39,6 +39,7 @@ class ExhibitionRepository implements ExhibitionInterface
         $exhibition->content = $input['content'];
         $exhibition->image = $input['image'];
         $exhibition->published_at = $input['published_at'] ? $input['published_at'] : Carbon::now();
+        $exhibition->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($exhibition, $input) {
             if ($exhibition->save()) {
@@ -60,6 +61,7 @@ class ExhibitionRepository implements ExhibitionInterface
         $exhibition->content = $input['content'];
         $exhibition->image = $input['image'];
         $exhibition->published_at = $input['published_at'] ? $input['published_at'] : Carbon::now();
+        $exhibition->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($exhibition, $input) {
             if ($exhibition->update()) {

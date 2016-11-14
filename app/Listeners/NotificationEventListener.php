@@ -22,7 +22,7 @@ class NotificationEventListener
         NotificationPush::send($data);
     }
 
-    public function vote($event)
+    public function personal($event)
     {
         $notification = $event->notification;
         $vote = $notification->notification()->first();
@@ -52,8 +52,8 @@ class NotificationEventListener
         );
 
         $events->listen(
-           \App\Events\NotificationVoteEvent::class,
-            'App\Listeners\NotificationEventListener@vote'
+           \App\Events\NotificationPersonalEvent::class,
+            'App\Listeners\NotificationEventListener@personal'
         );
     }
 }

@@ -15,8 +15,8 @@ class NotificationController extends BaseController
      */
     
     /**
-     * @api {get} /notifications 未读通知
-     * @apiDescription 未读通知
+     * @api {get} /notifications 通知
+     * @apiDescription 通知
      * @apiGroup Notify
      * @apiPermission 认证
      * @apiVersion 1.0.0
@@ -26,28 +26,114 @@ class NotificationController extends BaseController
     {
         "data": [
             {
-                "notify_id": "8fa4f38d-fb89-4750-8635-ad5315f79390",
-                "content": {
-                    "id": 1,
-                    "title": "互动消息",
-                    "message": "有人赞了您的帖子，去查看。",
-                    "type": "App\\Models\\Topics\\Vote",
-                    "date": "2016-11-09 01:36:54",
-                    "user_id": 2
-                },
-                "read_at": ""
+                "id": 104,
+                "title": "系统通知",
+                "notification_id": 26,
+                "notification_type": "App\\Models\\Joins\\Join",
+                "message": "user • 申请认证，请您及时处理。",
+                "sender": 2,
+                "read_at": "",
+                "created_at": "2016-11-14 04:02:52"
             },
             {
-                "notify_id": "a6d30191-ed5f-47fd-8ba8-3d6eddebfac7",
-                "content": {
-                    "id": 1,
-                    "title": "互动消息",
-                    "message": "有人赞了您的帖子，去查看。",
-                    "type": "App\\Models\\Topics\\Vote",
-                    "date": "2016-11-08 12:31:01",
-                    "user_id": 2
-                },
-                "read_at": "2016-11-09 01:33:28"
+                "id": 96,
+                "title": "赞了你的回复",
+                "notification_id": 1,
+                "notification_type": "App\\Models\\Topics\\Reply",
+                "message": "user • 赞了你的回复",
+                "sender": 2,
+                "read_at": "",
+                "created_at": "2016-11-14 03:26:29"
+            },
+            {
+                "id": 95,
+                "title": "赞了你的主题",
+                "notification_id": 4,
+                "notification_type": "App\\Models\\Topics\\Topic",
+                "message": "user • 赞了你的主题 • 我再发布了一个话题",
+                "sender": 2,
+                "read_at": "",
+                "created_at": "2016-11-14 03:18:19"
+            },
+            {
+                "id": 57,
+                "title": "系统消息",
+                "notification_id": 5,
+                "notification_type": "App\\Models\\News\\News",
+                "message": "啊大大",
+                "sender": "",
+                "read_at": "",
+                "created_at": "2016-11-11 02:15:00"
+            },
+            {
+                "id": 56,
+                "title": "系统消息",
+                "notification_id": 5,
+                "notification_type": "App\\Models\\News\\News",
+                "message": "啊大大",
+                "sender": "",
+                "read_at": "",
+                "created_at": "2016-11-11 02:15:00"
+            },
+            {
+                "id": 55,
+                "title": "系统消息",
+                "notification_id": 5,
+                "notification_type": "App\\Models\\News\\News",
+                "message": "啊大大",
+                "sender": "",
+                "read_at": "",
+                "created_at": "2016-11-11 02:15:00"
+            },
+            {
+                "id": 54,
+                "title": "系统消息",
+                "notification_id": 5,
+                "notification_type": "App\\Models\\News\\News",
+                "message": "我现在要给所有用户发一条内部消息",
+                "sender": "",
+                "read_at": "",
+                "created_at": "2016-11-11 02:15:00"
+            },
+            {
+                "id": 53,
+                "title": "系统消息",
+                "notification_id": 4,
+                "notification_type": "App\\Models\\News\\News",
+                "message": "我现在要给所有用户发一条内部消息",
+                "sender": "",
+                "read_at": "",
+                "created_at": "2016-11-11 02:15:00"
+            },
+            {
+                "id": 6,
+                "title": "系统消息",
+                "notification_id": 3,
+                "notification_type": "App\\Models\\Topics\\Topic",
+                "message": "我推送了什么消息吗",
+                "sender": "",
+                "read_at": "",
+                "created_at": "2016-11-10 11:02:43"
+            },
+            {
+                "id": 5,
+                "title": "系统消息",
+                "notification_id": 2,
+                "notification_type": "App\\Models\\Topics\\Topic",
+                "message": "我推送论坛消息",
+                "sender": "",
+                "read_at": "",
+                "created_at": "2016-11-10 11:02:43"
+            },
+            {
+                "id": 4,
+                "title": "系统消息",
+                "notification_id": 1,
+                "notification_type": "App\\Models\\Topics\\Topic",
+                "message": "我是推送消息",
+                "sender": "",
+                "read_at": "2016-11-10 11:04:48",
+                "created_at": "2016-11-10 11:02:43"
             }
         ]
     }

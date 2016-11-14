@@ -43,6 +43,8 @@ class NewsRepository implements NewsInterface
         $news->content = $input['content'];
         $news->image = $input['image'];
         $news->published_at = $input['published_at'] ? $input['published_at'] : Carbon::now();
+        $news->is_excellent = $input['is_excellent'];
+
 
         DB::transaction(function () use ($news, $input) {
             if ($news->save()) {
@@ -81,6 +83,7 @@ class NewsRepository implements NewsInterface
         $news->content = $input['content'];
         $news->image = $input['image'];
         $news->published_at = $input['published_at'] ? $input['published_at'] : Carbon::now();
+        $news->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($news, $input) {
             if ($news->update()) {

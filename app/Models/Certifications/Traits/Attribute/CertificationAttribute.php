@@ -57,7 +57,7 @@ trait CertificationAttribute
     public function setStatusAttribute($value)
     {
         if (!$value) {
-            $this->attributes['status'] = 2;
+            $this->attributes['status'] = 1;
         }
     }
 

@@ -26,7 +26,7 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'avatar' => 'required',
-            'username' => 'required|alpha_dash_except_num|unique:users,username,'.Auth::id(),
+            'username' => 'required',//required|alpha_dash_except_num|unique:users,username,'.Auth::id()
             'name' => 'required',
             'mobile' => 'required|is_mobile|unique:users,mobile,'.Auth::id(),
             'email' => 'required',

@@ -35,10 +35,16 @@ id - 话题ID
 'type' => 'App\Models\Topics\Topic' - 论坛话题  
 接口请求地址 get http://stone.dev/api/topics/:id
 ##### 系统消息
-'type' => 'App\Models\Joins\Join' - 申请加盟  
+'notification_type' => 'App\Models\Joins\Join' - 申请加盟  
 接口请求地址 get http://stone.dev/api/users/joins  
-'type' => 'App\Models\Certifications\Certification - 申请认证  
+'notification_type' => 'App\Models\Certifications\Certification' - 申请认证  
 接口请求地址 get http://stone.dev/api/users/certifications  
+'notification_type' => 'App\Models\Topics\Topic' - 论坛话题    
+接口请求地址 get http://stone.dev/api/topics/:id //:id为notification_id  
+'notification_type' => 'App\Models\Topics\Reply' - 话题回复  
+接口请求地址 get http://stone.dev/api/topics/:id //:id为notification_id  
+
+
 
 #### meta说明
 

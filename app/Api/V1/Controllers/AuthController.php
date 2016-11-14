@@ -10,6 +10,7 @@ use App\Api\V1\Requests\UserUpdateRequest;
 use App\Api\V1\Transformers\AuthenticateTransformer;
 use App\Api\V1\Transformers\AuthorizationTransformer;
 use App\Api\V1\Transformers\CertificationTransformer;
+use App\Api\V1\Transformers\CompanyTransformer;
 use App\Api\V1\Transformers\JoinTransformer;
 use App\Api\V1\Transformers\UserTransformer;
 use App\Models\Certifications\Certification;
@@ -256,7 +257,7 @@ class AuthController extends BaseController
 
     public function index()
     {
-        $users = User::WithoutBanned()->paginate();
+        $users = User::withOutBanned()->paginate();
         return $this->response->paginator($users, new UserTransformer());
     }
 
@@ -285,7 +286,7 @@ class AuthController extends BaseController
     }
 
     /**
-     * @api {get} /users 当前用户信息
+     * @api {get} /users/me 当前用户信息
      * @apiDescription 当前用户信息
      * @apiGroup Auth
      * @apiPermission 认证
@@ -303,11 +304,45 @@ class AuthController extends BaseController
             "created_at": "2016-11-02 15:57:24",
         }
     }
+     * @apiSampleRequest /api/users/me
      */
     public function me(Request $request)
     {
         $user = Auth::user();
         return $this->response->item($user, new UserTransformer());
+    }
+
+    /**
+     * @api {get} /users/companies 当前用户公司信息
+     * @apiDescription 当前用户公司信息
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": {
+            "id": 3,
+            "name": "测试公司",
+            "province": "北京市",
+            "city": "北京市",
+            "area": "石景山区",
+            "addressDetail": "",
+            "telephone": "0592-5928529",
+            "photos": [
+                "/storage/companies/2016/11/192330UhMQ.png"
+            ],
+            "is_validate": 0,
+            "is_excellent": 0
+        }
+    }
+     * @apiSampleRequest /api/users/companies
+     */
+    public function company(Request $request)
+    {
+        $company = Auth::user()->company()->first();
+        return $this->response->item($company, new CompanyTransformer());
     }
 
     /**

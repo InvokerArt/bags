@@ -217,6 +217,14 @@ class AppServiceProvider extends ServiceProvider
         );
 
         /**
+         * 点赞
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Topics\VoteInterface::class,
+            \App\Repositories\Backend\Topics\VoteRepository::class
+        );
+
+        /**
          * 通知
          */
         $this->app->bind(

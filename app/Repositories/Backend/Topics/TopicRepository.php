@@ -110,4 +110,27 @@ class TopicRepository implements TopicInterface
 
         throw new GeneralException('未找到需求信息');
     }
+
+    public function userFavorite($topic_id, $user_id)
+    {
+        return Favorite::where(compact('topic_id', 'user_id'))->exists();
+    }
+
+    /**
+     * 是否已经支持帖子.
+     *
+     * @param $topic_id
+     * @param $user_id
+     *
+     * @return bool
+     */
+    public function userTopicVoted($topic_id, $user_id)
+    {
+        return Vote::query()->where([
+            'user_id'      => $user_id,
+            'votable_id'   => $topic_id,
+            'votable_type' => 'Topic',
+            'is'           => 'upvote',
+        ])->exists();
+    }
 }

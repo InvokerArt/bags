@@ -61,6 +61,14 @@
             </div>
             <div class="box margin-bottom-15">
                 <h2>
+                    <span>首页置顶</span>
+                </h2>
+                <div class="inside">
+                    {{ Form::select('is_excellent', ['yes' => '是', 'no' => '否'], null, ['class' => 'form-control select2', 'placeholder' => '是否首页置顶']) }}
+                </div>
+            </div>
+            <div class="box margin-bottom-15">
+                <h2>
                     <span>标签</span>
                 </h2>
                 <div class="inside">

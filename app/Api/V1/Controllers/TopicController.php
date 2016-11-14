@@ -15,6 +15,7 @@ use App\Models\Users\User;
 use App\Repositories\Backend\Notifications\NotificationInterface;
 use App\Repositories\Backend\Topics\ReplyInterface;
 use App\Repositories\Backend\Topics\TopicInterface;
+use App\Repositories\Backend\Topics\VoteInterface;
 use Auth;
 use Gate;
 use Illuminate\Http\Request;
@@ -24,12 +25,14 @@ class TopicController extends BaseController
     protected $topics;
     protected $replies;
     protected $notification;
+    protected $vote;
 
-    public function __construct(TopicInterface $topics, ReplyInterface $replies, NotificationInterface $notification)
+    public function __construct(TopicInterface $topics, ReplyInterface $replies, NotificationInterface $notification, VoteInterface $vote)
     {
         $this->topics = $topics;
         $this->replies = $replies;
         $this->notification = $notification;
+        $this->vote = $vote;
     }
 
     /**
@@ -186,6 +189,10 @@ class TopicController extends BaseController
     public function show(Topic $topic)
     {
         $topic->increment('view_count', 1);
+        if (Auth::check()) {
+            $topic->favorite = $this->topics->userFavorite($topic->id, Auth::id());
+            $topic->topic_vote = $this->topics->userTopVoted($topic->id, Auth::id());
+        }
         return $this->response->item($topic, new TopicTransformer());
     }
 
@@ -247,7 +254,9 @@ class TopicController extends BaseController
      */
     public function topicVote(Topic $topic)
     {
-        $this->notification->createVote($topic);
+        //action加入通知的动作
+        $topic->action = snake_case(__FUNCTION__);
+        $this->vote->create($topic);
         return $this->response->noContent();
     }
 
@@ -373,6 +382,7 @@ class TopicController extends BaseController
     public function newReply(Topic $topic, ReplyStoreOrUpdateRequest $request)
     {
         $user = Auth::user();
+        //action加入通知的动作
         $request->merge(['user_id' => $user->id, 'topic_id' => $topic->id, 'action' => snake_case(__FUNCTION__)]);
         $this->replies->create($request);
         return $this->response->created();
@@ -391,8 +401,9 @@ class TopicController extends BaseController
      */
     public function replyVote(Reply $reply)
     {
+        //action加入通知的动作
         $reply->action = snake_case(__FUNCTION__);
-        $this->notification->createVote($reply);
+        $this->vote->create($reply);
         return $this->response->noContent();
     }
 }

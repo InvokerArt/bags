@@ -16,6 +16,12 @@ trait NotificationPresenter
             case 'reply_vote':
                 $subject = trans('notification.Reply vote subject');
                 break;
+            case 'join_company':
+                $subject = trans('notification.Join company subject');
+                break;
+            case 'certification_company':
+                $subject = trans('notification.Certification company subject');
+                break;
             default:
                 break;
         }
@@ -33,6 +39,12 @@ trait NotificationPresenter
                 break;
             case 'reply_vote':
                 $lable = trans('notification.Up Vote your reply');
+                break;
+            case 'join_company':
+                $lable = trans('notification.Your company has new user application join');
+                break;
+            case 'certification_company':
+                $lable = trans('notification.Your company has new user application certification');
                 break;
             case 'follow':
                 $lable = trans('notification.Someone following you');

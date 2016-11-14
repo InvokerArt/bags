@@ -6,6 +6,7 @@ use App\Exceptions\GeneralException;
 use App\Models\Companies\Company;
 use App\Models\Joins\Join;
 use App\Models\Users\User;
+use App\Repositories\Backend\Notifications\NotificationInterface;
 use DB;
 
 /**
@@ -14,6 +15,13 @@ use DB;
  */
 class JoinRepository implements JoinInterface
 {
+    private $notification;
+
+    public function __construct(NotificationInterface $notification)
+    {
+        $this->notification = $notification;
+    }
+
     public function getForDataTable()
     {
         return Join::select('joins.*', 'users.username', 'companies.name as companyname')
@@ -37,9 +45,9 @@ class JoinRepository implements JoinInterface
         if ($company && $company->role === 3) {
             throw new GeneralException('该公司不属于采购商或加盟商！');
         }
-        $isJoin = Join::where('company_id', $company->id)->first();
+        $isJoin = Join::where('company_id', $company->id)->where('status', 1)->orWhere('status', 2)->first();
         if ($isJoin) {
-            throw new GeneralException('请勿重复加盟该公司！');
+            throw new GeneralException('请勿重复申请加盟该公司！');
         }
 
         $join = new Join;
@@ -49,8 +57,13 @@ class JoinRepository implements JoinInterface
         $join->licenses = $input['licenses'];
         $join->status = $input['status'];
 
-        DB::transaction(function () use ($join) {
+        DB::transaction(function () use ($join, $input) {
             if ($join->save()) {
+                if ($input['action']) {
+                    $join->type =  get_class($join);
+                    $join->action = $input['action'];
+                    $this->notification->createPersonal($join);
+                }
                 return true;
             }
 

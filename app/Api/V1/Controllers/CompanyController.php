@@ -87,7 +87,7 @@ class CompanyController extends BaseController
      * @apiPermission 无
      * @apiVersion 1.0.0
      * @apiSuccess is_validate 认证 1//已认证  0//未认证
-     * @apiSuccess is_extension 推广 1//已认证  0//未认证
+     * @apiSuccess is_excellent 推广 1//已认证  0//未认证
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
     {
@@ -105,7 +105,7 @@ class CompanyController extends BaseController
                     "/storage/companies/2016/11/192247z703.png"
                 ],
                 "is_validate": 0,
-                "is_extension": 0
+                "is_excellent": 0
             }
         ],
         "meta": {
@@ -376,10 +376,11 @@ class CompanyController extends BaseController
      *      HTTP/1.1 201 Created
      * @apiSampleRequest /api/companies/1/joins
      */
-    public function joinStore(Company $company, JoinStoreRequest $request)
+    public function joinCompany(Company $company, JoinStoreRequest $request)
     {
         $user = Auth::user();
-        $request->merge(['user_id' => $user->id, 'company_id' => $company->id]);
+        //action加入通知的动作
+        $request->merge(['user_id' => $user->id, 'company_id' => $company->id, 'action' => snake_case(__FUNCTION__)]);
         $this->joins->create($request);
         return $this->response->created();
     }
@@ -397,10 +398,11 @@ class CompanyController extends BaseController
      *      HTTP/1.1 201 Created
      * @apiSampleRequest /api/companies/1/certifications
      */
-    public function certificationStore(Company $company, CertificationStoreRequest $request)
+    public function certificationCompany(Company $company, CertificationStoreRequest $request)
     {
         $user = Auth::user();
-        $request->merge(['user_id' => $user->id, 'company_id' => $company->id]);
+        //action加入通知的动作
+        $request->merge(['user_id' => $user->id, 'company_id' => $company->id, 'action' => snake_case(__FUNCTION__)]);
         $this->certifications->create($request);
         return $this->response->created();
     }

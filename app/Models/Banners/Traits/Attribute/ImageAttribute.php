@@ -40,4 +40,10 @@ trait ImageAttribute
     {
         $this->attributes['published_to'] = Carbon::createFromFormat('Y-m-d', $date);
     }
+
+    //设置图片路径访问器
+    public function getImageUrlAttribute($value)
+    {
+        return asset(Storage::url($value));
+    }
 }

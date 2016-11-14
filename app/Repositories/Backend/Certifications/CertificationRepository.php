@@ -6,6 +6,7 @@ use App\Exceptions\GeneralException;
 use App\Models\Certifications\Certification;
 use App\Models\Companies\Company;
 use App\Models\Users\User;
+use App\Repositories\Backend\Notifications\NotificationInterface;
 use DB;
 
 /**
@@ -14,6 +15,13 @@ use DB;
  */
 class CertificationRepository implements CertificationInterface
 {
+    private $notification;
+
+    public function __construct(NotificationInterface $notification)
+    {
+        $this->notification = $notification;
+    }
+    
     public function getForDataTable()
     {
         return Certification::select('certifications.*', 'users.username', 'companies.name as companyname')
@@ -34,9 +42,9 @@ class CertificationRepository implements CertificationInterface
         if ($company && $company->role != 3) {
             throw new GeneralException('该公司不属于机构/单位！');
         }
-        $isCertification = Certification::where('company_id', $company->id)->first();
+        $isCertification = Certification::where('company_id', $company->id)->where('status', 1)->orWhere('status', 2)->first();
         if ($isCertification) {
-            throw new GeneralException('请勿重复认证！');
+            throw new GeneralException('请勿重复申请认证！');
         }
 
         $certification = new Certification;
@@ -46,8 +54,13 @@ class CertificationRepository implements CertificationInterface
         $certification->licenses = $input['licenses'];
         $certification->status = $input['status'];
 
-        DB::transaction(function () use ($certification) {
+        DB::transaction(function () use ($certification, $input) {
             if ($certification->save()) {
+                if ($input['action']) {
+                    $certification->type =  get_class($certification);
+                    $certification->action = $input['action'];
+                    $this->notification->createPersonal($certification);
+                }
                 return true;
             }
 

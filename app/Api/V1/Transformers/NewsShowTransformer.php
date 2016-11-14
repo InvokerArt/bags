@@ -15,6 +15,8 @@ class NewsShowTransformer extends BaseTransformer
             'content' => $model->content,
             'image' => $model->image,
             'created_at' => $model->created_at->toDateTimeString(),
+            'is_excellent' => $model->is_excellent == 'yes' ? 1 : 0,
+            'is_top' => $model->is_excellent == 'yes' ? 1 : 0
         ];
     }
 }

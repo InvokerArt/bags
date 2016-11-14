@@ -27,6 +27,11 @@ trait ReplyRelationship
         return $this->morphMany('App\Models\Topics\Vote', 'votable');
     }
 
+    public function notifications()
+    {
+        return $this->morphMany('App\Models\Notifications\Notification', 'notification');
+    }
+
     public function scopeWhose($query, $user_id)
     {
         return $query->where('user_id', '=', $user_id)->with('topic');

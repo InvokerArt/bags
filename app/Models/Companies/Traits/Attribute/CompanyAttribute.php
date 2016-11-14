@@ -75,7 +75,7 @@ trait CompanyAttribute
     public function setIsExtensionAttribute($value)
     {
         if (!$value) {
-            $this->attributes['is_extension'] = 'no';
+            $this->attributes['is_excellent'] = 'no';
         }
     }
 

@@ -14,7 +14,7 @@
         <div class="left-body-content">
             <div class="news-body">
                 <div class="form-group">
-                    <input type="text" name="title" class="form-control" placeholder="在此输入资讯标题">
+                    {{ Form::text('title', null, ['class' => 'form-control', 'placeholder' => '在此输入资讯标题']) }}
                 </div>
                 {{-- <div class="inside">
                     <div id="edit-slug-box" class="hide-if-no-js"> <strong>固定链接：</strong>
@@ -26,11 +26,11 @@
                     </div>
                 </div> --}}
                 <div class="form-group margin-top-15">
-                    <textarea name="subtitle" class="form-control" placeholder="在此输入资讯简介"></textarea>
+                    {{ Form::textarea('subtitle', null, ['class' => 'form-control', 'placeholder' => '在此输入资讯简介', 'rows' => '3']) }}
                     <span class="help-block">字数建议控制在100字以内</span>
                 </div>
                 <div class="form-group">
-                    <textarea name="content" id="editor" class="form-control"></textarea>
+                    {{ Form::textarea('content', null, ['class' => 'form-control', 'id' => 'editor']) }}
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                     <span>发布</span>
                 </h2>
                 <div class="inside">
-                    <input type="text" name="published_at" class="form-control date-timepicker" placeholder="发布时间">
+                    {{ Form::text('published_at', null, ['class' => 'form-control date-timepicker margin-top-10', 'placeholder' => '发布时间']) }}
                     <button href="javascript:;" class="btn btn-default  margin-top-10">
                         <i class="fa fa-eye"></i>
                         预览 
@@ -58,6 +58,14 @@
                 <div class="inside news-categories">
                 </div>
                 <input type="hidden" name="categories_id" id="categories">
+            </div>
+            <div class="box margin-bottom-15">
+                <h2>
+                    <span>首页置顶</span>
+                </h2>
+                <div class="inside">
+                    {{ Form::select('is_excellent', ['yes' => '是', 'no' => '否'], 'no', ['class' => 'form-control select2', 'placeholder' => '是否首页置顶']) }}
+                </div>
             </div>
             <div class="box margin-bottom-15">
                 <h2>

@@ -9,6 +9,7 @@ class UserTransformer extends BaseTransformer
         return [
             'id' => $model->id,
             'username' => $model->username,
+            'name' => $model->name,
             'mobile' => $model->mobile,
             'email' => $model->email,
             'avatar' => $model->avatar,

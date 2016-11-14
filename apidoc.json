@@ -9,8 +9,18 @@
     "filename": "header.md"
   },
   "order": [
-    "GetUser",
-    "PostUser"
+    "Homepage",
+    "Auth",
+    "Notify",
+    "Favorite",
+    "Company",
+    "News",
+    "Exhibition",
+    "Topic",
+    "Product",
+    "Demand",
+    "Supply",
+    "Area"
   ],
   "template": {
     "withCompare": true,

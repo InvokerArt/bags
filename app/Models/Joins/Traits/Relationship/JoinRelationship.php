@@ -13,4 +13,9 @@ trait JoinRelationship
     {
         return $this->belongsTo('App\Models\Companies\Company');
     }
+
+    public function notifications()
+    {
+        return $this->morphMany('App\Models\Notifications\Notification', 'notification');
+    }
 }

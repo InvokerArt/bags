@@ -19,4 +19,9 @@ trait SupplyRelationship
     {
         return $this->morphMany('App\Models\Favorites\Favorite', 'favorite');
     }
+
+    public function notifications()
+    {
+        return $this->morphMany('App\Models\Notifications\Notification', 'notification');
+    }
 }
