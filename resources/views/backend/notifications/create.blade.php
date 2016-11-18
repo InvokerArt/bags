@@ -1,9 +1,5 @@
 @extends('backend.layouts.app')
 
-@section('page-title')
-添加系统通知
-@stop
-
 @section('content')
 {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.notifications.store', 'method' => 'post', 'id' => 'create-notification', 'class' => 'form-horizontal']) }}
 <div class="portlet">            

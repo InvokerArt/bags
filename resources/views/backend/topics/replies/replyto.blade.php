@@ -4,10 +4,6 @@
     <link rel="stylesheet" href="{{asset('css/global/vendor/jstree/themes/default/style.min.css')}}">
 @stop
 
-@section('page-title')
-添加回复
-@stop
-
 @section('content')
 {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.replies.store', 'method' => 'post', 'id' => 'create-reply']) }}
     {{ Form::hidden('parent_id', $reply->id) }}

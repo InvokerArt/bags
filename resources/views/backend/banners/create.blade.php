@@ -1,9 +1,5 @@
 @extends('backend.layouts.app')
 
-@section('page-title')
-添加广告位
-@stop
-
 @section('content')
 {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.banners.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'submit_form']) }}
     <div class="portlet">            

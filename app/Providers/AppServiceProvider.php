@@ -231,5 +231,13 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Backend\Notifications\NotificationInterface::class,
             \App\Repositories\Backend\Notifications\NotificationRepository::class
         );
+
+        /**
+         * 反馈
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Feedbacks\FeedbackInterface::class,
+            \App\Repositories\Backend\Feedbacks\FeedbackRepository::class
+        );
     }
 }

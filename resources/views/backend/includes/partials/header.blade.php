@@ -5,7 +5,7 @@
         <!-- LOGO开始 -->
         <div class="page-logo">
             <a href="/admin">
-            <img src="{!! asset('images/logo.png') !!}" alt="logo" class="logo-default"/>
+                <img src="{!! asset('images/logo.png') !!}" alt="logo" class="logo-default"/>
             </a>
             <!-- 侧边栏切换开关开始 -->
             <div class="menu-toggler sidebar-toggler">
@@ -21,37 +21,10 @@
                 <!-- BEGIN USER LOGIN DROPDOWN -->
                 <li class="dropdown dropdown-user">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                    <img alt="" class="img-circle" src="{!! asset('images/avatar3_small.jpg') !!}"/>
-                    <span class="username">
-                    Bob </span>
-                    <i class="fa fa-angle-down"></i>
+                        <span class="username"> {{ auth('admin')->user()->name }} </span>
+                        <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li>
-                            <a href="extra_profile.html">
-                            <i class="icon-user"></i> My Profile </a>
-                        </li>
-                        <li>
-                            <a href="page_calendar.html">
-                            <i class="icon-calendar"></i> My Calendar </a>
-                        </li>
-                        <li>
-                            <a href="inbox.html">
-                            <i class="icon-envelope-open"></i> My Inbox <span class="badge badge-danger">
-                            3 </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                            <i class="icon-rocket"></i> My Tasks <span class="badge badge-success">
-                            7 </span>
-                            </a>
-                        </li>
-                        <li class="divider">
-                        </li>
-                        <li>
-                            <a href="extra_lock.html"> Lock Screen </a>
-                        </li>
                         <li>
                             <a href="{{ route(env('APP_BACKEND_PREFIX').'.auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="icon-lock"></i>

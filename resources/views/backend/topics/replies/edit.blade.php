@@ -4,10 +4,6 @@
     <link rel="stylesheet" href="{{asset('css/global/vendor/jstree/themes/default/style.min.css')}}">
 @stop
 
-@section('page-title')
-编辑回复
-@stop
-
 @section('content')
 {{ Form::model($reply, ['route' => [env('APP_BACKEND_PREFIX').'.replies.update', $reply], 'method' => 'PATCH', 'id' => 'edit-reply']) }}
     {{ Form::hidden('parent_id', $reply->id) }}

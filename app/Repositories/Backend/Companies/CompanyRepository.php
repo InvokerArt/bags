@@ -70,7 +70,9 @@ class CompanyRepository implements CompanyInterface
             'role' => $input['role'],
             'is_excellent' => $input['is_excellent']
         ];
-        $data = array_filter($data, 'strlen');
+        
+        $data = array_filter($data);
+
         DB::transaction(function () use ($company, $data, $input) {
 
             if ($company->update($data)) {

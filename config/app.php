@@ -173,6 +173,7 @@
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         //权限控制
+        Zizaco\Entrust\EntrustServiceProvider::class,
         App\Providers\AccessServiceProvider::class,
         /**
          * PassportServiceProvider 官方Passport认证插件
@@ -191,8 +192,6 @@
         Collective\Html\HtmlServiceProvider::class,
         //Datatables插件
         Yajra\Datatables\DatatablesServiceProvider::class,
-        //基于角色的权限系统
-        Zizaco\Entrust\EntrustServiceProvider::class,
         //Active 导航选中插件
         HieuLe\Active\ActiveServiceProvider::class,
         //导航条插件

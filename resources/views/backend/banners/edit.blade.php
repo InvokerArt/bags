@@ -1,9 +1,5 @@
 @extends('backend.layouts.app')
 
-@section('page-title')
-编辑广告位
-@stop
-
 @section('content')
 {{ Form::model($banner, ['route' => [env('APP_BACKEND_PREFIX').'.banners.update', $banner], 'class' => 'form-horizontal', 'method' => 'PATCH', 'id' => 'edit-banner']) }}
     <div class="portlet">            

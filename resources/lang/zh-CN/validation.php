@@ -136,7 +136,11 @@ return [
         'role' => '角色',
         'telephone' => '电话',
         'address' => '地址',
-        'addressDetail' => '详细地址'
+        'addressDetail' => '详细地址',
+        'job' => '招聘职位',
+        'education' => '学历要求',
+        'experience' => '工作年限',
+        'minsalary' => '薪资待遇'
     ],
 
 ];

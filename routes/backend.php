@@ -5,7 +5,7 @@
  * Namespaces indicate folder structure
  * Admin middleware groups web, auth, and routeNeedsPermission
  */
-Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.'], function () {
+Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', 'middleware' => 'web'], function () {
     Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
         Route::get('login', 'LoginController@showLoginForm')->name('login');
         Route::post('login', 'LoginController@login');
@@ -15,7 +15,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.'], 
     Route::get('location/{city}', 'AreaController@cityOrArea');
 });
 
-Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', 'middleware' => 'admin'], function () {
+Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', 'middleware' => ['admin', 'permission:view-backend']], function () {
     /**
      * These routes need view-backend permission
      * (good if you want to allow more than one group in the backend,
@@ -299,11 +299,19 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/', 'NotificationController@index')->name('index');
         Route::get('create', 'NotificationController@create')->name('create');
         Route::post('/', 'NotificationController@store')->name('store');
-        Route::delete('/{message}', 'NotificationController@destroy')->name('destroy');
+        Route::delete('/{notification}', 'NotificationController@destroy')->name('destroy');
+    });
+
+    //反馈
+    Route::group(['namespace' => 'Feedbacks', 'as' => 'feedbacks.', 'prefix' => 'feedbacks'], function () {
+        Route::get('/get', 'FeedbackController@get')->name('get');
+        Route::get('/', 'FeedbackController@index')->name('index');
+        Route::get('/{feedback}', 'FeedbackController@show')->name('show');
+        Route::delete('/{feedback}', 'FeedbackController@destroy')->name('destroy');
     });
 });
 
-Route::group(['prefix' => 'log-viewer', 'as' => env('APP_BACKEND_PREFIX').'.', 'middleware' => 'admin'], function () {
+Route::group(['prefix' => 'log-viewer', 'as' => env('APP_BACKEND_PREFIX').'.', 'middleware' => ['admin', 'role:root']], function () {
 
     Route::get('/', [
         'as'   => 'log-viewer::dashboard',
@@ -326,6 +334,10 @@ Route::group(['prefix' => 'log-viewer', 'as' => env('APP_BACKEND_PREFIX').'.', '
             'as'   => 'log-viewer::logs.show',
             'uses' => '\Arcanedev\LogViewer\Http\Controllers\LogViewerController@show',
         ]);
+        //TODO: Figure out why the default link isn't working
+        Route::get('/all', function ($date) {
+            return redirect()->route('admin.log-viewer::logs.show', [$date]);
+        });
         Route::get('download', [
             'as'   => 'log-viewer::logs.download',
             'uses' => '\Arcanedev\LogViewer\Http\Controllers\LogViewerController@download',

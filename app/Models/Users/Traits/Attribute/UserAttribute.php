@@ -47,9 +47,18 @@ trait UserAttribute
     public function getAvatarAttribute($value)
     {
         if ($value) {
-            return asset($value);
-        } else {
-            return asset('uploads/avatars/default/medium.png');
+            $avatar['_default'] = $value;
+            $avatarPath = str_replace('.png', '', $value);
+            $avatar['small'] = $this->avatarMulti($avatarPath, 'small');
+            $avatar['medium'] = $this->avatarMulti($avatarPath, 'medium');
+            $avatar['large'] = $this->avatarMulti($avatarPath, 'large');
+            return $avatar;
         }
+    }
+
+    public function avatarMulti($url, $size)
+    {
+        $avatarPath = asset($url.'_'.config('avatar.'.$size.'.size').'x'.config('avatar.'.$size.'.size').'.png');
+        return $avatarPath;
     }
 }

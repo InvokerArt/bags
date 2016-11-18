@@ -4,6 +4,7 @@ namespace App\Api\V1\Controllers;
 
 use App\Api\V1\Requests\CertificationStoreRequest;
 use App\Api\V1\Requests\CompanyStoreRequest;
+use App\Api\V1\Requests\JobStoreRequest;
 use App\Api\V1\Requests\JoinStoreRequest;
 use App\Api\V1\Transformers\BannerTransformer;
 use App\Api\V1\Transformers\CategoryTransformer;
@@ -18,8 +19,10 @@ use App\Models\Companies\CategoryCompany;
 use App\Models\Companies\Company;
 use App\Models\Jobs\Job;
 use App\Models\Products\Product;
+use App\Repositories\Backend\Banners\ImageInterface;
 use App\Repositories\Backend\Certifications\CertificationInterface;
 use App\Repositories\Backend\Companies\CompanyInterface;
+use App\Repositories\Backend\Jobs\JobInterface;
 use App\Repositories\Backend\Joins\JoinInterface;
 use Auth;
 use Illuminate\Http\Request;
@@ -30,12 +33,16 @@ class CompanyController extends BaseController
     protected $joins;
     protected $certifications;
     protected $companies;
+    private $job;
+    private $image;
 
-    public function __construct(JoinInterface $joins, CertificationInterface $certifications, CompanyInterface $companies)
+    public function __construct(JoinInterface $joins, CertificationInterface $certifications, CompanyInterface $companies, JobInterface $job, ImageInterface $image)
     {
         $this->joins = $joins;
         $this->certifications = $certifications;
         $this->companies = $companies;
+        $this->job = $job;
+        $this->image = $image;
     }
 
     /**
@@ -76,7 +83,7 @@ class CompanyController extends BaseController
      */
     public function banner()
     {
-        $images = Image::where('banner_id', 2)->orderBy('order', 'desc')->get();
+        $images = $this->image->getCategoryBanners(2);
         return $this->response->collection($images, new BannerTransformer());
     }
 
@@ -123,10 +130,16 @@ class CompanyController extends BaseController
      */
     public function index($id)
     {
-        $company = Company::where('role', $id)->with(['certifications' => function ($query) {
-            $query->validate();
-        }])->paginate();
-        return $this->response()->paginator($company, new CompanyTransformer());
+        if ($id) {
+            $companys = Company::where('role', $id)->with(['certifications' => function ($query) {
+                $query->validate();
+            }])->paginate();
+        } else {
+            $companys = Company::where('role', 1)->orWhere('role', 2)->with(['certifications' => function ($query) {
+                $query->validate();
+            }])->paginate();
+        }
+        return $this->response()->paginator($companys, new CompanyTransformer());
     }
 
     /**
@@ -276,8 +289,34 @@ class CompanyController extends BaseController
     public function job(Company $company)
     {
         $user = $company->user()->first();
-        $jobs = $user->jobs()->get();
-        return $this->response->collection($jobs, new JobTransformer());
+        $jobs = $user->jobs()->paginate();
+        return $this->response->paginator($jobs, new JobTransformer());
+    }
+
+    /**
+     * @api {post} /companies/jobs 发布招聘
+     * @apiDescription 发布招聘
+     * @apiGroup Company
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {String} job 招聘职位
+     * @apiParam {String} total 招聘人数
+     * @apiParam {String} education 学历要求
+     * @apiParam {String} experience 工作年限
+     * @apiParam {String} minsalary 薪资待遇
+     * @apiParam {String} content 招聘内容
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 201 Created
+     *
+     * @apiSampleRequest /api/companies/jobs
+     */
+    public function jobStore(JobStoreRequest $request)
+    {
+        $user = $request->user();
+        $request->merge(['user_id' => $user->id]);
+        $job = $this->job->create($request);
+        return $this->response->created();
     }
 
     /**
@@ -290,12 +329,27 @@ class CompanyController extends BaseController
      *      HTTP/1.1 200 OK
      *
     {
-        "data": {
-            "id": 1,
-            "title": "产品标题",
-            "price": 1.2,
-            "unit": 1,
-            "content": "<p>产品很好很好产品很好很好产品很好很好产品很好很好</p>"
+        "data": [
+            {
+                "id": 2,
+                "title": "我有袋子100箱",
+                "price": 100,
+                "unit": 5,
+                "content": "<p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">加工定制 是</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">用途 通用包装</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">底面侧面 无底无侧</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">供货类型 可定制</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">规格 400*300（mm*mm）</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">加印LOGO 可以</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">款式 手提袋</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">颜色 米白</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">印刷工艺 丝印</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">自重 285（g）</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">品牌 Martina</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">是否有现货 有</p><p><br/></p>",
+                "images": [
+                    "http://stone.dev/uploads/products/2016/11/165204E76X.png"
+                ]
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 1,
+                "count": 1,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
         }
     }
     没有产品内容的时候为
@@ -307,8 +361,8 @@ class CompanyController extends BaseController
     public function product(Company $company)
     {
         $user = $company->user()->first();
-        $products = $user->products()->get();
-        return $this->response->collection($products, new ProductTransformer());
+        $products = $user->products()->paginate();
+        return $this->response->paginator($products, new ProductTransformer());
     }
 
     /**
@@ -440,7 +494,7 @@ class CompanyController extends BaseController
     }
 
     /**
-     * @api {PATCH} /companies/ 更新公司信息
+     * @api {PATCH} /companies 更新公司信息
      * @apiDescription 更新公司时下面参数不是必传项
      * @apiGroup Auth
      * @apiPermission 认证
@@ -451,18 +505,19 @@ class CompanyController extends BaseController
      * @apiParam {String} telephone 电话
      * @apiParam {Number} address 地区code
      * @apiParam {String} addressDetail 详细地区
-     * @apiParam {Number{1,2,3,4,5,6,7,8}} categories 分类ID 当为机构单位时为1，2,3,4
-     * @apiParam {String} licenses 营业执照
-     * @apiParam {String} photos 公司照片或单位照片
+     * @apiParam {Number} categories 分类ID
+     * @apiParam {String[]} licenses[] 营业执照
+     * @apiParam {String[]} photos[] 公司照片或单位照片
      * @apiParam {String} notes 公司加盟须知或单位认证须知
      * @apiParam {String} content 公司简介或单位简介
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 201 Created
-     * @apiSampleRequest /api/companies/1/certifications
+     * @apiSampleRequest /api/companies/
      */
-    public function update(Company $company, Request $request)
+    public function update(Request $request)
     {
         $user = Auth::user();
+        $company = Company::where('user_id', $user->id)->first();
         if (!$user->can('update', $company)) {
             return $this->response->errorForbidden();
         }
@@ -547,9 +602,80 @@ class CompanyController extends BaseController
         return $this->response->created();
     }
 
+    /**
+     * @api {get} /companies/search 公司搜索
+     * @apiDescription 公司搜索
+     * @apiGroup Company
+     * @apiPermission 无
+     * @apiVersion 1.0.0
+     * @apiParam {String} q 搜索关键字
+     * @apiParam {Number{0,1,2}} role 企业性质
+     * @apiParam {Number} categories 企业分类
+     * @apiParam {Number} address 地区码
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 3,
+                "name": "测试公司",
+                "province": "北京市",
+                "city": "北京市",
+                "area": "石景山区",
+                "addressDetail": "",
+                "telephone": "0592-5928529",
+                "photos": "http://stone.dev/storage/companies/2016/11/192330UhMQ.png",
+                "is_validate": 0,
+                "is_excellent": 0
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 1,
+                "count": 1,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
+     * @apiSampleRequest /api/companies/search
+     */
     public function search(Request $request)
     {
-        $companys = Company::search($request->q)->get();
-        return $this->response->collection($companys, new CompanyTransformer());
+        $query = Company::select();
+
+        if ($request->q) {
+            $query->where(function ($query) use ($request) {
+                $query->where('name', 'like', "%$request->q%")
+                ->orWhere('notes', 'like', "%$request->q%")
+                ->orWhere('content', 'like', "%$request->q%");
+            });
+        }
+
+        if (isset($request->role)) {
+            if ($request->role == 0) {
+                $query->where(function ($query) {
+                    $query->where('role', 1)
+                    ->orWhere('role', 2);
+                });
+            } else {
+                $query->where('role', $request->role);
+            }
+        }
+
+        if ($request->categories) {
+            $query->whereHas('categories', function ($query) use ($request) {
+                $query->where('category_id', $request->categories);
+            });
+        }
+
+        if ($request->address) {
+            $query->where('address', $request->address);
+        }
+
+        $companies = $query->paginate();
+        return $this->response->paginator($companies, new CompanyTransformer());
     }
 }

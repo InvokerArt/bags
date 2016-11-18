@@ -7,7 +7,6 @@ use App\Api\V1\Requests\TopicStoreOrUpdateRequest;
 use App\Api\V1\Transformers\CategoryTransformer;
 use App\Api\V1\Transformers\ReplyTransformer;
 use App\Api\V1\Transformers\TopicTransformer;
-use App\Events\TopicEvent;
 use App\Models\Topics\CategoriesTopics;
 use App\Models\Topics\Reply;
 use App\Models\Topics\Topic;
@@ -216,7 +215,7 @@ class TopicController extends BaseController
         $request->merge(['user_id' => $user->id]);
         $topic = $this->topics->create($request);
         $user->increment('topic_count', 1);
-        return $this->response->created(env('APP_URL').'api/topics/'.$topic->id, $topic);
+        return $this->response->created(env('APP_URL').'/api/topics/'.$topic->id, $topic);
     }
 
     /**

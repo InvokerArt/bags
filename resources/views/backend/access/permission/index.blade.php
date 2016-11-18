@@ -1,9 +1,5 @@
 @extends('backend.layouts.app')
 
-@section('page-title')
-    权限
-@stop
-
 @section('content')
 <div class="portlet light portlet-fit portlet-datatable bordered">
     <div class="portlet-title">

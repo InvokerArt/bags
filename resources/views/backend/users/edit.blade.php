@@ -5,10 +5,6 @@
 <link rel="stylesheet" href="/js/vendor/cropper/main.css">
 @stop
 
-@section('page-title')
-    编辑用户
-@stop
-
 @section('content')
 <div id="crop-avatar">
     {{ Form::model($user, ['route' => [env('APP_BACKEND_PREFIX').'.users.update', $user], 'class' => 'form-horizontal', 'method' => 'PATCH', 'id' => 'edit-user']) }}

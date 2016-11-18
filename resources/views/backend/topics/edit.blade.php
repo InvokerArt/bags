@@ -4,10 +4,6 @@
     <link rel="stylesheet" href="{{asset('css/global/vendor/jstree/themes/default/style.min.css')}}">
 @stop
 
-@section('page-title')
-编辑话题
-@stop
-
 @section('content')
 {{ Form::model($topic, ['route' => [env('APP_BACKEND_PREFIX').'.topics.update', $topic], 'method' => 'PATCH', 'id' => 'edit-topic']) }}
     <div id="poststuff">

@@ -1,9 +1,5 @@
 @extends('backend.layouts.app')
 
-@section('page-title')
-    媒体库
-@stop
-
 @section('content')
 <div class="portlet">
     <div class="note note-danger no-margin margin-bottom-10">上传图片不能包含中文或非法字符！双击文件夹进入文件夹</div>

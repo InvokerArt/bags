@@ -4,10 +4,6 @@
     <link rel="stylesheet" href="{{asset('css/global/vendor/jstree/themes/default/style.min.css')}}">
 @stop
 
-@section('page-title')
-添加话题
-@stop
-
 @section('content')
 {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.topics.store', 'method' => 'post', 'id' => 'create-topic']) }}
     <div id="poststuff">

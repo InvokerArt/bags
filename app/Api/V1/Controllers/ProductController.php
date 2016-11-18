@@ -8,6 +8,7 @@ use App\Api\V1\Transformers\ProductTransformer;
 use App\Models\Products\Product;
 use App\Repositories\Backend\Products\ProductInterface;
 use Auth;
+use Illuminate\Http\Request;
 
 class ProductController extends BaseController
 {
@@ -108,14 +109,33 @@ class ProductController extends BaseController
         "data": {
             "id": 1,
             "title": "产品标题",
-            "address": "福建厦门思明",
+            "province": "海南省",
+            "city": "三沙市",
+            "area": "中沙群岛的岛礁及其海域",
+            "addressDetail": "",
             "telephone": "0592-5928529",
             "price": 1.2,
             "unit": 1,
             "content": "<p>产品很好很好产品很好很好产品很好很好产品很好很好</p>",
             "images": [
-                "/uploads/products/2016/11/092739rqKq.png"
-            ]
+                "http://stone.dev/uploads/products/2016/11/092739rqKq.png"
+            ],
+            "user": {
+                "data": {
+                    "id": 3,
+                    "username": "来我家",
+                    "name": "新英雄",
+                    "mobile": "13111111112",
+                    "email": "ghsjjshhd",
+                    "avatar": {
+                        "_default": "http://192.168.1.41:8000/uploads/avatars/20161117100823_30x30.png",
+                        "small": "http://192.168.1.41:8000/uploads/avatars/20161117100823_30x30_30x30.png",
+                        "medium": "http://192.168.1.41:8000/uploads/avatars/20161117100823_30x30_65x65.png",
+                        "large": "http://192.168.1.41:8000/uploads/avatars/20161117100823_30x30_180x180.png"
+                    },
+                    "created_at": "2016-11-02 19:01:58"
+                }
+            }
         }
     }
      * @apiSampleRequest /api/products/1
@@ -123,6 +143,7 @@ class ProductController extends BaseController
     public function show(Product $product)
     {
         $company = $product->company()->first();
+        $product = $product->with('user')->first();
         $product->address = $company->address;
         $product->addressDetail = $company->addressDetail;
         $product->telephone = $company->telephone;
@@ -192,5 +213,51 @@ class ProductController extends BaseController
 
         $product->delete();
         return $this->response->noContent();
+    }
+    /**
+     * @api {get} /products/search 产品搜索
+     * @apiDescription 产品搜索
+     * @apiGroup Product
+     * @apiPermission 无
+     * @apiVersion 1.0.0
+     * @apiParam {String} q 搜索关键字
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 1,
+                "title": "产品标题",
+                "price": 1.2,
+                "unit": 1,
+                "content": "<p>产品很好很好产品很好很好产品很好很好产品很好很好</p>",
+                "images": "http://stone.dev/uploads/products/2016/11/092739rqKq.png"
+            },
+            {
+                "id": 3,
+                "title": "我要更新一个产品4",
+                "price": 1000,
+                "unit": 1,
+                "content": "内容就是产品够好你买不买",
+                "images": "http://stone.dev/uploads/products/2016/11/165204E76X.png"
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 2,
+                "count": 2,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
+     * @apiSampleRequest /api/products/search
+     */
+    public function search(Request $request)
+    {
+        $news = Product::where('title', 'like', "%$request->q%")->orWhere('content', 'like', "%$request->q%")->paginate();
+        return $this->response->paginator($news, new ProductTransformer());
     }
 }

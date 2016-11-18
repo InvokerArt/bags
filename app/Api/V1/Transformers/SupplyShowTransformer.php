@@ -14,7 +14,7 @@ class SupplyShowTransformer extends BaseTransformer
             'price' => $model->price,
             'unit' => $model->unit,
             'content' => $model->content,
-            'images' => $model->images,
+            'images' => $model->images ? img_fullurl($model->images) : [],
             'is_excellent' => $model->is_excellent == 'yes' ? 1 : 0,
         ];
     }

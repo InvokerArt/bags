@@ -12,7 +12,7 @@ class UserTransformer extends BaseTransformer
             'name' => $model->name,
             'mobile' => $model->mobile,
             'email' => $model->email,
-            'avatar' => $model->avatar,
+            'avatar' => img_fullurl($model->avatar),
             'created_at' => $model->created_at->toDateTimeString(),
         ];
     }

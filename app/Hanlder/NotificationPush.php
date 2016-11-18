@@ -36,9 +36,9 @@ class NotificationPush
         try {
             $response = $push->send();
         } catch (\JPush\Exceptions\APIConnectionException $e) {
-            // try something here
+            throw new \Exception($e->getMessage());
         } catch (\JPush\Exceptions\APIRequestException $e) {
-            // try something here
+            throw new \Exception($e->getMessage());
         }
     }
 }

@@ -4,11 +4,6 @@ namespace App\Models\Users\Traits\Relationship;
 
 trait UserRelationship
 {
-    public function roles()
-    {
-        return $this->belongsToMany(config('entrust.role'), config('entrust.role_user_table'), config('entrust.user_foreign_key'), config('entrust.role_foreign_key'));
-    }
-
     public function news()
     {
         return $this->hasMany('App\Models\News\News');

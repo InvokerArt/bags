@@ -24,8 +24,9 @@ class CompanyShowTransformer extends BaseTransformer
             'addressDetail' => $model->addressDetail,
             'telephone' => $model->telephone,
             'content' => $model->content,
-            'photos' => $model->photos,
-            'licenses' => $model->licenses,
+            'role' => $model->role,
+            'photos' => $model->photos ? img_fullurl($model->photos) : [],
+            'licenses' => $model->licenses ? img_fullurl($model->licenses) : [],
             'created_at' => $model->created_at->toDateTimeString()
         ];
     }

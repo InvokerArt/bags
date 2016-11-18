@@ -5,10 +5,6 @@
 <link rel="stylesheet" href="/js/vendor/cropper/main.css">
 @stop
 
-@section('page-title')
-    创建用户
-@stop
-
 @section('content')
 <div id="crop-avatar">
     {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.users.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'create-user']) }}

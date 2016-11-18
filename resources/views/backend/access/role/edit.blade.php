@@ -1,7 +1,5 @@
 @extends('backend.layouts.app')
-@section('page-title')
-    编辑角色
-@stop
+
 @section('content')
 {{ Form::model($role, ['route' => [env('APP_BACKEND_PREFIX').'.access.role.update', $role], 'class' => 'form-horizontal', 'method' => 'PATCH', 'id' => 'edit-role']) }}
     <div class="portlet">

@@ -1,9 +1,5 @@
 @extends('backend.layouts.app')
 
-@section('page-title')
-编辑广告
-@stop
-
 @section('content')
 {{ Form::model($image, ['route' => [env('APP_BACKEND_PREFIX').'.banners.image.update', $image], 'class' => 'form-horizontal', 'method' => 'PATCH', 'id' => 'edit-image' ,'enctype' => 'multipart/form-data', 'accept-charset' => 'UTF-8']) }}
     <div class="portlet">

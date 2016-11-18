@@ -206,13 +206,15 @@ class UserRepository implements UserInterface
                     $baseFile = public_path(config('avatar.upload')).$newName.".".$extension;
                     $result = $file->move(public_path(config('avatar.upload')), $baseFile);
                     if ($result) {
-                        $data = json_decode(stripslashes($avatarData));
                         $img = Image::make($baseFile);
                         $img->backup();
-                        if ($data->rotate) {
-                            $img->rotate(-($data->rotate));
+                        $data = json_decode(stripslashes($avatarData));
+                        if ($data) {
+                            if ($data->rotate) {
+                                $img->rotate(-($data->rotate));
+                            }
+                            $img->crop((int)$data->width, (int)$data->height, (int)$data->x, (int)$data->y);
                         }
-                        $img->crop((int)$data->width, (int)$data->height, (int)$data->x, (int)$data->y);
                         $img->save();
                         //大图
                         $large = config('avatar.large.size');
@@ -255,5 +257,39 @@ class UserRepository implements UserInterface
         );
 
         return $response;
+    }
+
+    public function apiAvatar($input)
+    {
+        $avatarUrl = '';
+        $content = $input->getContent();
+        $img = Image::make($content);
+        $newName = '/'.date('YmdHis');
+        $baseFile = public_path(config('avatar.upload')).$newName.".png";
+        $result = $img->save($baseFile);
+        if ($result) {
+            $img->backup();
+            $img->save();
+            //大图
+            $large = config('avatar.large.size');
+            $img->resize($large, $large);
+            $largePath = public_path(config('avatar.upload')).$newName."_".$large."x".$large.".png";
+            $img->save($largePath);
+            //中图
+            $medium = config('avatar.medium.size');
+            $img->resize($medium, $medium);
+            $mediumPath = public_path(config('avatar.upload')).$newName."_".$medium."x".$medium.".png";
+            $img->save($mediumPath);
+            //小图
+            $small = config('avatar.small.size');
+            $img->resize($small, $small);
+            $smallPath = public_path(config('avatar.upload')).$newName."_".$small."x".$small.".png";
+            $img->save($smallPath);
+            $largeAvatar = asset(str_replace(public_path(), '', $largePath));
+            $mediumAvatar = asset(str_replace(public_path(), '', $mediumPath));
+            $smallAvatar = asset(str_replace(public_path(), '', $smallPath));
+            $avatarUrl = ['large' => $largeAvatar, 'medium' => $mediumAvatar, 'small' => $smallAvatar];
+            return ['avatar' => $avatarUrl];
+        }
     }
 }

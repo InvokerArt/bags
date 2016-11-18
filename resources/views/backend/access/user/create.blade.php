@@ -1,9 +1,5 @@
 @extends('backend.layouts.app')
 
-@section('page-title')
-    创建管理员
-@stop
-
 @section('content')
 <div id="myAlert"></div>
 {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.access.user.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'create-user']) }}

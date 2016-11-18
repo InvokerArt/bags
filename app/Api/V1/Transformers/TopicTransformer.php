@@ -16,9 +16,8 @@ class TopicTransformer extends BaseTransformer
             "title" => $model->title,
             "content" => $model->content,
             "reply_count" => $model->reply_count,
+            "view_count" => $model->view_count,
             "vote_count" => $model->vote_count,
-            "vote_up" => (bool)$model->vote_up,
-            "vote_down" => (bool)$model->vote_down,
             "updated_at" => $model->updated_at->toDateString()
         ];
     }

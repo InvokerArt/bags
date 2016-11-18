@@ -20,7 +20,12 @@ abstract class BaseTransformer extends TransformerAbstract
                 if (!empty($value)) {
                     $data[$key] = $value;
                 } else {
-                    $data[$key] = '';
+                    $data[$key] = [];
+                }
+            } elseif (is_object($value)) {
+                $value = formatArray($value);
+                if (empty($value)) {
+                    $data[$key] = (object)null;
                 }
             } elseif (is_bool($value)) {
                 $data[$key] = intval($value); //bool转换为整型

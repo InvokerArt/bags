@@ -13,8 +13,8 @@ class AreaController extends BaseController
      */
 
     /**
-     * @api {get} /areas 地区列表
-     * @apiDescription 地区列表
+     * @api {get} /areas 全部数据
+     * @apiDescription 全部数据
      * @apiGroup Area
      * @apiPermission 无
      * @apiVersion 1.0.0
@@ -158,5 +158,21 @@ class AreaController extends BaseController
         $citys = collect($citys);
         $citys = $citys->collapse();
         return $this->response->collection($citys, new AreaTransformer);
+    }
+
+    public function area()
+    {
+        $provinces = Area::where('parent_id', 0)->with('childrens')->get();
+        foreach ($provinces as $key => $province) {
+            $citys[] = $province->childrens;
+        }
+        $citys = collect($citys);
+        $citys = $citys->collapse();
+        foreach ($citys as $value) {
+            $areas[] = Area::where('parent_id', $value->code)->get();
+        }
+        $areas = collect($areas);
+        $areas = $areas->collapse();
+        return $this->response->collection($areas, new AreaTransformer);
     }
 }

@@ -13,7 +13,7 @@ class User extends Authenticatable
     use HasApiTokens, Notifiable, UserAttribute, UserRelationship;
 
     protected $fillable = [
-        'id', 'username', 'name', 'mobile', 'email', 'password', 'avatar', 'status', 'created_at', 'updated_at'
+        'username', 'name', 'mobile', 'email', 'password', 'avatar', 'status', 'created_at', 'updated_at'
     ];
     /**
      * The attributes that should be hidden for arrays.

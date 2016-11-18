@@ -25,7 +25,6 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'avatar' => 'required',
             'username' => 'required',//required|alpha_dash_except_num|unique:users,username,'.Auth::id()
             'name' => 'required',
             'mobile' => 'required|is_mobile|unique:users,mobile,'.Auth::id(),

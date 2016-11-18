@@ -13,6 +13,7 @@ use App\Api\V1\Transformers\CertificationTransformer;
 use App\Api\V1\Transformers\CompanyTransformer;
 use App\Api\V1\Transformers\JoinTransformer;
 use App\Api\V1\Transformers\UserTransformer;
+use App\Events\UserCreateEvent;
 use App\Models\Certifications\Certification;
 use App\Models\Joins\Join;
 use App\Models\Users\User;
@@ -67,7 +68,7 @@ class AuthController extends BaseController
     {
         try {
             $client = new \GuzzleHttp\Client();
-            $response = $client->request('POST', env('APP_URL').'oauth/token', [
+            $response = $client->request('POST', env('APP_URL').'/oauth/token', [
                 'form_params' => [
                     'grant_type' => 'password',
                     'client_id' => env('API_CLIENT_ID'),
@@ -77,10 +78,10 @@ class AuthController extends BaseController
                     'scope' => '',
                 ],
             ]);
-            $data = json_decode((string) $response->getBody(), true);
+            $data['data'] = json_decode((string) $response->getBody(), true);
             $user = User::where('mobile', $request->mobile)->first();
             $userTransformer = new UserTransformer();
-            $data['user'] = $userTransformer->transform($user);
+            $data['data']['user'] = $userTransformer->transform($user);
             return $this->response->array($data);
         } catch (RequestException $e) {
             throw new UnauthorizedHttpException('Unauthenticated.', '认证失败');
@@ -104,10 +105,11 @@ class AuthController extends BaseController
         $user = new User;
         $user->mobile = $request->mobile;
         $user->password = bcrypt($request->password);
-
         try {
             // 创建用户成功
             $user->save();
+            $user->password = $request->password;
+            event(new UserCreateEvent($user));
             return $this->response->created();
         } catch (\Exception $e) {
             return $this->response->errorBadRequest($e->getMessage());
@@ -170,6 +172,7 @@ class AuthController extends BaseController
     public function update(UserUpdateRequest $request)
     {
         $user = Auth::user();
+        $request->avatar = str_replace(env('APP_URL'), '', $request->avatar);
         $this->users->update($user, $request);
         return $this->response->item($user, new UserTransformer());
     }
@@ -243,7 +246,7 @@ class AuthController extends BaseController
     //刷新token
     public function refreshToken(Request $request)
     {
-        $response = $client->request('POST', env('APP_URL').'oauth/token', [
+        $response = $client->request('POST', env('APP_URL').'/oauth/token', [
             'form_params' => [
                 'grant_type' => 'refresh_token',
                 'refresh_token' => $request->refresh_token,
@@ -296,12 +299,28 @@ class AuthController extends BaseController
      *      HTTP/1.1 200 OK
     {
         "data": {
-            "id": 1,
-            "username": "admin",
-            "mobile": "13111111111",
-            "email": "admin@admin.com",
-            "avatar": "http://stone.dev/uploads/avatars/default/medium.png",
-            "created_at": "2016-11-02 15:57:24",
+            "user": {
+                "id": 2,
+                "username": "user",
+                "name": "name",
+                "mobile": "13113113111",
+                "email": "user@user.com",
+                "avatar": "http://stone.dev/uploads/avatars/default/medium.png",
+                "created_at": "2016-11-02 15:57:24"
+            },
+            "company": {
+                "id": 3,
+                "name": "测试公司",
+                "province": "北京市",
+                "city": "北京市",
+                "area": "石景山区",
+                "addressDetail": "",
+                "telephone": "0592-5928529",
+                "role": "1",
+                "photos": "http://stone.dev/storage/companies/2016/11/192330UhMQ.png",
+                "is_validate": 0,
+                "is_excellent": 0
+            }
         }
     }
      * @apiSampleRequest /api/users/me
@@ -309,7 +328,12 @@ class AuthController extends BaseController
     public function me(Request $request)
     {
         $user = Auth::user();
-        return $this->response->item($user, new UserTransformer());
+        $user = json_decode($this->response->item($user, new UserTransformer())->morph()->content(), true);
+        $data['data']['user'] = $user['data'];
+        $company = Auth::user()->company()->first();
+        $company = json_decode($this->response->item($company, new CompanyTransformer())->morph()->content(), true);
+        $data['data']['company'] = $company['data'] ? $company['data'] : (object)null;
+        return $this->response->array($data);
     }
 
     /**
@@ -330,6 +354,7 @@ class AuthController extends BaseController
             "area": "石景山区",
             "addressDetail": "",
             "telephone": "0592-5928529",
+            "role": "1",
             "photos": [
                 "/storage/companies/2016/11/192330UhMQ.png"
             ],

@@ -7,6 +7,8 @@ use Storage;
 
 class ProductShowTransformer extends BaseTransformer
 {
+    protected $defaultIncludes = ['user'];
+
     public function transformData($model)
     {
         $area = Area::select('name', 'parent_id')->where('code', $model->address)->first();
@@ -23,7 +25,12 @@ class ProductShowTransformer extends BaseTransformer
             'price' => $model->price,
             'unit' => $model->unit,
             'content' => $model->content,
-            'images' => $model->images
+            'images' => $model->images ? img_fullurl($model->images) : []
         ];
+    }
+
+    public function includeUser($model)
+    {
+        return $this->item($model->user, new UserTransformer());
     }
 }

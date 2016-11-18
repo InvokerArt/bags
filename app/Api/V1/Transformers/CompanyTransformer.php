@@ -21,7 +21,8 @@ class CompanyTransformer extends BaseTransformer
             'area' => $area->name,
             'addressDetail' => $model->addressDetail,
             'telephone' => $model->telephone,
-            'photos' => $model->photos,
+            'role' => $model->role,
+            'photos' => ($model->photos) ? img_fullurl($model->photos) : [],
             'is_validate' => (bool)count($model->certifications),
             'is_excellent' => $model->is_excellent == 'yes' ? 1 : 0,
         ];

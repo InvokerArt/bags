@@ -1,8 +1,5 @@
 @extends('backend.layouts.app')
 
-@section('page-title')
-    标签
-@stop
 @section('content')
 <div class="portlet">
     <div class="portlet-body">

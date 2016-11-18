@@ -1,7 +1,6 @@
 <?php
 //管理员
 Breadcrumbs::register(env('APP_BACKEND_PREFIX').'.access.user.index', function ($breadcrumbs) {
-    $breadcrumbs->parent(env('APP_BACKEND_PREFIX').'.dashboard');
     $breadcrumbs->push('管理员管理', route(env('APP_BACKEND_PREFIX').'.access.user.index'));
 });
 Breadcrumbs::register(env('APP_BACKEND_PREFIX').'.access.user.create', function ($breadcrumbs) {
@@ -14,7 +13,6 @@ Breadcrumbs::register(env('APP_BACKEND_PREFIX').'.access.user.edit', function ($
 });
 //角色
 Breadcrumbs::register(env('APP_BACKEND_PREFIX').'.access.role.index', function ($breadcrumbs) {
-    $breadcrumbs->parent(env('APP_BACKEND_PREFIX').'.dashboard');
     $breadcrumbs->push('管理员管理', route(env('APP_BACKEND_PREFIX').'.access.role.index'));
 });
 Breadcrumbs::register(env('APP_BACKEND_PREFIX').'.access.role.create', function ($breadcrumbs) {
@@ -27,7 +25,6 @@ Breadcrumbs::register(env('APP_BACKEND_PREFIX').'.access.role.edit', function ($
 });
 //权限
 Breadcrumbs::register(env('APP_BACKEND_PREFIX').'.access.permission.index', function ($breadcrumbs) {
-    $breadcrumbs->parent(env('APP_BACKEND_PREFIX').'.dashboard');
     $breadcrumbs->push('管理员管理', route(env('APP_BACKEND_PREFIX').'.access.permission.index'));
 });
 Breadcrumbs::register(env('APP_BACKEND_PREFIX').'.access.permission.create', function ($breadcrumbs) {

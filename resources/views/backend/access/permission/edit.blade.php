@@ -1,9 +1,5 @@
 @extends('backend.layouts.app')
 
-@section('page-title')
-    编辑权限
-@stop
-
 @section('content')
 {{ Form::model($permission, ['route' => [env('APP_BACKEND_PREFIX').'.access.permission.update', $permission], 'class' => 'form-horizontal', 'method' => 'PATCH', 'id' => 'edit-permission']) }}
     <div class="portlet">

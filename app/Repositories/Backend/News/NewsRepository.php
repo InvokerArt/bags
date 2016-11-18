@@ -18,11 +18,13 @@ use DB;
 class NewsRepository implements NewsInterface
 {
     protected $tags;
+    protected $news;
 
 
-    public function __construct(TagsInterface $tags)
+    public function __construct(TagsInterface $tags, News $news)
     {
         $this->tags = $tags;
+        $this->news = $news;
     }
 
     public function getForDataTable()
@@ -30,12 +32,29 @@ class NewsRepository implements NewsInterface
         /**
          * withCount--统计关联的结果而不实际的加载它们。
          */
-        return News::with(['tags', 'categories'])->withCount('comments');
+        return $this->news->with(['tags', 'categories'])->withCount('comments');
+    }
+
+    public function indexByCategories($input)
+    {
+        $query = $this->news->select();
+        if ($input->categories) {
+            $query->whereHas('categories', function ($query) use ($input) {
+                $query->where('id', $input->categories);
+            });
+        }
+        
+        return $query->paginate();
+    }
+
+    public function search($input)
+    {
+        return $this->news->where('title', 'like', "%$input->q%")->orWhere('subtitle', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%")->paginate();
     }
 
     public function create($input)
     {
-        $news = new News;
+        $news = $this->news;
         $news->title = $input['title'];
         //$news->slug = $input['slug'];
         $news->user_id = Auth::guard('admin')->id();
@@ -144,7 +163,7 @@ class NewsRepository implements NewsInterface
 
     public function findOrThrowException($id)
     {
-        $news = News::withTrashed()->find($id);
+        $news = $this->news->withTrashed()->find($id);
 
         if (!is_null($news)) {
             return $news;

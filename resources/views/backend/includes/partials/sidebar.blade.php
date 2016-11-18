@@ -34,9 +34,9 @@
                     <li class="{{ active_class(if_route_pattern([env('APP_BACKEND_PREFIX').'.news.index', env('APP_BACKEND_PREFIX').'.news.create', env('APP_BACKEND_PREFIX').'.news.edit'])) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.news.index') }}">资讯</a>
                     </li>
-                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.news.comments*'), 'active open') }}">
+                    {{-- <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.news.comments*'), 'active open') }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.news.comments.index') }}">评论</a>
-                    </li>
+                    </li> --}}
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.tags*'), 'active open') }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.tags.index') }}">标签</a>
                     </li>
@@ -76,16 +76,10 @@
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.banners.image*')) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.banners.image.index') }}">广告</a>
                     </li>
-                    <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.banners*')) }}">
+                    <li class="{{ active_class(if_route_pattern([env('APP_BACKEND_PREFIX').'.banners.index', env('APP_BACKEND_PREFIX').'.banners.create', env('APP_BACKEND_PREFIX').'.banners.edit'])) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.banners.index') }}">广告位</a>
                     </li>
                 </ul>
-            </li>
-            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.favorites*'), 'active open') }}">
-                <a href="{{ route(env('APP_BACKEND_PREFIX').'.favorites.index') }}">
-                    <i class="icon-like"></i>
-                    <span class="title">收藏管理</span>
-                </a>
             </li>
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.topics*') || if_route_pattern(env('APP_BACKEND_PREFIX').'.replies*'), 'active open') }}">
                 <a href="{{ route(env('APP_BACKEND_PREFIX').'.topics.index') }}">
@@ -168,6 +162,13 @@
                     </li>
                 </ul>
             </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.feedbacks*'), 'active open') }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.feedbacks.index') }}">
+                    <i class="icon-info"></i>
+                    <span class="title">消息反馈</span>
+                </a>
+            </li>
+            @role(('root'))
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'log-viewer*'), 'active open') }} last">
                 <a href="javascript:;">
                     <i class="icon-settings"></i>
@@ -181,6 +182,7 @@
                     </li>
                 </ul>
             </li>
+            @endauth
         </ul>
         <!-- 侧边菜单结束 -->
     </div>

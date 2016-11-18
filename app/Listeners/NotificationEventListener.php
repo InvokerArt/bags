@@ -8,7 +8,7 @@ use Auth;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class NotificationEventListener
+class NotificationEventListener implements ShouldQueue
 {
     public function system($event)
     {

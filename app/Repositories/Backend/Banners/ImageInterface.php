@@ -6,9 +6,13 @@ use App\Models\Banners\Image;
 
 interface ImageInterface
 {
+    //获取所有轮播图
     public function getAll();
 
     public function getForDataTable();
+
+    //根据分类获取轮播图
+    public function getCategoryBanners($id);
 
     /**
      * @param  $input

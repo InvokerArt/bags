@@ -4,10 +4,6 @@
     <link rel="stylesheet" href="{{asset('css/global/vendor/jstree/themes/default/style.min.css')}}">
 @stop
 
-@section('page-title')
-编辑展会
-@stop
-
 @section('content')
 {{ Form::model($exhibition, ['route' => [env('APP_BACKEND_PREFIX').'.exhibitions.update', $exhibition], 'method' => 'PATCH', 'id' => 'edit-exhibition']) }}
     <div id="poststuff">

@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'mobile', 'password',
+        'username', 'name', 'mobile', 'email', 'password', 'avatar', 'status', 'created_at', 'updated_at'
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -28,7 +28,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
 
     /**
      * 重写Checks if the user has a role by its name.
@@ -57,7 +56,9 @@ class User extends Authenticatable
             return $requireAll;
         } else {
             foreach ($this->cachedRoles() as $role) {
-                if ($role->all) return true;//本地新增所有权限的判断
+                if ($role->all) {
+                    return true;//本地新增所有权限的判断
+                }
                 if ($role->name == $name) {
                     return true;
                 }
@@ -67,9 +68,8 @@ class User extends Authenticatable
         return false;
     }
 
-
     /**
-     * 重写Check if user has a permission by its name. 
+     * 重写Check if user has a permission by its name.
      *
      * @param string|array $permission Permission string or array of permissions.
      * @param bool         $requireAll All permissions in the array are required.
@@ -95,10 +95,12 @@ class User extends Authenticatable
             return $requireAll;
         } else {
             foreach ($this->cachedRoles() as $role) {
-                if ($role->all) return true;//本地新增所有权限的判断
+                if ($role->all) {
+                    return true;//本地新增所有权限的判断
+                }
                 // Validate against the Permission table
                 foreach ($role->cachedPermissions() as $perm) {
-                    if (str_is( $permission, $perm->name) ) {
+                    if (str_is( $permission, $perm->name)) {
                         return true;
                     }
                 }
@@ -118,5 +120,4 @@ class User extends Authenticatable
     {
         return User::where('mobile', $username)->first();
     }
-
 }

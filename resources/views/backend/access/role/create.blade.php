@@ -1,7 +1,5 @@
 @extends('backend.layouts.app')
-@section('page-title')
-    创建角色
-@stop
+
 @section('content')
 <div id="myAlert"></div>
 {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.access.role.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'create-role']) }}

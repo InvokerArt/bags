@@ -32,25 +32,27 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     $api->get('areas', 'AreaController@index');
     $api->get('areas/{area}', 'AreaController@show');
     $api->get('childrens/{area}', 'AreaController@children');
-    $api->get('provinces', 'AreaController@province');
-    $api->get('citys', 'AreaController@city');
+    $api->get('provinces', 'AreaController@province');//所有省
+    $api->get('citys', 'AreaController@city');//所有市
+    $api->get('areass', 'AreaController@area');//所有地区
 
 
     /**
      * 新闻
      */
-    $api->get('news', 'NewsController@index');
-    $api->get('news/categories/{news}', 'NewsController@indexByCategories');
+    $api->get('news', 'NewsController@indexByCategories');
     $api->get('news/banner', 'NewsController@banner');
     $api->get('news/categories', 'NewsController@categories');
+    $api->get('news/search', 'NewsController@search');
     $api->get('news/{news}', 'NewsController@show');
 
     /**
      * 展会
      */
-    $api->get('exhibitions', 'ExhibitionController@index');
+    $api->get('exhibitions', 'ExhibitionController@indexByCategories');
     $api->get('exhibitions/banner', 'ExhibitionController@banner');
     $api->get('exhibitions/categories', 'ExhibitionController@categories');
+    $api->get('exhibitions/search', 'ExhibitionController@search');
     $api->get('exhibitions/{exhibition}', 'ExhibitionController@show');
 
     /**
@@ -86,6 +88,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     /**
      * 产品
      */
+    $api->get('products/search', 'ProductController@search');
     $api->get('products/{product}', 'ProductController@show');
 
     /**
@@ -102,6 +105,11 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     $api->get('users/{user}/topics', 'TopicController@indexByUserId');
     //获取用户点赞
     $api->get('users/{id}/votes', 'TopicController@indexByUserVotes');
+
+    //上传图片
+    $api->post('upload/avatar', 'UploadController@avatar');
+    $api->post('upload/company', 'UploadController@company');
+    $api->post('upload/product', 'UploadController@product');
 
     //需要认证权限
     $api->group(['middleware' => 'passport:api'], function ($api) {
@@ -123,8 +131,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->post('companies/{company}/joins', 'CompanyController@joinCompany');
         $api->post('companies/{company}/certifications', 'CompanyController@certificationCompany');
         $api->post('companies', 'CompanyController@store');
-        $api->put('companies/{company}', 'CompanyController@update');
-        $api->patch('companies/{company}', 'CompanyController@update');
+        $api->patch('companies', 'CompanyController@update');
         //需求
         $api->resource('demands', 'DemandController', ['except' => ['index', 'create', 'show']]);
         $api->get('users/demands', 'DemandController@indexByUser');
@@ -143,6 +150,8 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->post('topics/replies/{reply}/vote', 'TopicController@replyVote');
         //产品
         $api->resource('products', 'ProductController', ['except' => ['create', 'show']]);
+        //招聘
+        $api->post('companies/jobs', 'CompanyController@jobStore');
         //收藏
         $api->get('favorites/companies/role/{id}', 'FavoriteController@indexForCompanyRole');
         $api->get('favorites/exhibitions/', 'FavoriteController@indexForExhibition');
@@ -163,6 +172,8 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->get('notifications', 'NotificationController@index');
         $api->post('notifications/{id}', 'NotificationController@makeAsRead');
         $api->post('notifications', 'NotificationController@store');
+        //反馈
+        $api->post('feedbacks', 'FeedbackController@store');
     });
     //单个用户
     $api->get('users/{user}', 'AuthController@userInfo');

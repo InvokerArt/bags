@@ -1,9 +1,5 @@
 @extends('backend.layouts.app')
 
-@section('page-title')
-    编辑管理员
-@stop
-
 @section('content')
 {{ Form::model($user, ['route' => [env('APP_BACKEND_PREFIX').'.access.user.update', $user], 'class' => 'form-horizontal', 'method' => 'PATCH', 'id' => 'edit-user']) }}
     <div class="portlet">

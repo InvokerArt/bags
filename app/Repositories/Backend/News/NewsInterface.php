@@ -8,6 +8,10 @@ interface NewsInterface
 {
     public function getForDataTable();
 
+    public function indexByCategories($input);
+
+    public function search($input);
+
     /**
      * @param  $input
      * @return mixed

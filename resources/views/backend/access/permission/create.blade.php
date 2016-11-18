@@ -1,9 +1,5 @@
 @extends('backend.layouts.app')
 
-@section('page-title')
-    创建权限
-@stop
-
 @section('content')
 {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.access.permission.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'create-permission']) }}
     <div class="portlet">

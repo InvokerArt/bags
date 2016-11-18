@@ -62,7 +62,7 @@ class TopicRepository implements TopicInterface
             'vote_count' => $input['vote_count']
         ];
 
-        $data = array_filter($data, 'strlen');
+        $data = array_filter($data);
 
         DB::transaction(function () use ($topic, $data) {
             if ($topic->update($data)) {

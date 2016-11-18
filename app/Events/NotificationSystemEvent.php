@@ -11,9 +11,9 @@ use Illuminate\Queue\SerializesModels;
 
 class NotificationSystemEvent
 {
-    public $notification;
-
     use InteractsWithSockets, SerializesModels;
+    
+    public $notification;
 
     /**
      * Create a new event instance.

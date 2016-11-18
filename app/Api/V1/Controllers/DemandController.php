@@ -134,6 +134,7 @@ class DemandController extends BaseController
      */
     public function show(Demand $demand)
     {
+        $demand = $demand->with('user')->first();
         return $this->response->item($demand, new DemandShowTransformer());
     }
 

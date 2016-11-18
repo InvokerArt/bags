@@ -13,20 +13,32 @@ use Storage;
  */
 class ImageRepository implements ImageInterface
 {
+    protected $image;
+
+    public function __construct(Image $image)
+    {
+        $this->image = $image;
+    }
+
     public function getAll()
     {
-        return Image::all();
+        return $this->image->all();
     }
 
     public function getForDataTable()
     {
-        return Image::select('banner_image.*', 'banners.title as banner_title')
+        return $this->image->select('banner_image.*', 'banners.title as banner_title')
                 ->leftJoin('banners', 'banners.id', '=', 'banner_image.banner_id');
+    }
+
+    public function getCategoryBanners($id)
+    {
+        return $this->image->where('banner_id', $id)->orderBy('order', 'desc')->get();
     }
 
     public function create($input)
     {
-        $image = new Image;
+        $image = $this->image;
         $imageUrl = $input->image->store('banners');
         $image->banner_id = $input->banner_id;
         $image->title = $input->title;
@@ -109,7 +121,7 @@ class ImageRepository implements ImageInterface
 
     public function findOrThrowException($id)
     {
-        $image = Image::withTrashed()->find($id);
+        $image = $this->image->withTrashed()->find($id);
 
         if (!is_null($image)) {
             return $image;

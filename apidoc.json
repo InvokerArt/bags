@@ -20,7 +20,8 @@
     "Product",
     "Demand",
     "Supply",
-    "Area"
+    "Area",
+    "Upload"
   ],
   "template": {
     "withCompare": true,

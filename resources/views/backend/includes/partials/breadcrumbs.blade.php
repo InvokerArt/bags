@@ -5,6 +5,7 @@
                 <li>
                     @if($breadcrumb->first)
                         <i class="fa fa-home"></i>
+                        <i class="fa fa-angle-right"></i>
                     @else
                         <i class="fa fa-angle-right"></i>
                     @endif
@@ -16,6 +17,7 @@
                 <li class="active">
                     @if($breadcrumb->first)
                         <i class="fa fa-home"></i>
+                        <i class="fa fa-angle-right"></i>
                     @else
                         <i class="fa fa-angle-right"></i>
                     @endif

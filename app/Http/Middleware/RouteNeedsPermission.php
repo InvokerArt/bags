@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class RouteNeedsRole
@@ -11,33 +12,17 @@ use Closure;
 class RouteNeedsPermission
 {
 
-	/**
+    /**
      * @param $request
      * @param Closure $next
      * @param $permission
      * @param bool $needsAll
      * @return mixed
      */
-    public function handle($request, Closure $next, $permission, $needsAll = false)
+    public function handle($request, Closure $next, $permissions, $needsAll = false, $guard = 'admin')
     {
-        /**
-         * Permission array
-         */
-        if (strpos($permission, ";") !== false) {
-            $permissions = explode(";", $permission);
-            $access = access()->allowMultiple($permissions, ($needsAll === "true" ? true : false));
-        } else {
-            /**
-             * Single permission
-             */
-            $access = access()->allow($permission);
-        }
-
-
-        if (! $access) {
-            return redirect()
-                ->route('frontend.index')
-                ->withFlashDanger(trans('auth.general_error'));
+        if (Auth::guard($guard)->guest() || !$request->user($guard)->can(explode('|', $permissions))) {
+            abort(403);
         }
 
         return $next($request);

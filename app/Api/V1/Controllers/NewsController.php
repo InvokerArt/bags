@@ -9,10 +9,22 @@ use App\Api\V1\Transformers\NewsTransformer;
 use App\Models\Banners\Image;
 use App\Models\News\CategoriesNews;
 use App\Models\News\News;
+use App\Repositories\Backend\Banners\ImageInterface;
+use App\Repositories\Backend\News\NewsInterface;
 use Auth;
+use Illuminate\Http\Request;
 
 class NewsController extends BaseController
 {
+    protected $image;
+    protected $news;
+
+    public function __construct(ImageInterface $image, NewsInterface $news)
+    {
+        $this->image = $image;
+        $this->news = $news;
+    }
+
 
     /**
      * @apiDefine News 新闻
@@ -52,7 +64,7 @@ class NewsController extends BaseController
      */
     public function banner()
     {
-        $images = Image::where('banner_id', 4)->orderBy('order', 'desc')->get();
+        $images = $this->image->getCategoryBanners(4);
         return $this->response->collection($images, new BannerTransformer());
     }
 
@@ -62,6 +74,7 @@ class NewsController extends BaseController
      * @apiGroup News
      * @apiPermission 无
      * @apiVersion 1.0.0
+     * @apiParam {Number{0,1,2,3,4,5,6}} categories //0为全部或不传也可以
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
     {
@@ -101,62 +114,9 @@ class NewsController extends BaseController
     }
      * @apiSampleRequest /api/news
      */
-    public function index()
+    public function indexByCategories(Request $request)
     {
-        $news = News::with('categories')->paginate();
-        return $this->response()->paginator($news, new NewsTransformer());
-    }
-
-    /**
-     * @api {get} /news/categories/:id 新闻分类列表
-     * @apiDescription 新闻分类列表 :id 分类ID
-     * @apiGroup News
-     * @apiPermission 无
-     * @apiVersion 1.0.0
-     * @apiSuccessExample {json} Success-Response:
-     *      HTTP/1.1 200 OK
-    {
-        "data": [
-            {
-                "id": 1,
-                "title": "sed vel asperiores",
-                "subtitle": "nisi consectetur ea",
-                "image": "/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg",
-                "updated_at": "2016-11-02 15:59:21"
-            },
-            {
-                "id": 6,
-                "title": "aut qui explicabo",
-                "subtitle": "esse iste aut",
-                "image": "",
-                "updated_at": "2016-10-31 19:47:55"
-            },
-            {
-                "id": 13,
-                "title": "基于RESTful API 怎么设计用户权限控制？",
-                "subtitle": "有人说，每个人都是平等的；\r\n也有人说，人生来就是不平等的；\r\n在人类社会中，并没有绝对的公平，\r\n一件事，并不是所有人都能去做；\r\n一样物，并不是所有人都能够拥有。",
-                "image": "/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg",
-                "updated_at": "2016-11-02 15:57:41"
-            }
-        ],
-        "meta": {
-            "pagination": {
-                "total": 3,
-                "count": 3,
-                "per_page": 15,
-                "current_page": 1,
-                "total_pages": 1,
-                "links": []
-            }
-        }
-    }
-     * @apiSampleRequest /api/news/categories/1
-     */
-    public function indexByCategories($id)
-    {
-        $news = News::whereHas('categories', function ($query) use ($id) {
-            $query->where('id', $id);
-        })->paginate();
+        $news = $this->news->indexByCategories($request);
         return $this->response()->paginator($news, new NewsTransformer());
     }
 
@@ -251,5 +211,65 @@ class NewsController extends BaseController
         }
         $news->favorites()->create(['user_id' => Auth::id()]);
         return $this->response->created();
+    }
+
+    /**
+     * @api {get} /news/search 新闻搜索
+     * @apiDescription 新闻搜索
+     * @apiGroup News
+     * @apiPermission 无
+     * @apiVersion 1.0.0
+     * @apiParam {String} q 搜索关键字
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 1,
+                "title": "sed vel asperiores",
+                "subtitle": "nisi consectetur ea",
+                "image": "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg",
+                "updated_at": "2016-11-15 07:12:40",
+                "is_excellent": 0,
+                "is_top": 0,
+                "categories": {
+                    "data": [
+                        {
+                            "id": 1,
+                            "name": "可降解知识"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": 3,
+                "title": "eos molestiae aut",
+                "subtitle": "eveniet dolorem cum",
+                "image": "http://stone.dev/storage/images/6f9326f09fe1cb83d01c74d5cce7cc41.jpg",
+                "updated_at": "2016-11-11 05:55:59",
+                "is_excellent": 0,
+                "is_top": 0,
+                "categories": {
+                    "data": []
+                }
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 2,
+                "count": 2,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
+     * @apiSampleRequest /api/news/search
+     */
+    public function search(Request $request)
+    {
+        $news = $this->news->search($request);
+        return $this->response->paginator($news, new NewsTransformer());
     }
 }

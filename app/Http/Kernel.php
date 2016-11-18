@@ -58,9 +58,9 @@ class Kernel extends HttpKernel
         /**
          * 角色权限
          */
-        'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
-        'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
-        'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
+        'role' => \App\Http\Middleware\RouteNeedsRole::class,
+        'permission' => \App\Http\Middleware\RouteNeedsPermission::class,
+        'ability' => \App\Http\Middleware\RouteNeedsAbility::class,
         /**
          * 自定义后台admin登录
          */

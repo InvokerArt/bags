@@ -60,4 +60,6 @@ interface UserInterface
     public function mark(User $user, $status);
 
     public function avatar($input);
+
+    public function apiAvatar($input);
 }
