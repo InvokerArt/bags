@@ -330,7 +330,7 @@ Route::group(['prefix' => 'log-viewer', 'as' => env('APP_BACKEND_PREFIX').'.', '
     });
 
     Route::group(['prefix' => '{date}'], function () {
-        Route::get('/1', [
+        Route::get('/', [
             'as'   => 'log-viewer::logs.show',
             'uses' => '\Arcanedev\LogViewer\Http\Controllers\LogViewerController@show',
         ]);
