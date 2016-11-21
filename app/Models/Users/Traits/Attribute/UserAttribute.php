@@ -52,8 +52,13 @@ trait UserAttribute
             $avatar['small'] = $this->avatarMulti($avatarPath, 'small');
             $avatar['medium'] = $this->avatarMulti($avatarPath, 'medium');
             $avatar['large'] = $this->avatarMulti($avatarPath, 'large');
-            return $avatar;
+        } else {
+            $avatar['_default'] = '';
+            $avatar['small'] = '';
+            $avatar['medium'] = '';
+            $avatar['large'] = '';
         }
+        return $avatar;
     }
 
     public function avatarMulti($url, $size)

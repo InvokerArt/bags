@@ -46,12 +46,38 @@ if (! function_exists('img_fullurl')) {
         if ($array) {
             if (is_array($array)) {
                 foreach ($array as $key => $value) {
-                    $url[$key] = asset($value);
+                    if ($value) {
+                        $url[$key] = asset($value);
+                    } else {
+                        $url[$key] = '';
+                    }
                 }
             } else {
                 $url = asset($array);
             }
             return $url;
         }
+    }
+}
+
+if (! function_exists('relative_url')) {
+    function relative_url($url)
+    {
+        if (is_array($url)) {
+            foreach ($url as $value) {
+                if (strstr($value, '://')) {
+                    $newUrl[] = str_replace(env('APP_URL'), '', $value);
+                } else {
+                    $newUrl[] = $value;
+                }
+            }
+        } else {
+            if (strstr($value, '://')) {
+                $newUrl = str_replace(env('APP_URL'), '', $url);
+            } else {
+                $newUrl = $url;
+            }
+        }
+        return $newUrl;
     }
 }

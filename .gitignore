@@ -32,3 +32,4 @@ bootstrap/cache/
 /storage/app/public
 /.phpstorm.meta.php
 /public/css/*.map
+/worker.log

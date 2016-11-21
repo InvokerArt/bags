@@ -36,15 +36,25 @@ class SupplyController extends BaseController
                 "id": 1,
                 "title": "我有100袋包装袋",
                 "images": [
-                    "/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+                    "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
                 ],
-                "content": "我就需要这么多包装袋"
+                "content": "<p>我就有这么多包装袋</p>",
+                "is_excellent": 0
+            },
+            {
+                "id": 2,
+                "title": "我需求100袋包装袋",
+                "images": [
+                    "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+                ],
+                "content": "我就需要这么多包装袋",
+                "is_excellent": 1
             }
         ],
         "meta": {
             "pagination": {
-                "total": 1,
-                "count": 1,
+                "total": 2,
+                "count": 2,
                 "per_page": 15,
                 "current_page": 1,
                 "total_pages": 1,

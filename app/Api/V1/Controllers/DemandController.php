@@ -38,8 +38,9 @@ class DemandController extends BaseController
                 "quantity": 1000,
                 "unit": 5,
                 "images": [
-                    "/uploads/products/2016/11/165305Y37a.png"
-                ]
+                    "http://stone.dev/uploads/products/2016/11/165305Y37a.png"
+                ],
+                "is_excellent": 0
             },
             {
                 "id": 2,
@@ -47,14 +48,33 @@ class DemandController extends BaseController
                 "quantity": 100,
                 "unit": 4,
                 "images": [
-                    "/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
-                ]
+                    "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+                ],
+                "is_excellent": 0
+            },
+            {
+                "id": 3,
+                "title": "我需求100袋包装袋",
+                "quantity": 1000,
+                "unit": 5,
+                "images": [
+                    "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+                ],
+                "is_excellent": 1
+            },
+            {
+                "id": 4,
+                "title": "ghvff",
+                "quantity": 45,
+                "unit": 3,
+                "images": "http://192.168.1.41:8000/uploads/avatars/20161119060951_180x180.png",
+                "is_excellent": 0
             }
         ],
         "meta": {
             "pagination": {
-                "total": 2,
-                "count": 2,
+                "total": 4,
+                "count": 4,
                 "per_page": 15,
                 "current_page": 1,
                 "total_pages": 1,
@@ -158,6 +178,7 @@ class DemandController extends BaseController
     {
         $user = Auth::user();
         $request->merge(['user_id' => $user->id]);
+        $request->images = relative_url($request->images);
         $this->demands->create($request);
         return $this->response->created();
     }

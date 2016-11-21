@@ -57,7 +57,12 @@ class AuthController extends BaseController
                     "id": 16,
                     "username": "username8",
                     "mobile": "15960838225",
-                    "email": "",
+                    "email": {
+                        "_default": "",
+                        "small": "",
+                        "medium": "",
+                        "large": ""
+                    },
                     "avatar": "http://stone.dev/uploads/avatars/default/medium.png",
                     "created_at": "2016-11-07 07:49:28"
                 }

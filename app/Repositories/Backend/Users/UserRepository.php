@@ -285,10 +285,11 @@ class UserRepository implements UserInterface
             $img->resize($small, $small);
             $smallPath = public_path(config('avatar.upload')).$newName."_".$small."x".$small.".png";
             $img->save($smallPath);
+            $default= asset(str_replace(public_path(), '', $baseFile));
             $largeAvatar = asset(str_replace(public_path(), '', $largePath));
             $mediumAvatar = asset(str_replace(public_path(), '', $mediumPath));
             $smallAvatar = asset(str_replace(public_path(), '', $smallPath));
-            $avatarUrl = ['large' => $largeAvatar, 'medium' => $mediumAvatar, 'small' => $smallAvatar];
+            $avatarUrl = ['_default' => $default, 'large' => $largeAvatar, 'medium' => $mediumAvatar, 'small' => $smallAvatar];
             return ['avatar' => $avatarUrl];
         }
     }
