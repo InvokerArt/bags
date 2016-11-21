@@ -34,3 +34,4 @@ bootstrap/cache/
 /public/css/*.map
 /worker.log
 /composer.lock
+/_ide_helper.php
