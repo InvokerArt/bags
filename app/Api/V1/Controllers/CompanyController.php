@@ -11,6 +11,7 @@ use App\Api\V1\Transformers\CategoryTransformer;
 use App\Api\V1\Transformers\CompanyShowTransformer;
 use App\Api\V1\Transformers\CompanyTransformer;
 use App\Api\V1\Transformers\JobTransformer;
+use App\Api\V1\Transformers\JoinAndValidateTransformer;
 use App\Api\V1\Transformers\JoinTransformer;
 use App\Api\V1\Transformers\ProductShowTransformer;
 use App\Api\V1\Transformers\ProductTransformer;
