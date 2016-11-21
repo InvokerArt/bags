@@ -33,3 +33,4 @@ bootstrap/cache/
 /.phpstorm.meta.php
 /public/css/*.map
 /worker.log
+/composer.lock
