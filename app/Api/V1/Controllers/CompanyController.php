@@ -473,7 +473,7 @@ class CompanyController extends BaseController
      * @apiParam {String} name 公司名
      * @apiParam {String} telephone 电话
      * @apiParam {Number} address 地区code
-     * @apiParam {String} addressDetail 详细地区
+     * @apiParam {String} addressDetail 详细地区1
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 201 Created
      * @apiSampleRequest /api/companies/1/certifications
