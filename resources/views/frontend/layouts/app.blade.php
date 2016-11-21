@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Laravel</title>
+    <title>环保降解袋</title>
 
     <!-- Styles -->
     <link href="/css/frontend/default.css" rel="stylesheet">
@@ -35,7 +35,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                Laravel
+                环保降解袋
             </a>
         </div>
 

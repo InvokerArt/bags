@@ -4,10 +4,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <example></example>
-            <passport-clients></passport-clients>
-            <passport-authorized-clients></passport-authorized-clients>
-            <passport-personal-tokens></passport-personal-tokens>
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        欢迎~
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
