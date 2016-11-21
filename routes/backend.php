@@ -334,10 +334,6 @@ Route::group(['prefix' => 'log-viewer', 'as' => env('APP_BACKEND_PREFIX').'.', '
             'as'   => 'log-viewer::logs.show',
             'uses' => '\Arcanedev\LogViewer\Http\Controllers\LogViewerController@show',
         ]);
-        //TODO: Figure out why the default link isn't working
-        Route::get('/all', function ($date) {
-            return redirect()->route('admin.log-viewer::logs.show', [$date]);
-        });
         Route::get('download', [
             'as'   => 'log-viewer::logs.download',
             'uses' => '\Arcanedev\LogViewer\Http\Controllers\LogViewerController@download',
