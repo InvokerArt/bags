@@ -21,7 +21,7 @@ Auth::routes();
 //技验验证
 Route::get('ajax/geetest', 'Controller@getGeetest');
 //媒体库
-TalvBansal\MediaManager\Http\Routes::mediaBrowser();
+TalvBansal\MediaManager\Routes\MediaRoutes::get();
 
 Route::group(['namespace' => 'Frontend'], function () {
     /**
