@@ -22,8 +22,8 @@ class CreateBannerImageTable extends Migration
             $table->enum('target', ['_blank',  '_self'])->default('_blank')->index();
             $table->text('description')->nullable();
             $table->integer('order')->unsigned()->default(0)->index();
-            $table->timestamp('published_from')->index()->comment('轮播图时间开始');
-            $table->timestamp('published_to')->index()->comment('轮播图时间结束');
+            $table->timestamp('published_from')->nullable()->index()->comment('轮播图时间开始');
+            $table->timestamp('published_to')->nullable()->index()->comment('轮播图时间结束');
             $table->timestamps();
             $table->softDeletes();
         });

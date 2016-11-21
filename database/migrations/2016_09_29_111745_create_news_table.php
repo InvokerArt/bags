@@ -27,7 +27,7 @@ class CreateNewsTable extends Migration
             $table->enum('is_excellent', ['yes',  'no'])->default('no')->index()->comment('是否推广');
             $table->enum('is_top', ['yes',  'no'])->default('no')->index()->comment('是否置顶');
             $table->tinyInteger('status')->default(1)->comment('状态//0回收站//1已发布//2未来发布');
-            $table->timestamp('published_at')->index()->comment('发布于');
+            $table->timestamp('published_at')->nullable()->index()->comment('发布于');
             $table->timestamps();
             $table->softDeletes();
         });
