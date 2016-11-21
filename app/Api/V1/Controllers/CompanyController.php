@@ -506,7 +506,7 @@ class CompanyController extends BaseController
      * @apiParam {String} telephone 电话
      * @apiParam {Number} address 地区code
      * @apiParam {String} addressDetail 详细地区
-     * @apiParam {Number} categories 分类ID
+     * @apiParam {Number[]} categories 分类ID
      * @apiParam {String[]} licenses[] 营业执照
      * @apiParam {String[]} photos[] 公司照片或单位照片
      * @apiParam {String} notes 公司加盟须知或单位认证须知
