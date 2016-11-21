@@ -6,7 +6,7 @@ Breadcrumbs::register(env('APP_BACKEND_PREFIX').'.users.create', function ($brea
     $breadcrumbs->parent(env('APP_BACKEND_PREFIX').'.users.index');
     $breadcrumbs->push('添加会员', route(env('APP_BACKEND_PREFIX').'.users.create'));
 });
-Breadcrumbs::register(env('APP_BACKEND_PREFIX').'.users.edit', function ($breadcrumbs) {
+Breadcrumbs::register(env('APP_BACKEND_PREFIX').'.users.edit', function ($breadcrumbs, $id) {
     $breadcrumbs->parent(env('APP_BACKEND_PREFIX').'.users.index');
-    $breadcrumbs->push('编辑会员', route(env('APP_BACKEND_PREFIX').'.users.edit'));
+    $breadcrumbs->push('编辑会员', route(env('APP_BACKEND_PREFIX').'.users.edit', $id));
 });

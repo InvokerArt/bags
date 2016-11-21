@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <div class="pull-left col-xs-offset-2">
                                     <div class="avatar-view" data-toggle="tooltip" data-placement="bottom" title="修改头像">
-                                        <img src="{{ $user->avatar }}" class="user-profile-image" />
+                                        <img src="{{ $user->avatar['_default'] }}" class="user-profile-image" />
                                     </div>
                                 </div>
                                 <input type="hidden" name="avatar" id="avatar">
