@@ -6,12 +6,11 @@ use App\Models\Users\Traits\Attribute\UserAttribute;
 use App\Models\Users\Traits\Relationship\UserRelationship;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, EntrustUserTrait, Notifiable, UserAttribute, UserRelationship;
+    use HasApiTokens, Notifiable, UserAttribute, UserRelationship;
 
     protected $fillable = [
         'username', 'name', 'mobile', 'email', 'password', 'avatar', 'status', 'created_at', 'updated_at'
