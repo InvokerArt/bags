@@ -12,26 +12,26 @@ require('./bootstrap');
  * the body of the page. From here, you may begin adding components to
  * the application, or feel free to tweak this setup for your needs.
  */
-Vue.component(
-    'example',
-    require('./components/Example.vue')
-);
+// Vue.component(
+//     'example',
+//     require('./components/Example.vue')
+// );
 
-Vue.component(
-    'passport-clients',
-    require('./components/passport/Clients.vue')
-);
+// Vue.component(
+//     'passport-clients',
+//     require('./components/passport/Clients.vue')
+// );
 
-Vue.component(
-    'passport-authorized-clients',
-    require('./components/passport/AuthorizedClients.vue')
-);
+// Vue.component(
+//     'passport-authorized-clients',
+//     require('./components/passport/AuthorizedClients.vue')
+// );
 
-Vue.component(
-    'passport-personal-tokens',
-    require('./components/passport/PersonalAccessTokens.vue')
-);
+// Vue.component(
+//     'passport-personal-tokens',
+//     require('./components/passport/PersonalAccessTokens.vue')
+// );
 
-const app = new Vue({
-    el: 'body'
-});
+// const app = new Vue({
+//     el: 'body'
+// });
