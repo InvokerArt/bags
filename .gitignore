@@ -35,3 +35,4 @@ bootstrap/cache/
 /worker.log
 /composer.lock
 /_ide_helper.php
+/bootstrap/cache

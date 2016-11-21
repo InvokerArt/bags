@@ -22,8 +22,10 @@ class Access
      */
     public function __construct($app)
     {
-        $guard = app()->request->route()->middleware();
-        $this->guard = $guard[1] == 'admin' ? 'admin' : 'web';
+        if (app()->request->route()) {
+            $guard = app()->request->route()->middleware();
+            $this->guard = $guard[1] == 'admin' ? 'admin' : 'web';
+        }
         $this->app = $app;
     }
 
