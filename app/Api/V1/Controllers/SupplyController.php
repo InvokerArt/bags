@@ -182,6 +182,7 @@ class SupplyController extends BaseController
     {
         $user = Auth::user();
         $request->merge(['user_id' => $user->id]);
+        $request->images = relative_url($request->images);
         $this->supplies->create($request);
         return $this->response->created();
     }
@@ -210,6 +211,7 @@ class SupplyController extends BaseController
             return $this->response->errorForbidden();
         }
 
+        $request->images = relative_url($request->images);
         $this->supplies->update($supply, $request);
         return $this->response->item($supply, new SupplyShowTransformer());
     }

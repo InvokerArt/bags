@@ -38,6 +38,8 @@ trait DemandAttribute
     {
         if (!$value) {
             $this->attributes['is_excellent'] = 'no';
+        } else {
+            $this->attributes['is_excellent'] = $value;
         }
     }
 }

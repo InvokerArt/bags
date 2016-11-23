@@ -72,10 +72,12 @@ trait CompanyAttribute
         return $role;
     }
 
-    public function setIsExtensionAttribute($value)
+    public function setIsExcellentAttribute($value)
     {
         if (!$value) {
             $this->attributes['is_excellent'] = 'no';
+        } else {
+            $this->attributes['is_excellent'] = $value;
         }
     }
 
@@ -83,6 +85,8 @@ trait CompanyAttribute
     {
         if (!$value) {
             $this->attributes['addressDetail'] = '';
+        } else {
+            $this->attributes['addressDetail'] = $value;
         }
     }
 
@@ -90,6 +94,8 @@ trait CompanyAttribute
     {
         if (!$value) {
             $this->attributes['notes'] = '';
+        } else {
+            $this->attributes['notes'] = $value;
         }
     }
 
@@ -97,6 +103,8 @@ trait CompanyAttribute
     {
         if (!$value) {
             $this->attributes['content'] = '';
+        } else {
+            $this->attributes['content'] = $value;
         }
     }
 }

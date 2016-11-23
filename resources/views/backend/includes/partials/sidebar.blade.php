@@ -168,6 +168,12 @@
                     <span class="title">消息反馈</span>
                 </a>
             </li>
+            <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.faqs*'), 'active open') }}">
+                <a href="{{ route(env('APP_BACKEND_PREFIX').'.faqs.index') }}">
+                    <i class="icon-question"></i>
+                    <span class="title">常见问题</span>
+                </a>
+            </li>
             @role(('root'))
             <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'log-viewer*'), 'active open') }} last">
                 <a href="javascript:;">

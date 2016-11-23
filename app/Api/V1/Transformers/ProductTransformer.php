@@ -15,7 +15,7 @@ class ProductTransformer extends BaseTransformer
             'price' => $model->price,
             'unit' => $model->unit,
             'content' => $model->content,
-            'images' => img_fullurl($model->images)
+            'images' => $model->images ? img_fullurl($model->images) : []
         ];
     }
 }

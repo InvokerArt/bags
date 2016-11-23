@@ -219,6 +219,7 @@ class DemandController extends BaseController
             return $this->response->errorForbidden();
         }
 
+        $request->images = relative_url($request->images);
         $this->demands->update($demand, $request);
         return $this->response->item($demand, new DemandShowTransformer());
     }

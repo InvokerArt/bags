@@ -15,7 +15,6 @@ require('laravel-elixir-vue');
 
 elixir(function(mix) {
 	mix
-    .webpack('app.js')
     /**
      * 前台样式
      */

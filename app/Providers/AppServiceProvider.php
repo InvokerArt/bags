@@ -239,5 +239,13 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Backend\Feedbacks\FeedbackInterface::class,
             \App\Repositories\Backend\Feedbacks\FeedbackRepository::class
         );
+
+        /**
+         * 反馈
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Faqs\FaqInterface::class,
+            \App\Repositories\Backend\Faqs\FaqRepository::class
+        );
     }
 }

@@ -20,6 +20,8 @@ trait TopicAttribute
     {
         if (!$value) {
             $this->attributes['is_excellent'] = 'no';
+        } else {
+            $this->attributes['is_excellent'] = $value;
         }
     }
 
@@ -27,6 +29,8 @@ trait TopicAttribute
     {
         if (!$value) {
             $this->attributes['is_blocked'] = 'no';
+        } else {
+            $this->attributes['is_blocked'] = $value;
         }
     }
 
@@ -34,6 +38,8 @@ trait TopicAttribute
     {
         if (!$value) {
             $this->attributes['view_count'] = 0;
+        } else {
+            $this->attributes['view_count'] = $value;
         }
     }
 
@@ -41,6 +47,8 @@ trait TopicAttribute
     {
         if (!$value) {
             $this->attributes['reply_count'] = 0;
+        } else {
+            $this->attributes['reply_count'] = $value;
         }
     }
 
@@ -48,6 +56,8 @@ trait TopicAttribute
     {
         if (!$value) {
             $this->attributes['vote_count'] = 0;
+        } else {
+            $this->attributes['vote_count'] = $value;
         }
     }
 }

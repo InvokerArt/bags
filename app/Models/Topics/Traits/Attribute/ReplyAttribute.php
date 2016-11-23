@@ -40,6 +40,8 @@ trait ReplyAttribute
     {
         if (!$value) {
             $this->attributes['is_blocked'] = 'no';
+        } else {
+            $this->attributes['is_excellent'] = $value;
         }
     }
 
@@ -47,6 +49,8 @@ trait ReplyAttribute
     {
         if (!$value) {
             $this->attributes['vote_count'] = 0;
+        } else {
+            $this->attributes['vote_count'] = $value;
         }
     }
 }

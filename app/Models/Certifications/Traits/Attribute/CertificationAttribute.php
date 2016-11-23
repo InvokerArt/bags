@@ -58,6 +58,8 @@ trait CertificationAttribute
     {
         if (!$value) {
             $this->attributes['status'] = 1;
+        } else {
+            $this->attributes['status'] = $value;
         }
     }
 

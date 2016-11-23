@@ -93,6 +93,7 @@ class ProductController extends BaseController
     public function store(ProductStoreOrUpdateRequest $request)
     {
         $request->merge(['user_id' => Auth::id()]);
+        $request->images = relative_url($request->images);
         $this->products->create($request);
         return $this->response->created();
     }
@@ -143,7 +144,6 @@ class ProductController extends BaseController
     public function show(Product $product)
     {
         $company = $product->company()->first();
-        $product = $product->with('user')->first();
         $product->address = $company->address;
         $product->addressDetail = $company->addressDetail;
         $product->telephone = $company->telephone;
@@ -188,6 +188,7 @@ class ProductController extends BaseController
             return $this->response->errorForbidden();
         }
 
+        $request->images = relative_url($request->images);
         $this->products->update($product, $request);
         $product = $product->insert_company;
         return $this->response->item($product, new ProductShowTransformer());
