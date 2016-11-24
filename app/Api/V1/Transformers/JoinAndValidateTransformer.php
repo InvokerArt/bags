@@ -21,7 +21,7 @@ class JoinAndValidateTransformer extends BaseTransformer
             'address' => $location,
             'telephone' => $model->telephone,
             'notes' => $model->notes,
-            'image' => img_fullurl($model->photos)
+            'image' => $model->photos ? img_fullurl($model->photos) : []
         ];
     }
 

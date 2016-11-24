@@ -213,6 +213,7 @@ class ExhibitionController extends BaseController
      * @apiGroup Exhibition
      * @apiPermission 无
      * @apiVersion 1.0.0
+     * @apiParam {Number{0,1,2,3,4,5,6}} categories //0为全部或不传也可以
      * @apiParam {String} q 搜索关键字
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
@@ -247,7 +248,14 @@ class ExhibitionController extends BaseController
      */
     public function search(Request $request)
     {
-        $news = Exhibition::where('title', 'like', "%$request->q%")->orWhere('subtitle', 'like', "%$request->q%")->orWhere('content', 'like', "%$request->q%")->paginate();
+        $query = Exhibition::select();
+        
+        if ($request->categories) {
+            $query->whereHas('categories', function ($query) use ($request) {
+                $query->where('category_id', $request->categories);
+            });
+        }
+        $news = $query->where('title', 'like', "%$request->q%")->orWhere('subtitle', 'like', "%$request->q%")->orWhere('content', 'like', "%$request->q%")->paginate();
         return $this->response->paginator($news, new ExhibitionShowTransformer());
     }
 }

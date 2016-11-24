@@ -118,6 +118,13 @@ Dashboard Stats
             float: right;
         }
     }  
+
+    &.dashboard-stat-v2 {
+        .visual {
+            padding-top: 35px;
+            margin-bottom: 40px;  
+        }   
+    }
 }
 
 @each $name, $colors in $component-colors {

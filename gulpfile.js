@@ -1,6 +1,6 @@
-var elixir = require('laravel-elixir');
+const elixir = require('laravel-elixir');
 
-require('laravel-elixir-vue');
+require('laravel-elixir-vue-2');
 
 /*
  |--------------------------------------------------------------------------
@@ -15,15 +15,16 @@ require('laravel-elixir-vue');
 
 elixir(function(mix) {
 	mix
+    .webpack('wap.js')
+    .sass([
+        'wap/app.scss'
+    ],'public/css/wap/app.css')
     /**
      * 前台样式
      */
 	.sass([
 		'frontend/app.scss'
-	],'resources/assets/css/frontend/default.css')
-    .styles([
-        'frontend/default.css',
-    ], 'public/css/frontend/default.css')
+	],'public/css/frontend/default.css')
     /**
      * js插件样式
      * 后台合并所有插件样式

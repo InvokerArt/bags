@@ -61,8 +61,8 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     $api->get('companies/role/{role}', 'CompanyController@index');
     $api->get('companies/banner', 'CompanyController@banner');
     $api->get('companies/categories/{category}', 'CompanyController@categories');
-    $api->get('companies/{company}/jobs', 'CompanyController@job');
-    $api->get('companies/{company}/products', 'CompanyController@product');
+    $api->get('companies/jobs', 'CompanyController@job');
+    $api->get('companies/products', 'CompanyController@product');
     $api->get('companies/search', 'CompanyController@search');
     $api->get('companies/{company}', 'CompanyController@show');
 

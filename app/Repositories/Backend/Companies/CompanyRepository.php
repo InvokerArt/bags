@@ -77,7 +77,7 @@ class CompanyRepository implements CompanyInterface
 
             if ($company->update($data)) {
                 if (isset($input['categories'])) {
-                    $company->attachCategories($input['categories']);
+                    $company->syncCategories($input['categories']);
                 }
                 return true;
             }

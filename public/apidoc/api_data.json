@@ -151,6 +151,66 @@
   },
   {
     "type": "get",
+    "url": "/companies/jobs",
+    "title": "公司招聘",
+    "description": "<p>公司招聘</p>",
+    "group": "Auth",
+    "permission": [
+      {
+        "name": "无"
+      }
+    ],
+    "version": "1.0.0",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n\n{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"job\": \"销售代表\",\n            \"total\": \"10人\",\n            \"education\": \"本科大学\",\n            \"experience\": \"2-3年\",\n            \"minsalary\": \"50000\",\n            \"content\": \"<p>要求就是不要命</p>\"\n        }\n    ]\n}\n\n没有招聘内容的时候为\n{\n    \"data\": []\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/companies/jobs"
+      }
+    ],
+    "filename": "App/Api/v1/Controllers/CompanyController.php",
+    "groupTitle": "用户",
+    "name": "GetCompaniesJobs"
+  },
+  {
+    "type": "get",
+    "url": "/companies/products",
+    "title": "产品列表",
+    "description": "<p>产品列表 unit代表的单位见顶部(接口说明)</p>",
+    "group": "Auth",
+    "permission": [
+      {
+        "name": "无"
+      }
+    ],
+    "version": "1.0.0",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n\n{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"我有袋子100箱\",\n            \"price\": 100,\n            \"unit\": 5,\n            \"content\": \"<p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">加工定制 是</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">用途 通用包装</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">底面侧面 无底无侧</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">供货类型 可定制</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">规格 400*300（mm*mm）</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">加印LOGO 可以</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">款式 手提袋</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">颜色 米白</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">印刷工艺 丝印</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">自重 285（g）</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">品牌 Martina</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">是否有现货 有</p><p><br/></p>\",\n            \"images\": [\n                \"http://stone.dev/uploads/products/2016/11/165204E76X.png\"\n            ]\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 1,\n            \"count\": 1,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}\n没有产品内容的时候为\n{\n    \"data\": []\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/companies/products"
+      }
+    ],
+    "filename": "App/Api/v1/Controllers/CompanyController.php",
+    "groupTitle": "用户",
+    "name": "GetCompaniesProducts"
+  },
+  {
+    "type": "get",
     "url": "/supplies",
     "title": "供应列表",
     "description": "<p>供应列表</p>",
@@ -686,14 +746,14 @@
             "group": "Parameter",
             "type": "String[]",
             "optional": false,
-            "field": "licenses[]",
+            "field": "licenses",
             "description": "<p>营业执照</p>"
           },
           {
             "group": "Parameter",
             "type": "String[]",
             "optional": false,
-            "field": "photos[]",
+            "field": "photos",
             "description": "<p>公司照片或单位照片</p>"
           },
           {
@@ -1238,36 +1298,6 @@
   },
   {
     "type": "get",
-    "url": "/companies/:id/jobs",
-    "title": "公司招聘",
-    "description": "<p>公司招聘 :id 公司ID</p>",
-    "group": "Company",
-    "permission": [
-      {
-        "name": "无"
-      }
-    ],
-    "version": "1.0.0",
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n\n{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"job\": \"销售代表\",\n            \"total\": \"10人\",\n            \"education\": \"本科大学\",\n            \"experience\": \"2-3年\",\n            \"minsalary\": \"50000\",\n            \"content\": \"<p>要求就是不要命</p>\"\n        }\n    ]\n}\n\n没有招聘内容的时候为\n{\n    \"data\": []\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "sampleRequest": [
-      {
-        "url": "/api/companies/1/jobs"
-      }
-    ],
-    "filename": "App/Api/v1/Controllers/CompanyController.php",
-    "groupTitle": "公司",
-    "name": "GetCompaniesIdJobs"
-  },
-  {
-    "type": "get",
     "url": "/companies/:id/join-certification",
     "title": "公司加盟或机构认证",
     "description": "<p>公司加盟或机构认证 :id 公司ID user 申请者用户信息 company 申请者公司信息</p>",
@@ -1307,36 +1337,6 @@
     "filename": "App/Api/v1/Controllers/CompanyController.php",
     "groupTitle": "公司",
     "name": "GetCompaniesIdJoinCertification"
-  },
-  {
-    "type": "get",
-    "url": "/companies/:id/products",
-    "title": "产品列表",
-    "description": "<p>产品列表 :id 公司ID  unit代表的单位见顶部(接口说明)</p>",
-    "group": "Company",
-    "permission": [
-      {
-        "name": "无"
-      }
-    ],
-    "version": "1.0.0",
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n\n{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"我有袋子100箱\",\n            \"price\": 100,\n            \"unit\": 5,\n            \"content\": \"<p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">加工定制 是</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">用途 通用包装</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">底面侧面 无底无侧</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">供货类型 可定制</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">规格 400*300（mm*mm）</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">加印LOGO 可以</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">款式 手提袋</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">颜色 米白</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">印刷工艺 丝印</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">自重 285（g）</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">品牌 Martina</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">是否有现货 有</p><p><br/></p>\",\n            \"images\": [\n                \"http://stone.dev/uploads/products/2016/11/165204E76X.png\"\n            ]\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 1,\n            \"count\": 1,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}\n没有产品内容的时候为\n{\n    \"data\": []\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "sampleRequest": [
-      {
-        "url": "/api/companies/1/products"
-      }
-    ],
-    "filename": "App/Api/v1/Controllers/CompanyController.php",
-    "groupTitle": "公司",
-    "name": "GetCompaniesIdProducts"
   },
   {
     "type": "get",
@@ -2265,6 +2265,14 @@
     "parameter": {
       "fields": {
         "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "size": "0,1,2,3,4,5,6",
+            "optional": false,
+            "field": "categories",
+            "description": "<p>//0为全部或不传也可以</p>"
+          },
           {
             "group": "Parameter",
             "type": "String",
@@ -3776,7 +3784,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n{\n    \"data\": {\n        \"id\": 1,\n        \"category_id\": 2,\n        \"title\": \"Laravel 5.3 中文文档翻译完成\",\n        \"content\": \"<p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" background-color:=\\\"\\\"><img src=\\\"https://dn-phphub.qbox.me/uploads/images/201608/24/1/IEQ4Xir8sH.jpg\\\" alt=\\\"\\\" data-type=\\\"image\\\" style=\\\"box-sizing: border-box; border: 1px solid rgb(221, 221, 221); vertical-align: middle; max-width: 100%; box-shadow: rgb(204, 204, 204) 0px 0px 30px; margin-bottom: 30px; margin-top: 10px;\\\"/></p><p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" background-color:=\\\"\\\">文档地址在此：<a href=\\\"https://laravel-china.org/docs/5.3\\\" style=\\\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\\\">https://laravel-china.org/docs/5.3</a></p><p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" background-color:=\\\"\\\">翻译的召集帖：<a href=\\\"https://laravel-china.org/topics/2752\\\" style=\\\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\\\">https://laravel-china.org/topics/2752</a></p><p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" background-color:=\\\"\\\">参与人员列表：<a href=\\\"https://laravel-china.org/roles/7\\\" style=\\\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\\\">Laravel 5.3 译者</a></p><p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" background-color:=\\\"\\\">项目托管在 Github 上，欢迎提交反馈：<a href=\\\"https://github.com/laravel-china/laravel-docs\\\" style=\\\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\\\">https://github.com/laravel-china/laravel-docs</a></p><blockquote style=\\\"box-sizing: border-box; padding: 6px 8px; border-left: 4px solid rgb(221, 221, 221); line-height: 30px; color: rgb(119, 119, 119); background-color: rgb(247, 247, 247); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" margin:=\\\"\\\" 20px=\\\"\\\" 0px=\\\"\\\"><p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; line-height: 30px;\\\">我代表 Laravel 中文文档的受益者对 可爱的&nbsp;<a href=\\\"https://laravel-china.org/roles/7\\\" style=\\\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\\\">Laravel 5.3 译者</a>&nbsp;表示感谢&nbsp;<img title=\\\":beer:\\\" alt=\\\":beer:\\\" class=\\\"emoji\\\" src=\\\"https://dn-phphub.qbox.me/assets/images/emoji/beer.png\\\" align=\\\"absmiddle\\\" style=\\\"box-sizing: border-box; border: 0px; vertical-align: middle; width: 1.6em; display: inline-block; margin-bottom: 0px; margin-top: -5px; margin-left: 5px; max-width: 100%;\\\"/>&nbsp;<img title=\\\":metal:\\\" alt=\\\":metal:\\\" class=\\\"emoji\\\" src=\\\"https://dn-phphub.qbox.me/assets/images/emoji/metal.png\\\" align=\\\"absmiddle\\\" style=\\\"box-sizing: border-box; border: 0px; vertical-align: middle; width: 1.6em; display: inline-block; margin-bottom: 0px; margin-top: -5px; margin-left: 5px; max-width: 100%;\\\"/></p></blockquote><p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" background-color:=\\\"\\\"><img src=\\\"https://dn-phphub.qbox.me/uploads/images/201610/19/1/F9kV4goXoU.png\\\" alt=\\\"\\\" data-type=\\\"image\\\" style=\\\"box-sizing: border-box; border: 1px solid rgb(221, 221, 221); vertical-align: middle; max-width: 100%; box-shadow: rgb(204, 204, 204) 0px 0px 30px; margin-bottom: 30px; margin-top: 10px;\\\"/></p><p><br/></p>\",\n        \"reply_count\": 4,\n        \"vote_count\": 0,\n        \"vote_up\": 0,\n        \"vote_down\": 0,\n        \"updated_at\": \"2016-11-03\",\n        \"user\": {\n            \"data\": {\n                \"id\": 2,\n                \"username\": \"user\",\n                \"mobile\": \"13113113111\",\n                \"email\": \"user@user.com\",\n                \"avatar\": \"\",\n                \"created_at\": \"2016-11-02 15:57:24\"\n            }\n        }\n    }\n}",
+          "content": " HTTP/1.1 200 OK\n{\n    \"data\": {\n        \"id\": 1,\n        \"category_id\": 2,\n        \"title\": \"Laravel 5.3 中文文档翻译完成\",\n        \"content\": \"<p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" background-color:=\\\"\\\"><img src=\\\"https://dn-phphub.qbox.me/uploads/images/201608/24/1/IEQ4Xir8sH.jpg\\\" alt=\\\"\\\" data-type=\\\"image\\\" style=\\\"box-sizing: border-box; border: 1px solid rgb(221, 221, 221); vertical-align: middle; max-width: 100%; box-shadow: rgb(204, 204, 204) 0px 0px 30px; margin-bottom: 30px; margin-top: 10px;\\\"/></p><p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" background-color:=\\\"\\\">文档地址在此：<a href=\\\"https://laravel-china.org/docs/5.3\\\" style=\\\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\\\">https://laravel-china.org/docs/5.3</a></p><p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" background-color:=\\\"\\\">翻译的召集帖：<a href=\\\"https://laravel-china.org/topics/2752\\\" style=\\\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\\\">https://laravel-china.org/topics/2752</a></p><p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" background-color:=\\\"\\\">参与人员列表：<a href=\\\"https://laravel-china.org/roles/7\\\" style=\\\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\\\">Laravel 5.3 译者</a></p><p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" background-color:=\\\"\\\">项目托管在 Github 上，欢迎提交反馈：<a href=\\\"https://github.com/laravel-china/laravel-docs\\\" style=\\\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\\\">https://github.com/laravel-china/laravel-docs</a></p><blockquote style=\\\"box-sizing: border-box; padding: 6px 8px; border-left: 4px solid rgb(221, 221, 221); line-height: 30px; color: rgb(119, 119, 119); background-color: rgb(247, 247, 247); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" margin:=\\\"\\\" 20px=\\\"\\\" 0px=\\\"\\\"><p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; line-height: 30px;\\\">我代表 Laravel 中文文档的受益者对 可爱的&nbsp;<a href=\\\"https://laravel-china.org/roles/7\\\" style=\\\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\\\">Laravel 5.3 译者</a>&nbsp;表示感谢&nbsp;<img title=\\\":beer:\\\" alt=\\\":beer:\\\" class=\\\"emoji\\\" src=\\\"https://dn-phphub.qbox.me/assets/images/emoji/beer.png\\\" align=\\\"absmiddle\\\" style=\\\"box-sizing: border-box; border: 0px; vertical-align: middle; width: 1.6em; display: inline-block; margin-bottom: 0px; margin-top: -5px; margin-left: 5px; max-width: 100%;\\\"/>&nbsp;<img title=\\\":metal:\\\" alt=\\\":metal:\\\" class=\\\"emoji\\\" src=\\\"https://dn-phphub.qbox.me/assets/images/emoji/metal.png\\\" align=\\\"absmiddle\\\" style=\\\"box-sizing: border-box; border: 0px; vertical-align: middle; width: 1.6em; display: inline-block; margin-bottom: 0px; margin-top: -5px; margin-left: 5px; max-width: 100%;\\\"/></p></blockquote><p style=\\\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \\\" hiragino=\\\"\\\" sans=\\\"\\\" microsoft=\\\"\\\" wenquanyi=\\\"\\\" micro=\\\"\\\" white-space:=\\\"\\\" background-color:=\\\"\\\"><img src=\\\"https://dn-phphub.qbox.me/uploads/images/201610/19/1/F9kV4goXoU.png\\\" alt=\\\"\\\" data-type=\\\"image\\\" style=\\\"box-sizing: border-box; border: 1px solid rgb(221, 221, 221); vertical-align: middle; max-width: 100%; box-shadow: rgb(204, 204, 204) 0px 0px 30px; margin-bottom: 30px; margin-top: 10px;\\\"/></p><p><br/></p>\",\n        \"reply_count\": 4,\n        \"view_count\": 116,\n        \"vote_count\": 29,\n        \"created_at\": \"2016-10-31 03:01:39\",\n        \"user\": {\n            \"data\": {\n                \"id\": 3,\n                \"username\": \"来我家\",\n                \"name\": \"新英雄\",\n                \"mobile\": \"13111111112\",\n                \"email\": \"ghsjjshhd\",\n                \"avatar\": {\n                    \"_default\": \"http://stone.dev/uploads/avatars/20161117100823_30x30.png\",\n                    \"small\": \"http://stone.dev/uploads/avatars/20161117100823_30x30_30x30.png\",\n                    \"medium\": \"http://stone.dev/uploads/avatars/20161117100823_30x30_65x65.png\",\n                    \"large\": \"http://stone.dev/uploads/avatars/20161117100823_30x30_180x180.png\"\n                },\n                \"created_at\": \"2016-11-02 11:01:58\"\n            }\n        },\n        \"replies\": {\n            \"data\": [\n                {\n                    \"id\": 1,\n                    \"topic_id\": 1,\n                    \"user_id\": 3,\n                    \"content\": \"<p>您好，这是一条评论。<br>\\r\\n要删除评论，请先登录，然后再查看这篇文章的评论。登录后您可以看到编辑或者删除评论的选项。</p>\",\n                    \"vote_count\": 2,\n                    \"created_at\": \"2016-10-31 08:11:43\",\n                    \"replyTo_userid\": \"\",\n                    \"replyTo_username\": \"\",\n                    \"user\": {\n                        \"data\": {\n                            \"id\": 3,\n                            \"username\": \"来我家\",\n                            \"name\": \"新英雄\",\n                            \"mobile\": \"13111111112\",\n                            \"email\": \"ghsjjshhd\",\n                            \"avatar\": {\n                                \"_default\": \"http://stone.dev/uploads/avatars/20161117100823_30x30.png\",\n                                \"small\": \"http://stone.dev/uploads/avatars/20161117100823_30x30_30x30.png\",\n                                \"medium\": \"http://stone.dev/uploads/avatars/20161117100823_30x30_65x65.png\",\n                                \"large\": \"http://stone.dev/uploads/avatars/20161117100823_30x30_180x180.png\"\n                            },\n                            \"created_at\": \"2016-11-02 11:01:58\"\n                        }\n                    }\n                },\n                {\n                    \"id\": 2,\n                    \"topic_id\": 1,\n                    \"user_id\": 2,\n                    \"content\": \"<p>我是回复给admin的回复内容</p>\",\n                    \"vote_count\": 0,\n                    \"created_at\": \"2016-10-31 09:31:05\",\n                    \"replyTo_userid\": 3,\n                    \"replyTo_username\": \"来我家\",\n                    \"user\": {\n                        \"data\": {\n                            \"id\": 2,\n                            \"username\": \"user\",\n                            \"name\": \"name\",\n                            \"mobile\": \"13113113111\",\n                            \"email\": \"user@user.com\",\n                            \"avatar\": {\n                                \"_default\": \"\",\n                                \"small\": \"\",\n                                \"medium\": \"\",\n                                \"large\": \"\"\n                            },\n                            \"created_at\": \"2016-11-02 07:57:24\"\n                        }\n                    }\n                },\n                {\n                    \"id\": 7,\n                    \"topic_id\": 1,\n                    \"user_id\": 2,\n                    \"content\": \"我又来回复第一篇文章了\",\n                    \"vote_count\": 0,\n                    \"created_at\": \"2016-11-07 04:02:13\",\n                    \"replyTo_userid\": \"\",\n                    \"replyTo_username\": \"\",\n                    \"user\": {\n                        \"data\": {\n                            \"id\": 2,\n                            \"username\": \"user\",\n                            \"name\": \"name\",\n                            \"mobile\": \"13113113111\",\n                            \"email\": \"user@user.com\",\n                            \"avatar\": {\n                                \"_default\": \"\",\n                                \"small\": \"\",\n                                \"medium\": \"\",\n                                \"large\": \"\"\n                            },\n                            \"created_at\": \"2016-11-02 07:57:24\"\n                        }\n                    }\n                },\n                {\n                    \"id\": 13,\n                    \"topic_id\": 1,\n                    \"user_id\": 2,\n                    \"content\": \"我又来回复第一篇文章了\",\n                    \"vote_count\": 0,\n                    \"created_at\": \"2016-11-11 02:14:47\",\n                    \"replyTo_userid\": \"\",\n                    \"replyTo_username\": \"\",\n                    \"user\": {\n                        \"data\": {\n                            \"id\": 2,\n                            \"username\": \"user\",\n                            \"name\": \"name\",\n                            \"mobile\": \"13113113111\",\n                            \"email\": \"user@user.com\",\n                            \"avatar\": {\n                                \"_default\": \"\",\n                                \"small\": \"\",\n                                \"medium\": \"\",\n                                \"large\": \"\"\n                            },\n                            \"created_at\": \"2016-11-02 07:57:24\"\n                        }\n                    }\n                },\n                {\n                    \"id\": 14,\n                    \"topic_id\": 1,\n                    \"user_id\": 2,\n                    \"content\": \"我又来回复第一篇文章了\",\n                    \"vote_count\": 0,\n                    \"created_at\": \"2016-11-11 02:15:46\",\n                    \"replyTo_userid\": \"\",\n                    \"replyTo_username\": \"\",\n                    \"user\": {\n                        \"data\": {\n                            \"id\": 2,\n                            \"username\": \"user\",\n                            \"name\": \"name\",\n                            \"mobile\": \"13113113111\",\n                            \"email\": \"user@user.com\",\n                            \"avatar\": {\n                                \"_default\": \"\",\n                                \"small\": \"\",\n                                \"medium\": \"\",\n                                \"large\": \"\"\n                            },\n                            \"created_at\": \"2016-11-02 07:57:24\"\n                        }\n                    }\n                },\n                {\n                    \"id\": 15,\n                    \"topic_id\": 1,\n                    \"user_id\": 2,\n                    \"content\": \"我又来回复第一篇文章了\",\n                    \"vote_count\": 0,\n                    \"created_at\": \"2016-11-11 02:15:55\",\n                    \"replyTo_userid\": \"\",\n                    \"replyTo_username\": \"\",\n                    \"user\": {\n                        \"data\": {\n                            \"id\": 2,\n                            \"username\": \"user\",\n                            \"name\": \"name\",\n                            \"mobile\": \"13113113111\",\n                            \"email\": \"user@user.com\",\n                            \"avatar\": {\n                                \"_default\": \"\",\n                                \"small\": \"\",\n                                \"medium\": \"\",\n                                \"large\": \"\"\n                            },\n                            \"created_at\": \"2016-11-02 07:57:24\"\n                        }\n                    }\n                }\n            ]\n        }\n    }\n}",
           "type": "json"
         }
       ]
@@ -4164,7 +4172,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n{\n  \"data\": {\n    \"url\": [\n      \"http://stone.dev/storage/companies/2016/11/031150jIr1.png\",\n      \"http://stone.dev/storage/companies/2016/11/031150tN1t.png\"\n    ]\n  }\n}",
+          "content": " HTTP/1.1 200 OK\n{\n  \"data\": {\n    \"url\": [\n      \"http://stone.dev/storage/companies/2016/11/031150tN1t.png\"\n    ]\n  }\n}",
           "type": "json"
         }
       ]
@@ -4202,7 +4210,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n{\n  \"data\": {\n    \"url\": [\n        \"http://stone.dev/uploads/products/2016/11/071549GTEr.png\",\n        \"http://stone.dev/uploads/products/2016/11/071549GTEr.png\"\n    ]\n  }\n}",
+          "content": " HTTP/1.1 200 OK\n{\n  \"data\": {\n    \"url\": [\n        \"http://stone.dev/uploads/products/2016/11/071549GTEr.png\"\n    ]\n  }\n}",
           "type": "json"
         }
       ]

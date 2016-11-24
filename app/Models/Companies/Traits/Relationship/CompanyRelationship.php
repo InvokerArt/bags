@@ -53,7 +53,7 @@ trait CompanyRelationship
     //更新分类数据到中间表
     public function syncCategories($Categories)
     {
-        $this->Categories()->sync($Categories);
+        $this->categories()->sync($Categories);
     }
 
     public function certifications()

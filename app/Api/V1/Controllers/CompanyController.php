@@ -259,9 +259,9 @@ class CompanyController extends BaseController
     }
 
     /**
-     * @api {get} /companies/:id/jobs 公司招聘
-     * @apiDescription 公司招聘 :id 公司ID
-     * @apiGroup Company
+     * @api {get} /companies/jobs 公司招聘
+     * @apiDescription 公司招聘
+     * @apiGroup Auth
      * @apiPermission 无
      * @apiVersion 1.0.0
      * @apiSuccessExample {json} Success-Response:
@@ -285,11 +285,11 @@ class CompanyController extends BaseController
     {
         "data": []
     }
-     * @apiSampleRequest /api/companies/1/jobs
+     * @apiSampleRequest /api/companies/jobs
      */
-    public function job(Company $company)
+    public function job(Request $request)
     {
-        $user = $company->user()->first();
+        $user = $request->user();
         $jobs = $user->jobs()->paginate();
         return $this->response->paginator($jobs, new JobTransformer());
     }
@@ -321,9 +321,9 @@ class CompanyController extends BaseController
     }
 
     /**
-     * @api {get} /companies/:id/products 产品列表
-     * @apiDescription 产品列表 :id 公司ID  unit代表的单位见顶部(接口说明)
-     * @apiGroup Company
+     * @api {get} /companies/products 产品列表
+     * @apiDescription 产品列表 unit代表的单位见顶部(接口说明)
+     * @apiGroup Auth
      * @apiPermission 无
      * @apiVersion 1.0.0
      * @apiSuccessExample {json} Success-Response:
@@ -357,11 +357,11 @@ class CompanyController extends BaseController
     {
         "data": []
     }
-     * @apiSampleRequest /api/companies/1/products
+     * @apiSampleRequest /api/companies/products
      */
-    public function product(Company $company)
+    public function product(Request $request)
     {
-        $user = $company->user()->first();
+        $user = $request->user();
         $products = $user->products()->paginate();
         return $this->response->paginator($products, new ProductTransformer());
     }
@@ -507,8 +507,8 @@ class CompanyController extends BaseController
      * @apiParam {Number} address 地区code
      * @apiParam {String} addressDetail 详细地区
      * @apiParam {Number[]} categories 分类ID
-     * @apiParam {String[]} licenses[] 营业执照
-     * @apiParam {String[]} photos[] 公司照片或单位照片
+     * @apiParam {String[]} licenses 营业执照
+     * @apiParam {String[]} photos 公司照片或单位照片
      * @apiParam {String} notes 公司加盟须知或单位认证须知
      * @apiParam {String} content 公司简介或单位简介
      * @apiSuccessExample {json} Success-Response:
@@ -526,10 +526,11 @@ class CompanyController extends BaseController
         $messages = [
             'name.unique' => '公司名已存在！',
         ];
-        $validator = Validator::make($request->all(), ['user_id' => 'required|unique:companies,user_id,'.$company->id, 'name' => 'required|unique:companies,name,'.$company->id], $messages);
+        $validator = Validator::make($request->all(), ['user_id' => 'required|unique:companies,user_id,'.$company->id], $messages);
         if ($validator->fails()) {
             throw new \Dingo\Api\Exception\StoreResourceFailedException('422 Unprocessable Entity', $validator->errors());
         }
+        //return $this->response->array($request->categories);
         $this->companies->update($company, $request);
         return $this->response->item($company, new CompanyShowTransformer());
     }

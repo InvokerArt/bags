@@ -6,7 +6,7 @@ class TopicTransformer extends BaseTransformer
 {
     protected $availableIncludes = ['user', 'last_reply_user', 'replies', 'category'];
 
-    protected $defaultIncludes = ['user'];
+    protected $defaultIncludes = ['user','replies'];
 
     public function transformData($model)
     {
@@ -18,7 +18,7 @@ class TopicTransformer extends BaseTransformer
             "reply_count" => $model->reply_count,
             "view_count" => $model->view_count,
             "vote_count" => $model->vote_count,
-            "updated_at" => $model->updated_at->toDateString()
+            "created_at" => $model->created_at->toDateTimeString()
         ];
     }
 

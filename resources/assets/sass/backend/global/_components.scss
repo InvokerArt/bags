@@ -3,10 +3,6 @@
 @import 'components/_mixins';  
 
 // General CSS Reset
-@if $theme-style == "square" { 
-@import 'components/_reset-rounds';
-}
-
 @import 'components/_reset-general';  
     
 // Material Desing Components
@@ -45,14 +41,18 @@
 @import 'components/_tables'; 
 @import 'components/_tabs'; 
 @import 'components/_tiles';  
-@import 'components/_wells'; 
+@import 'components/_wells';  
 @import 'components/_widgets'; 
 @import 'components/_animate';
 @import 'components/_headings'; 
 @import 'components/_timeline'; 
+@import 'components/_timeline-2'; 
+@import 'components/_timeline-3'; 
 @import 'components/_tasks-widget'; 
 @import 'components/_comments'; 
 @import 'components/_quick-actions'; 
+
+@import 'components/_app-widgets'; 
 
 // Elements
 @import 'components/elements/steps/_step-1';
@@ -63,3 +63,8 @@
 
 // Apply flat UI colors to all components
 @import 'components/_colors';
+
+// System components
+
+@import 'components/cookie-consent';
+@import 'components/sidebar';

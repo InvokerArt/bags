@@ -63,7 +63,6 @@ class UploadController extends BaseController
     {
       "data": {
         "url": [
-          "http://stone.dev/storage/companies/2016/11/031150jIr1.png",
           "http://stone.dev/storage/companies/2016/11/031150tN1t.png"
         ]
       }
@@ -73,13 +72,13 @@ class UploadController extends BaseController
     {
         try {
             $url = '';
-            $images = $request->file('images');
-            foreach ($images as $image) {
-                $filePath = 'companies/'.date('Y').'/'.date('m').'/'.date('His').str_random(4).'.png';
-                $result = Storage::put($filePath, file_get_contents($image->getRealPath()));
-                if ($result) {
-                    $url['data']['url'][] = asset(Storage::url($filePath));
-                }
+            $image = $request->file('images');
+            $filePath = 'companies/'.date('Y').'/'.date('m').'/'.date('His').str_random(4).'.png';
+            try {
+                Storage::put($filePath, file_get_contents($image->getRealPath()));
+                $url['data']['url'][] = asset(Storage::url($filePath));
+            } catch (Exception $e) {
+                throw new Exception($e->getMessages(), 1);
             }
             return $this->response->array($url);
         } catch (Exception $e) {
@@ -99,7 +98,6 @@ class UploadController extends BaseController
     {
       "data": {
         "url": [
-            "http://stone.dev/uploads/products/2016/11/071549GTEr.png",
             "http://stone.dev/uploads/products/2016/11/071549GTEr.png"
         ]
       }
@@ -109,14 +107,10 @@ class UploadController extends BaseController
     {
         try {
             $url = '';
-            $images = $request->file('images');
-            return $this->response->array($images);
-            foreach ($images as $image) {
-                $img = Image::make($image);
-                $filePath = 'uploads/products/'.date('Y').'/'.date('m').'/'.date('His').str_random(4).'.png';
-                $img->save($filePath);
-                $url['data']['url'][] = asset($filePath);
-            }
+            $img = Image::make($request->file('images'));
+            $filePath = 'uploads/products/'.date('Y').'/'.date('m').'/'.date('His').str_random(4).'.png';
+            $img->save($filePath);
+            $url['data']['url'][] = asset($filePath);
             return $this->response->array($url);
         } catch (Exception $e) {
             return $this->response->errorBadRequest('上传失败！');

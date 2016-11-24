@@ -47,9 +47,9 @@
   	margin: 0 0 35px 0;  
   	padding-top: 20px;     
 
-  	&:last-child {
-  		margin-bottom: 10px;
-  	}
+  	//&:last-child { remove to fix mobile mode issue
+  		//margin-bottom: 10px;
+  	//}
 
 	.form-horizontal & {
 		padding-top: 10px;
@@ -132,8 +132,7 @@
 		}
    
    		&.edited:not([readonly]),
-		&:focus:not([readonly]),  
-		&.focus:not([readonly]) {
+		&:focus:not([readonly]) {
 			~ label,   
 			~ .form-control-focus {
 				color: $input-md-label-color;  
@@ -153,6 +152,16 @@
 			~ .help-block {
 				color: $input-md-focus-border;     
 				@include opacity(1);
+			}
+
+			~ .help-block-error {
+				@include opacity(0);
+			}
+		}  
+ 
+		&.edited:not([readonly]):not(:focus) {
+			~ .help-block {  
+				@include opacity(0);
 			}
 
 			~ .help-block-error {
