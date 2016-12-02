@@ -25,7 +25,7 @@ class JpushServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('jpush', function ($app) {
-            return new JPush(config('jpush.app_key'), config('jpush.master_secret'));
+            return new JPush(config('jpush.app_key'), config('jpush.master_secret'), storage_path('logs/jpush.log'));
         });
     }
 }

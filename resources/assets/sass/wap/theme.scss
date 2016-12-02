@@ -1,0 +1,135 @@
+.wrap{
+    overflow: auto;
+    height: 100%;
+    padding-bottom: 1.33rem !important;
+}
+.mint-header {
+    height:1.12rem !important;
+    background-color: #5fad0a !important;
+    padding:0.36rem 0.27rem !important;
+}
+.mint-button{
+    height:auto !important;
+    font-size:14px !important;
+    padding:0.05rem 0.13rem !important;
+    border-radius:0.2rem !important;
+}
+.mint-tab-item-label{
+    font-size:13px !important;
+}
+.mintui,.mint-header-title{font-size:18px !important;}
+.mint-navbar .mint-tab-item{padding:0.35rem 0 !important;font-size:14px !important;border-color: #5fad0a !important;}
+.mint-navbar .mint-tab-item.is-selected{color:#5fad0a !important}
+footer{
+    text-align:center;
+    height:1.33rem;
+    background-color:#fff;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    z-index: 1;
+    ul li{
+        width:4.98rem;
+        border-right:0.01rem solid #ddd;
+        float:left;
+        text-align: center;
+        height: 1.33rem;
+        line-height: 1.33rem;
+        &:last-child{
+        border-right:none;
+        }
+    }
+    img{
+        width:0.29rem;
+        margin-right: 0.13rem;
+        position: relative;
+    }
+}
+img.banner{
+    width:9.47rem;
+    height:4.0rem;
+    border-radius:0.13rem;
+    margin-bottom:0.27rem;
+}
+span.price{
+    color:#5fad0a;font-size:12px;
+}
+[data-dpr="2"]{
+    .mint-header{
+        font-size:28px !important;
+    }
+    .products li .price{
+        font-size:24px;
+    }
+    .company-categories{
+        font-size:26px;
+    }
+    .company-info .detail p{
+        font-size:26px;
+    } 
+    .mint-tab-item-label{
+        font-size:26px !important;
+    }
+    .mint-button{
+        font-size:28px !important;
+    }
+    .mint-navbar .mint-tab-item{
+        font-size:28px !important;
+    }
+    .products a{
+        font-size:28px !important;
+    }
+    .mintui{
+        font-size: 36px !important;
+    }
+    .mint-header-title{
+        font-size: 36px !important;
+    }
+    .company-info .detail h3{
+        font-size: 36px;
+    }
+    footer img{
+        width:0.4rem;
+        margin-bottom: -0.2rem;
+    }
+}
+[data-dpr="3"] {
+    .mint-header{
+        font-size:42px !important;
+    }
+    .products li .price{
+        font-size:36px;
+    }
+    .company-categories{
+        font-size:39px;
+    }
+    .company-info .detail p{
+        font-size:39px;
+    }
+    .mint-tab-item-label{
+        font-size:39px !important;
+    }
+    .mint-button{
+        font-size:42px !important;
+    }
+    .mint-navbar .mint-tab-item{
+        font-size:42px !important;
+    }
+    .products a{
+        font-size:42px !important;
+    }
+    .mintui{
+        font-size: 54px !important;
+    }
+    .mint-header-title{
+        font-size: 54px !important;
+    }
+    .company-info .detail h3{
+        font-size: 54px;
+    }
+    footer img{
+        width:0.8rem;
+        margin-bottom: -0.2rem;
+    }
+}

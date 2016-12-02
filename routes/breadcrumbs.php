@@ -59,6 +59,11 @@ require __DIR__ . '/Breadcrumbs/Backend/Users/Collection.php';
 require __DIR__ . '/Breadcrumbs/Backend/Feedbacks/Collection.php';
 
 /**
+ * 常见问题
+ */
+require __DIR__ . '/Breadcrumbs/Backend/Faqs/Collection.php';
+
+/**
  * 日志
  */
 require __DIR__ . '/Breadcrumbs/Backend/Logs/Collection.php';

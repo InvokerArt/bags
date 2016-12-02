@@ -17,12 +17,6 @@ trait CompanyRelationship
         return $this->belongsTo('App\Models\Users\User');
     }
 
-    //产品一对多
-    public function products()
-    {
-        return $this->hasMany('App\Models\Products\Product', 'user_id');
-    }
-
     public function favorites()
     {
         return $this->morphMany('App\Models\Favorites\Favorite', 'favorite');

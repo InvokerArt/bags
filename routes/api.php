@@ -19,97 +19,6 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         'limit'      => config('api.rate_limits.access.limits'),
         'expires'    => config('api.rate_limits.access.expires'),
 ], function ($api) {
-    $api->get('test', 'AuthController@test');
-    /**
-     * 主页
-     */
-    $api->get('home', 'HomepageController@index');
-
-
-    /**
-     * 地区
-     */
-    $api->get('areas', 'AreaController@index');
-    $api->get('areas/{area}', 'AreaController@show');
-    $api->get('childrens/{area}', 'AreaController@children');
-    $api->get('provinces', 'AreaController@province');//所有省
-    $api->get('citys', 'AreaController@city');//所有市
-    $api->get('areass', 'AreaController@area');//所有地区
-
-
-    /**
-     * 新闻
-     */
-    $api->get('news', 'NewsController@indexByCategories');
-    $api->get('news/banner', 'NewsController@banner');
-    $api->get('news/categories', 'NewsController@categories');
-    $api->get('news/search', 'NewsController@search');
-    $api->get('news/{news}', 'NewsController@show');
-
-    /**
-     * 展会
-     */
-    $api->get('exhibitions', 'ExhibitionController@indexByCategories');
-    $api->get('exhibitions/banner', 'ExhibitionController@banner');
-    $api->get('exhibitions/categories', 'ExhibitionController@categories');
-    $api->get('exhibitions/search', 'ExhibitionController@search');
-    $api->get('exhibitions/{exhibition}', 'ExhibitionController@show');
-
-    /**
-     * 公司
-     */
-    $api->get('companies/role/{role}', 'CompanyController@index');
-    $api->get('companies/banner', 'CompanyController@banner');
-    $api->get('companies/categories/{category}', 'CompanyController@categories');
-    $api->get('companies/jobs', 'CompanyController@job');
-    $api->get('companies/products', 'CompanyController@product');
-    $api->get('companies/search', 'CompanyController@search');
-    $api->get('companies/{company}', 'CompanyController@show');
-
-    /**
-     * 需求
-     */
-    $api->get('demands', 'DemandController@index');
-    $api->get('demands/{demand}', 'DemandController@show');
-
-    /**
-     * 供应
-     */
-    $api->get('supplies', 'SupplyController@index');
-    $api->get('supplies/{supply}', 'SupplyController@show');
-
-    /**
-     * 论坛
-     */
-    $api->get('topics/categories', 'TopicController@categories');
-    $api->get('topics/categories/{id}', 'TopicController@index');
-    $api->get('topics/{topic}', 'TopicController@show');
-
-    /**
-     * 产品
-     */
-    $api->get('products/search', 'ProductController@search');
-    $api->get('products/{product}', 'ProductController@show');
-
-    /**
-     * 用户
-     */
-    $api->post('login', 'AuthController@authenticate');
-    $api->post('register', 'AuthController@register');
-    $api->get('users', 'AuthController@index');
-    //单个用户
-    $api->patch('password/reset', 'AuthController@reset');
-    //发送验证码
-    $api->post('verifycode', 'AuthController@verifyCode');
-    //获取用户话题
-    $api->get('users/{user}/topics', 'TopicController@indexByUserId');
-    //获取用户点赞
-    $api->get('users/{id}/votes', 'TopicController@indexByUserVotes');
-
-    //上传图片
-    $api->post('upload/avatar', 'UploadController@avatar');
-    $api->post('upload/company', 'UploadController@company');
-    $api->post('upload/product', 'UploadController@product');
 
     //需要认证权限
     $api->group(['middleware' => 'passport:api'], function ($api) {
@@ -124,6 +33,9 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->get('users/join-out', 'AuthController@indexJoinOut');
         $api->get('users/certification-in', 'AuthController@indexCertificationIn');
         $api->get('users/certification-out', 'AuthController@indexCertificationOut');
+
+        $api->get('companies/jobs', 'CompanyController@job');
+        $api->get('companies/products', 'CompanyController@product');
         //评论
         $api->post('news/{id}/comment', 'CommentController@store');
         //加盟和认证
@@ -174,7 +86,103 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->post('notifications', 'NotificationController@store');
         //反馈
         $api->post('feedbacks', 'FeedbackController@store');
+        //加盟审核
+        $api->patch('joins/{join}', 'CompanyController@join');
+        //认证审核
+        $api->patch('certifications/{certification}', 'CompanyController@certification');
     });
+    /**
+     * 主页
+     */
+    $api->get('home', 'HomepageController@index');
+
+
+    /**
+     * 地区
+     */
+    $api->get('areas', 'AreaController@index');
+    $api->get('areas/{area}', 'AreaController@show');
+    $api->get('childrens/{area}', 'AreaController@children');
+    $api->get('provinces', 'AreaController@province');//所有省
+    $api->get('citys', 'AreaController@city');//所有市
+    $api->get('areass', 'AreaController@area');//所有地区
+
+
+    /**
+     * 新闻
+     */
+    $api->get('news', 'NewsController@indexByCategories');
+    $api->get('news/banner', 'NewsController@banner');
+    $api->get('news/categories', 'NewsController@categories');
+    $api->get('news/search', 'NewsController@search');
+    $api->get('news/{news}', 'NewsController@show');
+
+    /**
+     * 展会
+     */
+    $api->get('exhibitions', 'ExhibitionController@indexByCategories');
+    $api->get('exhibitions/banner', 'ExhibitionController@banner');
+    $api->get('exhibitions/categories', 'ExhibitionController@categories');
+    $api->get('exhibitions/search', 'ExhibitionController@search');
+    $api->get('exhibitions/{exhibition}', 'ExhibitionController@show');
+
+    /**
+     * 公司
+     */
+    $api->get('companies/role/{role}', 'CompanyController@index');
+    $api->get('companies/banner', 'CompanyController@banner');
+    $api->get('companies/categories/{category}', 'CompanyController@categories');
+    $api->get('companies/search', 'CompanyController@search');
+    $api->get('companies/{company}', 'CompanyController@show');
+
+    /**
+     * 需求
+     */
+    $api->get('demands', 'DemandController@index');
+    $api->get('demands/search', 'DemandController@search');
+    $api->get('demands/{demand}', 'DemandController@show');
+
+    /**
+     * 供应
+     */
+    $api->get('supplies', 'SupplyController@index');
+    $api->get('supplies/search', 'SupplyController@search');
+    $api->get('supplies/{supply}', 'SupplyController@show');
+
+    /**
+     * 论坛
+     */
+    $api->get('topics/categories', 'TopicController@categories');
+    $api->get('topics/categories/{id}', 'TopicController@index');
+    $api->get('topics/{topic}', 'TopicController@show');
+
+    /**
+     * 产品
+     */
+    $api->get('products/search', 'ProductController@search');
+    $api->get('products/{product}', 'ProductController@show');
+
+    //常见问题
+    $api->get('faqs', 'FaqController@index');
+    /**
+     * 用户
+     */
+    $api->post('login', 'AuthController@authenticate');
+    $api->post('register', 'AuthController@register');
+    $api->get('users', 'AuthController@index');
+    //单个用户
+    $api->patch('password/reset', 'AuthController@reset');
+    //发送验证码
+    $api->post('verifycode', 'AuthController@verifyCode');
+    //获取用户话题
+    $api->get('users/{user}/topics', 'TopicController@indexByUserId');
+    //获取用户点赞
+    $api->get('users/{id}/votes', 'TopicController@indexByUserVotes');
+
+    //上传图片
+    $api->post('upload/avatar', 'UploadController@avatar');
+    $api->post('upload/company', 'UploadController@company');
+    $api->post('upload/product', 'UploadController@product');
     //单个用户
     $api->get('users/{user}', 'AuthController@userInfo');
 });

@@ -14,6 +14,13 @@ use DB;
  */
 class SupplyRepository implements SupplyInterface
 {
+    protected $supply;
+
+    public function __construct(Supply $supply)
+    {
+        $this->supply = $supply;
+    }
+
 
 
     public function getForDataTable()
@@ -38,7 +45,7 @@ class SupplyRepository implements SupplyInterface
         $supply->unit = $input['unit'];
         $supply->content = $input['content'];
         $supply->images = $input['images'];
-        $demand->is_excellent = $input['is_excellent'];
+        $supply->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($supply) {
             if ($supply->save()) {
@@ -57,7 +64,7 @@ class SupplyRepository implements SupplyInterface
         $supply->unit = $input['unit'];
         $supply->content = $input['content'];
         $supply->images = $input['images'];
-        $demand->is_excellent = $input['is_excellent'];
+        $supply->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($supply) {
             if ($supply->update()) {
@@ -104,5 +111,10 @@ class SupplyRepository implements SupplyInterface
         }
 
         throw new GeneralException('未找到供应信息');
+    }
+
+    public function search($input)
+    {
+        return $this->supply->where('title', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%")->paginate();
     }
 }

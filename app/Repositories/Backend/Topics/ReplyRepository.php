@@ -55,9 +55,9 @@ class ReplyRepository implements ReplyInterface
                 $topic->last_reply_user_id = $reply->user_id;
                 $topic->save();
                 if ($input['action']) {
-                    $reply->type =  get_class($input);
-                    $reply->action = $input['action'];
-                    $this->notification->createPersonal($reply);
+                    $topic->type =  'App\Models\Topics\Topic';
+                    $topic->action = $input['action'];
+                    $this->notification->createPersonal($topic);
                 }
                 return true;
             }

@@ -47,9 +47,3 @@ Route::delete('upload/company', 'UploadController@companyDelete')->name('upload.
 //产品上传
 Route::post('upload/product', 'UploadController@product')->name('upload.product');
 Route::delete('upload/product', 'UploadController@productDelete')->name('upload.productDelete');
-
-Route::group(['domain' => 'm.stone.dev', 'namespace' => 'Wap', 'prefix' => 'index'], function () {
-    Route::get('/{vue_capture?}', function () {
-        return view('wap.layouts.app');
-    })->where('vue_capture', '[\/\w\.-]*');
-});

@@ -91,6 +91,140 @@ class TopicController extends BaseController
      * @apiVersion 1.0.0
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 6,
+                "category_id": 1,
+                "title": "考虑考虑",
+                "content": "咯聊几句噢噢噢考虑考虑<img src=\"http://192.168.1.41:8000/uploads/products/2016/11/1303043WwP.png\" alt=\"\"><u>龙年龙门</u>",
+                "reply_count": 0,
+                "view_count": 0,
+                "vote_count": 0,
+                "is_excellent": 0,
+                "created_at": "2016-11-24 13:03:23",
+                "user": {
+                    "data": {
+                        "id": 3,
+                        "username": "来我家",
+                        "name": "新英雄",
+                        "mobile": "13111111112",
+                        "email": "ghsjjshhd",
+                        "avatar": {
+                            "_default": "http://stone.dev/uploads/avatars/20161117100823_30x30.png",
+                            "small": "http://stone.dev/uploads/avatars/20161117100823_30x30_30x30.png",
+                            "medium": "http://stone.dev/uploads/avatars/20161117100823_30x30_65x65.png",
+                            "large": "http://stone.dev/uploads/avatars/20161117100823_30x30_180x180.png"
+                        },
+                        "created_at": "2016-11-02 11:01:58"
+                    }
+                },
+                "replies": {
+                    "data": []
+                }
+            },
+            {
+                "id": 2,
+                "category_id": 1,
+                "title": "我发布了一个话题",
+                "content": "至2013年04月，全国共有34个省级行政区（其中：4个直辖市、23个省、5个自治区、2个特别行政区），333(不含港澳台)个地级行政区划单位（其中：285个地级市、15个地区、30个自治州、3个盟），2856（不含港澳台）个县级行政区划单位（其中：860个市辖区、368个县级市、1453个县、117自治县、49个旗、3个自治旗、1个特区、1个林区），41658（不含港澳台）个乡级行政区划单位（其中：2个区公所、7194个街道、19683个镇、13587个乡、1085个民族乡、106个苏木、1个民族苏木）。662238（不含港澳台）个村级行政单位（包括街道办事处）（省以下行政区划单位统计不包括港澳台）  经常沿用华东、华北、华南、华中、东北、西南、西北七大区的地理分布的说法，具体如下：华北（北京、天津、河北、山西、内蒙古）、华东（上海、山东、江苏、安徽、江西、浙江、福建、台湾）、华中（湖北、湖南、河南）、华南（广东、广西、海南、香港、澳门）、西南（重庆、四川、贵州、云南、西藏）、西北（陕西、甘肃、宁夏、新疆、青海）、东北（黑龙江、吉林、辽宁）（省以下行政区划单位统计不包括台湾） 。",
+                "reply_count": 0,
+                "view_count": 9,
+                "vote_count": 2,
+                "is_excellent": 0,
+                "created_at": "2016-11-03 03:58:13",
+                "user": {
+                    "data": {
+                        "id": 2,
+                        "username": "user",
+                        "name": "name",
+                        "mobile": "13113113111",
+                        "email": "user@user.com",
+                        "avatar": {
+                            "_default": "",
+                            "small": "",
+                            "medium": "",
+                            "large": ""
+                        },
+                        "created_at": "2016-11-02 07:57:24"
+                    }
+                },
+                "replies": {
+                    "data": []
+                }
+            },
+            {
+                "id": 4,
+                "category_id": 1,
+                "title": "我再发布了一个话题",
+                "content": "至2013年04月，全国共有34个省级行政区（其中：4个直辖市、23个省、5个自治区、2个特别行政区），333(不含港澳台)个地级行政区划单位（其中：285个地级市、15个地区、30个自治州、3个盟），2856（不含港澳台）个县级行政区划单位（其中：860个市辖区、368个县级市、1453个县、117自治县、49个旗、3个自治旗、1个特区、1个林区），41658（不含港澳台）个乡级行政区划单位（其中：2个区公所、7194个街道、19683个镇、13587个乡、1085个民族乡、106个苏木、1个民族苏木）。662238（不含港澳台）个村级行政单位（包括街道办事处）（省以下行政区划单位统计不包括港澳台）  经常沿用华东、华北、华南、华中、东北、西南、西北七大区的地理分布的说法，具体如下：华北（北京、天津、河北、山西、内蒙古）、华东（上海、山东、江苏、安徽、江西、浙江、福建、台湾）、华中（湖北、湖南、河南）、华南（广东、广西、海南、香港、澳门）、西南（重庆、四川、贵州、云南、西藏）、西北（陕西、甘肃、宁夏、新疆、青海）、东北（黑龙江、吉林、辽宁）（省以下行政区划单位统计不包括台湾） 。",
+                "reply_count": 0,
+                "view_count": 0,
+                "vote_count": 2,
+                "is_excellent": 0,
+                "created_at": "2016-11-03 06:01:26",
+                "user": {
+                    "data": {
+                        "id": 45,
+                        "username": "Jervis",
+                        "name": "纪栋梁",
+                        "mobile": "15759268225",
+                        "email": "751385816@qq.com",
+                        "avatar": {
+                            "_default": "http://stone.dev/uploads/avatars/20161123060656.png",
+                            "small": "http://stone.dev/uploads/avatars/20161123060656_30x30.png",
+                            "medium": "http://stone.dev/uploads/avatars/20161123060656_65x65.png",
+                            "large": "http://stone.dev/uploads/avatars/20161123060656_180x180.png"
+                        },
+                        "created_at": "2016-11-10 18:47:56"
+                    }
+                },
+                "replies": {
+                    "data": []
+                }
+            },
+            {
+                "id": 3,
+                "category_id": 1,
+                "title": "我又发布了一个话题",
+                "content": "至2013年04月，全国共有34个省级行政区（其中：4个直辖市、23个省、5个自治区、2个特别行政区），333(不含港澳台)个地级行政区划单位（其中：285个地级市、15个地区、30个自治州、3个盟），2856（不含港澳台）个县级行政区划单位（其中：860个市辖区、368个县级市、1453个县、117自治县、49个旗、3个自治旗、1个特区、1个林区），41658（不含港澳台）个乡级行政区划单位（其中：2个区公所、7194个街道、19683个镇、13587个乡、1085个民族乡、106个苏木、1个民族苏木）。662238（不含港澳台）个村级行政单位（包括街道办事处）（省以下行政区划单位统计不包括港澳台）  经常沿用华东、华北、华南、华中、东北、西南、西北七大区的地理分布的说法，具体如下：华北（北京、天津、河北、山西、内蒙古）、华东（上海、山东、江苏、安徽、江西、浙江、福建、台湾）、华中（湖北、湖南、河南）、华南（广东、广西、海南、香港、澳门）、西南（重庆、四川、贵州、云南、西藏）、西北（陕西、甘肃、宁夏、新疆、青海）、东北（黑龙江、吉林、辽宁）（省以下行政区划单位统计不包括台湾） 。",
+                "reply_count": 0,
+                "view_count": 0,
+                "vote_count": 0,
+                "is_excellent": 0,
+                "created_at": "2016-11-03 05:52:50",
+                "user": {
+                    "data": {
+                        "id": 1,
+                        "username": "admin",
+                        "name": "管理员",
+                        "mobile": "13111111111",
+                        "email": "admin@admin.com",
+                        "avatar": {
+                            "_default": "http://stone.dev/uploads/avatars/20161107085531.png",
+                            "small": "http://stone.dev/uploads/avatars/20161107085531_30x30.png",
+                            "medium": "http://stone.dev/uploads/avatars/20161107085531_65x65.png",
+                            "large": "http://stone.dev/uploads/avatars/20161107085531_180x180.png"
+                        },
+                        "created_at": "2016-11-02 07:57:24"
+                    }
+                },
+                "replies": {
+                    "data": []
+                }
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 4,
+                "count": 4,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
      * @apiSampleRequest /api/topics/categories/1
      */
     public function index($id, Request $request, Topic $topic)
@@ -438,9 +572,7 @@ class TopicController extends BaseController
      */
     public function favorite(Topic $topic)
     {
-        $favorites = $topic->whereHas('favorites', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->first();
+        $favorites = $topic->favorites()->where('user_id', Auth::id())->count();
         if ($favorites) {
             return $this->response->errorBadRequest('你已经收藏！');
         }
@@ -554,7 +686,7 @@ class TopicController extends BaseController
     }
 
     /**
-     * @api {post} /topics/replies/:id 回复点赞
+     * @api {post} /topics/replies/:id/vote 回复点赞
      * @apiDescription 回复点赞 :id
      * @apiGroup Topic
      * @apiPermission 认证
@@ -562,7 +694,7 @@ class TopicController extends BaseController
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 204 No Content
-     * @apiSampleRequest /api/topics/replies/1
+     * @apiSampleRequest /api/topics/replies/1/vote
      */
     public function replyVote(Reply $reply)
     {

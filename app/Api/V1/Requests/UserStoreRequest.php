@@ -24,8 +24,8 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //'mobile' => 'required|zh_mobile|unique:users,mobile|confirm_mobile_not_change',
-            //'verifyCode' => 'required|verify_code',
+            'mobile' => 'required|zh_mobile|unique:users,mobile|confirm_mobile_not_change',
+            'verifyCode' => 'required|verify_code',
             'password' => 'required|min:6'
         ];
     }

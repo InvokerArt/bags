@@ -1,7 +1,6 @@
 const elixir = require('laravel-elixir');
 
 require('laravel-elixir-vue-2');
-
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -14,7 +13,17 @@ require('laravel-elixir-vue-2');
  */
 
 elixir(function(mix) {
-	mix
+    Elixir.webpack.mergeConfig({
+        module: {
+            loaders: [
+                {
+                    test: /\.css$/,
+                    loader: 'style-loader!css-loader'
+                }
+            ]
+        }
+    });
+    mix
     .webpack('wap.js')
     .sass([
         'wap/app.scss'
@@ -22,9 +31,9 @@ elixir(function(mix) {
     /**
      * 前台样式
      */
-	.sass([
-		'frontend/app.scss'
-	],'public/css/frontend/default.css')
+    .sass([
+        'frontend/app.scss'
+    ],'public/css/frontend/default.css')
     /**
      * js插件样式
      * 后台合并所有插件样式
@@ -196,10 +205,10 @@ elixir(function(mix) {
     ], 'public/js/backend.js')
 
      /**
-	 * 版本控制
-	 */
+     * 版本控制
+     */
     .version([
-    	"public/css/backend/*.css",
+        "public/css/backend/*.css",
         "public/js/backend.js"
     ]);
 

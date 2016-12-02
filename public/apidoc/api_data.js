@@ -157,10 +157,22 @@ define({ "api": [
     "group": "Auth",
     "permission": [
       {
-        "name": "无"
+        "name": "认证"
       }
     ],
     "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer {access_token}</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "examples": [
         {
@@ -187,36 +199,6 @@ define({ "api": [
     "group": "Auth",
     "permission": [
       {
-        "name": "无"
-      }
-    ],
-    "version": "1.0.0",
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n\n{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"我有袋子100箱\",\n            \"price\": 100,\n            \"unit\": 5,\n            \"content\": \"<p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">加工定制 是</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">用途 通用包装</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">底面侧面 无底无侧</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">供货类型 可定制</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">规格 400*300（mm*mm）</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">加印LOGO 可以</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">款式 手提袋</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">颜色 米白</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">印刷工艺 丝印</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">自重 285（g）</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">品牌 Martina</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">是否有现货 有</p><p><br/></p>\",\n            \"images\": [\n                \"http://stone.dev/uploads/products/2016/11/165204E76X.png\"\n            ]\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 1,\n            \"count\": 1,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}\n没有产品内容的时候为\n{\n    \"data\": []\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "sampleRequest": [
-      {
-        "url": "/api/companies/products"
-      }
-    ],
-    "filename": "App/Api/v1/Controllers/CompanyController.php",
-    "groupTitle": "用户",
-    "name": "GetCompaniesProducts"
-  },
-  {
-    "type": "get",
-    "url": "/supplies",
-    "title": "供应列表",
-    "description": "<p>供应列表</p>",
-    "group": "Auth",
-    "permission": [
-      {
         "name": "认证"
       }
     ],
@@ -237,19 +219,19 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"我有100袋包装袋\",\n            \"images\": [\n                \"/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg\"\n            ],\n            \"content\": \"我就需要这么多包装袋\"\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 1,\n            \"count\": 1,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}",
+          "content": " HTTP/1.1 200 OK\n\n{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"我有袋子100箱\",\n            \"price\": 100,\n            \"unit\": 5,\n            \"content\": \"<p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">加工定制 是</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">用途 通用包装</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">底面侧面 无底无侧</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">供货类型 可定制</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">规格 400*300（mm*mm）</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">加印LOGO 可以</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">款式 手提袋</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">颜色 米白</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">印刷工艺 丝印</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">自重 285（g）</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">品牌 Martina</p><p style=\\\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\\\">是否有现货 有</p><p><br/></p>\",\n            \"images\": [\n                \"http://stone.dev/uploads/products/2016/11/165204E76X.png\"\n            ]\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 1,\n            \"count\": 1,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}\n没有产品内容的时候为\n{\n    \"data\": []\n}",
           "type": "json"
         }
       ]
     },
     "sampleRequest": [
       {
-        "url": "/api/supplies"
+        "url": "/api/companies/products"
       }
     ],
-    "filename": "App/Api/v1/Controllers/SupplyController.php",
+    "filename": "App/Api/v1/Controllers/CompanyController.php",
     "groupTitle": "用户",
-    "name": "GetSupplies"
+    "name": "GetCompaniesProducts"
   },
   {
     "type": "get",
@@ -632,6 +614,48 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/users/supplies",
+    "title": "供应列表",
+    "description": "<p>供应列表</p>",
+    "group": "Auth",
+    "permission": [
+      {
+        "name": "认证"
+      }
+    ],
+    "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer {access_token}</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"我有100袋包装袋\",\n            \"images\": [\n                \"/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg\"\n            ],\n            \"content\": \"我就需要这么多包装袋\"\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 1,\n            \"count\": 1,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/users/supplies"
+      }
+    ],
+    "filename": "App/Api/v1/Controllers/SupplyController.php",
+    "groupTitle": "用户",
+    "name": "GetUsersSupplies"
+  },
+  {
+    "type": "get",
     "url": "/users/topics",
     "title": "用户话题列表",
     "description": "<p>用户话题列表 :id 用户ID</p>",
@@ -671,6 +695,62 @@ define({ "api": [
     "filename": "App/Api/v1/Controllers/TopicController.php",
     "groupTitle": "用户",
     "name": "GetUsersTopics"
+  },
+  {
+    "type": "patch",
+    "url": "/certification/:id",
+    "title": "认证审核",
+    "description": "<p>认证审核</p>",
+    "group": "Auth",
+    "permission": [
+      {
+        "name": "认证"
+      }
+    ],
+    "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer {access_token}</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "size": "0,1,2",
+            "optional": false,
+            "field": "status",
+            "description": "<p>审核状态</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/certification/1"
+      }
+    ],
+    "filename": "App/Api/v1/Controllers/CompanyController.php",
+    "groupTitle": "用户",
+    "name": "PatchCertificationId"
   },
   {
     "type": "PATCH",
@@ -790,6 +870,62 @@ define({ "api": [
     "filename": "App/Api/v1/Controllers/CompanyController.php",
     "groupTitle": "用户",
     "name": "PatchCompanies"
+  },
+  {
+    "type": "patch",
+    "url": "/joins/:id",
+    "title": "加盟审核",
+    "description": "<p>加盟审核</p>",
+    "group": "Auth",
+    "permission": [
+      {
+        "name": "认证"
+      }
+    ],
+    "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer {access_token}</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "size": "0,1,2",
+            "optional": false,
+            "field": "status",
+            "description": "<p>审核状态</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/joins/1"
+      }
+    ],
+    "filename": "App/Api/v1/Controllers/CompanyController.php",
+    "groupTitle": "用户",
+    "name": "PatchJoinsId"
   },
   {
     "type": "PATCH",
@@ -1409,7 +1545,7 @@ define({ "api": [
           {
             "group": "Parameter",
             "type": "Number",
-            "size": "0,1,2",
+            "size": "0,1,2,3",
             "optional": false,
             "field": "role",
             "description": "<p>企业性质</p>"
@@ -1887,6 +2023,49 @@ define({ "api": [
     "name": "GetDemandsId"
   },
   {
+    "type": "get",
+    "url": "/demands/search",
+    "title": "需求搜索",
+    "description": "<p>需求搜索</p>",
+    "group": "Demand",
+    "permission": [
+      {
+        "name": "无"
+      }
+    ],
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "q",
+            "description": "<p>搜索关键字</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"我需求质量好的袋子\",\n            \"quantity\": 1000,\n            \"unit\": 5,\n            \"images\": [\n                \"http://stone.dev/uploads/products/2016/11/165305Y37a.png\"\n            ],\n            \"is_excellent\": 0\n        },\n        {\n            \"id\": 2,\n            \"title\": \"我需求100袋包装袋\",\n            \"quantity\": 100,\n            \"unit\": 4,\n            \"images\": [\n                \"http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg\"\n            ],\n            \"is_excellent\": 0\n        },\n        {\n            \"id\": 3,\n            \"title\": \"我需求100袋包装袋\",\n            \"quantity\": 1000,\n            \"unit\": 5,\n            \"images\": [\n                \"http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg\"\n            ],\n            \"is_excellent\": 1\n        },\n        {\n            \"id\": 4,\n            \"title\": \"我需求100袋包装袋\",\n            \"quantity\": 100,\n            \"unit\": 4,\n            \"images\": [\n                \"http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg\"\n            ],\n            \"is_excellent\": 0\n        },\n        {\n            \"id\": 6,\n            \"title\": \"我需求100袋包装袋\",\n            \"quantity\": 100,\n            \"unit\": 4,\n            \"images\": [\n                \"http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg\"\n            ],\n            \"is_excellent\": 0\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 5,\n            \"count\": 5,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/demands/search"
+      }
+    ],
+    "filename": "App/Api/v1/Controllers/DemandController.php",
+    "groupTitle": "需求",
+    "name": "GetDemandsSearch"
+  },
+  {
     "type": "PATCH",
     "url": "/demands/:id",
     "title": "更新需求",
@@ -2337,6 +2516,31 @@ define({ "api": [
     "filename": "App/Api/v1/Controllers/ExhibitionController.php",
     "groupTitle": "展会",
     "name": "PostExhibitionsIdFavorites"
+  },
+  {
+    "type": "get",
+    "url": "/faqs",
+    "title": "常见问题",
+    "description": "<p>常见问题</p>",
+    "group": "Faq",
+    "permission": [
+      {
+        "name": "无"
+      }
+    ],
+    "version": "1.0.0",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"常见问题1\",\n            \"content\": \"<p>常见问题内容那就是巴拉巴拉</p>\"\n        },\n        {\n            \"id\": 2,\n            \"title\": \"常见问题2\",\n            \"content\": \"<p>阿达大大大</p>\"\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 2,\n            \"count\": 2,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "App/Api/v1/Controllers/FaqController.php",
+    "groupTitle": "常见问题",
+    "name": "GetFaqs"
   },
   {
     "type": "delete",
@@ -3305,8 +3509,8 @@ define({ "api": [
             "group": "Parameter",
             "type": "Int",
             "optional": false,
-            "field": "quantity",
-            "description": "<p>数量</p>"
+            "field": "price",
+            "description": "<p>价格</p>"
           },
           {
             "group": "Parameter",
@@ -3453,6 +3657,49 @@ define({ "api": [
     "filename": "App/Api/v1/Controllers/SupplyController.php",
     "groupTitle": "供应",
     "name": "GetSuppliesId"
+  },
+  {
+    "type": "get",
+    "url": "/supplies/search",
+    "title": "供应搜索",
+    "description": "<p>供应搜索</p>",
+    "group": "Supply",
+    "permission": [
+      {
+        "name": "无"
+      }
+    ],
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "q",
+            "description": "<p>搜索关键字</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"我需求100袋包装袋\",\n            \"images\": [\n                \"http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg\"\n            ],\n            \"content\": \"我就需要这么多包装袋\",\n            \"is_excellent\": 1\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 1,\n            \"count\": 1,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/supplies/search"
+      }
+    ],
+    "filename": "App/Api/v1/Controllers/SupplyController.php",
+    "groupTitle": "供应",
+    "name": "GetSuppliesSearch"
   },
   {
     "type": "PATCH",
@@ -3754,7 +4001,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK",
+          "content": " HTTP/1.1 200 OK\n{\n    \"data\": [\n        {\n            \"id\": 6,\n            \"category_id\": 1,\n            \"title\": \"考虑考虑\",\n            \"content\": \"咯聊几句噢噢噢考虑考虑<img src=\\\"http://192.168.1.41:8000/uploads/products/2016/11/1303043WwP.png\\\" alt=\\\"\\\"><u>龙年龙门</u>\",\n            \"reply_count\": 0,\n            \"view_count\": 0,\n            \"vote_count\": 0,\n            \"is_excellent\": 0,\n            \"created_at\": \"2016-11-24 13:03:23\",\n            \"user\": {\n                \"data\": {\n                    \"id\": 3,\n                    \"username\": \"来我家\",\n                    \"name\": \"新英雄\",\n                    \"mobile\": \"13111111112\",\n                    \"email\": \"ghsjjshhd\",\n                    \"avatar\": {\n                        \"_default\": \"http://stone.dev/uploads/avatars/20161117100823_30x30.png\",\n                        \"small\": \"http://stone.dev/uploads/avatars/20161117100823_30x30_30x30.png\",\n                        \"medium\": \"http://stone.dev/uploads/avatars/20161117100823_30x30_65x65.png\",\n                        \"large\": \"http://stone.dev/uploads/avatars/20161117100823_30x30_180x180.png\"\n                    },\n                    \"created_at\": \"2016-11-02 11:01:58\"\n                }\n            },\n            \"replies\": {\n                \"data\": []\n            }\n        },\n        {\n            \"id\": 2,\n            \"category_id\": 1,\n            \"title\": \"我发布了一个话题\",\n            \"content\": \"至2013年04月，全国共有34个省级行政区（其中：4个直辖市、23个省、5个自治区、2个特别行政区），333(不含港澳台)个地级行政区划单位（其中：285个地级市、15个地区、30个自治州、3个盟），2856（不含港澳台）个县级行政区划单位（其中：860个市辖区、368个县级市、1453个县、117自治县、49个旗、3个自治旗、1个特区、1个林区），41658（不含港澳台）个乡级行政区划单位（其中：2个区公所、7194个街道、19683个镇、13587个乡、1085个民族乡、106个苏木、1个民族苏木）。662238（不含港澳台）个村级行政单位（包括街道办事处）（省以下行政区划单位统计不包括港澳台）  经常沿用华东、华北、华南、华中、东北、西南、西北七大区的地理分布的说法，具体如下：华北（北京、天津、河北、山西、内蒙古）、华东（上海、山东、江苏、安徽、江西、浙江、福建、台湾）、华中（湖北、湖南、河南）、华南（广东、广西、海南、香港、澳门）、西南（重庆、四川、贵州、云南、西藏）、西北（陕西、甘肃、宁夏、新疆、青海）、东北（黑龙江、吉林、辽宁）（省以下行政区划单位统计不包括台湾） 。\",\n            \"reply_count\": 0,\n            \"view_count\": 9,\n            \"vote_count\": 2,\n            \"is_excellent\": 0,\n            \"created_at\": \"2016-11-03 03:58:13\",\n            \"user\": {\n                \"data\": {\n                    \"id\": 2,\n                    \"username\": \"user\",\n                    \"name\": \"name\",\n                    \"mobile\": \"13113113111\",\n                    \"email\": \"user@user.com\",\n                    \"avatar\": {\n                        \"_default\": \"\",\n                        \"small\": \"\",\n                        \"medium\": \"\",\n                        \"large\": \"\"\n                    },\n                    \"created_at\": \"2016-11-02 07:57:24\"\n                }\n            },\n            \"replies\": {\n                \"data\": []\n            }\n        },\n        {\n            \"id\": 4,\n            \"category_id\": 1,\n            \"title\": \"我再发布了一个话题\",\n            \"content\": \"至2013年04月，全国共有34个省级行政区（其中：4个直辖市、23个省、5个自治区、2个特别行政区），333(不含港澳台)个地级行政区划单位（其中：285个地级市、15个地区、30个自治州、3个盟），2856（不含港澳台）个县级行政区划单位（其中：860个市辖区、368个县级市、1453个县、117自治县、49个旗、3个自治旗、1个特区、1个林区），41658（不含港澳台）个乡级行政区划单位（其中：2个区公所、7194个街道、19683个镇、13587个乡、1085个民族乡、106个苏木、1个民族苏木）。662238（不含港澳台）个村级行政单位（包括街道办事处）（省以下行政区划单位统计不包括港澳台）  经常沿用华东、华北、华南、华中、东北、西南、西北七大区的地理分布的说法，具体如下：华北（北京、天津、河北、山西、内蒙古）、华东（上海、山东、江苏、安徽、江西、浙江、福建、台湾）、华中（湖北、湖南、河南）、华南（广东、广西、海南、香港、澳门）、西南（重庆、四川、贵州、云南、西藏）、西北（陕西、甘肃、宁夏、新疆、青海）、东北（黑龙江、吉林、辽宁）（省以下行政区划单位统计不包括台湾） 。\",\n            \"reply_count\": 0,\n            \"view_count\": 0,\n            \"vote_count\": 2,\n            \"is_excellent\": 0,\n            \"created_at\": \"2016-11-03 06:01:26\",\n            \"user\": {\n                \"data\": {\n                    \"id\": 45,\n                    \"username\": \"Jervis\",\n                    \"name\": \"纪栋梁\",\n                    \"mobile\": \"15759268225\",\n                    \"email\": \"751385816@qq.com\",\n                    \"avatar\": {\n                        \"_default\": \"http://stone.dev/uploads/avatars/20161123060656.png\",\n                        \"small\": \"http://stone.dev/uploads/avatars/20161123060656_30x30.png\",\n                        \"medium\": \"http://stone.dev/uploads/avatars/20161123060656_65x65.png\",\n                        \"large\": \"http://stone.dev/uploads/avatars/20161123060656_180x180.png\"\n                    },\n                    \"created_at\": \"2016-11-10 18:47:56\"\n                }\n            },\n            \"replies\": {\n                \"data\": []\n            }\n        },\n        {\n            \"id\": 3,\n            \"category_id\": 1,\n            \"title\": \"我又发布了一个话题\",\n            \"content\": \"至2013年04月，全国共有34个省级行政区（其中：4个直辖市、23个省、5个自治区、2个特别行政区），333(不含港澳台)个地级行政区划单位（其中：285个地级市、15个地区、30个自治州、3个盟），2856（不含港澳台）个县级行政区划单位（其中：860个市辖区、368个县级市、1453个县、117自治县、49个旗、3个自治旗、1个特区、1个林区），41658（不含港澳台）个乡级行政区划单位（其中：2个区公所、7194个街道、19683个镇、13587个乡、1085个民族乡、106个苏木、1个民族苏木）。662238（不含港澳台）个村级行政单位（包括街道办事处）（省以下行政区划单位统计不包括港澳台）  经常沿用华东、华北、华南、华中、东北、西南、西北七大区的地理分布的说法，具体如下：华北（北京、天津、河北、山西、内蒙古）、华东（上海、山东、江苏、安徽、江西、浙江、福建、台湾）、华中（湖北、湖南、河南）、华南（广东、广西、海南、香港、澳门）、西南（重庆、四川、贵州、云南、西藏）、西北（陕西、甘肃、宁夏、新疆、青海）、东北（黑龙江、吉林、辽宁）（省以下行政区划单位统计不包括台湾） 。\",\n            \"reply_count\": 0,\n            \"view_count\": 0,\n            \"vote_count\": 0,\n            \"is_excellent\": 0,\n            \"created_at\": \"2016-11-03 05:52:50\",\n            \"user\": {\n                \"data\": {\n                    \"id\": 1,\n                    \"username\": \"admin\",\n                    \"name\": \"管理员\",\n                    \"mobile\": \"13111111111\",\n                    \"email\": \"admin@admin.com\",\n                    \"avatar\": {\n                        \"_default\": \"http://stone.dev/uploads/avatars/20161107085531.png\",\n                        \"small\": \"http://stone.dev/uploads/avatars/20161107085531_30x30.png\",\n                        \"medium\": \"http://stone.dev/uploads/avatars/20161107085531_65x65.png\",\n                        \"large\": \"http://stone.dev/uploads/avatars/20161107085531_180x180.png\"\n                    },\n                    \"created_at\": \"2016-11-02 07:57:24\"\n                }\n            },\n            \"replies\": {\n                \"data\": []\n            }\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 4,\n            \"count\": 4,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}",
           "type": "json"
         }
       ]
@@ -4065,7 +4312,7 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "/topics/replies/:id",
+    "url": "/topics/replies/:id/vote",
     "title": "回复点赞",
     "description": "<p>回复点赞 :id</p>",
     "group": "Topic",
@@ -4098,12 +4345,12 @@ define({ "api": [
     },
     "sampleRequest": [
       {
-        "url": "/api/topics/replies/1"
+        "url": "/api/topics/replies/1/vote"
       }
     ],
     "filename": "App/Api/v1/Controllers/TopicController.php",
     "groupTitle": "论坛",
-    "name": "PostTopicsRepliesId"
+    "name": "PostTopicsRepliesIdVote"
   },
   {
     "type": "post",

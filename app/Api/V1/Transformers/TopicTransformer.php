@@ -18,6 +18,7 @@ class TopicTransformer extends BaseTransformer
             "reply_count" => $model->reply_count,
             "view_count" => $model->view_count,
             "vote_count" => $model->vote_count,
+            'is_excellent' => $model->is_excellent == 'yes' ? 1 : 0,
             "created_at" => $model->created_at->toDateTimeString()
         ];
     }

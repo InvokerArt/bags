@@ -37,13 +37,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+        //wap端路由为了防止和web端路由冲突一定要放到前面
+        $this->mapWapRoutes();
+        //web端路由
         $this->mapWebRoutes();
-
+        //api路由
         $this->mapApiRoutes();
-
-        /**
-         * Backend路由
-         */
+        //Backend路由
         $this->mapBackendRoutes();
     }
 
@@ -94,6 +94,22 @@ class RouteServiceProvider extends ServiceProvider
             'prefix' => env('APP_BACKEND_PREFIX'),
         ], function ($router) {
             require base_path('routes/backend.php');
+        });
+    }
+
+    /**
+     * wap路由文件
+     *
+     * @return void
+     */
+    protected function mapWapRoutes()
+    {
+        Route::group([
+            'middleware' => 'web',
+            'namespace' => $this->namespace,
+            'domain' => 'm.'.env('APP_URL'),
+        ], function ($router) {
+            require base_path('routes/wap.php');
         });
     }
 }

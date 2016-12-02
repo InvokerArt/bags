@@ -7,7 +7,7 @@ use Storage;
 
 class CompanyShowTransformer extends BaseTransformer
 {
-    protected $defaultIncludes = ['categories', 'products'];
+    protected $defaultIncludes = ['categories', 'products', 'user'];
 
     public function transformData($model)
     {
@@ -39,5 +39,10 @@ class CompanyShowTransformer extends BaseTransformer
     public function includeProducts($model)
     {
         return $this->collection($model->products, new ProductTransformer);
+    }
+
+    public function includeUser($model)
+    {
+        return $this->item($model->user, new UserTransformer());
     }
 }

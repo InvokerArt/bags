@@ -5,6 +5,7 @@ namespace App\Hanlder;
 use Carbon\Carbon;
 use Jpush;
 use Auth;
+use Log;
 
 class NotificationPush
 {
@@ -36,9 +37,9 @@ class NotificationPush
         try {
             $response = $push->send();
         } catch (\JPush\Exceptions\APIConnectionException $e) {
-            throw new \Exception($e->getMessage());
+            //Log::error($e);
         } catch (\JPush\Exceptions\APIRequestException $e) {
-            throw new \Exception($e->getMessage());
+            //Log::error($e);
         }
     }
 }

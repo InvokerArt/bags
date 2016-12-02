@@ -14,6 +14,13 @@ use DB;
  */
 class DemandRepository implements DemandInterface
 {
+    protected $demand;
+
+    public function __construct(Demand $demand)
+    {
+        $this->demand = $demand;
+    }
+
 
 
     public function getForDataTable()
@@ -104,5 +111,10 @@ class DemandRepository implements DemandInterface
         }
 
         throw new GeneralException('未找到需求信息');
+    }
+
+    public function search($input)
+    {
+        return $this->demand->where('title', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%")->paginate();
     }
 }

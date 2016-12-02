@@ -8,6 +8,7 @@ use App\Api\V1\Requests\JobStoreRequest;
 use App\Api\V1\Requests\JoinStoreRequest;
 use App\Api\V1\Transformers\BannerTransformer;
 use App\Api\V1\Transformers\CategoryTransformer;
+use App\Api\V1\Transformers\CertificationTransformer;
 use App\Api\V1\Transformers\CompanyShowTransformer;
 use App\Api\V1\Transformers\CompanyTransformer;
 use App\Api\V1\Transformers\JobTransformer;
@@ -16,9 +17,11 @@ use App\Api\V1\Transformers\JoinTransformer;
 use App\Api\V1\Transformers\ProductShowTransformer;
 use App\Api\V1\Transformers\ProductTransformer;
 use App\Models\Banners\Image;
+use App\Models\Certifications\Certification;
 use App\Models\Companies\CategoryCompany;
 use App\Models\Companies\Company;
 use App\Models\Jobs\Job;
+use App\Models\Joins\Join;
 use App\Models\Products\Product;
 use App\Repositories\Backend\Banners\ImageInterface;
 use App\Repositories\Backend\Certifications\CertificationInterface;
@@ -254,7 +257,8 @@ class CompanyController extends BaseController
     {
         $company->increment('view_count', 1);
         $company->categories = $company->categories()->get();
-        $company->products = $company->products()->get();
+        $user = $company->user()->first();
+        $company->products = $user->products()->get();
         return $this->response->item($company, new CompanyShowTransformer());
     }
 
@@ -262,8 +266,9 @@ class CompanyController extends BaseController
      * @api {get} /companies/jobs 公司招聘
      * @apiDescription 公司招聘
      * @apiGroup Auth
-     * @apiPermission 无
+     * @apiPermission 认证
      * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
      *
@@ -324,8 +329,9 @@ class CompanyController extends BaseController
      * @api {get} /companies/products 产品列表
      * @apiDescription 产品列表 unit代表的单位见顶部(接口说明)
      * @apiGroup Auth
-     * @apiPermission 无
+     * @apiPermission 认证
      * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
      *
@@ -441,6 +447,24 @@ class CompanyController extends BaseController
     }
 
     /**
+     * @api {patch} /joins/:id 加盟审核
+     * @apiDescription 加盟审核
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {Number{0,1,2}} status 审核状态
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+     * @apiSampleRequest /api/joins/1
+     */
+    public function join(Join $join, Request $request)
+    {
+        $this->joins->update($join, $request);
+        return $this->response->item($join, new JoinTransformer());
+    }
+
+    /**
      * @api {post} /companies/:id/certifications 申请认证
      * @apiDescription 申请认证:id 公司ID
      * @apiGroup Company
@@ -460,6 +484,24 @@ class CompanyController extends BaseController
         $request->merge(['user_id' => $user->id, 'company_id' => $company->id, 'action' => snake_case(__FUNCTION__)]);
         $this->certifications->create($request);
         return $this->response->created();
+    }
+
+    /**
+     * @api {patch} /certification/:id 认证审核
+     * @apiDescription 认证审核
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {Number{0,1,2}} status 审核状态
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+     * @apiSampleRequest /api/certification/1
+     */
+    public function certification(Certification $certification, Request $request)
+    {
+        $this->certifications->update($certification, $request);
+        return $this->response->item($certification, new CertificationTransformer());
     }
 
     /**
@@ -548,9 +590,7 @@ class CompanyController extends BaseController
      */
     public function favorite(Company $company)
     {
-        $favorites = $company->whereHas('favorites', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->first();
+        $favorites = $company->favorites()->where('user_id', Auth::id())->count();
         if ($favorites) {
             return $this->response->errorBadRequest('你已经收藏！');
         }
@@ -571,9 +611,7 @@ class CompanyController extends BaseController
      */
     public function jobFavorite(Job $job)
     {
-        $favorites = $job->whereHas('favorites', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->first();
+        $favorites = $job->favorites()->where('user_id', Auth::id())->count();
         if ($favorites) {
             return $this->response->errorBadRequest('你已经收藏！');
         }
@@ -594,9 +632,7 @@ class CompanyController extends BaseController
      */
     public function productFavorite(Product $product)
     {
-        $favorites = $product->whereHas('favorites', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->first();
+        $favorites = $product->favorites()->where('user_id', Auth::id())->count();
         if ($favorites) {
             return $this->response->errorBadRequest('你已经收藏！');
         }
@@ -611,7 +647,7 @@ class CompanyController extends BaseController
      * @apiPermission 无
      * @apiVersion 1.0.0
      * @apiParam {String} q 搜索关键字
-     * @apiParam {Number{0,1,2}} role 企业性质
+     * @apiParam {Number{0,1,2,3}} role 企业性质
      * @apiParam {Number} categories 企业分类
      * @apiParam {Number} address 地区码
      * @apiSuccessExample {json} Success-Response:

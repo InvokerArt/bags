@@ -37,4 +37,10 @@ interface SupplyInterface
      * @return mixed
      */
     public function delete($id);
+
+    /**
+     * @param $input
+     * @return mixed
+     */
+    public function search($input);
 }

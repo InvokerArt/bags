@@ -197,9 +197,7 @@ class ExhibitionController extends BaseController
      */
     public function favorite(Exhibition $exhibition)
     {
-        $favorites = $exhibition->whereHas('favorites', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->first();
+        $favorites = $exhibition->favorites()->where('user_id', Auth::id())->count();
         if ($favorites) {
             return $this->response->errorBadRequest('你已经收藏！');
         }

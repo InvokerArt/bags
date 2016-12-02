@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Validator;
 use Illuminate\Support\ServiceProvider;
+use DB;
+use Event;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,6 +45,18 @@ class AppServiceProvider extends ServiceProvider
             }
             return true;
         });
+        //打印sql  example: http://stone.dev?sql-debug=1开启打印sql语句
+        if (env('APP_ENV') === 'local') {
+            DB::connection()->enableQueryLog();
+        }
+        if (env('APP_ENV') === 'local') {
+            Event::listen('kernel.handled', function ($request, $response) {
+                if ($request->has('sql-debug')) {
+                    $queries = DB::getQueryLog();
+                    dd($queries);
+                }
+            });
+        }
     }
 
     /**

@@ -82,7 +82,7 @@ class ProductController extends BaseController
      * @apiVersion 1.0.0
      * @apiHeader Authorization Bearer {access_token}
      * @apiParam {String} title 标题
-     * @apiParam {Int} quantity 数量
+     * @apiParam {Int} price 价格
      * @apiParam {Number=1,2,3,4,5} unit 单位
      * @apiParam {String[]} images[] 图片
      * @apiParam {String} content 内容

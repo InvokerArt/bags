@@ -8,6 +8,7 @@ use App\Api\V1\Transformers\SupplyTransformer;
 use App\Models\Supplies\Supply;
 use App\Repositories\Backend\Supplies\SupplyInterface;
 use Auth;
+use Illuminate\Http\Request;
 
 class SupplyController extends BaseController
 {
@@ -70,7 +71,7 @@ class SupplyController extends BaseController
         return $this->response()->paginator($supplies, new SupplyTransformer());
     }
     /**
-     * @api {get} /supplies 供应列表
+     * @api {get} /users/supplies 供应列表
      * @apiDescription 供应列表
      * @apiGroup Auth
      * @apiPermission 认证
@@ -100,7 +101,7 @@ class SupplyController extends BaseController
             }
         }
     }
-     * @apiSampleRequest /api/supplies
+     * @apiSampleRequest /api/users/supplies
      */
     public function indexByUser()
     {
@@ -250,13 +251,51 @@ class SupplyController extends BaseController
      */
     public function favorite(Supply $supply)
     {
-        $favorites = $supply->whereHas('favorites', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->first();
+        $favorites = $supply->favorites()->where('user_id', Auth::id())->count();
         if ($favorites) {
             return $this->response->errorBadRequest('你已经收藏！');
         }
         $supply->favorites()->create(['user_id' => Auth::id()]);
         return $this->response->created();
+    }
+
+    /**
+     * @api {get} /supplies/search 供应搜索
+     * @apiDescription 供应搜索
+     * @apiGroup Supply
+     * @apiPermission 无
+     * @apiVersion 1.0.0
+     * @apiParam {String} q 搜索关键字
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 2,
+                "title": "我需求100袋包装袋",
+                "images": [
+                    "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+                ],
+                "content": "我就需要这么多包装袋",
+                "is_excellent": 1
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 1,
+                "count": 1,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
+     * @apiSampleRequest /api/supplies/search
+     */
+    public function search(Request $request)
+    {
+        $supplies = $this->supplies->search($request);
+        return $this->response->paginator($supplies, new SupplyTransformer());
     }
 }

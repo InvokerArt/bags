@@ -52,7 +52,7 @@
 
                 <div class="input-icon">
                     <i class="fa fa-user"></i>
-                    <input id="username" type="username" class="form-control" name="username" placeholder="手机号/会员名/邮箱" value="{{ old('username') }}" autofocus>
+                    <input id="username" type="text" class="form-control" name="username" placeholder="手机号/会员名/邮箱" value="{{ old('username') }}" autofocus>
                 </div>
             </div>
 

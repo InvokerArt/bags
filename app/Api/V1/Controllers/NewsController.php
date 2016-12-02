@@ -203,9 +203,7 @@ class NewsController extends BaseController
      */
     public function favorite(News $news)
     {
-        $favorites = $news->whereHas('favorites', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->first();
+        $favorites = $news->favorites()->where('user_id', Auth::id())->count();
         if ($favorites) {
             return $this->response->errorBadRequest('你已经收藏！');
         }

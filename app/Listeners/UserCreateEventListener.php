@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Storage;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
-class UserCreateEventListener implements ShouldQueue
+class UserCreateEventListener
 {
     public static $token = null;
     public static $tokenPath = 'easemob.token';
@@ -77,13 +77,13 @@ class UserCreateEventListener implements ShouldQueue
         try {
             $client = new \GuzzleHttp\Client();
             $registerResponse = $client->request('POST', $this->url.'users', [
-            'headers' => [
-                'Authorization' => 'Bearer '.$token
-            ],
-            'json' => [
-                'username' => $event->user->mobile,
-                'password' => md5($event->user->password),
-            ],
+                'headers' => [
+                    'Authorization' => 'Bearer '.$token
+                ],
+                'json' => [
+                    'username' => $event->user->mobile,
+                    'password' => md5($event->user->password),
+                ],
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
         } catch (\Exception $e) {
