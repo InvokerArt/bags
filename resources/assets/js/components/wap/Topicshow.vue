@@ -7,12 +7,11 @@
                     <img v-else  src="/images/avatar.png" class="avatar">
                     <div class="info">
                         <span class="name">{{user.username}}</span>
-                        <span>{{topic.created_at}}<em>阅读：{{topic.view_count}}</em></span>
+                        <span>{{topic.created_at}}<em>阅读{{topic.view_count}}</em></span>
                     </div>
                 </div>
                 <div class="content">
                     <h2>{{topic.title}}</h2>
-                    <div class="time">{{topic.created_at}}</div>
                     <div v-html="topic.content"></div>
                     <div class="reply-vote"><img src="/images/wap/vote.png" alt=""><span v-if="topic.vote_count">{{topic.vote_count}}</span><img src="/images/wap/reply.png" alt=""><span v-if="topic.reply_count">{{topic.reply_count}}</span></div>
                 </div>
@@ -30,12 +29,13 @@
                                     <div v-html="replyContent(reply.replyTo_userid,reply.replyTo_username,reply.content)"></div>
                                 </div>
                             </div>
-                            <div class="vote">
+                            <div class="reply-vote">
                                 <img src="/images/wap/vote.png" alt=""><span v-if="reply.vote_count">{{reply.vote_count}}</span><img src="/images/wap/reply.png" alt="">
                             </div>
                         </li>
                     </ul>
                 </div>
+                <div class="add-reply"><input type="text" name="content"><button type="submit" class="mint-button mint-button--primary mint-button--normal">评论</button></div>
             </div>
         </section>
     </div>

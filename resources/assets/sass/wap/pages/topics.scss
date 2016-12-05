@@ -1,84 +1,158 @@
-.product{
-    padding:0.27rem;
-    .info{
-        background-color:#fff;
-        border-radius:0.13rem;
-        .detail{
-            padding:0.27rem;
-            h2{
-                font-size:15px;
-                color:#444;
-                margin:0 0 0.27rem;
-            }
-            span.price{
-                font-size:13px !important;
-            }
-            .address{
-                float:right;
-                line-height:20px;
-                img{
-                    width:16px;
-                    margin-right:0.2rem;
-                    position: relative;
-                    margin-bottom: -0.13rem;
+.topic{
+    background-color:#fff;
+    .user{
+        padding:0.27rem;
+        .avatar{
+            width:1.33rem;
+            height:1.33rem;
+            border-radius:50%;
+            float:left;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+        .info{
+            margin-left:1.87rem;
+            span{
+                clear:both;
+                width:100%;
+                font-size:12px;
+                display:inline-block;
+                &.name{
+                    margin:0.13rem auto 0.27rem;
+                    font-size:14px;
+                    color:#454545;
+                }
+                em{
+                    float:right;
                 }
             }
         }
     }
-    img.banner{
-        border-radius:0.13rem 0.13rem 0 0;
-        margin-bottom:0;
-    }
     .content{
-        margin-top:0.27rem;
-        padding:0.27rem;
-        background-color:#fff;
-        border-radius:0.13rem;
-        font-size:0.19rem !important;
-        h3{
-            font-size:0.2rem !important;
-            margin-bottom:0.4rem; 
+        padding:0.27rem 0.27rem 0.93rem;
+        border-top:1px solid #e5e5e5;
+        border-bottom:1px solid #e5e5e5;
+        position:relative;
+        h2{
+            font-size:18px;
+            margin-bottom:0.67rem;
+        }
+        p{
+            font-size:12px;
+        }
+        img{
+            max-width:100%;
+        }
+    }
+    .reply-vote{
+        position:absolute;
+        right:0.27rem;
+        bottom:0.27rem;
+        img{
+            width:18px;
+            margin-right:0.13rem;
+            float:left;
+        }
+        span{
+            line-height:16px;
+            margin-right:0.13rem;
+            float:left;
+        }
+    }
+    .replies{
+        ul li{
+            padding:0.27rem 0.27rem 0.4rem;
+            border-bottom:1px solid #e5e5e5;
+            position:relative;
+        }
+        .user .info span em.time{
+            float:none;
+            margin-left:0.4rem;
+        }
+        .reply-content{
+            margin-top:0.4rem;
+        }
+        .reply-vote{
+            top:0.4rem;
+            bottom:auto;
+        }
+    }
+    .add-reply{
+        padding:0.2rem 0.27rem;
+        z-index:1;
+        background-color: #fff;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        border-top:1px solid #c3c3c3;
+        input{
+            width:7.83rem;
+            height:0.8rem;
+            border:1px solid #c3c3c3;
+            border-radius:0.2rem;
+            margin-right:0.27rem;
+            border-radius: 0.2rem !important;
+            background-color:#f0f0f0
+        }
+        button{
+            height:0.8rem !important;
+            width:1.33rem;
+            background-color:#5fad0a !important;
+                border-radius: 0.2rem !important;
         }
     }
 }
 
 [data-dpr="2"]{
-    .product .info .detail h2{
-        font-size:30px;
-    }
-    .product .info .detail span.price{
-        font-size:26px !important;
-    }
-    .product .info .detail .address{
-        line-height:40px;
-    }
-    .product .info .detail .address img{
-        width:32px;
-    }
-    .product .content{
-        font-size:0.37rem !important;
-        h3{
-            font-size:0.4rem !important;
+    .topic {
+        .user .info span{
+            font-size:24px;
+            &.name{
+                font-size:28px;
+            }
+        }
+        .content {
+            h2{
+                font-size:36px;
+            }
+            p{
+                font-size:24px;
+            }
+        }
+        .reply-vote{
+            img{
+                width:36px;
+            }
+            span{
+                line-height:32px;
+            }
         }
     }
 }
 [data-dpr="3"]{
-    .product .info .detail h2{
-        font-size:45px;
-    }
-    .product .info .detail span.price{
-        font-size:39px !important;
-    }
-    .product .info .detail .address{
-        line-height:44px;
-    }
-    .product .info .detail .address img{
-        width:48px;
-    }
-    .product .content{
-        font-size:0.56rem !important;
-        h3{
-            font-size:0.6rem !important;
+    .topic {
+        .user .info span{
+            font-size:36px;
+            &.name{
+                font-size:42px;
+            }
+        }
+        .content {
+            h2{
+                font-size:54px;
+            }
+            p{
+                font-size:36px;
+            }
+        }
+        .reply-vote{
+            img{
+                width:54px;
+            }
+            span{
+                line-height:48px;
+            }
         }
     }
 }
