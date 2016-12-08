@@ -107,7 +107,7 @@ class ExhibitionController extends BaseController
                 $query->where('category_id', $request->categories);
             });
         }
-        $exhibitions = $query->paginate();
+        $exhibitions = $query->orderBy('created_at', 'DESC')->paginate();
         return $this->response()->paginator($exhibitions, new ExhibitionTransformer());
     }
 

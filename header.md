@@ -42,6 +42,10 @@ id - 话题ID
 'type' => 'App\Models\Topics\Topic' - 论坛话题  
 接口请求地址 get http://stone.dev/api/topics/:id
 ##### 系统消息
+'notification_type' => 'App\Models\News\News' - 资讯  
+接口请求地址 get http://stone.dev/api/news/:id //:id为notification_id  
+'notification_type' => 'App\Models\Exhibitions\Exhibition' - 展会  
+接口请求地址 get http://stone.dev/api/news/:id //:id为notification_id  
 'notification_type' => 'App\Models\Joins\Join' - 申请加盟  
 接口请求地址 get http://stone.dev/api/users/joins  
 'notification_type' => 'App\Models\Certifications\Certification' - 申请认证  

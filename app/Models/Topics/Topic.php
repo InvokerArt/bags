@@ -41,6 +41,7 @@ class Topic extends Model
 
         return $query;
     }
+    
     public function getTopicsWithFilter($filter)
     {
         $filter = $this->getTopicFilter($filter);

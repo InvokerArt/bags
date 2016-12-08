@@ -87,7 +87,7 @@ class UserCreateEventListener
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
         } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+            //throw new \Exception($e->getMessage());
         }
     }
 

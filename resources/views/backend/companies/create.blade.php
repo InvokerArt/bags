@@ -182,7 +182,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
-                                    {{ Form::select('is_excellent', ['' => '请选择', 'yes' => '是','no' => '否'], null, ['class' => 'form-control input-sm select2']) }}
+                                    {{ Form::select('is_excellent', ['' => '请选择', 'yes' => '是','no' => '否'], 'no', ['class' => 'form-control input-sm select2']) }}
                                 </div>
                             </div>
                         </div>

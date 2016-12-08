@@ -3,17 +3,21 @@
 namespace App\Api\V1\Controllers;
 
 use App\Api\V1\Transformers\CompanyTransformer;
+use App\Api\V1\Transformers\DemandTransformer;
 use App\Api\V1\Transformers\ExhibitionTransformer;
 use App\Api\V1\Transformers\JobTransformer;
 use App\Api\V1\Transformers\NewsTransformer;
 use App\Api\V1\Transformers\ProductTransformer;
+use App\Api\V1\Transformers\SupplyTransformer;
 use App\Api\V1\Transformers\TopicTransformer;
 use App\Models\Companies\Company;
+use App\Models\Demands\Demand;
 use App\Models\Exhibitions\Exhibition;
 use App\Models\Favorites\Favorite;
 use App\Models\Jobs\Job;
 use App\Models\News\News;
 use App\Models\Products\Product;
+use App\Models\Supplies\Supply;
 use App\Models\Topics\Topic;
 use Auth;
 
@@ -68,7 +72,7 @@ class FavoriteController extends BaseController
     {
         $companys = Company::where('role', $id)->whereHas('favorites', function ($query) {
             $query->where('user_id', Auth::id());
-        })->paginate();
+        })->orderBy('created_at', 'DESC')->paginate();
         return $this->response()->paginator($companys, new CompanyTransformer());
     }
 
@@ -108,7 +112,7 @@ class FavoriteController extends BaseController
     {
         $exhibitions = Exhibition::whereHas('favorites', function ($query) {
             $query->where('user_id', Auth::id());
-        })->paginate();
+        })->orderBy('created_at', 'DESC')->paginate();
         return $this->response()->paginator($exhibitions, new ExhibitionTransformer());
     }
 
@@ -156,7 +160,7 @@ class FavoriteController extends BaseController
     {
         $news = News::whereHas('favorites', function ($query) {
             $query->where('user_id', Auth::id());
-        })->paginate();
+        })->orderBy('created_at', 'DESC')->paginate();
         return $this->response()->paginator($news, new NewsTransformer());
     }
 
@@ -199,7 +203,7 @@ class FavoriteController extends BaseController
     {
         $products = Product::whereHas('favorites', function ($query) {
             $query->where('user_id', Auth::id());
-        })->paginate();
+        })->orderBy('created_at', 'DESC')->paginate();
         return $this->response()->paginator($products, new ProductTransformer());
     }
 
@@ -241,7 +245,7 @@ class FavoriteController extends BaseController
     {
         $jobs = Job::whereHas('favorites', function ($query) {
             $query->where('user_id', Auth::id());
-        })->paginate();
+        })->orderBy('created_at', 'DESC')->paginate();
         return $this->response()->paginator($jobs, new JobTransformer());
     }
 
@@ -295,8 +299,46 @@ class FavoriteController extends BaseController
     {
         $topics = Topic::whereHas('favorites', function ($query) {
             $query->where('user_id', Auth::id());
-        })->paginate();
+        })->orderBy('created_at', 'DESC')->paginate();
         return $this->response()->paginator($topics, new TopicTransformer());
+    }
+
+    /**
+     * @api {get} /favorites/demands 收藏的需求
+     * @apiDescription 收藏的需求
+     * @apiGroup Favorite
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+     * @apiSampleRequest /api/favorites/demands
+     */
+    public function indexForDemand()
+    {
+        $jobs = Demand::whereHas('favorites', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->orderBy('created_at', 'DESC')->paginate();
+        return $this->response()->paginator($jobs, new DemandTransformer());
+    }
+
+    /**
+     * @api {get} /favorites/supplies 收藏的供应
+     * @apiDescription 收藏的供应
+     * @apiGroup Favorite
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+     * @apiSampleRequest /api/favorites/supplies
+     */
+    public function indexForSupply()
+    {
+        $jobs = Supply::whereHas('favorites', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->orderBy('created_at', 'DESC')->paginate();
+        return $this->response()->paginator($jobs, new SupplyTransformer());
     }
 
     /**

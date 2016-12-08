@@ -7,6 +7,7 @@ use App\Models\Notifications\Notification;
 use App\Models\Notifications\NotificationUser;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class NotificationController extends BaseController
 {
@@ -141,6 +142,19 @@ class NotificationController extends BaseController
      */
     public function index()
     {
+        //生成消息开始
+        $user = Auth::user();
+        $lastNotification = NotificationUser::select('created_at')->where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
+        $lastReadAt = ($lastNotification) ? $lastNotification->created_at : '';
+        $unreadNotifications = Notification::where('created_at', '>=', $lastReadAt)->get();
+        if ($unreadNotifications) {
+            foreach ($unreadNotifications as $key => $unreadNotification) {
+                $notificationuser = new NotificationUser();
+                $notificationuser->user_id = $user->id;
+                $notificationuser->notification_id = $unreadNotification->id;
+                $notificationuser->save();
+            }
+        }//结束
         $notifications = NotificationUser::with('notification')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
         return $this->response->collection($notifications, new NotificationTransformer());
     }
@@ -164,29 +178,29 @@ class NotificationController extends BaseController
     }
 
     /**
-     * @api {post} /notifications/ 拉取未读消息
-     * @apiDescription 拉取未读消息
+     * @api {post} /notifications/ 消息回调
+     * @apiDescription 消息回调
      * @apiGroup Notify
      * @apiPermission 认证
      * @apiVersion 1.0.0
      * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {Number} notification_id
+     * @apiParam {String} notification_type
+     * @apiParam {String} message
+     * @apiParam {String} created_at
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 201 Created
      */
-    public function store()
+    public function store(Request $request)
     {
-        $user = Auth::user();
-        $lastNotification = NotificationUser::select('created_at')->where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
-        $lastReadAt = ($lastNotification) ? $lastNotification->created_at : '';
-        $unreadNotifications = Notification::where('created_at', '>=', $lastReadAt)->get();
-        if ($unreadNotifications) {
-            foreach ($unreadNotifications as $key => $unreadNotification) {
-                $notificationuser = new NotificationUser();
-                $notificationuser->user_id = $user->id;
-                $notificationuser->notification_id = $unreadNotification->id;
-                $notificationuser->save();
-            }
-        }
-        return $this->response->created();
+        $user_id = Auth::id();
+        $message = Notification::select('id')->where('notification_id', $request->notification_id)->where('notification_type', $request->notification_type)->where('data', $request->message)->where('created_at', $request->created_at)->first();
+        $notification = new NotificationUser();
+        $notification->user_id = $user_id;
+        $notification->notification_id = $message->id;
+        $notification->read_at = Carbon::now();
+        $notification->created_at = $request->created_at;
+        $notification->updated_at = $request->created_at;
+        $notification->save();
     }
 }

@@ -67,7 +67,7 @@ class SupplyController extends BaseController
      */
     public function index()
     {
-        $supplies = Supply::paginate();
+        $supplies = Supply::orderBy('created_at', 'DESC')->paginate();
         return $this->response()->paginator($supplies, new SupplyTransformer());
     }
     /**
@@ -105,7 +105,8 @@ class SupplyController extends BaseController
      */
     public function indexByUser()
     {
-        $supplies = Supply::where('user_id', Auth::id())->orderBy('is_excellent')->paginate();
+        $supplies = Supply::where('user_id', Auth::id())->orderBy('is_excellent')
+                    ->orderBy('created_at', 'DESC')->paginate();
         return $this->response()->paginator($supplies, new SupplyTransformer());
     }
 
@@ -182,6 +183,9 @@ class SupplyController extends BaseController
     public function store(SupplyStoreOrUpdateRequest $request)
     {
         $user = Auth::user();
+        if (!$user->company) {
+            return $this->response->errorBadRequest('请先完善公司信息！');
+        }
         $request->merge(['user_id' => $user->id]);
         $request->images = relative_url($request->images);
         $this->supplies->create($request);

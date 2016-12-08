@@ -71,6 +71,8 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->get('favorites/products/', 'FavoriteController@indexForProduct');
         $api->get('favorites/jobs/', 'FavoriteController@indexForJob');
         $api->get('favorites/topics/', 'FavoriteController@indexForTopic');
+        $api->get('favorites/demands/', 'FavoriteController@indexForDemand');
+        $api->get('favorites/supplies/', 'FavoriteController@indexForSupply');
         $api->post('topics/{topic}/favorites', 'TopicController@favorite');
         $api->post('companies/{company}/favorites', 'CompanyController@favorite');
         $api->post('jobs/{job}/favorites', 'CompanyController@jobFavorite');

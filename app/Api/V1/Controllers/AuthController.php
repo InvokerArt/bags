@@ -265,7 +265,7 @@ class AuthController extends BaseController
 
     public function index()
     {
-        $users = User::withOutBanned()->paginate();
+        $users = User::withOutBanned()->orderBy('created_at', 'DESC')->paginate();
         return $this->response->paginator($users, new UserTransformer());
     }
 
@@ -424,7 +424,7 @@ class AuthController extends BaseController
     {
         $joins = Join::whereHas('company', function ($query) {
             $query->where('user_id', Auth::id());
-        })->paginate();
+        })->orderBy('created_at', 'DESC')->paginate();
         return $this->response->paginator($joins, new JoinTransformer());
     }
 
@@ -476,7 +476,7 @@ class AuthController extends BaseController
      */
     public function indexJoinOut()
     {
-        $joins = Join::where('user_id', Auth::id())->with('company')->paginate();
+        $joins = Join::where('user_id', Auth::id())->with('company')->orderBy('created_at', 'DESC')->paginate();
         return $this->response->paginator($joins, new JoinTransformer());
     }
 
@@ -496,7 +496,7 @@ class AuthController extends BaseController
     {
         $certifications = Certification::whereHas('company', function ($query) {
             $query->where('user_id', Auth::id());
-        })->paginate();
+        })->orderBy('created_at', 'DESC')->paginate();
         return $this->response->paginator($certifications, new CertificationTransformer());
     }
 
@@ -514,7 +514,7 @@ class AuthController extends BaseController
      */
     public function indexCertificationOut()
     {
-        $certifications = Certification::where('user_id', Auth::id())->with('company')->paginate();
+        $certifications = Certification::where('user_id', Auth::id())->with('company')->orderBy('created_at', 'DESC')->paginate();
         return $this->response->paginator($certifications, new CertificationTransformer());
     }
 

@@ -70,7 +70,7 @@ class ProductController extends BaseController
      */
     public function index()
     {
-        $products = Product::where('user_id', Auth::id())->paginate();
+        $products = Product::where('user_id', Auth::id())->orderBy('created_at', 'DESC')->paginate();
         return $this->response()->paginator($products, new ProductTransformer());
     }
 

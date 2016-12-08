@@ -24,7 +24,9 @@ class NotificationPush
             'sound' => 'sound.caf',
             'content-available' => true,
             'mutable-content' => true,
-            'extras' => json_encode($data),
+            'extras' => [
+                'message' => json_encode($data)
+            ],
         ))
         ->message(json_encode($data));
 

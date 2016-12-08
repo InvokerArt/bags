@@ -25,7 +25,7 @@
                 'media-manager-notification' : function(message, type, time)
                 {   
                     swal({   
-                        title: "Auto close alert!",   
+                        title: "消息！",   
                         text: message,   
                         timer: 2000,   
                         showConfirmButton: false 

@@ -15,7 +15,7 @@ class CreateExhibitionsTable extends Migration
     {
         Schema::create('exhibitions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unique()->unsigned();
+            $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('title')->index()->comment('标题');
             $table->string('slug')->nullable()->index()->comment('固定链接地址');

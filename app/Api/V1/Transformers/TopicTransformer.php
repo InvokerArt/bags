@@ -2,6 +2,8 @@
 
 namespace App\Api\V1\Transformers;
 
+use Carbon\Carbon;
+
 class TopicTransformer extends BaseTransformer
 {
     protected $availableIncludes = ['user', 'last_reply_user', 'replies', 'category'];
@@ -10,6 +12,7 @@ class TopicTransformer extends BaseTransformer
 
     public function transformData($model)
     {
+        //Carbon::setLocale('zh');
         return [
             "id" => $model->id,
             "category_id" => $model->category_id,
@@ -19,7 +22,7 @@ class TopicTransformer extends BaseTransformer
             "view_count" => $model->view_count,
             "vote_count" => $model->vote_count,
             'is_excellent' => $model->is_excellent == 'yes' ? 1 : 0,
-            "created_at" => $model->created_at->toDateTimeString()
+            "created_at" => $model->created_at->toDateTimeString() //Carbon::createFromTimeStamp(strtotime($model->created_at))->diffForHumans() 生成几分钟前 几天前几个月前
         ];
     }
 

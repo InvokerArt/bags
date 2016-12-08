@@ -249,7 +249,8 @@ class TopicController extends BaseController
     public function indexByUser()
     {
         $user = Auth::user();
-        $topics = Topic::whose($user->id)->recent()->paginate();
+        $topics = Topic::whose($user->id)
+                    ->orderBy('is_excellent', 'DESC')->recent()->paginate();
         return $this->response()->paginator($topics, new TopicTransformer());
     }
 
@@ -512,6 +513,9 @@ class TopicController extends BaseController
     public function store(TopicStoreOrUpdateRequest $request)
     {
         $user = Auth::user();
+        if (!$user->username || !$user->name || !$user->mobile || !$user->email) {
+            return $this->response->errorBadRequest('请先完善个人信息！');
+        }
         $request->merge(['user_id' => $user->id]);
         $topic = $this->topics->create($request);
         $user->increment('topic_count', 1);

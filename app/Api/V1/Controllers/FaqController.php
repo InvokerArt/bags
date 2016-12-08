@@ -48,7 +48,7 @@ class FaqController extends BaseController
      */
     public function index()
     {
-        $faqs = Faq::paginate();
+        $faqs = Faq::orderBy('created_at', 'DESC')->paginate();
         return $this->response->paginator($faqs, new FaqTransformer());
     }
 }

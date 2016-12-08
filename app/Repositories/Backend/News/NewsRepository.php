@@ -44,7 +44,7 @@ class NewsRepository implements NewsInterface
             });
         }
         
-        return $query->paginate();
+        return $query->orderBy('created_at', 'DESC')->paginate();
     }
 
     public function search($input)

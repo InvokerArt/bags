@@ -137,11 +137,11 @@ class CompanyController extends BaseController
         if ($id) {
             $companys = Company::where('role', $id)->with(['certifications' => function ($query) {
                 $query->validate();
-            }])->paginate();
+            }])->orderBy('created_at', 'DESC')->paginate();
         } else {
             $companys = Company::where('role', 1)->orWhere('role', 2)->with(['certifications' => function ($query) {
                 $query->validate();
-            }])->paginate();
+            }])->orderBy('created_at', 'DESC')->paginate();
         }
         return $this->response()->paginator($companys, new CompanyTransformer());
     }
@@ -235,6 +235,19 @@ class CompanyController extends BaseController
                         }
                     ]
                 },
+                "jobs": {
+                    "data": [
+                        {
+                            "id": 1,
+                            "job": "销售代表",
+                            "total": "10人",
+                            "education": "本科大学",
+                            "experience": "2-3年",
+                            "minsalary": "50000",
+                            "content": "<p>要求就是不要命</p>"
+                        }
+                    ]
+                },
                 "products": {
                     "data": [
                         {
@@ -259,6 +272,7 @@ class CompanyController extends BaseController
         $company->categories = $company->categories()->get();
         $user = $company->user()->first();
         $company->products = $user->products()->get();
+        $company->jobs = $user->jobs()->get();
         return $this->response->item($company, new CompanyShowTransformer());
     }
 
@@ -295,7 +309,7 @@ class CompanyController extends BaseController
     public function job(Request $request)
     {
         $user = $request->user();
-        $jobs = $user->jobs()->paginate();
+        $jobs = $user->jobs()->orderBy('created_at', 'DESC')->paginate();
         return $this->response->paginator($jobs, new JobTransformer());
     }
 

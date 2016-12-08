@@ -87,7 +87,7 @@ class DemandController extends BaseController
      */
     public function index()
     {
-        $demands = Demand::paginate();
+        $demands = Demand::orderBy('created_at', 'DESC')->paginate();
         return $this->response()->paginator($demands, new DemandTransformer());
     }
 
@@ -127,7 +127,7 @@ class DemandController extends BaseController
      */
     public function indexByUser()
     {
-        $demands = Demand::where('user_id', Auth::id())->orderBy('is_excellent')->paginate();
+        $demands = Demand::where('user_id', Auth::id())->orderBy('is_excellent')->orderBy('created_at', 'DESC')->paginate();
         return $this->response()->paginator($demands, new DemandTransformer());
     }
 
@@ -155,7 +155,8 @@ class DemandController extends BaseController
      */
     public function show(Demand $demand)
     {
-        $demand = $demand->with('user')->first();
+        $demand->user = $demand->user()->first();
+        $demand->company= $demand->company()->first();
         return $this->response->item($demand, new DemandShowTransformer());
     }
 
@@ -178,6 +179,9 @@ class DemandController extends BaseController
     public function store(DemandStoreOrUpdateRequest $request)
     {
         $user = Auth::user();
+        if (!$user->company) {
+            return $this->response->errorBadRequest('请先完善公司信息！');
+        }
         $request->merge(['user_id' => $user->id]);
         $request->images = relative_url($request->images);
         $this->demands->create($request);
