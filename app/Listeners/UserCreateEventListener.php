@@ -82,7 +82,7 @@ class UserCreateEventListener
                 ],
                 'json' => [
                     'username' => $event->user->mobile,
-                    'password' => md5($event->user->password),
+                    'password' => $event->user->password,
                 ],
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);

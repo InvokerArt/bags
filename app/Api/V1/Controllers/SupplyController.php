@@ -5,7 +5,7 @@ namespace App\Api\V1\Controllers;
 use App\Api\V1\Requests\SupplyStoreOrUpdateRequest;
 use App\Api\V1\Transformers\SupplyShowTransformer;
 use App\Api\V1\Transformers\SupplyTransformer;
-use App\Models\Supplies\Supply;
+use App\Models\Supply;
 use App\Repositories\Backend\Supplies\SupplyInterface;
 use Auth;
 use Illuminate\Http\Request;

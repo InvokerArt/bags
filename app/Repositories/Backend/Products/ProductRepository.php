@@ -3,8 +3,8 @@
 namespace App\Repositories\Backend\Products;
 
 use App\Exceptions\GeneralException;
-use App\Models\Products\Product;
-use App\Models\Users\User;
+use App\Models\Product;
+use App\Models\User;
 use Auth;
 use DB;
 

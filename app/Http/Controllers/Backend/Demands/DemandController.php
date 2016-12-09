@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Backend\Demands;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Demands\DemandStoreOrUpdateRequest;
-use App\Models\Demands\Demand;
-use App\Models\Users\User;
+use App\Models\Demand;
+use App\Models\User;
 use App\Repositories\Backend\Demands\DemandInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Facades\Datatables;

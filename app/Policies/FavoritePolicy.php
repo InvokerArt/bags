@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Favorites\Favorite;
-use App\Models\Users\User;
+use App\Models\Favorite;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class FavoritePolicy

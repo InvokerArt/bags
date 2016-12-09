@@ -3,9 +3,9 @@
 namespace App\Repositories\Backend\Exhibitions;
 
 use App\Exceptions\GeneralException;
-use App\Models\Exhibitions\Exhibition;
-use App\Models\Exhibitions\CategoriesExhibition;
-use App\Models\Tags\Tag;
+use App\Models\Exhibition;
+use App\Models\CategoriesExhibition;
+use App\Models\Tag;
 use App\Repositories\Backend\Tags\TagsInterface;
 use Carbon;
 use DB;

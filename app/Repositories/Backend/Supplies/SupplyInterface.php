@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Supplies;
 
-use App\Models\Supplies\Supply;
+use App\Models\Supply;
 
 interface SupplyInterface
 {

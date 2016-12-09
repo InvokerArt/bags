@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Access\Role;
 
-use App\Models\Access\Role\Role;
+use App\Models\Role;
 
 /**
  * Interface RoleInterface
@@ -11,12 +11,12 @@ use App\Models\Access\Role\Role;
 interface RoleInterface
 {
 
-	/**
+    /**
      * @return mixed
      */
     public function getCount();
 
-	/**
+    /**
      * @return mixed
      */
     public function getForDataTable();
@@ -48,7 +48,7 @@ interface RoleInterface
      */
     public function destroy(Role $role);
 
-	/**
+    /**
      * @return mixed
      */
     public function getDefaultUserRole();

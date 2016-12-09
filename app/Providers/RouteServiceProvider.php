@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Access\User\User;
+use App\Models\Admin;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;

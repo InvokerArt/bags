@@ -3,9 +3,9 @@
 namespace App\Repositories\Backend\Companies;
 
 use App\Exceptions\GeneralException;
-use App\Models\Access\User\User;
-use App\Models\Companies\CategoriesCompanies;
-use App\Models\Companies\Company;
+use App\Models\Admin;
+use App\Models\CategoriesCompanies;
+use App\Models\Company;
 use Auth;
 use Carbon;
 use DB;

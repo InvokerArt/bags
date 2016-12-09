@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Comments;
 
-use App\Models\Comments\Comment;
+use App\Models\Comment;
 
 interface CommentInterface
 {

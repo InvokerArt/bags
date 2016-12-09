@@ -3,8 +3,8 @@
 namespace App\Repositories\Backend\Comments;
 
 use App\Exceptions\GeneralException;
-use App\Models\Comments\Comment;
-use App\Models\News\News;
+use App\Models\Comment;
+use App\Models\News;
 use DB;
 
 class CommentRepository implements CommentInterface

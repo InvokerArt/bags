@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Topics;
 
-use App\Models\Topics\Reply;
+use App\Models\Reply;
 
 interface ReplyInterface
 {

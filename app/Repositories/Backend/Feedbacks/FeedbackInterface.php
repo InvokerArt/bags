@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Feedbacks;
 
-use App\Models\Feedbacks\Feedback;
+use App\Models\Feedback;
 
 interface FeedbackInterface
 {

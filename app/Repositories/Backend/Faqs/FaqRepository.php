@@ -3,9 +3,9 @@
 namespace App\Repositories\Backend\Faqs;
 
 use App\Exceptions\GeneralException;
-use App\Models\Companies\Company;
-use App\Models\Faqs\Faq;
-use App\Models\Users\User;
+use App\Models\Company;
+use App\Models\Faq;
+use App\Models\User;
 use App\Repositories\Backend\Notifications\NotificationInterface;
 use DB;
 

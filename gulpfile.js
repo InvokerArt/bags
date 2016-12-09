@@ -35,6 +35,12 @@ elixir(function(mix) {
         'frontend/app.scss'
     ],'public/css/frontend/default.css')
     /**
+     * 广告样式
+     */
+    .sass([
+        'advertising/app.scss'
+    ],'public/css/advertising/default.css')
+    /**
      * js插件样式
      * 后台合并所有插件样式
      */

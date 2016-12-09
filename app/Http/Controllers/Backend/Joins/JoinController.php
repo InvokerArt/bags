@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Backend\Joins;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Joins\JoinStoreOrUpdateRequest;
-use App\Models\Joins\Join;
-use App\Models\Companies\Company;
-use App\Models\Users\User;
+use App\Models\Join;
+use App\Models\Company;
+use App\Models\User;
 use App\Repositories\Backend\Joins\JoinInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;

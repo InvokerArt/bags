@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Joins;
 
-use App\Models\Joins\Join;
+use App\Models\Join;
 
 interface JoinInterface
 {

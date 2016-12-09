@@ -11,18 +11,20 @@ use App\Api\V1\Transformers\CategoryTransformer;
 use App\Api\V1\Transformers\CertificationTransformer;
 use App\Api\V1\Transformers\CompanyShowTransformer;
 use App\Api\V1\Transformers\CompanyTransformer;
+use App\Api\V1\Transformers\CompanyUpdateTransformer;
 use App\Api\V1\Transformers\JobTransformer;
 use App\Api\V1\Transformers\JoinAndValidateTransformer;
 use App\Api\V1\Transformers\JoinTransformer;
 use App\Api\V1\Transformers\ProductShowTransformer;
 use App\Api\V1\Transformers\ProductTransformer;
-use App\Models\Banners\Image;
-use App\Models\Certifications\Certification;
-use App\Models\Companies\CategoryCompany;
-use App\Models\Companies\Company;
-use App\Models\Jobs\Job;
-use App\Models\Joins\Join;
-use App\Models\Products\Product;
+use App\Models\Area;
+use App\Models\CategoryCompany;
+use App\Models\Certification;
+use App\Models\Company;
+use App\Models\Image;
+use App\Models\Job;
+use App\Models\Join;
+use App\Models\Product;
 use App\Repositories\Backend\Banners\ImageInterface;
 use App\Repositories\Backend\Certifications\CertificationInterface;
 use App\Repositories\Backend\Companies\CompanyInterface;
@@ -588,7 +590,7 @@ class CompanyController extends BaseController
         }
         //return $this->response->array($request->categories);
         $this->companies->update($company, $request);
-        return $this->response->item($company, new CompanyShowTransformer());
+        return $this->response->item($company, new CompanyUpdateTransformer());
     }
 
     /**
@@ -724,7 +726,39 @@ class CompanyController extends BaseController
         }
 
         if ($request->address) {
-            $query->where('address', $request->address);
+            $provinces = Area::where('parent_id', $request->address)->with('childrens')->get();
+            if (count($provinces)) {
+                foreach ($provinces as $key => $province) {
+                    $city = $province->childrens;
+                    if (count($city)) {
+                        $citys[] = $province->childrens;
+                    }
+                }
+                //搜索省级地址
+                if (isset($citys)) {
+                    $citys = collect($citys);
+                    $citys = $citys->collapse();
+                    foreach ($citys as $value) {
+                        $area = Area::where('parent_id', $value->code)->get();
+                        if (count($area)) {
+                            $areas[] = $area;
+                        }
+                    }
+                    if (isset($areas)) {
+                        $areas = collect($areas);
+                        $areas = $areas->collapse();
+                        $query->whereIn('address', $areas);
+                    } else {
+                        $query->whereIn('address', $citys);
+                    }
+                } else {
+                    //搜索市级地址
+                    $query->whereIn('address', $provinces);
+                }
+            } else {
+                //搜索区级地址
+                $query->where('address', $request->address);
+            }
         }
 
         $companies = $query->paginate();

@@ -6,9 +6,9 @@ use App\Api\V1\Transformers\BannerTransformer;
 use App\Api\V1\Transformers\ExhibitionTransformer;
 use App\Api\V1\Transformers\HomeTransformer;
 use App\Api\V1\Transformers\NewsTransformer;
-use App\Models\Banners\Image;
-use App\Models\Exhibitions\Exhibition;
-use App\Models\News\News;
+use App\Models\Image;
+use App\Models\Exhibition;
+use App\Models\News;
 use App\Repositories\Backend\Banners\ImageInterface;
 
 class HomepageController extends BaseController

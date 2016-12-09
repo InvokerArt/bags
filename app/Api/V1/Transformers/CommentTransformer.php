@@ -2,7 +2,7 @@
 
 namespace App\Api\V1\Transformers;
 
-use App\Models\Users\User;
+use App\Models\User;
 use Storage;
 
 class CommentTransformer extends BaseTransformer

@@ -3,7 +3,7 @@
 namespace App\Repositories\Backend\Tags;
 
 use App\Exceptions\GeneralException;
-use App\Models\Tags\Tag;
+use App\Models\Tag;
 use App\Repositories\Backend\Tags\TagInterface;
 use DB;
 

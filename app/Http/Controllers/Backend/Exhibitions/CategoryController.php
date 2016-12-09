@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Http\Requests\Backend\Exhibitions\CategoryUpdateRequest;
 use App\Http\Requests\Backend\Exhibitions\CategoryRequest;
-use App\Models\Exhibitions\CategoriesExhibitions;
+use App\Models\CategoriesExhibitions;
 use App\Repositories\Backend\Exhibitions\CategoryInterface;
 use Illuminate\Http\Request;
 

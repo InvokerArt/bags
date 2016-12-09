@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Wap;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Companies\Company;
+use App\Models\Company;
 
 class CompanyController extends Controller
 {

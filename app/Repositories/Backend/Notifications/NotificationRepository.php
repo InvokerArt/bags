@@ -4,8 +4,8 @@ namespace App\Repositories\Backend\Notifications;
 
 use App\Events\NotificationSystemEvent;
 use App\Events\NotificationPersonalEvent;
-use App\Models\Notifications\Notification;
-use App\Models\Notifications\NotificationUser;
+use App\Models\Notification;
+use App\Models\NotificationUser;
 use Auth;
 use DB;
 

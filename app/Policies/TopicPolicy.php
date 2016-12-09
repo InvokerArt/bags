@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\Models\Users\User;
-use App\Models\Topics\Topic;
+use App\Models\User;
+use App\Models\Topic;
 
 class TopicPolicy
 {

@@ -3,8 +3,8 @@
 namespace App\Repositories\Backend\Feedbacks;
 
 use App\Exceptions\GeneralException;
-use App\Models\Feedbacks\Feedback;
-use App\Models\Users\User;
+use App\Models\Feedback;
+use App\Models\User;
 use DB;
 use Auth;
 

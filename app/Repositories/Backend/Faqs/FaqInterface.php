@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Faqs;
 
-use App\Models\Faqs\Faq;
+use App\Models\Faq;
 
 interface FaqInterface
 {

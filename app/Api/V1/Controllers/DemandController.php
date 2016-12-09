@@ -5,7 +5,7 @@ namespace App\Api\V1\Controllers;
 use App\Api\V1\Requests\DemandStoreOrUpdateRequest;
 use App\Api\V1\Transformers\DemandShowTransformer;
 use App\Api\V1\Transformers\DemandTransformer;
-use App\Models\Demands\Demand;
+use App\Models\Demand;
 use App\Repositories\Backend\Demands\DemandInterface;
 use Auth;
 use Illuminate\Http\Request;

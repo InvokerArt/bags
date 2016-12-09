@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Topics;
 
-use App\Models\Topics\Topic;
+use App\Models\Topic;
 
 interface TopicInterface
 {

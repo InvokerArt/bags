@@ -3,7 +3,7 @@
 namespace App\Api\V1\Transformers;
 
 use App\Hanlder\NotificationPresenter;
-use App\Models\Users\User;
+use App\Models\User;
 use App\Notification;
 
 class NotificationTransformer extends BaseTransformer

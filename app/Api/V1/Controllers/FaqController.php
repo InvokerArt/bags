@@ -3,7 +3,7 @@
 namespace App\Api\V1\Controllers;
 
 use App\Api\V1\Transformers\FaqTransformer;
-use App\Models\Faqs\Faq;
+use App\Models\Faq;
 
 class FaqController extends BaseController
 {

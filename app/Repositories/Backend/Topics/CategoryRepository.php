@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Topics;
 
-use App\Models\Topics\CategoriesTopics;
+use App\Models\CategoriesTopics;
 use App\Exceptions\GeneralException;
 use App\Helper\Catalog\Image;
 

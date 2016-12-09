@@ -14,6 +14,8 @@ class JoinTransformer extends BaseTransformer
         return [
             'id' => $model->id,
             'status' => $model->status,
+            'identity_card' => img_fullurl($model->identity_card),
+            'licenses' => img_fullurl($model->licenses)
         ];
     }
 

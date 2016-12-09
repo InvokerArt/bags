@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Topics;
 
-use App\Models\Notifications\Notification;
+use App\Models\Notification;
 use App\Repositories\Backend\Notifications\NotificationInterface;
 use Auth;
 

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Http\Requests\Backend\Topics\CategoryUpdateRequest;
 use App\Http\Requests\Backend\Topics\CategoryRequest;
-use App\Models\Topics\CategoriesTopics;
+use App\Models\CategoriesTopics;
 use App\Repositories\Backend\Topics\CategoryInterface;
 use Illuminate\Http\Request;
 

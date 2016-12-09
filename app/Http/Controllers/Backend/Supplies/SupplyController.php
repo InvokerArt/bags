@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Backend\Supplies;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Supplies\SupplyStoreOrUpdateRequest;
-use App\Models\Supplies\Supply;
-use App\Models\Users\User;
+use App\Models\Supply;
+use App\Models\User;
 use App\Repositories\Backend\Supplies\SupplyInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Facades\Datatables;

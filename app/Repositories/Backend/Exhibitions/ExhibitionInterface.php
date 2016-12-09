@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Exhibitions;
 
-use App\Models\Exhibitions\Exhibition;
+use App\Models\Exhibition;
 
 interface ExhibitionInterface
 {

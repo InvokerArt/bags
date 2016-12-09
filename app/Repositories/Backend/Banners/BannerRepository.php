@@ -3,7 +3,7 @@
 namespace App\Repositories\Backend\Banners;
 
 use App\Exceptions\GeneralException;
-use App\Models\Banners\Banner;
+use App\Models\Banner;
 use DB;
 
 /**

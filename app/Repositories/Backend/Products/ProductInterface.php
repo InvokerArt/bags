@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Products;
 
-use App\Models\Products\Product;
+use App\Models\Product;
 
 interface ProductInterface
 {

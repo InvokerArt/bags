@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend\Topics;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Topics\ReplyStoreOrUpdateRequest;
-use App\Models\Topics\Reply;
+use App\Models\Reply;
 use App\Repositories\Backend\Topics\ReplyInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;

@@ -3,8 +3,8 @@
 namespace App\Repositories\Backend\Jobs;
 
 use App\Exceptions\GeneralException;
-use App\Models\Jobs\Job;
-use App\Models\Users\User;
+use App\Models\Job;
+use App\Models\User;
 use DB;
 
 /**

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Backend\Certifications;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Certifications\CertificationStoreOrUpdateRequest;
-use App\Models\Certifications\Certification;
-use App\Models\Companies\Company;
-use App\Models\Users\User;
+use App\Models\Certification;
+use App\Models\Company;
+use App\Models\User;
 use App\Repositories\Backend\Certifications\CertificationInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;

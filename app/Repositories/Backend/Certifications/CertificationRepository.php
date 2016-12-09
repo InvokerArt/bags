@@ -3,9 +3,9 @@
 namespace App\Repositories\Backend\Certifications;
 
 use App\Exceptions\GeneralException;
-use App\Models\Certifications\Certification;
-use App\Models\Companies\Company;
-use App\Models\Users\User;
+use App\Models\Certification;
+use App\Models\Company;
+use App\Models\User;
 use App\Repositories\Backend\Notifications\NotificationInterface;
 use DB;
 
@@ -42,7 +42,7 @@ class CertificationRepository implements CertificationInterface
         if ($company && $company->role != 3) {
             throw new GeneralException('该公司不属于机构/单位！');
         }
-        $isCertification = Certification::where('company_id', $company->id)->where('status', 1)->orWhere('status', 2)->first();
+        $isCertification = Certification::where('company_id', $company->id)->where('user_id', $user->id)->whereIn('status', [1, 2])->first();
         if ($isCertification) {
             throw new GeneralException('请勿重复申请认证！');
         }

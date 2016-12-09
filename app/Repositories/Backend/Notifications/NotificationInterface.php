@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Notifications;
 
-use App\Models\Notifications\Notification;
+use App\Models\Notification;
 
 interface NotificationInterface
 {

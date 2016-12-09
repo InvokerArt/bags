@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
-use App\Models\Companies\Company;
-use App\Models\Demands\Demand;
-use App\Models\Favorites\Favorite;
-use App\Models\Jobs\Job;
-use App\Models\Products\Product;
-use App\Models\Supplies\Supply;
-use App\Models\Topics\Topic;
+use App\Models\Company;
+use App\Models\Demand;
+use App\Models\Favorite;
+use App\Models\Job;
+use App\Models\Product;
+use App\Models\Supply;
+use App\Models\Topic;
 use App\Policies\CompanyPolicy;
 use App\Policies\DemandPolicy;
 use App\Policies\FavoritePolicy;

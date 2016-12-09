@@ -35,7 +35,7 @@ Route::group(['namespace' => 'Frontend'], function () {
      */
     //Route::get('/', 'IndexController@index')->name('frontend.index');
     Route::get('/', function () {
-        return view('frontend.index');
+        return view('advertising.app');
     });
 });
 

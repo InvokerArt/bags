@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\News;
 
-use App\Models\News\News;
+use App\Models\News;
 
 interface NewsInterface
 {

@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Jobs;
 
-use App\Models\Jobs\Job;
+use App\Models\Job;
 
 interface JobInterface
 {

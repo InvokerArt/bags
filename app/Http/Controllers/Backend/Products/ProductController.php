@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Backend\Products;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Products\ProductStoreOrUpdateRequest;
-use App\Models\Products\Product;
-use App\Models\Users\User;
+use App\Models\Product;
+use App\Models\User;
 use App\Repositories\Backend\Products\ProductInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Facades\Datatables;

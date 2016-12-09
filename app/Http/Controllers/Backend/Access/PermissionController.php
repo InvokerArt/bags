@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Access;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Access\Permission\PermissionRequest;
 use App\Http\Requests\Backend\Access\Permission\PermissionStoreOrUpdateRequest;
-use App\Models\Access\Permission\Permission;
+use App\Models\Permission;
 use App\Repositories\Backend\Access\Permission\PermissionInterface;
 use App\Repositories\Backend\Access\Role\RoleInterface;
 use Illuminate\Http\Request;

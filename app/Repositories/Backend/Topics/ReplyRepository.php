@@ -3,8 +3,8 @@
 namespace App\Repositories\Backend\Topics;
 
 use App\Exceptions\GeneralException;
-use App\Models\Topics\Reply;
-use App\Models\Topics\Topic;
+use App\Models\Reply;
+use App\Models\Topic;
 use App\Repositories\Backend\Notifications\NotificationInterface;
 use DB;
 
@@ -55,7 +55,7 @@ class ReplyRepository implements ReplyInterface
                 $topic->last_reply_user_id = $reply->user_id;
                 $topic->save();
                 if ($input['action']) {
-                    $topic->type =  'App\Models\Topics\Topic';
+                    $topic->type =  'App\Models\Topic';
                     $topic->action = $input['action'];
                     $this->notification->createPersonal($topic);
                 }

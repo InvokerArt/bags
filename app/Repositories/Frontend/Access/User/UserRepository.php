@@ -2,12 +2,11 @@
 
 namespace App\Repositories\Frontend\Access\User;
 
-use App\Models\Access\User\User;
+use App\Models\Admin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Exceptions\GeneralException;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Access\User\SocialLogin;
 use App\Events\Frontend\Auth\UserConfirmed;
 use App\Repositories\Backend\Access\Role\RoleInterface;
 

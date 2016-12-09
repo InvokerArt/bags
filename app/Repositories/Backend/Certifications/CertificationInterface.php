@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Certifications;
 
-use App\Models\Certifications\Certification;
+use App\Models\Certification;
 
 interface CertificationInterface
 {

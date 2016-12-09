@@ -3,9 +3,9 @@
 namespace App\Repositories\Backend\News;
 
 use App\Exceptions\GeneralException;
-use App\Models\News\News;
-use App\Models\News\NewsCategory;
-use App\Models\Tags\Tag;
+use App\Models\News;
+use App\Models\NewsCategory;
+use App\Models\Tag;
 use App\Repositories\Backend\Tags\TagsInterface;
 use Auth;
 use Carbon\Carbon;

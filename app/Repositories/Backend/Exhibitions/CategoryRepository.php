@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Exhibitions;
 
-use App\Models\Exhibitions\CategoriesExhibitions;
+use App\Models\CategoriesExhibitions;
 use App\Exceptions\GeneralException;
 use App\Helper\Catalog\Image;
 

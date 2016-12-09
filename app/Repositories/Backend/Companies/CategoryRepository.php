@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Companies;
 
-use App\Models\Companies\CategoryCompany;
+use App\Models\CategoryCompany;
 use App\Exceptions\GeneralException;
 use App\Helper\Catalog\Image;
 

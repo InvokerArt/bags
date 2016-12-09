@@ -10,15 +10,15 @@ use App\Api\V1\Transformers\NewsTransformer;
 use App\Api\V1\Transformers\ProductTransformer;
 use App\Api\V1\Transformers\SupplyTransformer;
 use App\Api\V1\Transformers\TopicTransformer;
-use App\Models\Companies\Company;
-use App\Models\Demands\Demand;
-use App\Models\Exhibitions\Exhibition;
-use App\Models\Favorites\Favorite;
-use App\Models\Jobs\Job;
-use App\Models\News\News;
-use App\Models\Products\Product;
-use App\Models\Supplies\Supply;
-use App\Models\Topics\Topic;
+use App\Models\Company;
+use App\Models\Demand;
+use App\Models\Exhibition;
+use App\Models\Favorite;
+use App\Models\Job;
+use App\Models\News;
+use App\Models\Product;
+use App\Models\Supply;
+use App\Models\Topic;
 use Auth;
 
 class FavoriteController extends BaseController

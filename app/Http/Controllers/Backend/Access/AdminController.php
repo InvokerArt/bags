@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Http\Requests\Backend\Access\User\UserRequest;
 use App\Http\Requests\Backend\Access\User\UserStoreOrUpdateRequest;
-use App\Models\Access\User\User;
+use App\Models\Admin;
 use App\Repositories\Backend\Access\Permission\PermissionInterface;
 use App\Repositories\Backend\Access\Role\RoleInterface;
 use App\Repositories\Backend\Access\User\UserInterface;
@@ -105,7 +105,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user, Request $request)
+    public function edit(Admin $user, Request $request)
     {
         return view('backend.access.user.edit')
             ->withUser($user)

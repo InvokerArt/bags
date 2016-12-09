@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Access\User\User;
+use App\Models\Admin;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use SmsManager;
 use Validator;

@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Hanlder\NotificationPush;
-use App\Models\Users\User;
+use App\Models\User;
 use Auth;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;

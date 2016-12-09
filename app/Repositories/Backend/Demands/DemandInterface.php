@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Demands;
 
-use App\Models\Demands\Demand;
+use App\Models\Demand;
 
 interface DemandInterface
 {

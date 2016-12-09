@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Backend\Topics;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Topics\TopicStoreOrUpdateRequest;
-use App\Models\Topics\CategoriesTopics;
-use App\Models\Topics\Topic;
-use App\Models\Users\User;
+use App\Models\CategoriesTopics;
+use App\Models\Topic;
+use App\Models\User;
 use App\Repositories\Backend\Topics\TopicInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;

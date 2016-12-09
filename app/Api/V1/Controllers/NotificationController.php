@@ -3,8 +3,8 @@
 namespace App\Api\V1\Controllers;
 
 use App\Api\V1\Transformers\NotificationTransformer;
-use App\Models\Notifications\Notification;
-use App\Models\Notifications\NotificationUser;
+use App\Models\Notification;
+use App\Models\NotificationUser;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -30,7 +30,7 @@ class NotificationController extends BaseController
                 "id": 104,
                 "title": "系统通知",
                 "notification_id": 26,
-                "notification_type": "App\\Models\\Joins\\Join",
+                "notification_type": "App\\Models\\Join",
                 "message": "user • 申请认证，请您及时处理。",
                 "sender": 2,
                 "read_at": "",
@@ -40,7 +40,7 @@ class NotificationController extends BaseController
                 "id": 96,
                 "title": "赞了你的回复",
                 "notification_id": 1,
-                "notification_type": "App\\Models\\Topics\\Reply",
+                "notification_type": "App\\Models\\Reply",
                 "message": "user • 赞了你的回复",
                 "sender": 2,
                 "read_at": "",
@@ -50,7 +50,7 @@ class NotificationController extends BaseController
                 "id": 95,
                 "title": "赞了你的主题",
                 "notification_id": 4,
-                "notification_type": "App\\Models\\Topics\\Topic",
+                "notification_type": "App\\Models\\Topic",
                 "message": "user • 赞了你的主题 • 我再发布了一个话题",
                 "sender": 2,
                 "read_at": "",
@@ -60,7 +60,7 @@ class NotificationController extends BaseController
                 "id": 57,
                 "title": "系统消息",
                 "notification_id": 5,
-                "notification_type": "App\\Models\\News\\News",
+                "notification_type": "App\\Models\\News",
                 "message": "啊大大",
                 "sender": "",
                 "read_at": "",
@@ -70,7 +70,7 @@ class NotificationController extends BaseController
                 "id": 56,
                 "title": "系统消息",
                 "notification_id": 5,
-                "notification_type": "App\\Models\\News\\News",
+                "notification_type": "App\\Models\\News",
                 "message": "啊大大",
                 "sender": "",
                 "read_at": "",
@@ -80,7 +80,7 @@ class NotificationController extends BaseController
                 "id": 55,
                 "title": "系统消息",
                 "notification_id": 5,
-                "notification_type": "App\\Models\\News\\News",
+                "notification_type": "App\\Models\\News",
                 "message": "啊大大",
                 "sender": "",
                 "read_at": "",
@@ -90,7 +90,7 @@ class NotificationController extends BaseController
                 "id": 54,
                 "title": "系统消息",
                 "notification_id": 5,
-                "notification_type": "App\\Models\\News\\News",
+                "notification_type": "App\\Models\\News",
                 "message": "我现在要给所有用户发一条内部消息",
                 "sender": "",
                 "read_at": "",
@@ -100,7 +100,7 @@ class NotificationController extends BaseController
                 "id": 53,
                 "title": "系统消息",
                 "notification_id": 4,
-                "notification_type": "App\\Models\\News\\News",
+                "notification_type": "App\\Models\\News",
                 "message": "我现在要给所有用户发一条内部消息",
                 "sender": "",
                 "read_at": "",
@@ -110,7 +110,7 @@ class NotificationController extends BaseController
                 "id": 6,
                 "title": "系统消息",
                 "notification_id": 3,
-                "notification_type": "App\\Models\\Topics\\Topic",
+                "notification_type": "App\\Models\\Topic",
                 "message": "我推送了什么消息吗",
                 "sender": "",
                 "read_at": "",
@@ -120,7 +120,7 @@ class NotificationController extends BaseController
                 "id": 5,
                 "title": "系统消息",
                 "notification_id": 2,
-                "notification_type": "App\\Models\\Topics\\Topic",
+                "notification_type": "App\\Models\\Topic",
                 "message": "我推送论坛消息",
                 "sender": "",
                 "read_at": "",
@@ -130,7 +130,7 @@ class NotificationController extends BaseController
                 "id": 4,
                 "title": "系统消息",
                 "notification_id": 1,
-                "notification_type": "App\\Models\\Topics\\Topic",
+                "notification_type": "App\\Models\\Topic",
                 "message": "我是推送消息",
                 "sender": "",
                 "read_at": "2016-11-10 11:04:48",

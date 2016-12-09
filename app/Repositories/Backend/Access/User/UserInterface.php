@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Access\User;
 
-use App\Models\Access\User\User;
+use App\Models\Admin;
 
 /**
  * Interface UserInterface
@@ -50,33 +50,33 @@ interface UserInterface
      * @param  User $user
      * @return mixed
      */
-    public function delete(User $user);
+    public function delete(Admin $user);
 
     /**
      * @param  User $user
      * @return mixed
      */
-    public function restore(User $user);
+    public function restore(Admin $user);
 
     /**
      * @param  User $user
      * @param  $status
      * @return mixed
      */
-    public function mark(User $user, $status);
+    public function mark(Admin $user, $status);
 
     /**
      * @param  User $user
      * @param  $input
      * @return mixed
      */
-    public function updatePassword(User $user, $input);
+    public function updatePassword(Admin $user, $input);
 
     /**
      * @param User $user
      * @return mixed
      */
-    public function loginAs(User $user);
+    public function loginAs(Admin $user);
 
     /**
      * @return mixed

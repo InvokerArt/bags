@@ -3,9 +3,9 @@
 namespace App\Repositories\Backend\Joins;
 
 use App\Exceptions\GeneralException;
-use App\Models\Companies\Company;
-use App\Models\Joins\Join;
-use App\Models\Users\User;
+use App\Models\Company;
+use App\Models\Join;
+use App\Models\User;
 use App\Repositories\Backend\Notifications\NotificationInterface;
 use DB;
 
@@ -45,7 +45,7 @@ class JoinRepository implements JoinInterface
         if ($company && $company->role === 3) {
             throw new GeneralException('该公司不属于采购商或加盟商！');
         }
-        $isJoin = Join::where('company_id', $company->id)->where('status', 1)->orWhere('status', 2)->first();
+        $isJoin = Join::where('company_id', $company->id)->where('user_id', $user->id)->whereIn('status', [1, 2])->first();
         if ($isJoin) {
             throw new GeneralException('请勿重复申请加盟该公司！');
         }

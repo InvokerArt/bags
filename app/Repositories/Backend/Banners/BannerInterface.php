@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Banners;
 
-use App\Models\Banners\Banner;
+use App\Models\Banner;
 
 interface BannerInterface
 {

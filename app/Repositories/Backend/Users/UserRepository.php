@@ -3,7 +3,7 @@
 namespace App\Repositories\Backend\Users;
 
 use App\Exceptions\GeneralException;
-use App\Models\Users\User;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Image;
 use URL;

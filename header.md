@@ -30,7 +30,7 @@ http://www.xxx.com/api/companies/role/:id
 
 #### 申请加盟和申请认证的状态  
 status=0 已驳回  
-status=1 待审核  
+status=1 待审核(待处理)  
 status=2 已通过  
 
 #### Unit单位
@@ -39,20 +39,20 @@ status=2 已通过
 #### 消息说明
 ##### 互动消息
 id - 话题ID  
-'type' => 'App\Models\Topics\Topic' - 论坛话题  
+'type' => 'App\Models\Topic' - 论坛话题  
 接口请求地址 get http://stone.dev/api/topics/:id
 ##### 系统消息
-'notification_type' => 'App\Models\News\News' - 资讯  
+'notification_type' => 'App\Models\News' - 资讯  
 接口请求地址 get http://stone.dev/api/news/:id //:id为notification_id  
-'notification_type' => 'App\Models\Exhibitions\Exhibition' - 展会  
+'notification_type' => 'App\Models\Exhibition' - 展会  
 接口请求地址 get http://stone.dev/api/news/:id //:id为notification_id  
-'notification_type' => 'App\Models\Joins\Join' - 申请加盟  
+'notification_type' => 'App\Models\Join' - 申请加盟  
 接口请求地址 get http://stone.dev/api/users/joins  
-'notification_type' => 'App\Models\Certifications\Certification' - 申请认证  
+'notification_type' => 'App\Models\Certification' - 申请认证  
 接口请求地址 get http://stone.dev/api/users/certifications  
-'notification_type' => 'App\Models\Topics\Topic' - 论坛话题    
+'notification_type' => 'App\Models\Topic' - 论坛话题    
 接口请求地址 get http://stone.dev/api/topics/:id //:id为notification_id  
-'notification_type' => 'App\Models\Topics\Reply' - 话题回复  
+'notification_type' => 'App\Models\Reply' - 话题回复  
 接口请求地址 get http://stone.dev/api/topics/:id //:id为notification_id  
 
 

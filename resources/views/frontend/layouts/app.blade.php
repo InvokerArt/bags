@@ -11,7 +11,7 @@
     <title>环保降解袋</title>
 
     <!-- Styles -->
-    <link href="/css/frontend/default.css" rel="stylesheet">
+    <link href="/css/advertising/default.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>

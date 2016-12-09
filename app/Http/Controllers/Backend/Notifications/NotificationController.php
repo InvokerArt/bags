@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend\Notifications;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Notifications\NotificationStoreRequest;
-use App\Models\Notifications\Notification;
+use App\Models\Notification;
 use App\Repositories\Backend\Notifications\NotificationInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;

@@ -3,7 +3,7 @@
 namespace App\Repositories\Backend\Access\User;
 
 use App\Exceptions\GeneralException;
-use App\Models\Access\User\User;
+use App\Models\Admin;
 use App\Repositories\Backend\Access\Role\RoleInterface;
 use Illuminate\Support\Facades\DB;
 use Image;
@@ -29,7 +29,7 @@ class UserRepository implements UserInterface
      * @param RoleInterface $role
      * @param FrontendUserInterface $user
      */
-    public function __construct(RoleInterface $role, User $user)
+    public function __construct(RoleInterface $role, Admin $user)
     {
         $this->role = $role;
         $this->user = $user;
@@ -42,10 +42,10 @@ class UserRepository implements UserInterface
      */
     public function getForDataTable()
     {
-        return User::has('roles', '>', 0)
+        return Admin::has('roles', '>', 0)
         ->get();
         //原生写法
-        // return User::leftJoin("role_user", 'role_user.user_id', '=', 'users.id')
+        // return Admin::leftJoin("role_user", 'role_user.user_id', '=', 'users.id')
         //     ->whereNotNull('role_user.user_id')
         //     ->get()
         //     ->unique();
@@ -59,10 +59,10 @@ class UserRepository implements UserInterface
      */
     public function getUserForDataTable()
     {
-        return User::has('roles', '=', 0)
+        return Admin::has('roles', '=', 0)
         ->get();
         //原生写法
-        // return User::leftJoin("role_user", 'role_user.user_id', '=', 'users.id')
+        // return Admin::leftJoin("role_user", 'role_user.user_id', '=', 'users.id')
         //     ->whereNull('role_user.user_id')
         //     ->get()
         //     ->unique();
@@ -77,7 +77,7 @@ class UserRepository implements UserInterface
      */
     public function create($input)
     {
-        $user = User::where('username', $input['username'])->first();
+        $user = Admin::where('username', $input['username'])->first();
 
         if (!$user) {
             throw new GeneralException('用户不存在！');
@@ -120,7 +120,7 @@ class UserRepository implements UserInterface
     }
 
     /**
-     * @param User $user
+     * @param Admin $user
      * @param $input
      * @param $roles
      * @return bool
@@ -128,7 +128,7 @@ class UserRepository implements UserInterface
      */
     public function update($input)
     {
-        $user = User::where('username', $input['username'])->first();
+        $user = Admin::where('username', $input['username'])->first();
 
         if (!$user) {
             throw new GeneralException('用户不存在！');
@@ -171,12 +171,12 @@ class UserRepository implements UserInterface
     }
 
     /**
-     * @param  User $user
+     * @param  Admin $user
      * @param  $input
      * @throws GeneralException
      * @return bool
      */
-    public function updatePassword(User $user, $input)
+    public function updatePassword(Admin $user, $input)
     {
         $user->password = bcrypt($input['password']);
 
@@ -189,7 +189,7 @@ class UserRepository implements UserInterface
     }
 
     /**
-     * @param  User $user
+     * @param  Admin $user
      * @throws GeneralException
      * @return bool
      */
@@ -203,17 +203,17 @@ class UserRepository implements UserInterface
         if (auth()->id() == $id) {
             throw new GeneralException('不能删除自己！');
         }
-        $user = User::with('roles')->find($id);
+        $user = Admin::with('roles')->find($id);
         $user->detachRoles($user->roles);
         return true;
     }
 
     /**
-     * @param  User $user
+     * @param  Admin $user
      * @throws GeneralException
      * @return boolean|null
      */
-    public function delete(User $user)
+    public function delete(Admin $user)
     {
         //Failsafe
         if (is_null($user->deleted_at)) {
@@ -234,11 +234,11 @@ class UserRepository implements UserInterface
     }
 
     /**
-     * @param  User $user
+     * @param  Admin $user
      * @throws GeneralException
      * @return bool
      */
-    public function restore(User $user)
+    public function restore(Admin $user)
     {
         //Failsafe
         if (is_null($user->deleted_at)) {
@@ -254,12 +254,12 @@ class UserRepository implements UserInterface
     }
 
     /**
-     * @param  User $user
+     * @param  Admin $user
      * @param  $status
      * @throws GeneralException
      * @return bool
      */
-    public function mark(User $user, $status)
+    public function mark(Admin $user, $status)
     {
         if (access()->id() == $user->id && $status == 0) {
             throw new GeneralException(trans('exceptions.backend.access.users.cant_deactivate_self'));
@@ -286,11 +286,11 @@ class UserRepository implements UserInterface
     }
 
     /**
-     * @param User $user
+     * @param Admin $user
      * @return \Illuminate\Http\RedirectResponse
      * @throws GeneralException
      */
-    public function loginAs(User $user)
+    public function loginAs(Admin $user)
     {
         // Overwrite who we're logging in as, if we're already logged in as someone else.
         if (session()->has('admin_user_id') && session()->has('temp_user_id')) {
@@ -407,7 +407,7 @@ class UserRepository implements UserInterface
         //Figure out if email is not the same
         if ($user->email != $input['email']) {
             //Check to see if email exists
-            if (User::where('email', '=', $input['email'])->first()) {
+            if (Admin::where('email', '=', $input['email'])->first()) {
                 throw new GeneralException(trans('exceptions.backend.access.users.email_error'));
             }
         }
@@ -430,7 +430,7 @@ class UserRepository implements UserInterface
      */
     private function checkUserRolesCount($roles)
     {
-        //User Updated, Update Roles
+        //Admin Updated, Update Roles
         //Validate that there's at least one role chosen
         if (count($roles['role_user']) == 0) {
             throw new GeneralException(trans('exceptions.backend.access.users.role_needed'));
@@ -443,7 +443,7 @@ class UserRepository implements UserInterface
      */
     private function createUserStub($input)
     {
-        $user                    = new User;
+        $user                    = new Admin;
         $user->username              = $input['username'];
         $user->email             = $input['email'];
         $user->password          = bcrypt($input['password']);

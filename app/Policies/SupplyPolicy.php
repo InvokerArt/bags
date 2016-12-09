@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Supplies\Supply;
-use App\Models\Users\User;
+use App\Models\Supply;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SupplyPolicy

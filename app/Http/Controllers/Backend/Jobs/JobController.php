@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Backend\Jobs;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Jobs\JobStoreOrUpdateRequest;
-use App\Models\Access\User\User;
-use App\Models\Jobs\Job;
+use App\Models\Admin;
+use App\Models\Job;
 use App\Repositories\Backend\Jobs\JobInterface;
 use Auth;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class JobController extends Controller
     protected $jobs;
     protected $user;
 
-    public function __construct(JobInterface $jobs, User $user)
+    public function __construct(JobInterface $jobs, Admin $user)
     {
         $this->jobs = $jobs;
         $this->user = $user;
@@ -98,7 +98,7 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        $user = User::select('username')->where('id', $job->user_id)->first();
+        $user = Admin::select('username')->where('id', $job->user_id)->first();
         $job->username = $user->username;
         return view('backend.jobs.edit', compact('job'));
     }

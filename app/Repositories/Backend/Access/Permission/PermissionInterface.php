@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Access\Permission;
 
-use App\Models\Access\Permission\Permission;
+use App\Models\Permission;
 
 /**
  * Interface PermissionInterface
@@ -10,12 +10,12 @@ use App\Models\Access\Permission\Permission;
  */
 interface PermissionInterface
 {
-	/**
-	 * 获取Datatable数据
-	 *
-	 * @return \Illuminate\Database\Eloquent\Collection
-	 */
-	public function getForDataTable();
+    /**
+     * 获取Datatable数据
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getForDataTable();
 
     /**
      * @param  string  $order_by
@@ -48,6 +48,4 @@ interface PermissionInterface
      * @return mixed
      */
     public function destroy(Permission $permission);
-
-
 }

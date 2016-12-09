@@ -3,8 +3,8 @@
 namespace App\Repositories\Backend\Topics;
 
 use App\Exceptions\GeneralException;
-use App\Models\Topics\Topic;
-use App\Models\Topics\TopicCategory;
+use App\Models\Topic;
+use App\Models\TopicCategory;
 use DB;
 use Auth;
 

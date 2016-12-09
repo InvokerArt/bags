@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Banners;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Banners\BannerStoreRequest;
 use App\Http\Requests\Backend\Banners\BannerUpdateRequest;
-use App\Models\Banners\Banner;
+use App\Models\Banner;
 use App\Repositories\Backend\Banners\BannerInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;

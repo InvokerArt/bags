@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Banners;
 
-use App\Models\Banners\Image;
+use App\Models\Image;
 
 interface ImageInterface
 {

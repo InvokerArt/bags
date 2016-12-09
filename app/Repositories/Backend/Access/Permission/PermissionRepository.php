@@ -3,7 +3,7 @@
 namespace App\Repositories\Backend\Access\Permission;
 
 use Entrust;
-use App\Models\Access\Permission\Permission;
+use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 

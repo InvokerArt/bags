@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Demands\Demand;
-use App\Models\Users\User;
+use App\Models\Demand;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class DemandPolicy

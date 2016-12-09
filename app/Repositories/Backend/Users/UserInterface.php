@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Backend\Users;
 
-use App\Models\Users\User;
+use App\Models\User;
 
 /**
  * Interface UserInterface

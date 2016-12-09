@@ -5,7 +5,7 @@ namespace App\Api\V1\Controllers;
 use App\Api\V1\Requests\ProductStoreOrUpdateRequest;
 use App\Api\V1\Transformers\ProductShowTransformer;
 use App\Api\V1\Transformers\ProductTransformer;
-use App\Models\Products\Product;
+use App\Models\Product;
 use App\Repositories\Backend\Products\ProductInterface;
 use Auth;
 use Illuminate\Http\Request;
