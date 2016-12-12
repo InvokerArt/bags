@@ -36,8 +36,6 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
 
         $api->get('companies/jobs', 'CompanyController@job');
         $api->get('companies/products', 'CompanyController@product');
-        //评论
-        //$api->post('news/{id}/comment', 'CommentController@store');
         //加盟和认证
         $api->get('companies/{company}/join-certification', 'CompanyController@joinAndValidate');
         $api->post('companies/{company}/joins', 'CompanyController@joinCompany');
