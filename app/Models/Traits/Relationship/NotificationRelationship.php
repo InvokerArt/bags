@@ -13,4 +13,14 @@ trait NotificationRelationship
     {
         return $this->morphTo();
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function topic()
+    {
+        return $this->belongsTo('App\Models\Topic');
+    }
 }

@@ -4206,6 +4206,56 @@
     "name": "GetTopicsIdReplies"
   },
   {
+    "type": "get",
+    "url": "/topics/search",
+    "title": "话题搜索",
+    "description": "<p>话题搜索</p>",
+    "group": "Topic",
+    "permission": [
+      {
+        "name": "无"
+      }
+    ],
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "q",
+            "description": "<p>搜索关键字</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "categories",
+            "description": "<p>话题分类</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/topics/search"
+      }
+    ],
+    "filename": "App/Api/v1/Controllers/TopicController.php",
+    "groupTitle": "论坛",
+    "name": "GetTopicsSearch"
+  },
+  {
     "type": "post",
     "url": "/topics",
     "title": "发布话题",

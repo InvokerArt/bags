@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Access\User\User;
+use App\Models\Admin;
 use App\Models\Traits\Attribute\SupplyAttribute;
 use App\Models\Traits\Relationship\SupplyRelationship;
 use Illuminate\Database\Eloquent\Model;

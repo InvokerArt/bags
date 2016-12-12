@@ -47,7 +47,7 @@ class NotificationRepository implements NotificationInterface
         $notification->sender = Auth::id();
         $notificationUser = new NotificationUser(['user_id' => $input->user_id]);
 
-        DB::transaction(function () use ($notification, $notificationUser, $input) {
+        DB::transaction(function () use ($notification, $notificationUser) {
             if ($notification->save()) {
                 $notification->notificationUser()->save($notificationUser);
                 return $notification;

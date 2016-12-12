@@ -156,6 +156,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
      */
     $api->get('topics/categories', 'TopicController@categories');
     $api->get('topics/categories/{id}', 'TopicController@index');
+    $api->get('topics/search', 'TopicController@search');
     $api->get('topics/{topic}', 'TopicController@show');
 
     /**

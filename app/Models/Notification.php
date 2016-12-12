@@ -13,6 +13,7 @@ use App\Hanlder\NotificationPresenter;
 
 class Notification extends Model
 {
+    use NotificationAttribute, NotificationRelationship;
     protected $fillable = ['type', 'notification_id', 'notification_type', 'data', 'action', 'sender'];
 
     public static function notificationFilter($query, $request)
@@ -22,16 +23,6 @@ class Notification extends Model
         }
 
         return $query;
-    }
-
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
-    }
-
-    public function topic()
-    {
-        return $this->belongsTo('App\Models\Topic');
     }
 
     public function scopeRecent($query)

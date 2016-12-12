@@ -707,4 +707,37 @@ class TopicController extends BaseController
         $this->vote->create($reply);
         return $this->response->noContent();
     }
+
+
+
+    /**
+     * @api {get} /topics/search 话题搜索
+     * @apiDescription 话题搜索
+     * @apiGroup Topic
+     * @apiPermission 无
+     * @apiVersion 1.0.0
+     * @apiParam {String} q 搜索关键字
+     * @apiParam {Number} categories 话题分类
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+     * @apiSampleRequest /api/topics/search
+     */
+    public function search(Request $request)
+    {
+        $query = Topic::select();
+
+        if ($request->q) {
+            $query->where(function ($query) use ($request) {
+                $query->where('title', 'like', "%$request->q%")
+                ->orWhere('content', 'like', "%$request->q%");
+            });
+        }
+
+        if ($request->categories) {
+            $query->where('category_id', $request->categories);
+        }
+
+        $topics = $query->paginate();
+        return $this->response->paginator($topics, new TopicTransformer());
+    }
 }
