@@ -302,4 +302,45 @@ class SupplyController extends BaseController
         $supplies = $this->supplies->search($request);
         return $this->response->paginator($supplies, new SupplyTransformer());
     }
+
+    /**
+     * @api {get} /users/supplies/search 供应搜索
+     * @apiDescription 供应搜索
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {String} q 搜索关键字
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 2,
+                "title": "我需求100袋包装袋",
+                "images": [
+                    "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+                ],
+                "content": "我就需要这么多包装袋",
+                "is_excellent": 1
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 1,
+                "count": 1,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
+     * @apiSampleRequest /api/users/supplies/search
+     */
+    public function searchWithUser(Request $request)
+    {
+        $supplies = $this->supplies->searchWithUser($request);
+        return $this->response->paginator($supplies, new SupplyTransformer());
+    }
 }

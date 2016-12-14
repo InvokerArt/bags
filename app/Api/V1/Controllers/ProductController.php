@@ -215,6 +215,7 @@ class ProductController extends BaseController
         $product->delete();
         return $this->response->noContent();
     }
+
     /**
      * @api {get} /products/search 产品搜索
      * @apiDescription 产品搜索
@@ -258,7 +259,57 @@ class ProductController extends BaseController
      */
     public function search(Request $request)
     {
-        $news = Product::where('title', 'like', "%$request->q%")->orWhere('content', 'like', "%$request->q%")->paginate();
-        return $this->response->paginator($news, new ProductTransformer());
+        $products = Product::where('title', 'like', "%$request->q%")->orWhere('content', 'like', "%$request->q%")->paginate();
+        return $this->response->paginator($products, new ProductTransformer());
+    }
+    
+    /**
+     * @api {get} /users/products/search 产品搜索
+     * @apiDescription 产品搜索
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {String} q 搜索关键字
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 1,
+                "title": "产品标题",
+                "price": 1.2,
+                "unit": 1,
+                "content": "<p>产品很好很好产品很好很好产品很好很好产品很好很好</p>",
+                "images": "http://stone.dev/uploads/products/2016/11/092739rqKq.png"
+            },
+            {
+                "id": 3,
+                "title": "我要更新一个产品4",
+                "price": 1000,
+                "unit": 1,
+                "content": "内容就是产品够好你买不买",
+                "images": "http://stone.dev/uploads/products/2016/11/165204E76X.png"
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 2,
+                "count": 2,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
+     * @apiSampleRequest /api/users/products/search
+     */
+    public function searchWithUser(Request $request)
+    {
+        $products = Product::where('user_id', Auth::id())->where(function ($query) use ($request) {
+            $query->where('title', 'like', "%$request->q%")->orWhere('content', 'like', "%$request->q%");
+        })->paginate();
+        return $this->response->paginator($products, new ProductTransformer());
     }
 }

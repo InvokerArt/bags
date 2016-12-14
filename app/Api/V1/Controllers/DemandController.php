@@ -351,4 +351,86 @@ class DemandController extends BaseController
         $demands = $this->demands->search($request);
         return $this->response->paginator($demands, new DemandTransformer());
     }
+
+    /**
+     * @api {get} /users/demands/search 需求搜索
+     * @apiDescription 需求搜索
+     * @apiGroup Auth
+     * @apiPermission 认证
+     * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
+     * @apiParam {String} q 搜索关键字
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 1,
+                "title": "我需求质量好的袋子",
+                "quantity": 1000,
+                "unit": 5,
+                "images": [
+                    "http://stone.dev/uploads/products/2016/11/165305Y37a.png"
+                ],
+                "is_excellent": 0
+            },
+            {
+                "id": 2,
+                "title": "我需求100袋包装袋",
+                "quantity": 100,
+                "unit": 4,
+                "images": [
+                    "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+                ],
+                "is_excellent": 0
+            },
+            {
+                "id": 3,
+                "title": "我需求100袋包装袋",
+                "quantity": 1000,
+                "unit": 5,
+                "images": [
+                    "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+                ],
+                "is_excellent": 1
+            },
+            {
+                "id": 4,
+                "title": "我需求100袋包装袋",
+                "quantity": 100,
+                "unit": 4,
+                "images": [
+                    "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+                ],
+                "is_excellent": 0
+            },
+            {
+                "id": 6,
+                "title": "我需求100袋包装袋",
+                "quantity": 100,
+                "unit": 4,
+                "images": [
+                    "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+                ],
+                "is_excellent": 0
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 5,
+                "count": 5,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
+     * @apiSampleRequest /api/users/demands/search
+     */
+    public function searchWithUser(Request $request)
+    {
+        $demands = $this->demands->searchWithUser($request);
+        return $this->response->paginator($demands, new DemandTransformer());
+    }
 }

@@ -99,7 +99,7 @@ class CompanyController extends Controller
     public function edit(Company $company)
     {
         $categories = $company->categories->pluck('id')->toArray();
-        $user = User::where('id', $company->user_id)->first();
+        $user = Admin::where('id', $company->user_id)->first();
         $company->username = $user->username;
         $city = Area::select('code', 'parent_id')->where('code', $company->address)->first();
         $province = Area::select('parent_id')->where('code', $city->parent_id)->first();

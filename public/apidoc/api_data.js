@@ -403,6 +403,61 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/users/demands/search",
+    "title": "需求搜索",
+    "description": "<p>需求搜索</p>",
+    "group": "Auth",
+    "permission": [
+      {
+        "name": "认证"
+      }
+    ],
+    "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer {access_token}</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "q",
+            "description": "<p>搜索关键字</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"我需求质量好的袋子\",\n            \"quantity\": 1000,\n            \"unit\": 5,\n            \"images\": [\n                \"http://stone.dev/uploads/products/2016/11/165305Y37a.png\"\n            ],\n            \"is_excellent\": 0\n        },\n        {\n            \"id\": 2,\n            \"title\": \"我需求100袋包装袋\",\n            \"quantity\": 100,\n            \"unit\": 4,\n            \"images\": [\n                \"http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg\"\n            ],\n            \"is_excellent\": 0\n        },\n        {\n            \"id\": 3,\n            \"title\": \"我需求100袋包装袋\",\n            \"quantity\": 1000,\n            \"unit\": 5,\n            \"images\": [\n                \"http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg\"\n            ],\n            \"is_excellent\": 1\n        },\n        {\n            \"id\": 4,\n            \"title\": \"我需求100袋包装袋\",\n            \"quantity\": 100,\n            \"unit\": 4,\n            \"images\": [\n                \"http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg\"\n            ],\n            \"is_excellent\": 0\n        },\n        {\n            \"id\": 6,\n            \"title\": \"我需求100袋包装袋\",\n            \"quantity\": 100,\n            \"unit\": 4,\n            \"images\": [\n                \"http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg\"\n            ],\n            \"is_excellent\": 0\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 5,\n            \"count\": 5,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/users/demands/search"
+      }
+    ],
+    "filename": "App/Api/v1/Controllers/DemandController.php",
+    "groupTitle": "用户",
+    "name": "GetUsersDemandsSearch"
+  },
+  {
+    "type": "get",
     "url": "/users/:id",
     "title": "获取用户信息",
     "description": "<p>获取单个用户信息</p>",
@@ -614,6 +669,61 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/users/products/search",
+    "title": "产品搜索",
+    "description": "<p>产品搜索</p>",
+    "group": "Auth",
+    "permission": [
+      {
+        "name": "认证"
+      }
+    ],
+    "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer {access_token}</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "q",
+            "description": "<p>搜索关键字</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"产品标题\",\n            \"price\": 1.2,\n            \"unit\": 1,\n            \"content\": \"<p>产品很好很好产品很好很好产品很好很好产品很好很好</p>\",\n            \"images\": \"http://stone.dev/uploads/products/2016/11/092739rqKq.png\"\n        },\n        {\n            \"id\": 3,\n            \"title\": \"我要更新一个产品4\",\n            \"price\": 1000,\n            \"unit\": 1,\n            \"content\": \"内容就是产品够好你买不买\",\n            \"images\": \"http://stone.dev/uploads/products/2016/11/165204E76X.png\"\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 2,\n            \"count\": 2,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/users/products/search"
+      }
+    ],
+    "filename": "App/Api/v1/Controllers/ProductController.php",
+    "groupTitle": "用户",
+    "name": "GetUsersProductsSearch"
+  },
+  {
+    "type": "get",
     "url": "/users/supplies",
     "title": "供应列表",
     "description": "<p>供应列表</p>",
@@ -653,6 +763,61 @@ define({ "api": [
     "filename": "App/Api/v1/Controllers/SupplyController.php",
     "groupTitle": "用户",
     "name": "GetUsersSupplies"
+  },
+  {
+    "type": "get",
+    "url": "/users/supplies/search",
+    "title": "供应搜索",
+    "description": "<p>供应搜索</p>",
+    "group": "Auth",
+    "permission": [
+      {
+        "name": "认证"
+      }
+    ],
+    "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer {access_token}</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "q",
+            "description": "<p>搜索关键字</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"我需求100袋包装袋\",\n            \"images\": [\n                \"http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg\"\n            ],\n            \"content\": \"我就需要这么多包装袋\",\n            \"is_excellent\": 1\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 1,\n            \"count\": 1,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/users/supplies/search"
+      }
+    ],
+    "filename": "App/Api/v1/Controllers/SupplyController.php",
+    "groupTitle": "用户",
+    "name": "GetUsersSuppliesSearch"
   },
   {
     "type": "get",
@@ -2927,6 +3092,18 @@ define({ "api": [
       }
     ],
     "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer {access_token}</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -4141,9 +4318,21 @@ define({ "api": [
     "group": "Topic",
     "permission": [
       {
-        "name": "无"
+        "name": "认证"
       }
     ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer {access_token}</p>"
+          }
+        ]
+      }
+    },
     "version": "1.0.0",
     "success": {
       "examples": [

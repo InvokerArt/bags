@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
-|
+| 路由顺序会导致某些路由404要注意！！！
 */
 $api = Api::router();
 
@@ -19,6 +19,12 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         'limit'      => config('api.rate_limits.access.limits'),
         'expires'    => config('api.rate_limits.access.expires'),
 ], function ($api) {
+
+    /**
+     * 论坛
+     */
+    $api->get('topics/categories', 'TopicController@categories');
+    $api->get('topics/search', 'TopicController@search');
 
     //需要认证权限
     $api->group(['middleware' => 'passport:api'], function ($api) {
@@ -33,6 +39,12 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->get('users/join-out', 'AuthController@indexJoinOut');
         $api->get('users/certification-in', 'AuthController@indexCertificationIn');
         $api->get('users/certification-out', 'AuthController@indexCertificationOut');
+        //用户产品搜索
+        $api->get('users/products/search', 'ProductController@searchWithUser');
+        //用户需求搜索
+        $api->get('users/demands/search', 'DemandController@searchWithUser');
+        //用户供应搜索
+        $api->get('users/supplies/search', 'SupplyController@searchWithUser');
 
         $api->get('companies/jobs', 'CompanyController@job');
         $api->get('companies/products', 'CompanyController@product');
@@ -49,6 +61,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->resource('supplies', 'SupplyController', ['except' => ['index', 'create', 'show']]);
         $api->get('users/supplies', 'SupplyController@indexByUser');
         //话题
+        $api->get('topics/{topic}', 'TopicController@show');
         $api->resource('topics', 'TopicController', ['except' => ['index', 'create', 'show']]);
         $api->get('users/topics', 'TopicController@indexByUser');
         //话题点赞和取消赞
@@ -152,10 +165,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     /**
      * 论坛
      */
-    $api->get('topics/categories', 'TopicController@categories');
     $api->get('topics/categories/{id}', 'TopicController@index');
-    $api->get('topics/search', 'TopicController@search');
-    $api->get('topics/{topic}', 'TopicController@show');
 
     /**
      * 产品

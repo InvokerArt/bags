@@ -3,10 +3,12 @@
 namespace App\Repositories\Backend\Topics;
 
 use App\Exceptions\GeneralException;
+use App\Models\Favorite;
 use App\Models\Topic;
 use App\Models\TopicCategory;
-use DB;
+use App\Models\Vote;
 use Auth;
+use DB;
 
 /**
  * Class EloquentUserRepository
@@ -113,7 +115,11 @@ class TopicRepository implements TopicInterface
 
     public function userFavorite($topic_id, $user_id)
     {
-        return Favorite::where(compact('topic_id', 'user_id'))->exists();
+        return Favorite::where([
+            'user_id'      => $user_id,
+            'favorite_id'   => $topic_id,
+            'favorite_type' => 'App\Models\Topic',
+        ])->exists();
     }
 
     /**
@@ -129,8 +135,8 @@ class TopicRepository implements TopicInterface
         return Vote::query()->where([
             'user_id'      => $user_id,
             'votable_id'   => $topic_id,
-            'votable_type' => 'Topic',
-            'is'           => 'upvote',
+            'votable_type' => 'App\Models\Topic',
+            'is'           => 'topic_vote',
         ])->exists();
     }
 }

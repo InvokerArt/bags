@@ -43,4 +43,10 @@ interface SupplyInterface
      * @return mixed
      */
     public function search($input);
+
+    /**
+     * @param $input
+     * @return mixed
+     */
+    public function searchWithUser($input);
 }

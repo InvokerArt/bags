@@ -274,7 +274,7 @@ class CompanyController extends BaseController
         $company->categories = $company->categories()->get();
         $user = $company->user()->first();
         $company->products = $user->products()->get();
-        $company->jobs = $user->jobs()->get();
+        $company->jobs = $user->jobs()->paginate();
         return $this->response->item($company, new CompanyShowTransformer());
     }
 

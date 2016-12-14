@@ -229,7 +229,6 @@ class TopicController extends BaseController
      */
     public function index($id, Request $request, Topic $topic)
     {
-        //$category = CategoriesTopics::findOrFail($id);
         $filter = $topic->correctApiFilter($request->get('filters'));
         $topics = $topic->getCategoryTopicsWithFilter($filter, $id);
         return $this->response()->paginator($topics, new TopicTransformer());
@@ -249,8 +248,7 @@ class TopicController extends BaseController
     public function indexByUser()
     {
         $user = Auth::user();
-        $topics = Topic::whose($user->id)
-                    ->orderBy('is_excellent', 'DESC')->recent()->paginate();
+        $topics = Topic::whose($user->id)->orderBy('is_excellent', 'DESC')->recent()->paginate();
         return $this->response()->paginator($topics, new TopicTransformer());
     }
 
@@ -291,7 +289,8 @@ class TopicController extends BaseController
      * @api {get} /topics/:id 话题详情
      * @apiDescription 话题详情
      * @apiGroup Topic
-     * @apiPermission 无
+     * @apiPermission 认证
+     * @apiHeader Authorization Bearer {access_token}
      * @apiVersion 1.0.0
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
@@ -490,7 +489,7 @@ class TopicController extends BaseController
         $topic->increment('view_count', 1);
         if (Auth::check()) {
             $topic->favorite = $this->topics->userFavorite($topic->id, Auth::id());
-            $topic->topic_vote = $this->topics->userTopVoted($topic->id, Auth::id());
+            $topic->topic_vote = $this->topics->userTopicVoted($topic->id, Auth::id());
         }
         $topic->replies = $topic->replies()->get();
         return $this->response->item($topic, new TopicTransformer());

@@ -117,4 +117,11 @@ class DemandRepository implements DemandInterface
     {
         return $this->demand->where('title', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%")->paginate();
     }
+
+    public function searchWithUser($input)
+    {
+        return $this->demand->where('user_id', Auth::id())->where(function ($query) use ($request) {
+            $query->where('title', 'like', "%$request->q%")->orWhere('content', 'like', "%$request->q%");
+        })->paginate();
+    }
 }

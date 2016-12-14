@@ -10,6 +10,7 @@ require('laravel-elixir-vue-2');
  | for your Laravel application. By default, we are compiling the Sass
  | file for our application, as well as publishing vendor resources.
  | Metronic 模板gulp 失败注意使用  cd node_modules/gulp-sass/ 然后 npm install node-sass@3.3.2版本
+ | gulp本地开发时候用 上线了用gulp --production
  */
 
 elixir(function(mix) {

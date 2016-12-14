@@ -25,6 +25,7 @@ class FeedbackController extends BaseController
      * @apiGroup Feedback
      * @apiPermission 认证
      * @apiVersion 1.0.0
+     * @apiHeader Authorization Bearer {access_token}
      * @apiParam {String} content  反馈内容
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 201 Created
