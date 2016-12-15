@@ -126,32 +126,28 @@ class SupplyController extends BaseController
             "unit": 1,
             "content": "<p>我就有这么多包装袋</p>",
             "images": [
-                "/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+                "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
             ],
+            "is_excellent": 0,
+            "province": "北京市",
+            "city": "北京市",
+            "area": "石景山区",
+            "addressDetail": "",
             "user": {
-                "data": [
-                    {
-                        "id": 1,
-                        "username": "admin",
-                        "mobile": "13111111111",
-                        "email": "admin@admin.com",
-                        "avatar": "http://stone.dev/uploads/avatars/default/medium.png",
-                        "created_at": "2016-11-02 15:57:24"
-                    }
-                ]
-            },
-            "company": {
-                "data": [
-                    {
-                        "id": 3,
-                        "name": "测试公司",
-                        "address": "北京市北京市石景山区",
-                        "telephone": "0592-5928529",
-                        "photos": [
-                            "/storage/companies/2016/11/192330UhMQ.png"
-                        ]
-                    }
-                ]
+                "data": {
+                    "id": 2,
+                    "username": "user",
+                    "name": "name",
+                    "mobile": "13113113111",
+                    "email": "user@user.com",
+                    "avatar": {
+                        "_default": "",
+                        "small": "",
+                        "medium": "",
+                        "large": ""
+                    },
+                    "created_at": "2016-11-02 07:57:24"
+                }
             }
         }
     }
@@ -160,7 +156,9 @@ class SupplyController extends BaseController
     public function show(Supply $supply)
     {
         $supply->user = $supply->user()->first();
-        $supply->company= $supply->company()->first();
+        $company = $supply->company()->first();
+        $supply->address = $company->address;
+        $supply->addressDetail = $company->addressDetail;
         return $this->response->item($supply, new SupplyShowTransformer());
     }
 

@@ -141,14 +141,35 @@ class DemandController extends BaseController
      *      HTTP/1.1 200 OK
     {
         "data": {
-            "id": 1,
-            "title": "我需求质量好的袋子",
-            "quantity": 1000,
-            "unit": 5,
-            "content": "<p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">加工定制 是</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">用途 通用包装</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">底面侧面 无底无侧</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">供货类型 可定制</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">规格 400*300（mm*mm）</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">加印LOGO 可以</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">款式 手提袋</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">颜色 米白</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">印刷工艺 丝印</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">自重 285（g）</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">品牌 Martina</p><p style=\"margin-top: 0px; margin-bottom: 0px; text-rendering: optimizeLegibility; font-feature-settings: &#39;kern&#39; 1; font-kerning: normal; color: rgb(51, 51, 51); font-family: &quot;Arial Normal&quot;, Arial; font-size: 18px; white-space: normal;\">是否有现货 有</p><p><br/></p>",
+            "id": 2,
+            "title": "我需求100袋包装袋",
+            "quantity": 100,
+            "unit": 4,
+            "content": "我就需要这么多包装袋",
             "images": [
-                "/uploads/products/2016/11/165305Y37a.png"
-            ]
+                "http://stone.dev/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg"
+            ],
+            "is_excellent": 0,
+            "province": "福建省",
+            "city": "厦门市",
+            "area": "思明区",
+            "addressDetail": "HK排比哈哈哈哈他JJ他拒绝离开过来了来了太可怜了啦啦啦啦",
+            "user": {
+                "data": {
+                    "id": 1,
+                    "username": "admin",
+                    "name": "管理员",
+                    "mobile": "13111111111",
+                    "email": "admin@admin.com",
+                    "avatar": {
+                        "_default": "http://117.29.170.226:8000/uploads/avatars/20161212022331.png",
+                        "small": "http://117.29.170.226:8000/uploads/avatars/20161212022331_30x30.png",
+                        "medium": "http://117.29.170.226:8000/uploads/avatars/20161212022331_65x65.png",
+                        "large": "http://117.29.170.226:8000/uploads/avatars/20161212022331_180x180.png"
+                    },
+                    "created_at": "2016-11-02 07:57:24"
+                }
+            }
         }
     }
      * @apiSampleRequest /api/demands/1
@@ -156,7 +177,9 @@ class DemandController extends BaseController
     public function show(Demand $demand)
     {
         $demand->user = $demand->user()->first();
-        $demand->company= $demand->company()->first();
+        $company = $demand->company()->first();
+        $demand->address = $company->address;
+        $demand->addressDetail = $company->addressDetail;
         return $this->response->item($demand, new DemandShowTransformer());
     }
 

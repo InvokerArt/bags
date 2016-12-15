@@ -10,8 +10,21 @@
     <meta name="description" content=""/>
     <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
     <link rel="stylesheet" type="text/css" href="{{url(elixir("css/wap/app.css"))}}">
+    <script>
+        function isIosOrAndroid(){
+            var u = navigator.userAgent;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+            if (isAndroid) {
+                window.location.href="http://www.51hbjjd.com/";
+            }
+            if (isiOS) {
+                window.location.href="http://www.51hbjjd.com/";
+            }
+        }
+    </script>
 </head>
-<body>
+<body onclick="isIosOrAndroid();">
     <div id="app"></div>
     <script src="{{url(elixir("js/wap.js"))}}"></script>
 </body>

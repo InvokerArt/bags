@@ -36,6 +36,14 @@ status=2 已通过
 #### Unit单位
 ['1'=>'只', '2'=>'个', '3'=>'扎', '4'=>'袋', '5'=>'箱']
 
+#### 分享说明
+新闻链接 http://m.51hbjjd.com/news/:id  
+公司链接 http://m.51hbjjd.com/companies/:id  
+展会链接 http://m.51hbjjd.com/exhibitions/:id  
+论坛链接 http://m.51hbjjd.com/topics/:id  
+产品链接 http://m.51hbjjd.com/products/:id  
+
+
 #### 消息说明
 ##### 互动消息
 id - 话题ID  
