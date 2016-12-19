@@ -15,6 +15,7 @@ use App\Api\V1\Transformers\JoinTransformer;
 use App\Api\V1\Transformers\UserTransformer;
 use App\Events\UserCreateEvent;
 use App\Models\Certification;
+use App\Models\Company;
 use App\Models\Join;
 use App\Models\User;
 use App\Repositories\Backend\Users\UserInterface;
@@ -422,9 +423,8 @@ class AuthController extends BaseController
      */
     public function indexJoinIn()
     {
-        $joins = Join::whereHas('company', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->orderBy('created_at', 'DESC')->paginate();
+        $company = Company::select('id')->where('user_id', Auth::id())->first();
+        $joins = Join::where('company_id', $company->id)->with('userCompany')->orderBy('created_at', 'DESC')->paginate();
         return $this->response->paginator($joins, new JoinTransformer());
     }
 
@@ -494,9 +494,8 @@ class AuthController extends BaseController
      */
     public function indexCertificationIn()
     {
-        $certifications = Certification::whereHas('company', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->orderBy('created_at', 'DESC')->paginate();
+        $company = Company::select('id')->where('user_id', Auth::id())->first();
+        $certifications = Certification::where('company_id', $company->id)->with('userCompany')->orderBy('created_at', 'DESC')->paginate();
         return $this->response->paginator($certifications, new CertificationTransformer());
     }
 

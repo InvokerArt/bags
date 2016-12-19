@@ -1,0 +1,29 @@
+.homepage{
+    .logo{
+        margin:1.07rem auto 0.87rem;
+        text-align: center;
+    }
+    footer span{
+        font-size:12px;
+        font-weight:bold;
+        color:#5fad0a;
+        width:2.93rem;
+        height:0.8rem;
+        line-height:0.8rem;
+        border-radius:0.2rem;
+        border:2px solid #5fad0a;
+        display: block;
+        float: none;
+        margin: 0.27rem auto;
+    }
+}
+[data-dpr="2"]{
+    footer span{
+        font-size:24px;
+    }
+}
+[data-dpr="3"]{
+    footer span{
+        font-size:36px;
+    }
+}

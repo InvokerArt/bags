@@ -5,7 +5,7 @@
         <!-- LOGO开始 -->
         <div class="page-logo">
             <a href="/admin">
-                <img src="{!! asset('images/logo.png') !!}" alt="logo" class="logo-default"/>
+                <img src="{!! asset('images/logo.png') !!}" alt="logo" class="logo-default"/>环保降解袋
             </a>
             <!-- 侧边栏切换开关开始 -->
             <div class="menu-toggler sidebar-toggler">

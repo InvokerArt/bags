@@ -14,6 +14,11 @@ trait JoinRelationship
         return $this->belongsTo('App\Models\Company');
     }
 
+    public function userCompany()
+    {
+        return $this->belongsTo('App\Models\Company', 'user_id', 'user_id');
+    }
+
     public function notifications()
     {
         return $this->morphMany('App\Models\Notification', 'notification');

@@ -40,10 +40,14 @@ Page Header
 		> a {
 			display: inline-block;
 			float: left;
+            line-height: 40px;
+            color: #fff;
+            margin-top: 3px;
 		}
 
 		.logo-default {
-			margin: $header-logo-margin;
+			margin-right: 5px;
+            height: 40px;
 		}
 
 		.logo-mini {

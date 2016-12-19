@@ -11,6 +11,9 @@ class JoinTransformer extends BaseTransformer
 
     public function transformData($model)
     {
+        if ($model->userCompany) {
+            $model->company = $model->userCompany;
+        }
         return [
             'id' => $model->id,
             'status' => $model->status,

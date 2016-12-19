@@ -42,6 +42,8 @@ status=2 已通过
 展会链接 http://m.51hbjjd.com/exhibitions/:id  
 论坛链接 http://m.51hbjjd.com/topics/:id  
 产品链接 http://m.51hbjjd.com/products/:id  
+需求链接 http://m.51hbjjd.com/demands/:id  
+供应链接 http://m.51hbjjd.com/supplies/:id  
 
 
 #### 消息说明

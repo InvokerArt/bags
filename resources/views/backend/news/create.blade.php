@@ -159,15 +159,6 @@
             })
             .bind("loaded.jstree", function (event, data) {
                 $('.news-categories').jstree("open_all");
-            })
-            .bind("ready.jstree", function (event, data) {
-                $('.news-categories').find("li").each(function() {
-                    for (var i = 0; i < checkNodeIds.length; i++) {
-                        if ($(this).attr("id") == checkNodeIds[i]) {
-                            $('.news-categories').jstree("check_node", $(this));
-                        }
-                    }
-                });
             });
         })
 

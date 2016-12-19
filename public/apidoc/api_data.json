@@ -863,7 +863,7 @@
   },
   {
     "type": "patch",
-    "url": "/certification/:id",
+    "url": "/certifications/:id",
     "title": "认证审核",
     "description": "<p>认证审核</p>",
     "group": "Auth",
@@ -910,12 +910,12 @@
     },
     "sampleRequest": [
       {
-        "url": "/api/certification/1"
+        "url": "/api/certifications/1"
       }
     ],
     "filename": "App/Api/v1/Controllers/CompanyController.php",
     "groupTitle": "用户",
-    "name": "PatchCertificationId"
+    "name": "PatchCertificationsId"
   },
   {
     "type": "PATCH",

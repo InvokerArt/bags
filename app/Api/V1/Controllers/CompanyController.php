@@ -503,7 +503,7 @@ class CompanyController extends BaseController
     }
 
     /**
-     * @api {patch} /certification/:id 认证审核
+     * @api {patch} /certifications/:id 认证审核
      * @apiDescription 认证审核
      * @apiGroup Auth
      * @apiPermission 认证
@@ -512,7 +512,7 @@ class CompanyController extends BaseController
      * @apiParam {Number{0,1,2}} status 审核状态
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
-     * @apiSampleRequest /api/certification/1
+     * @apiSampleRequest /api/certifications/1
      */
     public function certification(Certification $certification, Request $request)
     {

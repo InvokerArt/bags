@@ -18,4 +18,9 @@ trait CertificationRelationship
     {
         return $this->belongsTo('App\Models\Company');
     }
+
+    public function userCompany()
+    {
+        return $this->belongsTo('App\Models\Company', 'user_id', 'user_id');
+    }
 }

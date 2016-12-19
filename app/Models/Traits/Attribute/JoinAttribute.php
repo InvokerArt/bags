@@ -46,7 +46,7 @@ trait JoinAttribute
     //设置状态存储器
     public function setStatusAttribute($value)
     {
-        if (!$value) {
+        if (!isset($value)) {
             $this->attributes['status'] = 1;
         } else {
             $this->attributes['status'] = $value;

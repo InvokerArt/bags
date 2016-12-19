@@ -60,12 +60,12 @@ elixir(function(mix) {
      * 后台样式
      * 模板样式（没有圆角）
      */
-    // .sass([
-    //     'backend/global/components.scss',
-    // ], 'resources/assets/css/backend/components.css')
-    // .styles([
-    //     'resources/assets/css/backend/components.css'
-    // ],'public/css/backend/components.css')
+    .sass([
+        'backend/global/components.scss',
+    ], 'resources/assets/css/backend/components.css')
+    .styles([
+        'resources/assets/css/backend/components.css'
+    ],'public/css/backend/components.css')
     /**
      * 模板样式（没有圆角有阴影）
      */
