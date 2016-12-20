@@ -6,7 +6,7 @@
         overflow: hidden;
         width: 100%;  
         height: 740px;
-        position: relative
+        position: relative;
     }
     .myslidetwo {
         overflow: hidden;
