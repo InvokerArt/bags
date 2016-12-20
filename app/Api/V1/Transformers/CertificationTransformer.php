@@ -11,6 +11,7 @@ class CertificationTransformer extends BaseTransformer
 
     public function transformData($model)
     {
+        dd($model->toJson());
         if ($model->userCompany) {
             $model->company = $model->userCompany;
         }

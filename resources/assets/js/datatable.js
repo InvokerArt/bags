@@ -41,7 +41,7 @@ var Datatable = function() {
                 resetGroupActionInputOnSuccess: true,
                 loadingMessage: '加载中...',
                 dataTable: {
-                    "dom": "<'row'<'col-md-8 col-sm-12'li><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r><'table-responsive't><'row'<'col-md-8 col-sm-12'li><'col-md-4 col-sm-12'p>>", // datatable layout
+                    "dom": "<'row'<'col-md-8 col-sm-12'li><'col-md-4 col-sm-12 pages'<'table-group-actions pull-right'>>r><'table-responsive't><'row'<'col-md-8 col-sm-12'li><'col-md-4 col-sm-12'p>>", // datatable layout
                     "pageLength": 20, // default records per page
                     "language": { // language settings
                         // metronic spesific
