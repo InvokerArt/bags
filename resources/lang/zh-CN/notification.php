@@ -11,5 +11,5 @@
         'Up Vote your reply' => '赞了你的回复',
         'Someone following youy' => '关注了你',
         'Your company has new user application join' => '申请加盟您的公司，请您及时处理。',
-        'Your company has new user application join' => '申请认证，请您及时处理。'
+        'Your company has new user application certification' => '申请认证，请您及时处理。'
     ];

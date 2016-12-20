@@ -3,7 +3,7 @@
 namespace App\Repositories\Backend\Companies;
 
 use App\Exceptions\GeneralException;
-use App\Models\Admin;
+use App\Models\User;
 use App\Models\CategoriesCompanies;
 use App\Models\Company;
 use Auth;

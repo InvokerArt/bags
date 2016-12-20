@@ -489,7 +489,6 @@ class AuthController extends BaseController
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
-
      * @apiSampleRequest /api/users/certification-in
      */
     public function indexCertificationIn()
@@ -508,17 +507,11 @@ class AuthController extends BaseController
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
-
      * @apiSampleRequest /api/users/certification-out
      */
     public function indexCertificationOut()
     {
         $certifications = Certification::where('user_id', Auth::id())->with('company')->orderBy('created_at', 'DESC')->paginate();
         return $this->response->paginator($certifications, new CertificationTransformer());
-    }
-
-    public function test()
-    {
-        return $this->response->created();
     }
 }

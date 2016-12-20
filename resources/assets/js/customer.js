@@ -562,5 +562,4 @@ $(function(){
         templateResult: formatCompany,
         templateSelection: formatCompanySelection
     });
-    
 });
