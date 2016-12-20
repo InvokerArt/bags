@@ -24,7 +24,7 @@
         height: 740px;
     }
     .arrows{    
-        width: 1100px;
+        width: 1200px;
         margin: 0 auto;
         display: block;
         position: relative;
