@@ -21,9 +21,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">目标ID <i class="required">*</i></label>
+                <label class="col-sm-2 control-label">资源ID <i class="required">*</i></label>
                 <div class="col-sm-10">
                     {{ Form::text('notification_id', null, ['class' => 'form-control', 'id' => 'notification-id']) }}
+                    <span class="help-block">如资源ID填1，模块为资讯，则推送ID为1的资讯。</span>
                 </div>
             </div>
             <hr class="clearfix">
