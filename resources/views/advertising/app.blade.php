@@ -17,6 +17,7 @@
     }
     .myslidetwo li {
         width: 100%;
+        height:740px;
     }
     .myslidetwo img {
         max-width: 100%;
@@ -102,8 +103,8 @@
     </div>
     <div class="myslide">
         <ul class="myslidetwo">
-            <li><img src="/images/advertising/slider1.png"/></li>
-            <li><img src="/images/advertising/slider2.png"/></li>
+            <li style="background:url(/images/advertising/slider1.png) top center"></li>
+            <li style="background:url(/images/advertising/slider2.png) top center"></li>
         </ul>
         <p class="arrows">
             <a class="pre"></a>
