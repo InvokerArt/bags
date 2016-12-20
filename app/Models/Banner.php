@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Banners;
+namespace App\Models;
 
 use App\Models\Traits\Attribute\BannerAttribute;
 use App\Models\Traits\Relationship\BannerRelationship;
