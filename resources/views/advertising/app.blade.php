@@ -97,7 +97,7 @@
 @section('content')
 <div class="container">
     <div class="header">
-        <div class="log"></div>
+        <a href="http://www.51hbjjd.com/"><div class="log"></div></a>
     </div>
     <div class="banner">
     </div>
