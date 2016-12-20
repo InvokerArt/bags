@@ -105,6 +105,7 @@
         <ul class="myslidetwo">
             <li style="background:url(/images/advertising/slider1.png) top center"></li>
             <li style="background:url(/images/advertising/slider2.png) top center"></li>
+            <li style="background:url(/images/advertising/slider3.png) top center"></li>
         </ul>
         <p class="arrows">
             <a class="pre"></a>
