@@ -39,3 +39,4 @@ bootstrap/cache/
 /storage/oauth-public.key
 /storage/oauth-private.key
 /oauth2-server.authorizer
+/public/apidoc
