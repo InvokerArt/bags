@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">所属模块 <i class="required">*</i></label>
+                <label class="col-sm-2 control-label">模块 <i class="required">*</i></label>
                 <div class="col-sm-10">
                     {{ Form::select('notification_type',['App\Models\News' => '资讯', 'App\Models\Exhibition' => '展会', 'App\Models\Company' => '公司', 'App\Models\Topic' => '话题'], 1, ['class' => 'form-control']) }}
                 </div>
