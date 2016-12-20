@@ -231,7 +231,6 @@ class TopicController extends BaseController
     {
         $filter = $topic->correctApiFilter($request->get('filters'));
         $topics = $topic->getCategoryTopicsWithFilter($filter, $id);
-        dd($topics);
         return $this->response()->paginator($topics, new TopicTransformer());
     }
 

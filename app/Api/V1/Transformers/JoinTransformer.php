@@ -11,7 +11,7 @@ class JoinTransformer extends BaseTransformer
 
     public function transformData($model)
     {
-        if ($model->userCompany) {
+        if ($model->relationLoaded('userCompany')) {
             $model->company = $model->userCompany;
         }
         return [

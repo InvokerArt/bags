@@ -489,6 +489,7 @@ class AuthController extends BaseController
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
+
      * @apiSampleRequest /api/users/certification-in
      */
     public function indexCertificationIn()
@@ -507,6 +508,7 @@ class AuthController extends BaseController
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
+
      * @apiSampleRequest /api/users/certification-out
      */
     public function indexCertificationOut()
