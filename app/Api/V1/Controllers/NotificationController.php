@@ -194,9 +194,9 @@ class NotificationController extends BaseController
     public function store(Request $request)
     {
         $user_id = Auth::id();
-        $message = Notification::select('id')->where('notification_id', $request->notification_id)->where('notification_type', $request->notification_type)->where('data', $request->message)->where('created_at', $request->created_at)->first();
         //防止非系统消息一条消息变两条问题
-        if ($message->type == 'system') {
+        if ($request->message == 'system') {
+            $message = Notification::select('id')->where('notification_id', $request->notification_id)->where('notification_type', $request->notification_type)->where('data', $request->message)->where('created_at', $request->created_at)->first();
             $notification = new NotificationUser();
             $notification->user_id = $user_id;
             $notification->notification_id = $message->id;
