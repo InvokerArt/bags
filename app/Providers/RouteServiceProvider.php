@@ -107,7 +107,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' => 'web',
             'namespace' => $this->namespace,
-            'domain' => 'm.'.env('APP_URL'),
+            'domain' => env('APP_WAP_URL'),
         ], function ($router) {
             require base_path('routes/wap.php');
         });
