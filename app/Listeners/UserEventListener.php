@@ -114,11 +114,11 @@ class UserEventListener
     {
         $events->listen(
            \App\Events\UserCreateEvent::class,
-            'App\Listeners\AuthEventListener@create'
+            'App\Listeners\UserEventListener@create'
         );
         $events->listen(
            \App\Events\UserUpdateEvent::class,
-            'App\Listeners\AuthEventListener@update'
+            'App\Listeners\UserEventListener@update'
         );
     }
 }
