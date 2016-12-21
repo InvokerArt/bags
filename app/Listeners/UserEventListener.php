@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\UserCreatedEvent;
+use App\Events\AuthEvent;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Storage;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
-class UserCreateEventListener
+class UserEventListener
 {
     public static $token = null;
     public static $tokenPath = 'easemob.token';
@@ -91,11 +91,34 @@ class UserCreateEventListener
         }
     }
 
+    public function update($event)
+    {
+        $token = $this->getToken();
+        try {
+            $client = new \GuzzleHttp\Client();
+            $registerResponse = $client->request('PUT', $this->url.'users/'.$event->user->mobile.'/password', [
+                'headers' => [
+                    'Authorization' => 'Bearer '.$token
+                ],
+                'json' => [
+                    'password' => $event->user->password,
+                ],
+            ]);
+            $registerResult = json_decode((string) $registerResponse->getBody(), true);
+        } catch (\Exception $e) {
+            //throw new \Exception($e->getMessage());
+        }
+    }
+
     public function subscribe($events)
     {
         $events->listen(
            \App\Events\UserCreateEvent::class,
-            'App\Listeners\UserCreateEventListener@create'
+            'App\Listeners\AuthEventListener@create'
+        );
+        $events->listen(
+           \App\Events\UserUpdateEvent::class,
+            'App\Listeners\AuthEventListener@update'
         );
     }
 }
