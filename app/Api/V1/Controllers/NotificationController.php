@@ -204,6 +204,10 @@ class NotificationController extends BaseController
             $notification->created_at = $request->created_at;
             $notification->updated_at = $request->created_at;
             $notification->save();
+        } else {
+            $notificationUser = NotificationUser::where('notification_id', $request->notification_id);
+            $notificationUser->read_at = Carbon::now();
+            $notificationUser->save();
         }
     }
 }

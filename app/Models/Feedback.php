@@ -9,4 +9,6 @@ use App\Models\Traits\Relationship\FeedbackRelationship;
 class Feedback extends Model
 {
     use FeedbackAttribute, FeedbackRelationship;
+
+    protected $table = 'feedbacks';
 }
