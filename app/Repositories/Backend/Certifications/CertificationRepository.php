@@ -46,7 +46,6 @@ class CertificationRepository implements CertificationInterface
         if ($isCertification) {
             throw new GeneralException('请勿重复申请认证！');
         }
-        $input->user_id = $company->user_id;
 
         $certification = new Certification;
         $certification->user_id = $user->id;
@@ -55,9 +54,10 @@ class CertificationRepository implements CertificationInterface
         $certification->licenses = $input['licenses'];
         $certification->status = $input['status'];
 
-        DB::transaction(function () use ($certification, $input) {
+        DB::transaction(function () use ($certification, $input, $company) {
             if ($certification->save()) {
                 if ($input['action']) {
+                    $certification->user_id = $company->user_id;
                     $certification->type =  get_class($certification);
                     $certification->action = $input['action'];
                     $this->notification->createPersonal($certification);
