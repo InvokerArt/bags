@@ -8,6 +8,7 @@
     <title>环保降解袋</title>
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
+    <link rel="shortcut icon" href="favicon.ico"/>
     <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
     <link rel="stylesheet" type="text/css" href="{{url(elixir("css/wap/app.css"))}}">
     <script>
