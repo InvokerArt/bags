@@ -37,6 +37,7 @@ status=2 已通过
 ['1'=>'只', '2'=>'个', '3'=>'扎', '4'=>'袋', '5'=>'箱']
 
 #### 分享说明
+分享App链接 http://m.51hbjjd.com  
 新闻链接 http://m.51hbjjd.com/news/:id  
 公司链接 http://m.51hbjjd.com/companies/:id  
 展会链接 http://m.51hbjjd.com/exhibitions/:id  
