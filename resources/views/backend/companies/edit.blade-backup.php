@@ -309,12 +309,6 @@
             $('input').iCheck({
                 radioClass: 'iradio_flat-green'
             });
-            //灯箱插件
-            $(document).on('click', '[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', function(event) {
-                event.preventDefault();
-                return $(this).ekkoLightbox({
-                });
-            });
 
             //分类选中
             var checkNodeIds = "{{ implode(',', $categories) }}".split(",");

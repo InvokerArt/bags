@@ -124,12 +124,6 @@
             $('input').iCheck({
                 radioClass: 'iradio_flat-green'
             });
-            
-            $(document).on('click', '[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', function(event) {
-                event.preventDefault();
-                return $(this).ekkoLightbox({
-                });
-            });
         })
     </script>
 @stop
