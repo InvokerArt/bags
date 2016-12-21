@@ -107,10 +107,14 @@ class UploadController extends BaseController
     {
         try {
             $url = '';
-            $image = $request->file('images');
-            $img = Image::make($image->getRealPath());
-            $path = public_path('uploads/products/'.date('Y').'/'.date('m').'/'.date('His').str_random(4).'.png');
-            $img->save($path);
+            $img = Image::make($request->file('images')->getRealPath());
+            $path = public_path('uploads/products/'.date('Y').'/'.date('m'));
+            if (!is_dir($path)) {
+                mkdir($path, true);
+            }
+            $fileName = date('His').str_random(4).'.png';
+            $filePath = $path.'/'.$fileName;
+            $img->save($filePath);
             $url['data']['url'][] = asset(str_replace(public_path(), '', $path));
             return $this->response->array($url);
         } catch (Exception $e) {
