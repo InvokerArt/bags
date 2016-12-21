@@ -146,7 +146,7 @@ class NotificationController extends BaseController
         $user = Auth::user();
         $lastNotification = NotificationUser::select('created_at')->where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
         $lastReadAt = ($lastNotification) ? $lastNotification->created_at : '';
-        $unreadNotifications = Notification::where('created_at', '>=', $lastReadAt)->get();
+        $unreadNotifications = Notification::where('created_at', '>', $lastReadAt)->get();
         if ($unreadNotifications) {
             foreach ($unreadNotifications as $key => $unreadNotification) {
                 $notificationuser = new NotificationUser();
