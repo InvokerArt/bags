@@ -203,7 +203,7 @@ class AuthController extends BaseController
             $user->password = bcrypt($request->password);
             try {
                 $user->save();
-                event(new UserUpdateEvent($user));
+                //event(new UserUpdateEvent($user));
                 return $this->response->noContent();
             } catch (\Exception $e) {
                 return $this->response->errorBadRequest($e->getMessage());
