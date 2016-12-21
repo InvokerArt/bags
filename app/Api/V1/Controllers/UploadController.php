@@ -109,8 +109,8 @@ class UploadController extends BaseController
             $url = '';
             $img = Image::make($request->file('images')->getRealPath());
             $path = public_path('uploads/products/'.date('Y').'/'.date('m'));
-            if (!is_dir($path)) {
-                mkdir($path, true);
+            if (!file_exists($path)) {
+                mkdir($path, 0777);
             }
             $fileName = date('His').str_random(4).'.png';
             $filePath = $path.'/'.$fileName;
