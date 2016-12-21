@@ -726,7 +726,7 @@ class CompanyController extends BaseController
         }
 
         if ($request->address) {
-            $provinces = Area::where('parent_id', $request->address)->with('childrens')->get();
+            $provinces = Area::select('code')->where('parent_id', $request->address)->with('childrens')->get();
             if (count($provinces)) {
                 foreach ($provinces as $key => $province) {
                     $city = $province->childrens;
@@ -739,7 +739,7 @@ class CompanyController extends BaseController
                     $citys = collect($citys);
                     $citys = $citys->collapse();
                     foreach ($citys as $value) {
-                        $area = Area::where('parent_id', $value->code)->get();
+                        $area = Area::select('code')->where('parent_id', $value->code)->get();
                         if (count($area)) {
                             $areas[] = $area;
                         }
