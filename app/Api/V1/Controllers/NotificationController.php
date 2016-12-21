@@ -206,8 +206,7 @@ class NotificationController extends BaseController
             $notification->save();
         } else {
             $notificationUser = NotificationUser::where('notification_id', $message->id);
-            $notificationUser->read_at = Carbon::now();
-            $notificationUser->update();
+            $notificationUser->update(['read_at' => Carbon::now()]);
         }
     }
 }
