@@ -115,7 +115,7 @@ class UploadController extends BaseController
             $fileName = date('His').str_random(4).'.png';
             $filePath = $path.'/'.$fileName;
             $img->save($filePath);
-            $url['data']['url'][] = asset(str_replace(public_path(), '', $path));
+            $url['data']['url'][] = asset(str_replace(public_path(), '', $filePath));
             return $this->response->array($url);
         } catch (Exception $e) {
             return $this->response->errorBadRequest('上传失败！');

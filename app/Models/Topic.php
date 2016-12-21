@@ -13,6 +13,32 @@ class Topic extends Model
 {
     use SoftDeletes, TopicRelationship, TopicAttribute;
 
+    protected $dates = ['deleted_at'];
+
+    /**
+     * 白名单
+     * @var [type]
+     */
+    protected $fillable = [
+        'title',
+        'slug',
+        'excerpt',
+        'source',
+        'content',
+        'user_id',
+        'category_id',
+        'reply_count',
+        'view_count',
+        'vote_count',
+        'last_reply_user_id',
+        'order',
+        'is_excellent',
+        'is_blocked',
+        'is_tagged',
+        'created_at',
+        'updated_at'
+    ];
+
     public static function topicFilter($query, $request)
     {
         if ($request->has('id')) {
