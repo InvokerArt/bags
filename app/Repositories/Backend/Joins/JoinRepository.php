@@ -49,7 +49,6 @@ class JoinRepository implements JoinInterface
         if ($isJoin) {
             throw new GeneralException('请勿重复申请加盟该公司！');
         }
-        $input->user_id = $company->user_id;
 
         $join = new Join;
         $join->user_id = $user->id;
@@ -58,9 +57,10 @@ class JoinRepository implements JoinInterface
         $join->licenses = $input['licenses'];
         $join->status = $input['status'];
 
-        DB::transaction(function () use ($join, $input) {
+        DB::transaction(function () use ($join, $input, $company) {
             if ($join->save()) {
                 if ($input['action']) {
+                    $join->user_id = $company->user_id;
                     $join->type =  get_class($join);
                     $join->action = $input['action'];
                     $this->notification->createPersonal($join);
