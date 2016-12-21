@@ -46,6 +46,7 @@ class CertificationRepository implements CertificationInterface
         if ($isCertification) {
             throw new GeneralException('请勿重复申请认证！');
         }
+        $input->user_id = $company->user_id;
 
         $certification = new Certification;
         $certification->user_id = $user->id;

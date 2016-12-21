@@ -49,6 +49,7 @@ class JoinRepository implements JoinInterface
         if ($isJoin) {
             throw new GeneralException('请勿重复申请加盟该公司！');
         }
+        $input->user_id = $company->user_id;
 
         $join = new Join;
         $join->user_id = $user->id;
