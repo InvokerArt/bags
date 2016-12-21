@@ -18,7 +18,7 @@ const router = new VueRouter({
     base: __dirname,
     root: '/',
     routes: [
-        { path: '/', component: require('./components/wap/Home.vue') },
+        { path: '/home', component: require('./components/wap/Home.vue') },
         { path: '/companies/:id', name: '公司详情', component: require('./components/wap/Companyshow.vue') },
         { path: '/exhibitions/:id', name: '展会详情', component: require('./components/wap/Exhibitionshow.vue') },
         { path: '/news/:id', name: '资讯详情', component: require('./components/wap/Newsshow.vue') },
