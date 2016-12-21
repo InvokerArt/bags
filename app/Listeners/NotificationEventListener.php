@@ -25,13 +25,14 @@ class NotificationEventListener implements ShouldQueue
     public function personal($event)
     {
         $notification = $event->notification;
-        $vote = $notification->notification()->first();
+        //取出关联关系的原型数据
+        $model = $notification->notification()->first();
         $notification_user = $notification->notificationUser()->select(['id', 'user_id'])->first();
         $fromUser = User::find($notification->sender);
         $action = $notification->action;
         $subject = $notification->subject();
-        $voteTitle = $vote->title ? $vote->title. ' • ' : '';
-        $message = $fromUser->username. ' • ' . $notification->lableUp().$voteTitle;
+        $title = $model->title ? ' • '.$model->title : '';
+        $message = $fromUser->username. ' • ' . $notification->lableUp().$title;
         $data['id'] = $notification_user->id;
         $data['type'] = $notification->type;
         $data['notification_id'] = $notification->notification_id;
