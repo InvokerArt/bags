@@ -14,6 +14,7 @@ use App\Api\V1\Transformers\CompanyTransformer;
 use App\Api\V1\Transformers\JoinTransformer;
 use App\Api\V1\Transformers\UserTransformer;
 use App\Events\UserCreateEvent;
+use App\Events\UserUpdateEvent;
 use App\Models\Certification;
 use App\Models\Company;
 use App\Models\Join;
