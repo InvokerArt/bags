@@ -9,7 +9,7 @@
                         <span>Android 下载</span>
                     </li>
                     <li>
-                        <span>Ios 下载</span>
+                        <span>IOS 下载</span>
                     </li>
                 </ul>
             </footer>
