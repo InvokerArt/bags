@@ -107,10 +107,11 @@ class UploadController extends BaseController
     {
         try {
             $url = '';
-            $img = Image::make($request->file('images'));
-            $filePath = 'uploads/products/'.date('Y').'/'.date('m').'/'.date('His').str_random(4).'.png';
-            $img->save($filePath);
-            $url['data']['url'][] = asset($filePath);
+            $image = $request->file('images');
+            $img = Image::make($image->getRealPath());
+            $path = public_path('uploads/products/'.date('Y').'/'.date('m').'/'.date('His').str_random(4).'.png');
+            $img->save($path);
+            $url['data']['url'][] = asset(str_replace(public_path(), '', $path));
             return $this->response->array($url);
         } catch (Exception $e) {
             return $this->response->errorBadRequest('上传失败！');

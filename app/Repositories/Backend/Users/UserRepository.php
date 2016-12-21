@@ -262,7 +262,8 @@ class UserRepository implements UserInterface
     public function apiAvatar($input)
     {
         $avatarUrl = '';
-        $img = Image::make($input->file('images'));
+        $image = $input->file('images');
+        $img = Image::make($image->getRealPath());
         $newName = '/'.date('YmdHis');
         $baseFile = public_path(config('avatar.upload')).$newName.".png";
         $result = $img->save($baseFile);

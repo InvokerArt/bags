@@ -3,7 +3,7 @@
 @section('content')
 {{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.banners.image.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'submit_form' ,'enctype' => 'multipart/form-data', 'accept-charset' => 'UTF-8']) }}
     <div class="portlet">
-    <div class="note note-danger no-margin margin-bottom-10">广告图的名字一定不要重名！！！ 文件名最好已时间来命名 （例：2016-10-27-20-10.jpg）图片尺寸建议(640x320)</div>
+    <div class="note note-danger no-margin margin-bottom-10">广告图的名字一定不要重名！！！ 文件名最好已时间来命名 （例：2016-10-27-20-10.jpg）图片尺寸建议(750x300)</div>
         <div class="portlet-title">
             <div class="actions btn-set">
                 <button type="button" name="back" class="btn btn-secondary-outline" onclick="location.href='{{ route(env('APP_BACKEND_PREFIX').'.banners.index') }}'">
