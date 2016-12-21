@@ -195,12 +195,15 @@ class NotificationController extends BaseController
     {
         $user_id = Auth::id();
         $message = Notification::select('id')->where('notification_id', $request->notification_id)->where('notification_type', $request->notification_type)->where('data', $request->message)->where('created_at', $request->created_at)->first();
-        $notification = new NotificationUser();
-        $notification->user_id = $user_id;
-        $notification->notification_id = $message->id;
-        $notification->read_at = Carbon::now();
-        $notification->created_at = $request->created_at;
-        $notification->updated_at = $request->created_at;
-        $notification->save();
+        //防止非系统消息一条消息变两条问题
+        if ($message->type == 'system') {
+            $notification = new NotificationUser();
+            $notification->user_id = $user_id;
+            $notification->notification_id = $message->id;
+            $notification->read_at = Carbon::now();
+            $notification->created_at = $request->created_at;
+            $notification->updated_at = $request->created_at;
+            $notification->save();
+        }
     }
 }
