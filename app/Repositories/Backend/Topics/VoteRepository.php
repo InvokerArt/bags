@@ -26,12 +26,8 @@ class VoteRepository implements VoteInterface
             $input->votes()->create(['user_id' => Auth::id(), 'is' => $input->action]);
             $input->increment('vote_count', 1);
             $input->type =  get_class($input);
-            //判断是否发送过通知
-            $hasNotification = Notification::where('notification_id', $input->id)->where('notification_type', $input->type)->where('type', 'user')->first();
-            if (!$hasNotification) {
-                $input->id = $input->topic_id;
-                $this->notification->createPersonal($input);
-            }
+            $input->id = $input->topic_id;
+            $this->notification->createPersonal($input);
         }
     }
 }
