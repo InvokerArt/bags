@@ -13,7 +13,7 @@ use App\Hanlder\NotificationPresenter;
 
 class Notification extends Model
 {
-    use NotificationAttribute, NotificationRelationship;
+    use NotificationAttribute, NotificationRelationship, NotificationPresenter;
     protected $fillable = ['type', 'notification_id', 'notification_type', 'data', 'action', 'sender'];
 
     public static function notificationFilter($query, $request)
