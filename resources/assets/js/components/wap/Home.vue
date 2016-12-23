@@ -6,10 +6,10 @@
             <footer>
                 <ul>
                     <li>
-                        <span>Android 下载</span>
+                        <a href="http://sj.qq.com/myapp/detail.htm?apkName=com.environmentalprotection"><span>Android 下载</span></a>
                     </li>
                     <li>
-                        <span>IOS 下载</span>
+                        <a href=""><span>IOS 下载</span></a>
                     </li>
                 </ul>
             </footer>
