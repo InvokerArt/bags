@@ -27,7 +27,7 @@ class AliyuncsAgent extends Agent
             'SignatureVersion' => $this->signatureVersion,
             'SignatureMethod' => $this->signatureMethod,
             'SignatureNonce'=> uniqid(),
-            'Timestamp' => Carbon::now()->format('Y-m-d\TH:i:s\Z'),
+            'Timestamp' => Carbon::setTimezone('UTC')->now()->format('Y-m-d\TH:i:s\Z'),
             'RegionId' => 'cn-hangzhou',
             // 接口参数
             'Action' => 'SingleSendSms',
