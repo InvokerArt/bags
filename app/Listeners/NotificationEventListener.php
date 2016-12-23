@@ -26,12 +26,12 @@ class NotificationEventListener implements ShouldQueue
     {
         $notification = $event->notification;
         //取出关联关系的原型数据
-        $model = $notification->notification()->first();
+        $relationship = $notification->notification()->first();
         $notification_user = $notification->notificationUser()->select(['id', 'user_id'])->first();
         $fromUser = User::find($notification->sender);
         $action = $notification->action;
         $subject = $notification->subject();
-        $title = $model->title ? ' • '.$model->title : '';
+        $title = $relationship->title ? $relationship->title. ' • ' : '';
         $message = $fromUser->username. ' • ' . $notification->lableUp().$title;
         $data['id'] = $notification_user->id;
         $data['type'] = $notification->type;
