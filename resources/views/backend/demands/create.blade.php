@@ -48,6 +48,15 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">
+                                    是否置顶
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-10">
+                                    {{ Form::select('is_excellent', ['yes' => '是', 'no' => '否'], 'no', ['class' => 'form-control select2', 'placeholder' => '是否置顶']) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">
                                     需求数量
                                     <span class="required">*</span>
                                 </label>
