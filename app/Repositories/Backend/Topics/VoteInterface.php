@@ -4,5 +4,5 @@ namespace App\Repositories\Backend\Topics;
 
 interface VoteInterface
 {
-    public function create($input);
+    public function create($input, $relation);
 }
