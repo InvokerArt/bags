@@ -24,6 +24,7 @@ class CompanyUpdateTransformer extends BaseTransformer
             'addressDetail' => $model->addressDetail,
             'telephone' => $model->telephone,
             'content' => $model->content,
+            'notes' => $model->notes,
             'role' => $model->role,
             'photos' => $model->photos ? img_fullurl($model->photos) : [],
             'licenses' => $model->licenses ? img_fullurl($model->licenses) : [],
