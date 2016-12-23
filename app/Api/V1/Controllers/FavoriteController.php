@@ -70,7 +70,12 @@ class FavoriteController extends BaseController
      */
     public function indexForCompanyRole($id)
     {
-        $companys = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Company')->orderBy('created_at', 'DESC')->paginate();
+        $companys = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Company')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
+        foreach ($companys as $key => $company) {
+            $favorite = $company->getRelation('favorite');
+            $favorite->id = $company->id;
+            $companys[$key] = $favorite;
+        }
         return $this->response()->paginator($companys, new CompanyTransformer());
     }
 
@@ -108,7 +113,12 @@ class FavoriteController extends BaseController
      */
     public function indexForExhibition()
     {
-        $exhibitions = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Exhibition')->orderBy('created_at', 'DESC')->paginate();
+        $exhibitions = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Exhibition')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
+        foreach ($exhibitions as $key => $exhibition) {
+            $favorite = $exhibition->getRelation('favorite');
+            $favorite->id = $exhibition->id;
+            $exhibitions[$key] = $favorite;
+        }
         return $this->response()->paginator($exhibitions, new ExhibitionTransformer());
     }
 
@@ -154,7 +164,12 @@ class FavoriteController extends BaseController
      */
     public function indexForNews()
     {
-        $news = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\News')->orderBy('created_at', 'DESC')->paginate();
+        $news = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\News')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
+        foreach ($news as $key => $new) {
+            $favorite = $new->getRelation('favorite');
+            $favorite->id = $new->id;
+            $news[$key] = $favorite;
+        }
         return $this->response()->paginator($news, new NewsTransformer());
     }
 
@@ -195,7 +210,12 @@ class FavoriteController extends BaseController
      */
     public function indexForProduct()
     {
-        $products = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Product')->orderBy('created_at', 'DESC')->paginate();
+        $products = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Product')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
+        foreach ($products as $key => $product) {
+            $favorite = $product->getRelation('favorite');
+            $favorite->id = $product->id;
+            $products[$key] = $favorite;
+        }
         return $this->response()->paginator($products, new ProductTransformer());
     }
 
@@ -235,7 +255,12 @@ class FavoriteController extends BaseController
      */
     public function indexForJob()
     {
-        $jobs = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Job')->orderBy('created_at', 'DESC')->paginate();
+        $jobs = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Job')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
+        foreach ($jobs as $key => $job) {
+            $favorite = $job->getRelation('favorite');
+            $favorite->id = $job->id;
+            $jobs[$key] = $favorite;
+        }
         return $this->response()->paginator($jobs, new JobTransformer());
     }
 
@@ -287,7 +312,12 @@ class FavoriteController extends BaseController
      */
     public function indexForTopic()
     {
-        $topics = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Topic')->orderBy('created_at', 'DESC')->paginate();
+        $topics = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Topic')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
+        foreach ($topics as $key => $topic) {
+            $favorite = $topic->getRelation('favorite');
+            $favorite->id = $topic->id;
+            $topics[$key] = $favorite;
+        }
         return $this->response()->paginator($topics, new TopicTransformer());
     }
 
@@ -304,7 +334,12 @@ class FavoriteController extends BaseController
      */
     public function indexForDemand()
     {
-        $jobs = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Demand')->orderBy('created_at', 'DESC')->paginate();
+        $jobs = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Demand')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
+        foreach ($demands as $key => $demand) {
+            $favorite = $demand->getRelation('favorite');
+            $favorite->id = $demand->id;
+            $demands[$key] = $favorite;
+        }
         return $this->response()->paginator($jobs, new DemandTransformer());
     }
 
@@ -321,8 +356,13 @@ class FavoriteController extends BaseController
      */
     public function indexForSupply()
     {
-        $jobs = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Supply')->orderBy('created_at', 'DESC')->paginate();
-        return $this->response()->paginator($jobs, new SupplyTransformer());
+        $supplies = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Supply')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
+        foreach ($supplies as $key => $supply) {
+            $favorite = $supply->getRelation('favorite');
+            $favorite->id = $supply->id;
+            $supplies[$key] = $favorite;
+        }
+        return $this->response()->paginator($supplies, new SupplyTransformer());
     }
 
     /**
