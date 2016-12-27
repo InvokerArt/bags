@@ -39,7 +39,7 @@
         methods: {
             exhibitionShow() {
                 var _this = this
-                this.$http.get('/api/exhibitions/'+ this.id)
+                this.$http.get('api.51hbjjd.com/exhibitions/'+ this.id)
                         .then(response => {
                     this.exhibition = response.data.data
             },response => {

@@ -47,7 +47,7 @@
         methods: {
             productShow() {
                 var _this = this
-                this.$http.get('/api/supplies/'+ this.id)
+                this.$http.get('api.51hbjjd.com/supplies/'+ this.id)
                         .then(response => {
                     this.product = response.data.data
             },response => {

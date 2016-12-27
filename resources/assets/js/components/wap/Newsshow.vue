@@ -27,7 +27,7 @@
         methods: {
             newsShow() {
                 var _this = this
-                this.$http.get('/api/news/'+ this.id)
+                this.$http.get('api.51hbjjd.com/news/'+ this.id)
                         .then(response => {
                     this.news = response.data.data
             },response => {

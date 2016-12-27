@@ -57,7 +57,7 @@
         methods: {
             topicShow() {
                 var _this = this
-                this.$http.get('/api/topics/'+ this.id)
+                this.$http.get('api.51hbjjd.com/topics/'+ this.id)
                         .then(response => {
                     this.topic = response.data.data
                     this.user = response.data.data.user.data
