@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of Entrust,
- * a role & permission management solution for Laravel.
- *
- * @license MIT
- * @package Zizaco\Entrust
- */
-
 return [
 
     /*
@@ -110,7 +102,27 @@ return [
         /*
          * Whether a role must contain a permission or can be used standalone as a label
          */
-        'user_must_contain_role' => true
+        'user_must_contain_role' => true,
+        /*
+         * Whether or not public registration is on
+         */
+        'registration' => env('ENABLE_REGISTRATION', 'true'),
+
+        /*
+         * The role the user is assigned to when they sign up from the frontend, not namespaced
+         */
+        'default_role' => 'User',
+        //'default_role' => 2,
+
+        /*
+         * Whether or not the user has to confirm their email when signing up
+         */
+        'confirm_email' => true,
+
+        /*
+         * Whether or not the users email can be changed on the edit profile screen
+         */
+        'change_email' => false,
     ],
 
 ];

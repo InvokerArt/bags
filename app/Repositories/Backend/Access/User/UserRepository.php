@@ -77,7 +77,7 @@ class UserRepository implements UserInterface
      */
     public function create($input)
     {
-        $user = Admin::where('username', $input['username'])->first();
+        $user = Admin::find($input['user_id']);
 
         if (!$user) {
             throw new GeneralException('用户不存在！');
@@ -95,7 +95,7 @@ class UserRepository implements UserInterface
 
         $roles = [];
         if (! $all) {
-            if (config('entrust.users.user_must_contain_role') && count($input['roles']) == 0) {
+            if (config('access.users.user_must_contain_role') && count($input['roles']) == 0) {
                 throw new GeneralException('您必须为管理员至少选择一个角色！');
             }
             if (is_array($input['roles']) && count($input['roles'])) {
@@ -128,7 +128,7 @@ class UserRepository implements UserInterface
      */
     public function update($input)
     {
-        $user = Admin::where('username', $input['username'])->first();
+        $user = Admin::find($input['user_id']);
 
         if (!$user) {
             throw new GeneralException('用户不存在！');
@@ -146,7 +146,7 @@ class UserRepository implements UserInterface
 
         $roles = [];
         if (! $all) {
-            if (config('entrust.users.user_must_contain_role') && count($input['roles']) == 0) {
+            if (config('access.users.user_must_contain_role') && count($input['roles']) == 0) {
                 throw new GeneralException('您必须为管理员至少选择一个角色！');
             }
             if (is_array($input['roles']) && count($input['roles'])) {

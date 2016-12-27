@@ -15,7 +15,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
     Route::get('location/{city}', 'AreaController@cityOrArea');
 });
 
-Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', 'middleware' => ['admin', 'permission:view-backend']], function () {
+Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', 'middleware' => 'admin'], function () {
     /**
      * These routes need view-backend permission
      * (good if you want to allow more than one group in the backend,

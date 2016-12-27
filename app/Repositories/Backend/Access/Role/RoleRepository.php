@@ -69,7 +69,7 @@ class RoleRepository implements RoleInterface
         //This config is only required if all is false
         if (! $all) {
             //See if the role must contain a permission as per config
-            if (config('entrust.roles.role_must_contain_permission') && count($input['permissions']) == 0) {
+            if (config('access.roles.role_must_contain_permission') && count($input['permissions']) == 0) {
                 throw new GeneralException('您必须为这个角色至少选择一个权限！');
             }
         }
@@ -130,7 +130,7 @@ class RoleRepository implements RoleInterface
         //This config is only required if all is false
         if (! $all) {
             //See if the role must contain a permission as per config
-            if (config('entrust.roles.role_must_contain_permission') && count($input['permissions']) == 0) {
+            if (config('access.roles.role_must_contain_permission') && count($input['permissions']) == 0) {
                 throw new Exception('您必须为这个角色至少选择一个权限！');
             }
         }

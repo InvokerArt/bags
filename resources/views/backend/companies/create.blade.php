@@ -238,50 +238,6 @@
                     demandJoin();
                 }
             });
-            
-            //用户资料
-            function formatUser(user) {
-                if (user.loading) return user.text;
-                var markup = "<div class='select2-result-repository clearfix'>" +
-                "<div class='select2-result-repository__avatar'><img src='" + user.avatar + "' /></div>" +
-                "<div class='select2-result-repository__meta'>" +
-                "<div class='select2-result-repository__title'>" + user.mobile + "</div>";
-                if (user.username) {
-                    markup += "<div class='select2-result-repository__description'>用户名：" + user.username + "</div>";
-                }
-                markup += "</div></div>";
-                return markup;
-            }
-
-            function formatUserSelection(user) {
-                return user.username || user.mobile || user.text;
-            }
-            $.fn.select2.defaults.set("theme", "bootstrap");
-            $(".user-ajax").select2({
-                ajax: {
-                    url: "{{ route(env('APP_BACKEND_PREFIX').'.users.ajax.info') }}",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            q: params.term, // search term
-                            page: params.page
-                        };
-                    },
-                    processResults: function(data, page) {
-                        return {
-                            results: data.data
-                        };
-                    },
-                    cache: true
-                },
-                escapeMarkup: function(markup) {
-                    return markup;
-                }, // let our custom formatter work
-                minimumInputLength: 1,
-                templateResult: formatUser,
-                templateSelection: formatUserSelection
-            });
 
             //分类
             $('.categories-companies').jstree({

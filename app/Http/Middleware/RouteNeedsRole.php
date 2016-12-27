@@ -19,9 +19,19 @@ class RouteNeedsRole
      * @param bool $needsAll
      * @return mixed
      */
-    public function handle($request, Closure $next, $roles, $needsAll = false, $guard = 'admin')
+    public function handle($request, Closure $next, $role, $needsAll = false, $guard = 'admin')
     {
-        if (Auth::guard($guard)->guest() || !$request->user($guard)->hasRole(explode('|', $roles))) {
+        if (strpos($role, "|") !== false) {
+            $roles = explode("|", $role);
+            $access = access()->hasRoles($roles, ($needsAll === "true" ? true : false));
+        } else {
+            /**
+             * Single role
+             */
+            $access = access()->hasRole($role);
+        }
+        
+        if (!$access) {
             abort(403);
         }
 

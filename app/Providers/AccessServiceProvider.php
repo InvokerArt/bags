@@ -36,7 +36,6 @@ class AccessServiceProvider extends ServiceProvider
     {
         $this->registerAccess();
         $this->registerFacade();
-        $this->registerBindings();
     }
 
     /**
@@ -65,32 +64,6 @@ class AccessServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register service provider bindings
-     */
-    public function registerBindings()
-    {
-        $this->app->bind(
-            \App\Repositories\Frontend\Access\User\UserInterface::class,
-            \App\Repositories\Frontend\Access\User\UserRepository::class
-        );
-
-        $this->app->bind(
-            \App\Repositories\Backend\Access\User\UserInterface::class,
-            \App\Repositories\Backend\Access\User\UserRepository::class
-        );
-
-        $this->app->bind(
-            \App\Repositories\Backend\Access\Role\RoleInterface::class,
-            \App\Repositories\Backend\Access\Role\RoleRepository::class
-        );
-
-        $this->app->bind(
-            \App\Repositories\Backend\Access\Permission\PermissionInterface::class,
-            \App\Repositories\Backend\Access\Permission\PermissionRepository::class
-        );
-    }
-
-    /**
      * Register the blade extender to use new blade sections
      */
     protected function registerBladeExtensions()
@@ -100,14 +73,14 @@ class AccessServiceProvider extends ServiceProvider
          * Accepts either string of Role Name or Role ID
          */
         Blade::directive('role', function ($role) {
-            return "<?php if (access()->hasRole{$role}): ?>";
+            return "<?php if (access()->hasRole({$role})): ?>";
         });
 
         /**
          * Accepts array of names or id's
          */
         Blade::directive('roles', function ($roles) {
-            return "<?php if (access()->hasRoles{$roles}): ?>";
+            return "<?php if (access()->hasRoles({$roles})): ?>";
         });
 
         Blade::directive('needsroles', function ($roles) {
@@ -119,14 +92,14 @@ class AccessServiceProvider extends ServiceProvider
          * Accepts wither string of Permission Name or Permission ID
          */
         Blade::directive('permission', function ($permission) {
-            return "<?php if (access()->allow{$permission}): ?>";
+            return "<?php if (access()->allow({$permission})): ?>";
         });
 
         /**
          * Accepts array of names or id's
          */
         Blade::directive('permissions', function ($permissions) {
-            return "<?php if (access()->allowMultiple{$permissions}): ?>";
+            return "<?php if (access()->allowMultiple({$permissions})): ?>";
         });
 
         Blade::directive('needspermissions', function ($permissions) {

@@ -703,7 +703,7 @@ class TopicController extends BaseController
     {
         //action加入通知的动作
         $reply->action = snake_case(__FUNCTION__);
-        $this->vote->create($reply);
+        $this->vote->create($reply, 1);
         return $this->response->noContent();
     }
 

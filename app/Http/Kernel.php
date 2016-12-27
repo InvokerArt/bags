@@ -34,6 +34,11 @@ class Kernel extends HttpKernel
             \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
         ],
 
+        'admin' => [
+            'admin.guest',
+            'permission:view-backend',
+        ],
+
         'api' => [
             'throttle:60,1',
             'bindings',
@@ -54,17 +59,17 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'timeout' => \App\Http\Middleware\SessionTimeout::class,
 
         /**
          * 角色权限
          */
         'role' => \App\Http\Middleware\RouteNeedsRole::class,
         'permission' => \App\Http\Middleware\RouteNeedsPermission::class,
-        'ability' => \App\Http\Middleware\RouteNeedsAbility::class,
         /**
          * 自定义后台admin登录
          */
-        'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
+        'admin.guest' => \App\Http\Middleware\RedirectIfNotAdmin::class,
         'passport' => \App\Http\Middleware\PassportDingo::class,
     ];
 }

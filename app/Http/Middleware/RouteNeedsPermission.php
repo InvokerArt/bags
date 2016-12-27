@@ -19,9 +19,21 @@ class RouteNeedsPermission
      * @param bool $needsAll
      * @return mixed
      */
-    public function handle($request, Closure $next, $permissions, $needsAll = false, $guard = 'admin')
+    public function handle($request, Closure $next, $permission, $needsAll = false, $guard = 'admin')
     {
-        if (Auth::guard($guard)->guest() || !$request->user($guard)->can(explode('|', $permissions))) {
+        /**
+         * Permission array
+         */
+        if (strpos($permission, ";") !== false) {
+            $permissions = explode(";", $permission);
+            $access = access()->allowMultiple($permissions, ($needsAll === "true" ? true : false));
+        } else {
+            /**
+             * Single permission
+             */
+            $access = access()->allow($permission);
+        }
+        if (!$access) {
             abort(403);
         }
 

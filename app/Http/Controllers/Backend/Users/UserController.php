@@ -108,14 +108,38 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 回收站
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        $this->users->delete($user);
+        $this->users->destroy($id);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.users.index')->withFlashSuccess('会员删除成功');
+    }
+
+    /**
+     * 还原
+     *
+     * @param  User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(User $user)
+    {
+        $this->users->restore($user);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.users.index')->withFlashSuccess('会员还原成功');
+    }
+
+    /**
+     * 彻底删除
+     *
+     * @param  User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(User $user)
+    {
+        $this->users->delete($id);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.users.index')->withFlashSuccess('会员删除成功');
     }
 

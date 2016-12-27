@@ -71,6 +71,30 @@ class AppServiceProvider extends ServiceProvider
         }
         
         /**
+         * 管理员
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Access\User\UserInterface::class,
+            \App\Repositories\Backend\Access\User\UserRepository::class
+        );
+        
+        /**
+         * 角色
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Access\Role\RoleInterface::class,
+            \App\Repositories\Backend\Access\Role\RoleRepository::class
+        );
+        
+        /**
+         * 权限
+         */
+        $this->app->bind(
+            \App\Repositories\Backend\Access\Permission\PermissionInterface::class,
+            \App\Repositories\Backend\Access\Permission\PermissionRepository::class
+        );
+        
+        /**
          * 会员
          */
         $this->app->bind(

@@ -7,10 +7,13 @@ use App\Models\Traits\Relationship\UserRelationship;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable, UserAttribute, UserRelationship;
+    use SoftDeletes, HasApiTokens, Notifiable, UserAttribute, UserRelationship;
+
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'username', 'name', 'mobile', 'email', 'password', 'avatar', 'status', 'created_at', 'updated_at'

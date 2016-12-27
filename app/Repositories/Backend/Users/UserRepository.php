@@ -124,15 +124,20 @@ class UserRepository implements UserInterface
      */
     public function destroy($id)
     {
-    }
+        //Would be stupid to delete the administrator role
+        if ($id == 1) { //id is 1 because of the seeder
+            throw new GeneralException('创始人不允许删除！');
+        }
 
-    /**
-     * @param  User $user
-     * @throws GeneralException
-     * @return boolean|null
-     */
-    public function delete(User $user)
-    {
+        if (auth()->id() == $id) {
+            throw new GeneralException('不能删除自己！');
+        }
+        $user = Admin::with('roles')->find($id);
+        $user->detachRoles($user->roles);
+        if ($user->delete()) {
+            return true;
+        }
+        throw new GeneralException('删除失败！');
     }
 
     /**
@@ -142,6 +147,41 @@ class UserRepository implements UserInterface
      */
     public function restore(User $user)
     {
+        //Failsafe
+        if (is_null($user->deleted_at)) {
+            throw new GeneralException("此用户没有被删除，因此无法恢复。");
+        }
+
+        if ($user->restore()) {
+            return true;
+        }
+
+        throw new GeneralException('返回失败！');
+    }
+
+    /**
+     * @param  User $user
+     * @throws GeneralException
+     * @return boolean|null
+     */
+    public function delete(User $user)
+    {
+        //Failsafe
+        if (is_null($user->deleted_at)) {
+            throw new GeneralException('必须先删除此用户，然后才能永久销毁此用户。');
+        }
+
+        DB::transaction(function () use ($user) {
+            //Detach all roles & permissions
+            $user->detachRoles($user->roles);
+
+            if ($user->forceDelete()) {
+                event(new UserPermanentlyDeleted($user));
+                return true;
+            }
+
+            throw new GeneralException('删除失败！');
+        });
     }
 
     /**

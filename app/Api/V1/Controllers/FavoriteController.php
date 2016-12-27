@@ -334,13 +334,13 @@ class FavoriteController extends BaseController
      */
     public function indexForDemand()
     {
-        $jobs = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Demand')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
+        $demands = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Demand')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
         foreach ($demands as $key => $demand) {
             $favorite = $demand->getRelation('favorite');
             $favorite->id = $demand->id;
             $demands[$key] = $favorite;
         }
-        return $this->response()->paginator($jobs, new DemandTransformer());
+        return $this->response()->paginator($demands, new DemandTransformer());
     }
 
     /**

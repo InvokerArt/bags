@@ -24,7 +24,14 @@ class UserStoreOrUpdateRequest extends Request
     public function rules()
     {
         return [
-            'username' => 'required|max:255',
+            'user_id' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'user_id.required' => '用户名必填'
         ];
     }
 }
