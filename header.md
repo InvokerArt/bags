@@ -41,7 +41,7 @@ status=2 已通过
 新闻链接 http://m.51hbjjd.com/news/:id  
 公司链接 http://m.51hbjjd.com/companies/:id  
 展会链接 http://m.51hbjjd.com/exhibitions/:id  
-论坛链接 http://m.51hbjjd.com/topics/:id?token=:token  
+论坛链接 http://m.51hbjjd.com/topics/:id/:token  
 产品链接 http://m.51hbjjd.com/products/:id  
 需求链接 http://m.51hbjjd.com/demands/:id  
 供应链接 http://m.51hbjjd.com/supplies/:id  

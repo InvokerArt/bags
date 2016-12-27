@@ -25,7 +25,7 @@ const router = new VueRouter({
         { path: '/products/:id', name: '产品详情', component: require('./components/wap/Productshow.vue') },
         { path: '/demands/:id', name: '需求详情', component: require('./components/wap/Demandshow.vue') },
         { path: '/supplies/:id', name: '供应详情', component: require('./components/wap/Supplyshow.vue') },
-        { path: '/topics/:id', name: '帖子详情', component: require('./components/wap/Topicshow.vue') }
+        { path: '/topics/:id/:token', name: '帖子详情', component: require('./components/wap/Topicshow.vue') }
     ]
 })
 
