@@ -67,7 +67,7 @@
         methods: {
                 companyShow() {
                     var _this = this
-                    this.$http.get('api.51hbjjd.com/companies/'+ this.id)
+                    this.$http.get('http://api.51hbjjd.com/companies/'+ this.id)
                     .then(response => {
                         this.company = response.data.data
                         this.categories = response.data.data.categories.data
