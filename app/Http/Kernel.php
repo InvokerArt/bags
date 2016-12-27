@@ -35,8 +35,9 @@ class Kernel extends HttpKernel
         ],
 
         'admin' => [
-            'admin.guest',
+            'admin.auth',
             'permission:view-backend',
+            'timeout'
         ],
 
         'api' => [
@@ -69,7 +70,7 @@ class Kernel extends HttpKernel
         /**
          * 自定义后台admin登录
          */
-        'admin.guest' => \App\Http\Middleware\RedirectIfNotAdmin::class,
+        'admin.auth' => \App\Http\Middleware\RedirectIfNotAdmin::class,
         'passport' => \App\Http\Middleware\PassportDingo::class,
     ];
 }

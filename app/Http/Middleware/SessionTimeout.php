@@ -4,12 +4,14 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Session\Store;
+use Auth;
 
 /**
  * Class SessionTimeout
  * @package App\Http\Middleware
  */
-class SessionTimeout {
+class SessionTimeout
+{
 
     /**
      * @var Store
@@ -24,7 +26,8 @@ class SessionTimeout {
     /**
      * @param Store $session
      */
-    public function __construct(Store $session){
+    public function __construct(Store $session)
+    {
         $this->session = $session;
         $this->timeout = config('misc.session_timeout');
     }
@@ -36,7 +39,7 @@ class SessionTimeout {
      * @param  \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $guard = 'admin')
     {
         if (config('misc.session_timeout_status')) {
             $isLoggedIn = $request->path() != '/logout';
@@ -46,7 +49,7 @@ class SessionTimeout {
             } elseif (time() - $this->session->get('lastActivityTime') > $this->timeout) {
                 $this->session->forget('lastActivityTime');
                 $cookie = cookie('intend', $isLoggedIn ? url()->current() : 'backend/dashboard');
-                $mobile = $request->user()->mobile;
+                $mobile = Auth::guard($guard)->user()->mobile;
                 access()->logout();
 
                 return redirect()->route('backend.auth.login')->withFlashWarning('由于您在' . $this->timeout / 60 . '分钟内没有活动，因此出于安全考虑，系统会自动退出。')->withInput(compact('mobile'))->withCookie($cookie);

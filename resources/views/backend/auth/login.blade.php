@@ -35,6 +35,7 @@
         <form class="login-form" role="form" method="POST" action="{{ route(env('APP_BACKEND_PREFIX').'.auth.login') }}">
             {{ csrf_field() }}
             <h3 class="form-title">登录</h3>
+            @include('backend.includes.partials.messages')
             <div class="alert alert-danger{{ $errors->has('username') || $errors->has('password') ? '' : ' hide' }}">
                 <button type="button" class="close" data-dismiss="alert"></button>
                 <ul>
