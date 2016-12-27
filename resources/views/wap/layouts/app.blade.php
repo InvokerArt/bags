@@ -17,7 +17,7 @@
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
             if (isAndroid) {
-                window.location.href="http://www.51hbjjd.com/";
+                window.location.href="http://sj.qq.com/myapp/detail.htm?apkName=com.environmentalprotection";
             }
             if (isiOS) {
                 window.location.href="http://www.51hbjjd.com/";
