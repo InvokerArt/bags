@@ -33,7 +33,8 @@
         "arcanedev/log-viewer": "^4.0",
         "laravel/scout": "^1.1",
         "elasticsearch/elasticsearch": "^5.0",
-        "jpush/jpush": "^3.5" 
+        "jpush/jpush": "^3.5",
+        "barryvdh/laravel-cors": "^0.8.2" 
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

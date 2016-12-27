@@ -218,7 +218,8 @@
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         App\Providers\ExceptionsServiceProvider::class,
         //Jpush
-        App\Providers\JpushServiceProvider::class
+        App\Providers\JpushServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
     ],
 
     /*
