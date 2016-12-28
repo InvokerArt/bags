@@ -75,7 +75,7 @@
                                             </a>
                                         </div>
                                         <div class="row">
-                                            <div id="licenses_uploader_filelist" class="col-md-12">
+                                            <div id="photos_uploader_filelist" class="col-md-12">
                                                 @foreach ($product->images as $key => $image)
                                                 <div class="alert added-files alert-success" id="uploaded_file_{{ $key }}" style="margin:12px 0 0;">
                                                     <a href="{{ $image }}" data-toggle="lightbox">
@@ -139,7 +139,6 @@
          
             init: {
                 PostInit: function() {
-                    $('#photos_uploader_filelist').html("");
          
                     $('#photos_uploader_uploadfiles').click(function() {
                         photoer.start();
