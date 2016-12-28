@@ -18,7 +18,6 @@ class NotificationTransformer extends BaseTransformer
             $subject = '系统消息';
         } else {
             $subject = $this->subject();
-            dump($model->id);
             $title = isset($relationship->notification->title) ? ' • '.$relationship->notification->title : '';
             $message = User::find($model->notification->sender)->username. ' • ' . $this->lableUp().$title;
         }
