@@ -31,7 +31,7 @@ class NotificationEventListener implements ShouldQueue
         $fromUser = User::find($notification->sender);
         $action = $notification->action;
         $subject = $notification->subject();
-        $title = $relationship->title ? $relationship->title. ' • ' : '';
+        $title = $relationship->title ? ' • '.$relationship->title : '';
         $message = $fromUser->username. ' • ' . $notification->lableUp().$title;
         $data['id'] = $notification_user->id;
         $data['type'] = $notification->type;
