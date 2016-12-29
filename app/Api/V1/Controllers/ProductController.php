@@ -307,7 +307,7 @@ class ProductController extends BaseController
      */
     public function searchWithUser(Request $request)
     {
-        $products = $this->searchWithUser($request);
+        $products = $this->products->searchWithUser($request);
         return $this->response->paginator($products, new ProductTransformer());
     }
 }
