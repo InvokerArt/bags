@@ -78,7 +78,7 @@ class FavoriteController extends BaseController
                 unset($companys[$key]);
                 continue;
             }
-            $favorite->company_id = $favorite->id;
+            $favorite->company_id = $company->favorite_id;
             $favorite->id = $company->id;
             $companys[$key] = $favorite;
         }
@@ -127,7 +127,7 @@ class FavoriteController extends BaseController
                 unset($exhibitions[$key]);
                 continue;
             }
-            $favorite->exhibition_id = $favorite->id;
+            $favorite->exhibition_id = $exhibition->favorite_id;
             $favorite->id = $exhibition->id;
             $exhibitions[$key] = $favorite;
         }
@@ -184,7 +184,7 @@ class FavoriteController extends BaseController
                 unset($news[$key]);
                 continue;
             }
-            $favorite->news_id = $favorite->id;
+            $favorite->news_id = $new->favorite_id;
             $favorite->id = $new->id;
             $news[$key] = $favorite;
         }
@@ -236,7 +236,7 @@ class FavoriteController extends BaseController
                 unset($products[$key]);
                 continue;
             }
-            $favorite->product_id = $favorite->id;
+            $favorite->product_id = $product->favorite_id;
             $favorite->id = $product->id;
             $products[$key] = $favorite;
         }
@@ -351,7 +351,7 @@ class FavoriteController extends BaseController
                 unset($topics[$key]);
                 continue;
             }
-            $favorite->topic_id = $favorite->id;
+            $favorite->topic_id = $topic->favorite_id;
             $favorite->id = $topic->id;
             $topics[$key] = $favorite;
         }
@@ -403,7 +403,7 @@ class FavoriteController extends BaseController
                 unset($demands[$key]);
                 continue;
             }
-            $favorite->demand_id = $favorite->id;
+            $favorite->demand_id = $demand->favorite_id;
             $favorite->id = $demand->id;
             $demands[$key] = $favorite;
         }
@@ -456,7 +456,7 @@ class FavoriteController extends BaseController
                 unset($supplies[$key]);
                 continue;
             }
-            $favorite->supply_id = $favorite->id;
+            $favorite->supply_id = $supply->favorite_id;
             $favorite->id = $supply->id;
             $supplies[$key] = $favorite;
         }
