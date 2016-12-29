@@ -715,7 +715,7 @@ class TopicController extends BaseController
      */
     public function search(Request $request)
     {
-        $this->topics->search($request);
+        $topics = $this->topics->search($request);
         return $this->response->paginator($topics, new TopicTransformer());
     }
 }

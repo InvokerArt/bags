@@ -51,8 +51,10 @@ class NotificationRepository extends Repository
     }
     
     //私人通知-----话题点赞或回复点赞或话题回复
-    public function createPersonal(Model $notification, $input)
+    public function createPersonal($input)
     {
+        $notification = self::MODEL;
+        $notification = new $notification;
         $notification->type = 'user';
         $notification->sender = Auth::id();
         $notificationUser = new NotificationUser(['user_id' => $input->user_id]);
