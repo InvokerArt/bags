@@ -56,6 +56,9 @@ class NotificationRepository extends Repository
         $notification = self::MODEL;
         $notification = new $notification;
         $notification->type = 'user';
+        $notification->notification_id = $input->id;
+        $notification->notification_type = $input->type;
+        $notification->action = $input->action;
         $notification->sender = Auth::id();
         $notificationUser = new NotificationUser(['user_id' => $input->user_id]);
 
