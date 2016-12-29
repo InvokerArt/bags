@@ -2,6 +2,8 @@
 
 namespace App\Models\Traits\Scope;
 
+use Carbon\Carbon;
+
 trait TopicScope
 {
     public function scopeWhose($query, $user_id)
