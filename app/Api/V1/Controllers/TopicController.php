@@ -11,6 +11,7 @@ use App\Models\CategoriesTopics;
 use App\Models\Reply;
 use App\Models\Topic;
 use App\Models\User;
+use App\Repositories\Backend\Favorites\FavoriteRepository;
 use App\Repositories\Backend\Notifications\NotificationRepository;
 use App\Repositories\Backend\Topics\ReplyRepository;
 use App\Repositories\Backend\Topics\TopicRepository;
