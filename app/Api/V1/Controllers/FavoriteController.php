@@ -81,7 +81,7 @@ class FavoriteController extends BaseController
             $favorite->company_id = $favorite->id;
             $companys[$key] = $favorite;
         }
-        return $this->response()->paginator($companys, new CompanyTransformer());
+        return $this->response()->paginator($companys, new CompanyFavoriteTransformer());
     }
 
     /**
@@ -126,9 +126,10 @@ class FavoriteController extends BaseController
                 continue;
             }
             $favorite->id = $exhibition->id;
+            $favorite->exhibition_id = $favorite->id;
             $exhibitions[$key] = $favorite;
         }
-        return $this->response()->paginator($exhibitions, new ExhibitionTransformer());
+        return $this->response()->paginator($exhibitions, new ExhibitionFavoriteTransformer());
     }
 
     /**
@@ -181,9 +182,10 @@ class FavoriteController extends BaseController
                 continue;
             }
             $favorite->id = $new->id;
+            $favorite->new_id = $favorite->id;
             $news[$key] = $favorite;
         }
-        return $this->response()->paginator($news, new NewsTransformer());
+        return $this->response()->paginator($news, new NewsFavoriteTransformer());
     }
 
     /**
@@ -231,9 +233,10 @@ class FavoriteController extends BaseController
                 continue;
             }
             $favorite->id = $product->id;
+            $favorite->product_id = $favorite->id;
             $products[$key] = $favorite;
         }
-        return $this->response()->paginator($products, new ProductTransformer());
+        return $this->response()->paginator($products, new ProductFavoriteTransformer());
     }
 
     /**
@@ -280,9 +283,10 @@ class FavoriteController extends BaseController
                 continue;
             }
             $favorite->id = $job->id;
+            $favorite->job_id = $favorite->id;
             $jobs[$key] = $favorite;
         }
-        return $this->response()->paginator($jobs, new JobTransformer());
+        return $this->response()->paginator($jobs, new JobFavoriteTransformer());
     }
 
     /**
@@ -341,9 +345,10 @@ class FavoriteController extends BaseController
                 continue;
             }
             $favorite->id = $topic->id;
+            $favorite->topic_id = $favorite->id;
             $topics[$key] = $favorite;
         }
-        return $this->response()->paginator($topics, new TopicTransformer());
+        return $this->response()->paginator($topics, new TopicFavoriteTransformer());
     }
 
     /**
@@ -367,9 +372,10 @@ class FavoriteController extends BaseController
                 continue;
             }
             $favorite->id = $demand->id;
+            $favorite->demand_id = $favorite->id;
             $demands[$key] = $favorite;
         }
-        return $this->response()->paginator($demands, new DemandTransformer());
+        return $this->response()->paginator($demands, new DemandFavoriteTransformer());
     }
 
     /**
@@ -393,9 +399,10 @@ class FavoriteController extends BaseController
                 continue;
             }
             $favorite->id = $supply->id;
+            $favorite->supply_id = $favorite->id;
             $supplies[$key] = $favorite;
         }
-        return $this->response()->paginator($supplies, new SupplyTransformer());
+        return $this->response()->paginator($supplies, new SupplyFavoriteTransformer());
     }
 
     /**
