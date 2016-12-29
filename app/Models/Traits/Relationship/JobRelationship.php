@@ -13,4 +13,9 @@ trait JobRelationship
     {
         return $this->morphMany('App\Models\Favorite', 'favorite');
     }
+
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Company', 'user_id', 'user_id');
+    }
 }

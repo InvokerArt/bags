@@ -2898,7 +2898,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"job_id\": 2,\n            \"job\": \"销售代表\",\n            \"total\": \"10人\",\n            \"education\": \"本科大学\",\n            \"experience\": \"2-3年\",\n            \"minsalary\": \"50000\",\n            \"content\": \"<p>要求就是不要命</p>\"\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 1,\n            \"count\": 1,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}",
+          "content": " HTTP/1.1 200 OK\n{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"company_id\": 2,\n            \"job\": \"销售代表\",\n            \"total\": \"10人\",\n            \"education\": \"本科大学\",\n            \"experience\": \"2-3年\",\n            \"minsalary\": \"50000\",\n            \"content\": \"<p>要求就是不要命</p>\"\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 1,\n            \"count\": 1,\n            \"per_page\": 15,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"links\": []\n        }\n    }\n}",
           "type": "json"
         }
       ]

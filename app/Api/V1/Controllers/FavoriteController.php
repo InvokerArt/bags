@@ -184,8 +184,8 @@ class FavoriteController extends BaseController
                 unset($news[$key]);
                 continue;
             }
-            $favorite->new_id = $favorite->id;
-            $favorite->id = $new->id;
+            $favorite->news_id = $favorite->id;
+            $favorite->id = $news->id;
             $news[$key] = $favorite;
         }
         return $this->response()->paginator($news, new NewsFavoriteTransformer());
@@ -256,7 +256,7 @@ class FavoriteController extends BaseController
         "data": [
             {
                 "id": 1,
-                "job_id": 2,
+                "company_id": 2,
                 "job": "销售代表",
                 "total": "10人",
                 "education": "本科大学",
@@ -287,7 +287,8 @@ class FavoriteController extends BaseController
                 unset($jobs[$key]);
                 continue;
             }
-            $favorite->job_id = $favorite->id;
+            $company = $favorite->company;
+            $favorite->company_id = $company->id;
             $favorite->id = $job->id;
             $jobs[$key] = $favorite;
         }
