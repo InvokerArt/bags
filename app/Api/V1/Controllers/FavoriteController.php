@@ -120,6 +120,10 @@ class FavoriteController extends BaseController
         $exhibitions = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Exhibition')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
         foreach ($exhibitions as $key => $exhibition) {
             $favorite = $exhibition->getRelation('favorite');
+            if (!$favorite) {
+                unset($exhibitions[$key]);
+                continue;
+            }
             $favorite->id = $exhibition->id;
             $exhibitions[$key] = $favorite;
         }
@@ -171,6 +175,10 @@ class FavoriteController extends BaseController
         $news = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\News')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
         foreach ($news as $key => $new) {
             $favorite = $new->getRelation('favorite');
+            if (!$favorite) {
+                unset($news[$key]);
+                continue;
+            }
             $favorite->id = $new->id;
             $news[$key] = $favorite;
         }
@@ -217,7 +225,10 @@ class FavoriteController extends BaseController
         $products = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Product')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
         foreach ($products as $key => $product) {
             $favorite = $product->getRelation('favorite');
-            dump($product->id);
+            if (!$favorite) {
+                unset($products[$key]);
+                continue;
+            }
             $favorite->id = $product->id;
             $products[$key] = $favorite;
         }
@@ -263,6 +274,10 @@ class FavoriteController extends BaseController
         $jobs = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Job')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
         foreach ($jobs as $key => $job) {
             $favorite = $job->getRelation('favorite');
+            if (!$favorite) {
+                unset($jobs[$key]);
+                continue;
+            }
             $favorite->id = $job->id;
             $jobs[$key] = $favorite;
         }
@@ -320,6 +335,10 @@ class FavoriteController extends BaseController
         $topics = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Topic')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
         foreach ($topics as $key => $topic) {
             $favorite = $topic->getRelation('favorite');
+            if (!$favorite) {
+                unset($topics[$key]);
+                continue;
+            }
             $favorite->id = $topic->id;
             $topics[$key] = $favorite;
         }
@@ -342,6 +361,10 @@ class FavoriteController extends BaseController
         $demands = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Demand')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
         foreach ($demands as $key => $demand) {
             $favorite = $demand->getRelation('favorite');
+            if (!$favorite) {
+                unset($demands[$key]);
+                continue;
+            }
             $favorite->id = $demand->id;
             $demands[$key] = $favorite;
         }
@@ -364,6 +387,10 @@ class FavoriteController extends BaseController
         $supplies = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Supply')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
         foreach ($supplies as $key => $supply) {
             $favorite = $supply->getRelation('favorite');
+            if (!$favorite) {
+                unset($supplies[$key]);
+                continue;
+            }
             $favorite->id = $supply->id;
             $supplies[$key] = $favorite;
         }
