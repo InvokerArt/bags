@@ -217,6 +217,7 @@ class FavoriteController extends BaseController
         $products = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Product')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
         foreach ($products as $key => $product) {
             $favorite = $product->getRelation('favorite');
+            dump($product->id);
             $favorite->id = $product->id;
             $products[$key] = $favorite;
         }
