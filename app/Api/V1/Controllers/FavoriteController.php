@@ -185,7 +185,7 @@ class FavoriteController extends BaseController
                 continue;
             }
             $favorite->news_id = $favorite->id;
-            $favorite->id = $news->id;
+            $favorite->id = $new->id;
             $news[$key] = $favorite;
         }
         return $this->response()->paginator($news, new NewsFavoriteTransformer());
