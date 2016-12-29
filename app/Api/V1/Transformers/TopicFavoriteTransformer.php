@@ -4,7 +4,7 @@ namespace App\Api\V1\Transformers;
 
 use Carbon\Carbon;
 
-class TopicTransformer extends BaseTransformer
+class TopicFavoriteTransformer extends BaseTransformer
 {
     protected $availableIncludes = ['user', 'last_reply_user', 'replies', 'category'];
 

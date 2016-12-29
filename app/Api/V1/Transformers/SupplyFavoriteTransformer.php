@@ -2,7 +2,7 @@
 
 namespace App\Api\V1\Transformers;
 
-class SupplyTransformer extends BaseTransformer
+class SupplyFavoriteTransformer extends BaseTransformer
 {
     public function transformData($model)
     {

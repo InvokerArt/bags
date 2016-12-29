@@ -4,7 +4,7 @@ namespace App\Api\V1\Transformers;
 
 use Storage;
 
-class NewsTransformer extends BaseTransformer
+class NewsFavoriteTransformer extends BaseTransformer
 {
     protected $defaultIncludes = ['categories'];
 

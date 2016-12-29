@@ -2,7 +2,7 @@
 
 namespace App\Api\V1\Transformers;
 
-class DemandTransformer extends BaseTransformer
+class DemandFavoriteTransformer extends BaseTransformer
 {
     public function transformData($model)
     {

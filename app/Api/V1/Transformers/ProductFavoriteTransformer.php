@@ -5,7 +5,7 @@ namespace App\Api\V1\Transformers;
 use App\Models\Area;
 use Storage;
 
-class ProductTransformer extends BaseTransformer
+class ProductFavoriteTransformer extends BaseTransformer
 {
     public function transformData($model)
     {

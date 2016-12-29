@@ -4,7 +4,7 @@ namespace App\Api\V1\Transformers;
 
 use Storage;
 
-class JobTransformer extends BaseTransformer
+class JobFavoriteTransformer extends BaseTransformer
 {
     public function transformData($model)
     {
