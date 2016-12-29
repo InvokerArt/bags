@@ -128,7 +128,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     $api->get('news/banner', 'NewsController@banner');
     $api->get('news/categories', 'NewsController@categories');
     $api->get('news/search', 'NewsController@search');
-    $api->get('news/{news}', 'NewsController@show');
+    $api->get('news/{news}', 'NewsController@show')->middleware('authOrNot:api');
 
     /**
      * 展会
@@ -137,7 +137,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     $api->get('exhibitions/banner', 'ExhibitionController@banner');
     $api->get('exhibitions/categories', 'ExhibitionController@categories');
     $api->get('exhibitions/search', 'ExhibitionController@search');
-    $api->get('exhibitions/{exhibition}', 'ExhibitionController@show');
+    $api->get('exhibitions/{exhibition}', 'ExhibitionController@show')->middleware('authOrNot:api');
 
     /**
      * 公司
@@ -146,21 +146,21 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     $api->get('companies/banner', 'CompanyController@banner');
     $api->get('companies/categories/{category}', 'CompanyController@categories');
     $api->get('companies/search', 'CompanyController@search');
-    $api->get('companies/{company}', 'CompanyController@show');
+    $api->get('companies/{company}', 'CompanyController@show')->middleware('authOrNot:api');
 
     /**
      * 需求
      */
     $api->get('demands', 'DemandController@index');
     $api->get('demands/search', 'DemandController@search');
-    $api->get('demands/{demand}', 'DemandController@show');
+    $api->get('demands/{demand}', 'DemandController@show')->middleware('authOrNot:api');
 
     /**
      * 供应
      */
     $api->get('supplies', 'SupplyController@index');
     $api->get('supplies/search', 'SupplyController@search');
-    $api->get('supplies/{supply}', 'SupplyController@show');
+    $api->get('supplies/{supply}', 'SupplyController@show')->middleware('authOrNot:api');
 
     /**
      * 论坛

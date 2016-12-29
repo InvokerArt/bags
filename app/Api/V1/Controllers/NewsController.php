@@ -6,10 +6,11 @@ use App\Api\V1\Transformers\BannerTransformer;
 use App\Api\V1\Transformers\CategoryTransformer;
 use App\Api\V1\Transformers\NewsShowTransformer;
 use App\Api\V1\Transformers\NewsTransformer;
-use App\Models\Image;
 use App\Models\CategoriesNews;
+use App\Models\Image;
 use App\Models\News;
 use App\Repositories\Backend\Banners\ImageRepository;
+use App\Repositories\Backend\Favorites\FavoriteRepository;
 use App\Repositories\Backend\News\NewsRepository;
 use Auth;
 use Illuminate\Http\Request;
@@ -18,11 +19,13 @@ class NewsController extends BaseController
 {
     protected $images;
     protected $news;
+    private $favorites;
 
-    public function __construct(ImageRepository $images, NewsRepository $news)
+    public function __construct(ImageRepository $images, NewsRepository $news, FavoriteRepository $favorites)
     {
         $this->images = $images;
         $this->news = $news;
+        $this->favorites = $favorites;
     }
 
 
@@ -188,6 +191,7 @@ class NewsController extends BaseController
     public function show(News $news)
     {
         $news->increment('view_count', 1);
+        $news->is_favorite = $this->favorites->userIsFavorite('news', $news->id, Auth::id());
         return $this->response->item($news, new NewsShowTransformer());
     }
 

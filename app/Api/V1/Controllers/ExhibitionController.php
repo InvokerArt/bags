@@ -11,6 +11,7 @@ use App\Models\Exhibition;
 use App\Models\Image;
 use App\Repositories\Backend\Banners\ImageRepository;
 use App\Repositories\Backend\Exhibitions\ExhibitionRepository;
+use App\Repositories\Backend\Favorites\FavoriteRepository;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -18,11 +19,13 @@ class ExhibitionController extends BaseController
 {
     protected $images;
     protected $exhibitions;
+    protected $favorites;
 
-    public function __construct(ImageRepository $images, ExhibitionRepository $exhibitions)
+    public function __construct(ImageRepository $images, ExhibitionRepository $exhibitions, FavoriteRepository $favorites)
     {
         $this->images = $images;
         $this->exhibitions = $exhibitions;
+        $this->favorites = $favorites;
     }
 
 
@@ -179,6 +182,7 @@ class ExhibitionController extends BaseController
     public function show(Exhibition $exhibition)
     {
         $exhibition->increment('view_count', 1);
+        $exhibition->is_favorite = $this->favorites->userIsFavorite('exhibition', $exhibition->id, Auth::id());
         return $this->response->item($exhibition, new ExhibitionShowTransformer());
     }
 

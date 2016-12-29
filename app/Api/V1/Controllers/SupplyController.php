@@ -7,16 +7,19 @@ use App\Api\V1\Transformers\SupplyShowTransformer;
 use App\Api\V1\Transformers\SupplyTransformer;
 use App\Models\Supply;
 use App\Repositories\Backend\Supplies\SupplyRepository;
+use App\Repositories\Backend\Favorites\FavoriteRepository;
 use Auth;
 use Illuminate\Http\Request;
 
 class SupplyController extends BaseController
 {
     protected $supplies;
+    protected $favorites;
 
-    public function __construct(SupplyRepository $supplies)
+    public function __construct(SupplyRepository $supplies, FavoriteRepository $favorites)
     {
         $this->supplies = $supplies;
+        $this->favorites = $favorites;
     }
 
     /**
@@ -158,6 +161,7 @@ class SupplyController extends BaseController
         $company = $supply->company()->first();
         $supply->address = $company->address;
         $supply->addressDetail = $company->addressDetail;
+        $supply->is_favorite = $this->favorites->userIsFavorite('supply', $supply->id, Auth::id());
         return $this->response->item($supply, new SupplyShowTransformer());
     }
 

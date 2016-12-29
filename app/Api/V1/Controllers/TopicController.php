@@ -25,13 +25,15 @@ class TopicController extends BaseController
     protected $replies;
     protected $notification;
     protected $vote;
+    protected $favorites;
 
-    public function __construct(TopicRepository $topics, ReplyRepository $replies, NotificationRepository $notification, VoteRepository $vote)
+    public function __construct(TopicRepository $topics, ReplyRepository $replies, NotificationRepository $notification, VoteRepository $vote, FavoriteRepository $favorites)
     {
         $this->topics = $topics;
         $this->replies = $replies;
         $this->notification = $notification;
         $this->vote = $vote;
+        $this->favorites = $favorites;
     }
 
     /**
@@ -486,8 +488,8 @@ class TopicController extends BaseController
     {
         $topic->increment('view_count', 1);
         if (Auth::check()) {
-            $topic->favorite = $this->topics->userFavorite($topic->id, Auth::id());
-            $topic->topic_vote = $this->topics->userTopicVoted($topic->id, Auth::id());
+            $topic->is_favorite = $this->favorites->userIsFavorite('topic', $topic->id, Auth::id());
+            $topic->is_vote = $this->topics->userIsVoted($topic->id, Auth::id());
         }
         $topic->replies = $topic->replies()->get();
         return $this->response->item($topic, new TopicTransformer());

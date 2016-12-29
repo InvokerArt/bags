@@ -24,7 +24,8 @@ class SupplyShowTransformer extends BaseTransformer
             'province' => $province->name,
             'city' => $city->name,
             'area' => $area->name,
-            'addressDetail' => $model->addressDetail
+            'addressDetail' => $model->addressDetail,
+            'is_favorite' => isset($model->is_favorite) && $model->is_favorite ? 1 : 0,
         ];
     }
 

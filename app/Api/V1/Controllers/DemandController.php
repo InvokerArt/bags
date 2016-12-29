@@ -7,16 +7,19 @@ use App\Api\V1\Transformers\DemandShowTransformer;
 use App\Api\V1\Transformers\DemandTransformer;
 use App\Models\Demand;
 use App\Repositories\Backend\Demands\DemandRepository;
+use App\Repositories\Backend\Favorites\FavoriteRepository;
 use Auth;
 use Illuminate\Http\Request;
 
 class DemandController extends BaseController
 {
     protected $demands;
+    protected $favorites;
 
-    public function __construct(DemandRepository $demands)
+    public function __construct(DemandRepository $demands, FavoriteRepository $favorites)
     {
         $this->demands = $demands;
+        $this->favorites = $favorites;
     }
 
     /**
@@ -180,6 +183,7 @@ class DemandController extends BaseController
         $company = $demand->company()->first();
         $demand->address = $company->address;
         $demand->addressDetail = $company->addressDetail;
+        $demand->is_favorite = $this->favorites->userIsFavorite('demand', $demand->id, Auth::id());
         return $this->response->item($demand, new DemandShowTransformer());
     }
 

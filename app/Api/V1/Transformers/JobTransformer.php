@@ -16,6 +16,7 @@ class JobTransformer extends BaseTransformer
             'experience' => $model->experience,
             'minsalary' => $model->minsalary,
             'content' => $model->content,
+            'is_favorite' => isset($model->is_favorite) && $model->is_favorite ? 1 : 0,
         ];
     }
 }

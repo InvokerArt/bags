@@ -5,9 +5,9 @@ namespace App\Repositories\Backend\Supplies;
 use App\Exceptions\GeneralException;
 use App\Models\Supply;
 use App\Models\User;
+use App\Repositories\Repository;
 use Auth;
 use DB;
-use App\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model;
 
 /**

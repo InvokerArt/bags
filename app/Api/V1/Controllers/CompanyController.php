@@ -27,6 +27,7 @@ use App\Models\Product;
 use App\Repositories\Backend\Banners\ImageRepository;
 use App\Repositories\Backend\Certifications\CertificationRepository;
 use App\Repositories\Backend\Companies\CompanyRepository;
+use App\Repositories\Backend\Favorites\FavoriteRepository;
 use App\Repositories\Backend\Jobs\JobRepository;
 use App\Repositories\Backend\Joins\JoinRepository;
 use App\Repositories\Backend\Products\ProductRepository;
@@ -42,8 +43,9 @@ class CompanyController extends BaseController
     protected $jobs;
     protected $images;
     protected $products;
+    protected $favorites;
 
-    public function __construct(JoinRepository $joins, CertificationRepository $certifications, CompanyRepository $companies, JobRepository $jobs, ImageRepository $images, ProductRepository $products)
+    public function __construct(JoinRepository $joins, CertificationRepository $certifications, CompanyRepository $companies, JobRepository $jobs, ImageRepository $images, ProductRepository $products, FavoriteRepository $favorites)
     {
         $this->joins = $joins;
         $this->certifications = $certifications;
@@ -51,6 +53,7 @@ class CompanyController extends BaseController
         $this->jobs = $jobs;
         $this->images = $images;
         $this->products = $products;
+        $this->favorites = $favorites;
     }
 
     /**
@@ -261,13 +264,23 @@ class CompanyController extends BaseController
         }
      * @apiSampleRequest /api/companies/1
      */
-    public function show(Company $company)
+    public function show(Company $company, Request $request)
     {
         $company->increment('view_count', 1);
         $company->categories = $company->categories()->get();
         $user = $company->user()->first();
-        $company->products = $user->products()->get();
-        $company->jobs = $user->jobs()->paginate();
+        $products = $user->products()->get();
+        foreach ($products as $key => $product) {
+            $product->is_favorite = $this->favorites->userIsFavorite('product', $product->id, Auth::id());
+            $products[$key] = $product;
+        }
+        $company->products = $products;
+        $jobs = $user->jobs()->get();
+        foreach ($jobs as $key => $job) {
+            $job->is_favorite = $this->favorites->userIsFavorite('job', $job->id, Auth::id());
+            $jobs[$key] = $job;
+        }
+        $company->jobs = $jobs;
         return $this->response->item($company, new CompanyShowTransformer());
     }
 

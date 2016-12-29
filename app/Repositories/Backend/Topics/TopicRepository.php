@@ -115,15 +115,6 @@ class TopicRepository extends Repository
         });
     }
 
-    public function userFavorite($topic_id, $user_id)
-    {
-        return Favorite::where([
-            'user_id'      => $user_id,
-            'favorite_id'   => $topic_id,
-            'favorite_type' => 'App\Models\Topic',
-        ])->exists();
-    }
-
     /**
      * 是否已经支持帖子.
      *
@@ -132,7 +123,7 @@ class TopicRepository extends Repository
      *
      * @return bool
      */
-    public function userTopicVoted($topic_id, $user_id)
+    public function userIsVoted($topic_id, $user_id)
     {
         return Vote::query()->where([
             'user_id'      => $user_id,
