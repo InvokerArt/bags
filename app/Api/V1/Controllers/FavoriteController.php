@@ -73,7 +73,7 @@ class FavoriteController extends BaseController
         $companys = Favorite::where('user_id', Auth::id())->where('favorite_type', 'App\Models\Company')->with('favorite')->orderBy('created_at', 'DESC')->paginate();
         foreach ($companys as $key => $company) {
             $favorite = $company->getRelation('favorite');
-            if ($favorite->role != $id) {
+            if ($favorite->role != $id || !$favorite) {
                 unset($companys[$key]);
                 continue;
             }
