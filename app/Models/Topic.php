@@ -5,13 +5,14 @@ namespace App\Models;
 use App\Models\Admin;
 use App\Models\Traits\Attribute\TopicAttribute;
 use App\Models\Traits\Relationship\TopicRelationship;
+use App\Models\Traits\Scope\TopicScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Topic extends Model
 {
-    use SoftDeletes, TopicRelationship, TopicAttribute;
+    use TopicScope, SoftDeletes, TopicRelationship, TopicAttribute;
 
     protected $dates = ['deleted_at'];
 
@@ -19,24 +20,7 @@ class Topic extends Model
      * 白名单
      * @var [type]
      */
-    protected $fillable = [
-        'title',
-        'slug',
-        'excerpt',
-        'source',
-        'content',
-        'user_id',
-        'category_id',
-        'reply_count',
-        'view_count',
-        'vote_count',
-        'last_reply_user_id',
-        'order',
-        'is_excellent',
-        'is_blocked',
-        'is_tagged',
-        'created_at',
-        'updated_at'
+    protected $fillable = ['title', 'slug', 'excerpt', 'source', 'content', 'user_id', 'category_id', 'reply_count', 'view_count', 'vote_count', 'last_reply_user_id', 'order', 'is_excellent', 'is_blocked', 'is_tagged', 'created_at', 'updated_at'
     ];
 
     public static function topicFilter($query, $request)
@@ -116,54 +100,6 @@ class Topic extends Model
                 return $query->pinAndRecentReply();
                 break;
         }
-    }
-
-    public function scopeWhose($query, $user_id)
-    {
-        return $query->where('user_id', '=', $user_id)->with('category');
-    }
-
-    public function scopeRecent($query)
-    {
-        return $query->orderBy('created_at', 'desc');
-    }
-
-    public function scopeRandom($query)
-    {
-        return $query->orderByRaw("RAND()");
-    }
-
-    public function scopePinAndRecentReply($query)
-    {
-        return $query->fresh()
-                     ->pinned()
-                     ->orderBy('updated_at', 'desc');
-    }
-
-    public function scopePinned($query)
-    {
-        return $query->orderBy('order', 'desc');
-    }
-
-    public function scopeFresh($query)
-    {
-        return $query->whereRaw("(`created_at` > '".Carbon::today()->subMonths(3)->toDateString()."' or (`order` > 0) )");
-    }
-
-    public function scopeRecentReply($query)
-    {
-        return $query->pinned()
-                     ->orderBy('updated_at', 'desc');
-    }
-
-    public function scopeExcellent($query)
-    {
-        return $query->where('is_excellent', '=', 'yes');
-    }
-
-    public function scopeWithoutBlocked($query)
-    {
-        return $query->where('is_blocked', '=', 'no');
     }
 
     public function correctApiFilter($filter)

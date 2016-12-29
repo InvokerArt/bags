@@ -9,19 +9,19 @@ use App\Api\V1\Transformers\NewsTransformer;
 use App\Models\Image;
 use App\Models\CategoriesNews;
 use App\Models\News;
-use App\Repositories\Backend\Banners\ImageInterface;
-use App\Repositories\Backend\News\NewsInterface;
+use App\Repositories\Backend\Banners\ImageRepository;
+use App\Repositories\Backend\News\NewsRepository;
 use Auth;
 use Illuminate\Http\Request;
 
 class NewsController extends BaseController
 {
-    protected $image;
+    protected $images;
     protected $news;
 
-    public function __construct(ImageInterface $image, NewsInterface $news)
+    public function __construct(ImageRepository $images, NewsRepository $news)
     {
-        $this->image = $image;
+        $this->images = $images;
         $this->news = $news;
     }
 
@@ -64,7 +64,7 @@ class NewsController extends BaseController
      */
     public function banner()
     {
-        $images = $this->image->getCategoryBanners(4);
+        $images = $this->images->getCategoryBanners(4);
         return $this->response->collection($images, new BannerTransformer());
     }
 
@@ -203,11 +203,7 @@ class NewsController extends BaseController
      */
     public function favorite(News $news)
     {
-        $favorites = $news->favorites()->where('user_id', Auth::id())->count();
-        if ($favorites) {
-            return $this->response->errorBadRequest('你已经收藏！');
-        }
-        $news->favorites()->create(['user_id' => Auth::id()]);
+        $this->news->createFavorite($news);
         return $this->response->created();
     }
 

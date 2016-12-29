@@ -2,7 +2,7 @@
 
 namespace App\Api\V1\Controllers;
 
-use App\Repositories\Backend\Users\UserInterface;
+use App\Repositories\Backend\Users\UserRepository;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
@@ -12,7 +12,7 @@ class UploadController extends BaseController
 {
     protected $user;
 
-    public function __construct(UserInterface $user)
+    public function __construct(UserRepository $user)
     {
         $this->user = $user;
     }

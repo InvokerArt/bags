@@ -8,24 +8,24 @@ use Illuminate\Support\Facades\Mail;
 use App\Exceptions\GeneralException;
 use Illuminate\Support\Facades\Hash;
 use App\Events\Frontend\Auth\UserConfirmed;
-use App\Repositories\Backend\Access\Role\RoleInterface;
+use App\Repositories\Backend\Access\Role\RoleRepository;
 
 /**
  * Class UserRepository
  * @package App\Repositories\Frontend\User
  */
-class UserRepository implements UserInterface
+class UserRepository implements UserRepository
 {
 
     /**
-     * @var RoleInterface
+     * @var RoleRepository
      */
     protected $role;
 
     /**
-     * @param RoleInterface $role
+     * @param RoleRepository $role
      */
-    public function __construct(RoleInterface $role)
+    public function __construct(RoleRepository $role)
     {
         $this->role = $role;
     }

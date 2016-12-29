@@ -59,10 +59,10 @@
                         url: '{{ route(env('APP_BACKEND_PREFIX').".feedbacks.get") }}'
                     },
                     columns: [
-                        {data: 'ids',"orderable": false,"searchable": false},
-                        {data: 'id',"orderable": true,"searchable": true},
-                        {data: 'user.username',"orderable": false,"searchable": true},
-                        {data: 'content', "orderable": false,"searchable": false},
+                        {data: 'ids', orderable: false, searchable: false},
+                        {data: 'id', orderable: true, searchable: true},
+                        {data: 'user.username', orderable: false, searchable: true},
+                        {data: 'content',  orderable: false, searchable: false},
                         {data: 'actions', orderable: false, searchable: false}
                     ],
                     "lengthMenu": [[20, 40, 100, -1], [20, 40, 100, "全部"]],

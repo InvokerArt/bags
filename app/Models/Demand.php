@@ -15,13 +15,13 @@ class Demand extends Model
 {
     use SoftDeletes, DemandRelationship, DemandAttribute;
 
+    protected $dates = ['deleted_at'];
+
     /**
-     * 参数黑名单
+     * 参数白名单
      * @var array
      */
-    protected $guard = [
-        'user_id',
-    ];
+    protected $fillable = ['user_id', 'title', 'slug', 'quantity', 'unit', 'content', 'images', 'is_excellent'];
 
     public static function demandFilter($query, $request)
     {

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Backend\Companies;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Companies\CategoryRequest;
 use App\Http\Requests\Backend\Companies\CategoryUpdateRequest;
-use App\Models\CategoryCompany;
-use App\Repositories\Backend\Companies\CategoryInterface;
+use App\Models\CategoriesCompanies as Category;
+use App\Repositories\Backend\Companies\CategoryRepository;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     protected $categories;
 
-    public function __construct(CategoryInterface $categories)
+    public function __construct(CategoryRepository $categories)
     {
         $this->categories = $categories;
     }
@@ -32,9 +32,9 @@ class CategoryController extends Controller
         $id = $request->id;
         $role = isset($request->role) ? $request->role : 1;
         if ($id) {
-            $category = CategoryCompany::root()->where('role', $role)->find($id);
+            $category = Category::root()->where('role', $role)->find($id);
         } else {
-            $category = CategoryCompany::roots()->where('role', $role)->first();
+            $category = Category::roots()->where('role', $role)->first();
         }
         return view('backend.companies.category.index', compact(['category', 'role']));
     }
@@ -59,8 +59,8 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         $name = $request->name;
-        $categories = CategoryCompany::root()->find($id);
-        $children = CategoryCompany::create(['name' => $name]);
+        $categories = Category::root()->find($id);
+        $children = Category::create(['name' => $name]);
         $children->makeChildOf($categories);
         return ['id'=>$children->id, 'icon' => 'fa fa-folder icon-lg icon-state-warning'];
     }
@@ -94,9 +94,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, CategoryUpdateRequest $request)
+    public function update(Category $category, CategoryUpdateRequest $request)
     {
-        $this->categories->update($id, $request);
+        $this->categories->update($category, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.categories.index')->withFlashSuccess('更新成功');
     }
 
@@ -106,9 +106,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        $this->categories->delete($id);
+        $this->categories->delete($category);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.catalog.categories.index')->withFlashSuccess('删除成功');
     }
 
@@ -121,7 +121,7 @@ class CategoryController extends Controller
         $role = $request->role;
         $disabled = $request->disabled;
         if ($parent == "#") {
-            $catetories = CategoryCompany::roots()->where('role', $role)->get();
+            $catetories = Category::roots()->where('role', $role)->get();
             foreach ($catetories as $category) {
                 $children = $category->children()->get();
                 $data[] = array(
@@ -135,7 +135,7 @@ class CategoryController extends Controller
                 );
             }
         } else {
-            $catetories = CategoryCompany::root()->find($parent)->where('role', $role)->getImmediateDescendants();
+            $catetories = Category::root()->find($parent)->where('role', $role)->getImmediateDescendants();
             foreach ($catetories as $category) {
                 $children = $category->isLeaf();
                 $data[] = array(
@@ -156,8 +156,8 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         $parent = $request->parent;
-        $catetorie = CategoryCompany::root()->find($parent);
-        $children = CategoryCompany::root()->find($id);
+        $catetorie = Category::root()->find($parent);
+        $children = Category::root()->find($id);
         $children->makeChildOf($catetorie);
     }
 
@@ -165,8 +165,8 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         $parent = $request->parent;
-        $categories = CategoryCompany::root()->find($parent);
-        $childrens = CategoryCompany::root()->find($id)->getDescendantsAndSelf();
+        $categories = Category::root()->find($parent);
+        $childrens = Category::root()->find($id)->getDescendantsAndSelf();
     }
 
     public function rename(CategoryRequest $request)

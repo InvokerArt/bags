@@ -9,25 +9,33 @@ use App\Models\TopicCategory;
 use App\Models\Vote;
 use Auth;
 use DB;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class EloquentUserRepository
  * @package App\Repositories\User
  */
-class TopicRepository implements TopicInterface
+class TopicRepository extends Repository
 {
+    /**
+     * 关联储存模型
+     */
+    const MODEL = Topic::class;
+
     public function getForDataTable()
     {
-        return Topic::select('topics.*', 'categories_topics.name as category', 'users.username as username')
+        return $this->query()->select('topics.*', 'categories_topics.name as category', 'users.username as username')
         ->leftJoin('categories_topics', 'categories_topics.id', 'topics.category_id')
         ->leftJoin('users', 'users.id', 'topics.user_id');
     }
 
     public function create($input)
     {
-        $topic = new Topic;
+        $topic = self::MODEL;
+        $topic = new $topic;
         $topic->title = $input['title'];
-        //$topic->slug = $input['slug'];
+        $topic->slug = $input['slug'];
         $topic->excerpt = $input['excerpt'];
         $topic->content = $input['content'];
         $topic->user_id = $input['user_id'];
@@ -39,7 +47,7 @@ class TopicRepository implements TopicInterface
         $topic->vote_count = $input['vote_count'];
 
         DB::transaction(function () use ($topic) {
-            if ($topic->save()) {
+            if (parent::save($topic)) {
                 return $topic;
             }
 
@@ -48,26 +56,26 @@ class TopicRepository implements TopicInterface
         return $topic;
     }
 
-    public function update(Topic $topic, $input)
+    public function update(Model $topic, array $input)
     {
-        $data = [
-            'title' => $input['title'],
-            //'slug' => $input['slug'],
-            'excerpt' => $input['excerpt'],
-            'content' => $input['content'],
-            'user_id' => $input['user_id'],
-            'category_id' => $input['category_id'],
-            'is_excellent' => $input['is_excellent'],
-            'is_blocked' => $input['is_blocked'],
-            'view_count' => $input['view_count'],
-            'reply_count' => $input['reply_count'],
-            'vote_count' => $input['vote_count']
-        ];
+        // $data = [
+        //     'title' => $input['title'],
+        //     //'slug' => $input['slug'],
+        //     'excerpt' => $input['excerpt'],
+        //     'content' => $input['content'],
+        //     'user_id' => $input['user_id'],
+        //     'category_id' => $input['category_id'],
+        //     'is_excellent' => $input['is_excellent'],
+        //     'is_blocked' => $input['is_blocked'],
+        //     'view_count' => $input['view_count'],
+        //     'reply_count' => $input['reply_count'],
+        //     'vote_count' => $input['vote_count']
+        // ];
 
-        $data = array_filter($data);
+        // $data = array_filter($data);
 
-        DB::transaction(function () use ($topic, $data) {
-            if ($topic->update($data)) {
+        DB::transaction(function () use ($topic, $input) {
+            if (parent::update($topic, $input)) {
                 return true;
             }
 
@@ -75,42 +83,36 @@ class TopicRepository implements TopicInterface
         });
     }
 
-    public function destroy($id)
+    public function destroy(Model $topic)
     {
-        $topic = $this->findOrThrowException($id);
-        if ($topic->delete()) {
+        if (parent::delete($topic)) {
             return true;
         }
         throw new GeneralException('删除失败！');
     }
 
-    public function restore($id)
+    public function restore(Model $topic)
     {
-        $topic = $this->findOrThrowException($id);
-        if ($topic->restore()) {
+        if (is_null($topic->deleted_at)) {
+            throw new GeneralException('话题不能恢复！');
+        }
+        if (parent::restore($topic)) {
             return true;
         }
         throw new GeneralException('返回失败！');
     }
 
-    public function delete($id)
+    public function delete(Model $topic)
     {
-        $topic = $this->findOrThrowException($id);
-        if ($topic->forceDelete()) {
-            return true;
+        if (is_null($topic->deleted_at)) {
+            throw new GeneralException('要先删除话题！');
         }
-        throw new GeneralException('删除失败！');
-    }
-
-    public function findOrThrowException($id)
-    {
-        $demand = Topic::withTrashed()->find($id);
-
-        if (!is_null($demand)) {
-            return $demand;
-        }
-
-        throw new GeneralException('未找到需求信息');
+        DB::transaction(function () use ($topic) {
+            if (parent::forceDelete($topic)) {
+                return true;
+            }
+            throw new GeneralException('删除失败！');
+        });
     }
 
     public function userFavorite($topic_id, $user_id)
@@ -138,5 +140,56 @@ class TopicRepository implements TopicInterface
             'votable_type' => 'App\Models\Topic',
             'is'           => 'topic_vote',
         ])->exists();
+    }
+
+    public function indexByUser()
+    {
+        return $this->query()->whose(Auth::id())->orderBy('is_excellent', 'DESC')->recent()->paginate();
+    }
+
+    public function indexByUserId($user_id)
+    {
+        $user  = User::findOrFail($user_id);
+        return $this->query()->whose($user_id)->recent()->paginate();
+    }
+
+    public function indexByUserVotes()
+    {
+        $user  = User::findOrFail($user_id);
+        return $user->votedTopics()->orderBy('pivot_created_at', 'desc')->paginate();
+    }
+
+    public function createFavorite(Model $topic)
+    {
+        $favorites = $topic->favorites()->where('user_id', Auth::id())->count();
+        if ($favorites) {
+            throw new GeneralException('你已经收藏！');
+        }
+        $topic->favorites()->create(['user_id' => Auth::id()]);
+    }
+
+    public function indexTopicsReply(Model $topic)
+    {
+        return $topic->replies()->withoutBlocked()->with(['user', 'replyTo' => function ($query) {
+            $query->with('user');
+        }])->get();
+    }
+
+    public function search($input)
+    {
+        $query = $this->query();
+
+        if ($input->q) {
+            $query->where(function ($query) use ($input) {
+                $query->where('title', 'like', "%$input->q%")
+                ->orWhere('content', 'like', "%$input->q%");
+            });
+        }
+
+        if ($input->categories) {
+            $query->where('category_id', $input->categories);
+        }
+
+        return $query->paginate();
     }
 }

@@ -3,13 +3,13 @@
 namespace App\Api\V1\Controllers;
 
 use App\Api\V1\Requests\FeedbackStoreRequest;
-use App\Repositories\Backend\Feedbacks\FeedbackInterface;
+use App\Repositories\Backend\Feedbacks\FeedbackRepository;
 
 class FeedbackController extends BaseController
 {
     protected $feedbacks;
 
-    public function __construct(FeedbackInterface $feedbacks)
+    public function __construct(FeedbackRepository $feedbacks)
     {
         $this->feedbacks = $feedbacks;
     }

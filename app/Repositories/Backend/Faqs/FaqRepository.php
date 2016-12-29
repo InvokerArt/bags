@@ -6,35 +6,39 @@ use App\Exceptions\GeneralException;
 use App\Models\Company;
 use App\Models\Faq;
 use App\Models\User;
-use App\Repositories\Backend\Notifications\NotificationInterface;
+use App\Repositories\Backend\Notifications\NotificationRepository;
 use DB;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class EloquentUserRepository
- * @package App\Repositories\User
- */
-class FaqRepository implements FaqInterface
+class FaqRepository extends Repository
 {
+    /**
+     * 关联储存模型
+     */
+    const MODEL = Faq::class;
+
     private $notification;
 
-    public function __construct(NotificationInterface $notification)
+    public function __construct(NotificationRepository $notification)
     {
         $this->notification = $notification;
     }
 
     public function getForDataTable()
     {
-        return Faq::get();
+        return $this->query()->get();
     }
 
     public function create($input)
     {
-        $faq = new Faq;
+        $faq = self::MODEL;
+        $faq = new $faq;
         $faq->title = $input['title'];
         $faq->content = $input['content'];
 
-        DB::transaction(function () use ($faq, $input) {
-            if ($faq->save()) {
+        DB::transaction(function () use ($faq) {
+            if (parent::save($faq)) {
                 return true;
             }
 
@@ -42,13 +46,10 @@ class FaqRepository implements FaqInterface
         });
     }
 
-    public function update(Faq $faq, $input)
+    public function update(Model $faq, array $input)
     {
-        $faq->title = $input['title'];
-        $faq->content = $input['content'];
-
-        DB::transaction(function () use ($faq) {
-            if ($faq->update()) {
+        DB::transaction(function () use ($faq, $input) {
+            if (parent::update($faq, $input)) {
                 return true;
             }
 
@@ -56,13 +57,16 @@ class FaqRepository implements FaqInterface
         });
     }
 
-    public function destroy($id)
+    public function destroy(Model $faq)
     {
-        $faq = Faq::find($id);
-
-        if ($faq->delete()) {
+        if (parent::delete($faq)) {
             return true;
         }
         throw new GeneralException('删除失败！');
+    }
+
+    public function index()
+    {
+        return $this->query()->orderBy('created_at', 'DESC')->paginate();
     }
 }

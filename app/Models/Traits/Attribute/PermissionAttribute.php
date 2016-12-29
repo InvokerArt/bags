@@ -26,7 +26,7 @@ trait PermissionAttribute
     {
         //系统权限不能编辑
         if ($this->id > 3) {
-            return '<a href="' . route(env('APP_BACKEND_PREFIX').'.access.permission.destroy', $this) . '" class="btn btn-xs red" data-method="delete"><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="删除"></i></a>';
+            return '<a href="' . route(env('APP_BACKEND_PREFIX').'.access.permission.destroy', $this) . '" class="btn btn-xs red" data-method="destroy"><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="删除"></i></a>';
         }
 
         return '';

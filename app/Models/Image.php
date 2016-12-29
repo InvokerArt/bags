@@ -13,6 +13,8 @@ class Image extends Model
 
     protected $table = 'banner_image';
 
+    protected $fillable = ['banner_id', 'title', 'image_url', 'link', 'target', 'description', 'order', 'published_from', 'published_to'];
+
     protected $dates = ['published_from', 'published_to'];
    
     public static function imageFilter($query, $request)

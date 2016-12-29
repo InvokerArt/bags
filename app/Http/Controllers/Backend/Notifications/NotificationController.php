@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Notifications;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Notifications\NotificationStoreRequest;
 use App\Models\Notification;
-use App\Repositories\Backend\Notifications\NotificationInterface;
+use App\Repositories\Backend\Notifications\NotificationRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -13,7 +13,7 @@ class NotificationController extends Controller
 {
     protected $notification;
 
-    public function __construct(NotificationInterface $notification)
+    public function __construct(NotificationRepository $notification)
     {
         $this->notification = $notification;
     }
@@ -76,9 +76,9 @@ class NotificationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Notification $notification)
     {
-        $this->notification->destroy($id);
+        $this->notification->destroy($notification);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.notifications.index')->withFlashSuccess('通知删除成功');
     }
 }

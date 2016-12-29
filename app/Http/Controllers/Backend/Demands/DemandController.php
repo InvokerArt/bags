@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Demands\DemandStoreOrUpdateRequest;
 use App\Models\Demand;
 use App\Models\User;
-use App\Repositories\Backend\Demands\DemandInterface;
+use App\Repositories\Backend\Demands\DemandRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Facades\Datatables;
 
@@ -14,7 +14,7 @@ class DemandController extends Controller
 {
     protected $demands;
 
-    public function __construct(DemandInterface $demands)
+    public function __construct(DemandRepository $demands)
     {
         $this->demands = $demands;
     }
@@ -125,7 +125,7 @@ class DemandController extends Controller
      */
     public function update(Demand $demand, DemandStoreOrUpdateRequest $request)
     {
-        $this->demands->update($demand, $request);
+        $this->demands->update($demand, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.demands.index')->withFlashSuccess('更新成功');
     }
 
@@ -135,9 +135,9 @@ class DemandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Demand $demand)
     {
-        $this->demands->destroy($id);
+        $this->demands->destroy($demand);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.demands.index')->withFlashSuccess('产品删除成功');
     }
 
@@ -147,9 +147,9 @@ class DemandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restore($id)
+    public function restore(Demand $demand)
     {
-        $this->demands->restore($id);
+        $this->demands->restore($demand);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.demands.index')->withFlashSuccess('产品恢复成功');
     }
 
@@ -159,9 +159,9 @@ class DemandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function delete(Demand $demand)
     {
-        $this->demands->delete($id);
+        $this->demands->delete($demand);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.demands.index')->withFlashSuccess('产品删除成功');
     }
 }

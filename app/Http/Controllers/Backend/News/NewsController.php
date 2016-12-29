@@ -7,8 +7,8 @@ use App\Http\Requests\Backend\News\NewsRequest;
 use App\Http\Requests\Backend\News\NewsStoreOrUpdateRequest;
 use App\Models\CategoriesNews;
 use App\Models\News;
-use App\Repositories\Backend\News\NewsInterface;
-use App\Repositories\Backend\Tags\TagsInterface;
+use App\Repositories\Backend\News\NewsRepository;
+use App\Repositories\Backend\Tags\TagsRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Facades\Datatables;
 
@@ -18,7 +18,7 @@ class NewsController extends Controller
     protected $categories;
     protected $tags;
 
-    public function __construct(NewsInterface $news, CategoriesNews $categories, TagsInterface $tags)
+    public function __construct(NewsRepository $news, CategoriesNews $categories, TagsRepository $tags)
     {
         $this->news = $news;
         $this->categories = $categories;
@@ -129,7 +129,7 @@ class NewsController extends Controller
      */
     public function update(News $news, NewsStoreOrUpdateRequest $request)
     {
-        $this->news->update($news, $request);
+        $this->news->update($news, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.news.index')->withFlashSuccess('更新成功');
     }
 
@@ -139,9 +139,9 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(News $news)
     {
-        $this->news->destroy($id);
+        $this->news->destroy($news);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.news.index')->withFlashSuccess('新闻删除成功');
     }
 
@@ -151,9 +151,9 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restore($id)
+    public function restore(News $news)
     {
-        $this->news->restore($id);
+        $this->news->restore($news);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.news.index')->withFlashSuccess('新闻恢复成功');
     }
 
@@ -163,9 +163,9 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function delete(News $news)
     {
-        $this->news->delete($id);
+        $this->news->delete($news);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.news.index')->withFlashSuccess('新闻删除成功');
     }
 

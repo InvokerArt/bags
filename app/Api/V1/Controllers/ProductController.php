@@ -6,7 +6,7 @@ use App\Api\V1\Requests\ProductStoreOrUpdateRequest;
 use App\Api\V1\Transformers\ProductShowTransformer;
 use App\Api\V1\Transformers\ProductTransformer;
 use App\Models\Product;
-use App\Repositories\Backend\Products\ProductInterface;
+use App\Repositories\Backend\Products\ProductRepository;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,7 @@ class ProductController extends BaseController
 {
     protected $products;
 
-    public function __construct(ProductInterface $products)
+    public function __construct(ProductRepository $products)
     {
         $this->products = $products;
     }
@@ -70,7 +70,7 @@ class ProductController extends BaseController
      */
     public function index()
     {
-        $products = Product::where('user_id', Auth::id())->orderBy('created_at', 'DESC')->paginate();
+        $products = $this->products->index();
         return $this->response()->paginator($products, new ProductTransformer());
     }
 
@@ -189,7 +189,7 @@ class ProductController extends BaseController
         }
 
         $request->images = relative_url($request->images);
-        $this->products->update($product, $request);
+        $this->products->update($product, $request->all());
         $product = $product->insert_company;
         return $this->response->item($product, new ProductShowTransformer());
     }
@@ -212,7 +212,7 @@ class ProductController extends BaseController
             return $this->response->errorForbidden();
         }
 
-        $product->delete();
+        $this->products->destroy($product);
         return $this->response->noContent();
     }
 
@@ -259,7 +259,7 @@ class ProductController extends BaseController
      */
     public function search(Request $request)
     {
-        $products = Product::where('title', 'like', "%$request->q%")->orWhere('content', 'like', "%$request->q%")->paginate();
+        $products = $this->products->search($request);
         return $this->response->paginator($products, new ProductTransformer());
     }
     
@@ -307,9 +307,7 @@ class ProductController extends BaseController
      */
     public function searchWithUser(Request $request)
     {
-        $products = Product::where('user_id', Auth::id())->where(function ($query) use ($request) {
-            $query->where('title', 'like', "%$request->q%")->orWhere('content', 'like', "%$request->q%");
-        })->paginate();
+        $products = $this->searchWithUser($request);
         return $this->response->paginator($products, new ProductTransformer());
     }
 }

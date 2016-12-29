@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Tags\TagsRequest;
 use App\Http\Requests\Backend\Tags\TagsStoreOrUpdateRequest;
 use App\Models\Tag;
-use App\Repositories\Backend\Tags\TagsInterface;
+use App\Repositories\Backend\Tags\TagsRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Facades\Datatables;
 
@@ -14,7 +14,7 @@ class IndexController extends Controller
 {
     protected $tags;
 
-    public function __construct(TagsInterface $tags)
+    public function __construct(TagsRepository $tags)
     {
         $this->tags = $tags;
     }
@@ -103,9 +103,9 @@ class IndexController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Tag $tag, Request $request)
     {
-        $this->tags->update($request, $id);
+        $this->tags->update($tag, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.tags.index')->withFlashSuccess('标签更新成功');
     }
 
@@ -115,9 +115,9 @@ class IndexController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        $this->tags->destroy($id);
+        $this->tags->destroy($tag);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.tags.index')->withFlashSuccess('标签删除成功');
     }
 

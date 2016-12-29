@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Topics;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Topics\ReplyStoreOrUpdateRequest;
 use App\Models\Reply;
-use App\Repositories\Backend\Topics\ReplyInterface;
+use App\Repositories\Backend\Topics\ReplyRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -13,7 +13,7 @@ class ReplyController extends Controller
 {
     protected $replies;
 
-    public function __construct(ReplyInterface $replies)
+    public function __construct(ReplyRepository $replies)
     {
         $this->replies = $replies;
     }
@@ -131,7 +131,7 @@ class ReplyController extends Controller
      */
     public function update(Reply $reply, ReplyStoreOrUpdateRequest $request)
     {
-        $this->replies->update($reply, $request);
+        $this->replies->update($reply, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.replies.index')->withFlashSuccess('回复更新成功');
     }
 
@@ -141,9 +141,9 @@ class ReplyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Reply $reply)
     {
-        $this->replies->destroy($id);
+        $this->replies->destroy($reply);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.replies.index')->withFlashSuccess('回复删除成功');
     }
 
@@ -153,9 +153,9 @@ class ReplyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restore($id)
+    public function restore(Reply $reply)
     {
-        $this->replies->restore($id);
+        $this->replies->restore($reply);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.replies.index')->withFlashSuccess('回复还原成功');
     }
 
@@ -165,9 +165,9 @@ class ReplyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function delete(Reply $reply)
     {
-        $this->replies->delete($id);
+        $this->replies->delete($reply);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.replies.index')->withFlashSuccess('回复删除成功');
     }
 }

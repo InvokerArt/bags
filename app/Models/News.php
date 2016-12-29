@@ -18,12 +18,15 @@ class News extends Model
     protected $table = 'news';
 
     /**
-     * 参数黑名单
+     * 参数白名单
      * @var array
      */
-    protected $guard = [
-        'user_id',
-    ];
+    protected $fillable = ['user_id', 'slug', 'title', 'subtitle', 'content', 'image', 'view_count', 'comment_count', 'ix_excellent', 'is_top', 'status', 'published_at'];
+    
+    /**
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
     public static function newsFilter($query, $request)
     {

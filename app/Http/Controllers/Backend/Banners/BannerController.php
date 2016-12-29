@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Banners\BannerStoreRequest;
 use App\Http\Requests\Backend\Banners\BannerUpdateRequest;
 use App\Models\Banner;
-use App\Repositories\Backend\Banners\BannerInterface;
+use App\Repositories\Backend\Banners\BannerRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -14,7 +14,7 @@ class BannerController extends Controller
 {
     protected $banners;
 
-    public function __construct(BannerInterface $banners)
+    public function __construct(BannerRepository $banners)
     {
         $this->banners = $banners;
     }
@@ -102,7 +102,7 @@ class BannerController extends Controller
      */
     public function update(Banner $banner, BannerUpdateRequest $request)
     {
-        $this->banners->update($banner, $request);
+        $this->banners->update($banner, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.banners.index')->withFlashSuccess('广告位更新成功');
     }
 
@@ -112,9 +112,33 @@ class BannerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Banner $banner)
     {
-        $this->banners->destroy($id);
+        $this->banners->destroy($banner);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.banners.index')->withFlashSuccess('广告位删除成功');
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Banner $banner)
+    {
+        $this->banners->restore($banner);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.banners.index')->withFlashSuccess('广告位恢复成功');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Banner $banner)
+    {
+        $this->banners->delete($banner);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.banners.index')->withFlashSuccess('广告位删除成功');
     }
 }

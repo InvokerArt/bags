@@ -6,16 +6,24 @@ use App\Exceptions\GeneralException;
 use App\Models\Job;
 use App\Models\User;
 use DB;
+use Auth;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class EloquentUserRepository
  * @package App\Repositories\User
  */
-class JobRepository implements JobInterface
+class JobRepository extends Repository
 {
+    /**
+     * 关联储存模型
+     */
+    const MODEL = Job::class;
+
     public function getForDataTable()
     {
-        return Job::select('jobs.*', 'users.username')
+        return $this->query()->select('jobs.*', 'users.username')
                 ->leftJoin('users', 'users.id', '=', 'jobs.user_id');
     }
 
@@ -27,7 +35,8 @@ class JobRepository implements JobInterface
             throw new GeneralException("会员不存在！");
         }
 
-        $job = new Job;
+        $job = self::MODEL;
+        $job = new $job;
         $job->user_id = $input['user_id'];
         $job->job = $input['job'];
         $job->total = $input['total'];
@@ -37,7 +46,7 @@ class JobRepository implements JobInterface
         $job->content = $input['content'];
 
         DB::transaction(function () use ($job) {
-            if ($job->save()) {
+            if (parent::save($job)) {
                 return true;
             }
 
@@ -45,17 +54,10 @@ class JobRepository implements JobInterface
         });
     }
 
-    public function update(Job $job, $input)
+    public function update(Model $job, array $input)
     {
-        $job->job = $input['job'];
-        $job->total = $input['total'];
-        $job->education = $input['education'];
-        $job->experience = $input['experience'];
-        $job->minsalary = $input['minsalary'];
-        $job->content = $input['content'];
-
-        DB::transaction(function () use ($job) {
-            if ($job->update()) {
+        DB::transaction(function () use ($job, $input) {
+            if (parent::update($job, $input)) {
                 return true;
             }
 
@@ -63,44 +65,50 @@ class JobRepository implements JobInterface
         });
     }
 
-    public function destroy($id)
+    public function destroy(Model $job)
     {
-        $job = $this->findOrThrowException($id);
-
-        if ($job->delete()) {
+        if (parent::delete($job)) {
             return true;
         }
         throw new GeneralException('删除失败！');
     }
 
-    public function restore($id)
+    public function restore(Model $job)
     {
-        $job = $this->findOrThrowException($id);
-
-        if ($job->restore()) {
+        if (is_null($job->deleted_at)) {
+            throw new GeneralException('公司不能恢复！');
+        }
+        if (parent::restore($job)) {
             return true;
         }
         throw new GeneralException('返回失败！');
     }
 
-    public function delete($id)
+    public function delete(Model $job)
     {
-        $job = $this->findOrThrowException($id);
-
-        if ($job->forceDelete()) {
-            return true;
+        if (is_null($job->deleted_at)) {
+            throw new GeneralException('要先删除公司！');
         }
-        throw new GeneralException('删除失败！');
+        DB::transaction(function () use ($job) {
+            if (parent::forceDelete($job)) {
+                return true;
+            }
+            throw new GeneralException('删除失败！');
+        });
     }
 
-    public function findOrThrowException($id)
+    public function indexByUser()
     {
-        $job = Job::withTrashed()->find($id);
+        $user = Auth::user();
+        return $user->jobs()->orderBy('created_at', 'DESC')->paginate();
+    }
 
-        if (!is_null($job)) {
-            return $job;
+    public function createFavorite(Model $job)
+    {
+        $favorites = $job->favorites()->where('user_id', Auth::id())->count();
+        if ($favorites) {
+            throw new GeneralException('你已经收藏！');
         }
-
-        throw new GeneralException('未找到招聘信息');
+        $job->favorites()->create(['user_id' => Auth::id()]);
     }
 }

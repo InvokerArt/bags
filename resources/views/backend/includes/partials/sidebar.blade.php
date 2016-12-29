@@ -152,7 +152,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.access.admin*')) }}">
-                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.user.index') }}">管理员</a>
+                        <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.admin.index') }}">管理员</a>
                     </li>
                     <li class="{{ active_class(if_route_pattern(env('APP_BACKEND_PREFIX').'.access.role*')) }}">
                         <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.role.index') }}">角色管理</a>

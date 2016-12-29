@@ -10,6 +10,8 @@ class Certification extends Model
 {
     use CertificationAttribute, CertificationRelationship;
 
+    protected $fillable = ['user_id', 'company_id', 'identity_card', 'licenses', 'status'];
+
     public static function certificationFilter($query, $request)
     {
         if ($request->has('id')) {

@@ -8,7 +8,7 @@ trait CompanyRelationship
     //分类多对多
     public function categories()
     {
-        return $this->belongsToMany('App\Models\CategoryCompany', 'category_company', 'company_id', 'category_id');
+        return $this->belongsToMany('App\Models\CategoriesCompanies', 'category_company', 'company_id', 'category_id');
     }
 
     //用户一对多反向

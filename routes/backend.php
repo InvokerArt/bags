@@ -25,8 +25,8 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
      */
     Route::group(['namespace' => 'Access', 'as' => 'access.', 'prefix' => 'access'], function () {
         //管理员
-        Route::get('/user/get', 'AdminController@get')->name('user.get');
-        Route::resource('/user', 'AdminController');
+        Route::get('/admin/get', 'AdminController@get')->name('admin.get');
+        Route::resource('/admin', 'AdminController');
         //角色
         Route::get('/role/get', 'RoleController@get')->name('role.get');
         Route::resource('/role', 'RoleController');
@@ -40,7 +40,6 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/get', 'UserController@get')->name('get');
         Route::get('/ajax', 'UserController@info')->name('ajax.info');
         Route::post('/avatar', 'UserController@avatar')->name('avatar');
-        Route::get('/deleted/{user}', 'UserController@deleted')->name('deleted');
         Route::post('/', 'UserController@store')->name('store');
         Route::get('/', 'UserController@index')->name('index');
         Route::get('/create', 'UserController@create')->name('create');
@@ -48,7 +47,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{user}', 'UserController@destroy')->name('destroy');
         Route::get('/{user}', 'UserController@show')->name('show');
         Route::get('/{user}/edit', 'UserController@edit')->name('edit');
-        Route::get('/deleted/{user}', 'UserController@deleted')->name('deleted');
+        Route::get('/{user}/delete', 'UserController@delete')->name('delete');
         Route::get('/{user}/restore', 'UserController@restore')->name('restore');
     });
 
@@ -69,7 +68,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{company}', 'CompanyController@destroy')->name('destroy');
         Route::get('/{company}', 'CompanyController@show')->name('show');
         Route::get('/{company}/edit', 'CompanyController@edit')->name('edit');
-        Route::get('/deleted/{company}', 'CompanyController@deleted')->name('deleted');
+        Route::get('/{company}/delete', 'CompanyController@delete')->name('delete');
         Route::get('/{company}/restore', 'CompanyController@restore')->name('restore');
     });
 
@@ -83,7 +82,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{job}', 'JobController@destroy')->name('destroy');
         Route::get('/{job}', 'JobController@show')->name('show');
         Route::get('/{job}/edit', 'JobController@edit')->name('edit');
-        Route::get('/deleted/{job}', 'JobController@deleted')->name('deleted');
+        Route::get('/{job}/delete', 'JobController@delete')->name('delete');
         Route::get('/{job}/restore', 'JobController@restore')->name('restore');
     });
 
@@ -105,7 +104,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
             Route::get('/{comment}', 'CommentController@show')->name('show');
             Route::get('/{comment}/edit', 'CommentController@edit')->name('edit');
             Route::get('/{comment}/commentto', 'CommentController@commentto')->name('commentto');
-            Route::get('/deleted/{comment}', 'CommentController@deleted')->name('deleted');
+            Route::get('/{comment}/delete', 'CommentController@delete')->name('delete');
             Route::get('/{comment}/restore', 'CommentController@restore')->name('restore');
         });
         //新闻
@@ -118,7 +117,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{news}', 'NewsController@destroy')->name('destroy');
         Route::get('/{news}', 'NewsController@show')->name('show');
         Route::get('/{news}/edit', 'NewsController@edit')->name('edit');
-        Route::get('/deleted/{news}', 'NewsController@deleted')->name('deleted');
+        Route::get('/{news}/delete', 'NewsController@delete')->name('delete');
         Route::get('/{news}/restore', 'NewsController@restore')->name('restore');
     });
 
@@ -138,7 +137,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{exhibition}', 'ExhibitionController@destroy')->name('destroy');
         Route::get('/{exhibition}', 'ExhibitionController@show')->name('show');
         Route::get('/{exhibition}/edit', 'ExhibitionController@edit')->name('edit');
-        Route::get('/deleted/{exhibition}', 'ExhibitionController@deleted')->name('deleted');
+        Route::get('/{exhibition}/delete', 'ExhibitionController@delete')->name('delete');
         Route::get('/{exhibition}/restore', 'ExhibitionController@restore')->name('restore');
     });
 
@@ -152,7 +151,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{join}', 'JoinController@destroy')->name('destroy');
         Route::get('/{join}', 'JoinController@show')->name('show');
         Route::get('/{join}/edit', 'JoinController@edit')->name('edit');
-        Route::get('/deleted/{join}', 'JoinController@deleted')->name('deleted');
+        Route::get('/{join}/delete', 'JoinController@delete')->name('delete');
         Route::get('/{join}/restore', 'JoinController@restore')->name('restore');
     });
 
@@ -166,7 +165,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{certification}', 'CertificationController@destroy')->name('destroy');
         Route::get('/{certification}', 'CertificationController@show')->name('show');
         Route::get('/{certification}/edit', 'CertificationController@edit')->name('edit');
-        Route::get('/deleted/{certification}', 'CertificationController@deleted')->name('deleted');
+        Route::get('/{certification}/delete', 'CertificationController@delete')->name('delete');
         Route::get('/{certification}/restore', 'CertificationController@restore')->name('restore');
     });
 
@@ -180,7 +179,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{product}', 'ProductController@destroy')->name('destroy');
         Route::get('/{product}', 'ProductController@show')->name('show');
         Route::get('/{product}/edit', 'ProductController@edit')->name('edit');
-        Route::get('/deleted/{product}', 'ProductController@deleted')->name('deleted');
+        Route::get('/{product}/delete', 'ProductController@delete')->name('delete');
         Route::get('/{product}/restore', 'ProductController@restore')->name('restore');
     });
 
@@ -194,7 +193,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{demand}', 'DemandController@destroy')->name('destroy');
         Route::get('/{demand}', 'DemandController@show')->name('show');
         Route::get('/{demand}/edit', 'DemandController@edit')->name('edit');
-        Route::get('/deleted/{demand}', 'DemandController@deleted')->name('deleted');
+        Route::get('/{demand}/delete', 'DemandController@delete')->name('delete');
         Route::get('/{demand}/restore', 'DemandController@restore')->name('restore');
     });
 
@@ -208,7 +207,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{supply}', 'SupplyController@destroy')->name('destroy');
         Route::get('/{supply}', 'SupplyController@show')->name('show');
         Route::get('/{supply}/edit', 'SupplyController@edit')->name('edit');
-        Route::get('/deleted/{supply}', 'SupplyController@deleted')->name('deleted');
+        Route::get('/{supply}/delete', 'SupplyController@delete')->name('delete');
         Route::get('/{supply}/restore', 'SupplyController@restore')->name('restore');
     });
 
@@ -223,7 +222,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{tag}', 'IndexController@destroy')->name('destroy');
         Route::get('/{tag}', 'IndexController@show')->name('show');
         Route::get('/{tag}/edit', 'IndexController@edit')->name('edit');
-        Route::get('/deleted/{tag}', 'IndexController@deleted')->name('deleted');
+        Route::get('/{tag}/delete', 'IndexController@delete')->name('delete');
         Route::get('/{tag}/restore', 'IndexController@restore')->name('restore');
     });
 
@@ -243,12 +242,12 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::match(['put', 'patch'], '/{banner}', 'BannerController@update')->name('update');
         Route::delete('/{banner}', 'BannerController@destroy')->name('destroy');
         Route::get('/{banner}/edit', 'BannerController@edit')->name('edit');
-        Route::get('/deleted/{banner}', 'BannerController@deleted')->name('deleted');
+        Route::get('/{banner}/delete', 'BannerController@delete')->name('delete');
         Route::get('/{banner}/restore', 'BannerController@restore')->name('restore');
         //轮播图
         Route::get('/image/get', 'ImageController@get')->name('image.get');
         Route::resource('/image', 'ImageController');
-        Route::get('/image/deleted/{image}', 'ImageController@deleted')->name('image.deleted');
+        Route::get('/image/{image}/delete', 'ImageController@delete')->name('image.delete');
         Route::get('/image/{image}/restore', 'ImageController@restore')->name('image.restore');
     });
 
@@ -269,7 +268,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::delete('/{topic}', 'TopicController@destroy')->name('destroy');
         Route::get('/{topic}', 'TopicController@show')->name('show');
         Route::get('/{topic}/edit', 'TopicController@edit')->name('edit');
-        Route::get('/deleted/{topic}', 'TopicController@deleted')->name('deleted');
+        Route::get('/{topic}/delete', 'TopicController@delete')->name('delete');
         Route::get('/{topic}/restore', 'TopicController@restore')->name('restore');
     });
 
@@ -284,7 +283,7 @@ Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', '
         Route::get('/{reply}', 'ReplyController@show')->name('show');
         Route::get('/{reply}/edit', 'ReplyController@edit')->name('edit');
         Route::get('/{reply}/replyto', 'ReplyController@replyto')->name('replyto');
-        Route::get('/deleted/{reply}', 'ReplyController@deleted')->name('deleted');
+        Route::get('/{reply}/delete', 'ReplyController@delete')->name('delete');
         Route::get('/{reply}/restore', 'ReplyController@restore')->name('restore');
     });
 

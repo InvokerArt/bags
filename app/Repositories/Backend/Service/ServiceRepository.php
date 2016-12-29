@@ -3,9 +3,9 @@
 namespace App\Repositories\Backend\Service;
 
 use App\Models\Services;
-use App\Repositories\Backend\Service\ServiceInterface;
+use App\Repositories\Backend\Service\ServiceRepository;
 
-class ServiceRepository implements ServiceInterface
+class ServiceRepository implements ServiceRepository
 {
 	/**
 	 * [获取所有服务]

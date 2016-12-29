@@ -6,20 +6,23 @@ use App\Api\V1\Transformers\BannerTransformer;
 use App\Api\V1\Transformers\CategoryTransformer;
 use App\Api\V1\Transformers\ExhibitionShowTransformer;
 use App\Api\V1\Transformers\ExhibitionTransformer;
-use App\Models\Image;
 use App\Models\CategoriesExhibitions;
 use App\Models\Exhibition;
-use App\Repositories\Backend\Banners\ImageInterface;
+use App\Models\Image;
+use App\Repositories\Backend\Banners\ImageRepository;
+use App\Repositories\Backend\Exhibitions\ExhibitionRepository;
 use Auth;
 use Illuminate\Http\Request;
 
 class ExhibitionController extends BaseController
 {
-    protected $image;
+    protected $images;
+    protected $exhibitions;
 
-    public function __construct(ImageInterface $image)
+    public function __construct(ImageRepository $images, ExhibitionRepository $exhibitions)
     {
-        $this->image = $image;
+        $this->images = $images;
+        $this->exhibitions = $exhibitions;
     }
 
 
@@ -61,7 +64,7 @@ class ExhibitionController extends BaseController
      */
     public function banner()
     {
-        $images = $this->image->getCategoryBanners(3);
+        $images = $this->images->getCategoryBanners(3);
         return $this->response->collection($images, new BannerTransformer());
     }
 
@@ -101,13 +104,7 @@ class ExhibitionController extends BaseController
      */
     public function indexByCategories(Request $request)
     {
-        $query = Exhibition::select();
-        if ($request->categories) {
-            $query->whereHas('categories', function ($query) use ($request) {
-                $query->where('category_id', $request->categories);
-            });
-        }
-        $exhibitions = $query->orderBy('created_at', 'DESC')->paginate();
+        $exhibitions = $this->exhibitions->indexByCategories($request);
         return $this->response()->paginator($exhibitions, new ExhibitionTransformer());
     }
 
@@ -197,11 +194,7 @@ class ExhibitionController extends BaseController
      */
     public function favorite(Exhibition $exhibition)
     {
-        $favorites = $exhibition->favorites()->where('user_id', Auth::id())->count();
-        if ($favorites) {
-            return $this->response->errorBadRequest('你已经收藏！');
-        }
-        $exhibition->favorites()->create(['user_id' => Auth::id()]);
+        $this->exhibitions->createFavorite($exhibition);
         return $this->response->created();
     }
 
@@ -246,14 +239,7 @@ class ExhibitionController extends BaseController
      */
     public function search(Request $request)
     {
-        $query = Exhibition::select();
-        
-        if ($request->categories) {
-            $query->whereHas('categories', function ($query) use ($request) {
-                $query->where('category_id', $request->categories);
-            });
-        }
-        $news = $query->where('title', 'like', "%$request->q%")->orWhere('subtitle', 'like', "%$request->q%")->orWhere('content', 'like', "%$request->q%")->paginate();
-        return $this->response->paginator($news, new ExhibitionShowTransformer());
+        $exhibitions = $this->exhibitions->search($request);
+        return $this->response->paginator($exhibitions, new ExhibitionShowTransformer());
     }
 }

@@ -1,11 +1,11 @@
 @extends('backend.layouts.app')
 
 @section('content')
-{{ Form::model($user, ['route' => [env('APP_BACKEND_PREFIX').'.access.user.update', $user], 'class' => 'form-horizontal', 'method' => 'PATCH', 'id' => 'edit-user']) }}
+{{ Form::model($user, ['route' => [env('APP_BACKEND_PREFIX').'.access.admin.update', $user], 'class' => 'form-horizontal', 'method' => 'PATCH', 'id' => 'edit-user']) }}
     <div class="portlet">
         <div class="portlet-title">
             <div class="actions btn-set">
-                <button type="button" name="back" class="btn btn-secondary-outline" onclick="location.href='{{ route(env('APP_BACKEND_PREFIX').'.access.user.index') }}'">
+                <button type="button" name="back" class="btn btn-secondary-outline" onclick="location.href='{{ route(env('APP_BACKEND_PREFIX').'.access.admin.index') }}'">
                     <i class="fa fa-angle-left"></i>
                     返回
                 </button>
@@ -14,7 +14,7 @@
                     保存
                 </button>
                 @if ($user->id>1)
-                <button class="btn btn-danger" type="button" href="{{ route(env('APP_BACKEND_PREFIX').'.access.user.destroy', $user->id) }}" data-method="delete">
+                <button class="btn btn-danger" type="button" href="{{ route(env('APP_BACKEND_PREFIX').'.access.admin.destroy', $user->id) }}" data-method="delete">
                     <i class="fa fa-trash"></i> 
                     删除
                 </button>

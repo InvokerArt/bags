@@ -2,11 +2,11 @@
 
 @section('content')
 <div id="myAlert"></div>
-{{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.access.user.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'create-user']) }}
+{{ Form::open(['route' => env('APP_BACKEND_PREFIX').'.access.admin.store', 'class' => 'form-horizontal', 'method' => 'post', 'id' => 'create-user']) }}
     <div class="portlet">
         <div class="portlet-title">
             <div class="actions btn-set">
-                <button type="button" name="back" class="btn btn-secondary-outline" onclick="location.href='{{ route(env('APP_BACKEND_PREFIX').'.access.user.index') }}'">
+                <button type="button" name="back" class="btn btn-secondary-outline" onclick="location.href='{{ route(env('APP_BACKEND_PREFIX').'.access.admin.index') }}'">
                     <i class="fa fa-angle-left"></i>
                     返回
                 </button>

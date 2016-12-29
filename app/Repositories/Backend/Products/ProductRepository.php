@@ -7,18 +7,23 @@ use App\Models\Product;
 use App\Models\User;
 use Auth;
 use DB;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class EloquentUserRepository
  * @package App\Repositories\User
  */
-class ProductRepository implements ProductInterface
+class ProductRepository extends Repository
 {
-
+    /**
+     * 关联储存模型
+     */
+    const MODEL = Product::class;
 
     public function getForDataTable()
     {
-        return Product::select('products.*', 'users.username')
+        return $this->query()->select('products.*', 'users.username')
         ->leftJoin('users', 'users.id', '=', 'products.user_id');
     }
 
@@ -30,7 +35,8 @@ class ProductRepository implements ProductInterface
             throw new GeneralException("会员不存在！");
         }
 
-        $product = new Product;
+        $product = self::MODEL;
+        $product = new $product;
         $product->title = $input['title'];
         //$product->slug = $input['slug'];
         $product->user_id = $input['user_id'];
@@ -40,7 +46,7 @@ class ProductRepository implements ProductInterface
         $product->images = $input['images'];
 
         DB::transaction(function () use ($product) {
-            if ($product->save()) {
+            if (parent::save($product)) {
                 return true;
             }
 
@@ -48,17 +54,10 @@ class ProductRepository implements ProductInterface
         });
     }
 
-    public function update(Product $product, $input)
+    public function update(Model $product, array $input)
     {
-        $product->title = $input['title'];
-        //$product->slug = $input['slug'];
-        $product->price = $input['price'];
-        $product->unit = $input['unit'];
-        $product->content = $input['content'];
-        $product->images = $input['images'];
-
-        DB::transaction(function () use ($product) {
-            if ($product->update()) {
+        DB::transaction(function () use ($product, $input) {
+            if (parent::update($product, $input)) {
                 return true;
             }
 
@@ -66,41 +65,67 @@ class ProductRepository implements ProductInterface
         });
     }
 
-    public function destroy($id)
+    public function destroy(Model $product)
     {
-        $product = $this->findOrThrowException($id);
-        if ($product->delete()) {
+        if (parent::delete($product)) {
             return true;
         }
         throw new GeneralException('删除失败！');
     }
 
-    public function restore($id)
+    public function restore(Model $product)
     {
-        $product = $this->findOrThrowException($id);
-        if ($product->restore()) {
+        if (is_null($product->deleted_at)) {
+            throw new GeneralException('产品不能恢复！');
+        }
+
+        if (parent::restore($product)) {
             return true;
         }
         throw new GeneralException('恢复失败！');
     }
 
-    public function delete($id)
+    public function delete(Model $product)
     {
-        $product = $this->findOrThrowException($id);
-        if ($product->forceDelete()) {
-            return true;
+        if (is_null($product->deleted_at)) {
+            throw new GeneralException('要先删除产品！');
         }
-        throw new GeneralException('删除失败！');
+        DB::transaction(function () use ($product) {
+            if (parent::forceDelete($product)) {
+                return true;
+            }
+            throw new GeneralException('删除失败！');
+        });
+    }
+    public function indexByUser()
+    {
+        $user = Auth::user();
+        return $user->products()->paginate();
     }
 
-    public function findOrThrowException($id)
+    public function createFavorite(Model $product)
     {
-        $product = Product::withTrashed()->find($id);
-
-        if (!is_null($product)) {
-            return $product;
+        $favorites = $product->favorites()->where('user_id', Auth::id())->count();
+        if ($favorites) {
+            throw new GeneralException('你已经收藏！');
         }
+        $product->favorites()->create(['user_id' => Auth::id()]);
+    }
 
-        throw new GeneralException('未找到招聘信息');
+    public function index()
+    {
+        return $this->query()->where('user_id', Auth::id())->orderBy('created_at', 'DESC')->paginate();
+    }
+
+    public function search($input)
+    {
+        return $this->query()->where('title', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%")->paginate();
+    }
+
+    public function searchWithUser($input)
+    {
+        return $this->query()->where('user_id', Auth::id())->where(function ($query) use ($request) {
+            $query->where('title', 'like', "%$request->q%")->orWhere('content', 'like', "%$request->q%");
+        })->paginate();
     }
 }

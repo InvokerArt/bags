@@ -5,12 +5,20 @@ namespace App\Api\V1\Controllers;
 use App\Api\V1\Transformers\NotificationTransformer;
 use App\Models\Notification;
 use App\Models\NotificationUser;
+use App\Repositories\Backend\Notifications\NotificationRepository;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class NotificationController extends BaseController
 {
+    protected $notifications;
+
+    public function __construct(NotificationRepository $notifications)
+    {
+        $this->notifications = $notifications;
+    }
+
     /**
      * @apiDefine Notify 通知
      */
@@ -142,21 +150,9 @@ class NotificationController extends BaseController
      */
     public function index()
     {
-        //生成消息开始
-        $user = Auth::user();
-        $lastNotification = NotificationUser::select('created_at')->where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
-        $lastReadAt = ($lastNotification) ? $lastNotification->created_at : '';
-        $unreadNotifications = Notification::where('created_at', '>', $lastReadAt)->where('type', 'system')->get();
-        if ($unreadNotifications) {
-            foreach ($unreadNotifications as $key => $unreadNotification) {
-                $notificationuser = new NotificationUser();
-                $notificationuser->user_id = $user->id;
-                $notificationuser->notification_id = $unreadNotification->id;
-                $notificationuser->save();
-            }
-        }
-        //结束
-        $notifications = NotificationUser::with('notification')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
+        //拉取生成用户消息列表
+        $this->notifications->createUsersNotifications();
+        $notifications = $this->notifications->index();
         return $this->response->collection($notifications, new NotificationTransformer());
     }
 
@@ -172,9 +168,7 @@ class NotificationController extends BaseController
      */
     public function makeAsRead($id)
     {
-        $unreadNotification = NotificationUser::where('id', $id)->where('user_id', Auth::id())->first();
-        $unreadNotification->read_at = new Carbon;
-        $unreadNotification->save();
+        $this->notifications->makeAsRead($id);
         return $this->response->noContent();
     }
 
@@ -194,20 +188,6 @@ class NotificationController extends BaseController
      */
     public function store(Request $request)
     {
-        $user_id = Auth::id();
-        $message = Notification::select('id')->where('notification_id', $request->notification_id)->where('notification_type', $request->notification_type)->where('created_at', $request->created_at)->first();
-        //防止非系统消息一条消息变两条问题
-        if ($request->message == 'system') {
-            $notification = new NotificationUser();
-            $notification->user_id = $user_id;
-            $notification->notification_id = $message->id;
-            $notification->read_at = Carbon::now();
-            $notification->created_at = $request->created_at;
-            $notification->updated_at = $request->created_at;
-            $notification->save();
-        } else {
-            $notificationUser = NotificationUser::where('notification_id', $message->id);
-            $notificationUser->update(['read_at' => Carbon::now()]);
-        }
+        $this->notifications->createOrUpdate($reuqest);
     }
 }

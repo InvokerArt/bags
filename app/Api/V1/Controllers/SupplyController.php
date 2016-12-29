@@ -6,7 +6,7 @@ use App\Api\V1\Requests\SupplyStoreOrUpdateRequest;
 use App\Api\V1\Transformers\SupplyShowTransformer;
 use App\Api\V1\Transformers\SupplyTransformer;
 use App\Models\Supply;
-use App\Repositories\Backend\Supplies\SupplyInterface;
+use App\Repositories\Backend\Supplies\SupplyRepository;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,7 @@ class SupplyController extends BaseController
 {
     protected $supplies;
 
-    public function __construct(SupplyInterface $supplies)
+    public function __construct(SupplyRepository $supplies)
     {
         $this->supplies = $supplies;
     }
@@ -67,7 +67,7 @@ class SupplyController extends BaseController
      */
     public function index()
     {
-        $supplies = Supply::orderBy('created_at', 'DESC')->paginate();
+        $supplies = $this->supplies->index();
         return $this->response()->paginator($supplies, new SupplyTransformer());
     }
     /**
@@ -105,8 +105,7 @@ class SupplyController extends BaseController
      */
     public function indexByUser()
     {
-        $supplies = Supply::where('user_id', Auth::id())->orderBy('is_excellent')
-                    ->orderBy('created_at', 'DESC')->paginate();
+        $supplies = $this->supplies->indexByUser();
         return $this->response()->paginator($supplies, new SupplyTransformer());
     }
 
@@ -215,7 +214,7 @@ class SupplyController extends BaseController
         }
 
         $request->images = relative_url($request->images);
-        $this->supplies->update($supply, $request);
+        $this->supplies->update($supply, $request->all());
         return $this->response->item($supply, new SupplyShowTransformer());
     }
 
@@ -237,7 +236,7 @@ class SupplyController extends BaseController
             return $this->response->errorForbidden();
         }
 
-        $supply->delete();
+        $this->supplies->destroy($supply);
         return $this->response->noContent();
     }
 
@@ -253,11 +252,7 @@ class SupplyController extends BaseController
      */
     public function favorite(Supply $supply)
     {
-        $favorites = $supply->favorites()->where('user_id', Auth::id())->count();
-        if ($favorites) {
-            return $this->response->errorBadRequest('你已经收藏！');
-        }
-        $supply->favorites()->create(['user_id' => Auth::id()]);
+        $this->supplies->createFavorite();
         return $this->response->created();
     }
 

@@ -7,34 +7,28 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Image;
 use URL;
+use Hash;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class EloquentUserRepository
  * @package App\Repositories\User
  */
-class UserRepository implements UserInterface
+class UserRepository extends Repository
 {
     /**
-     * @var FrontendUserInterface
+     * 关联储存模型
      */
-    protected $user;
+    const MODEL = User::class;
 
     /**
-     * @param FrontendUserInterface $user
+     * @var FrontendUserRepository
      */
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
 
     public function getForDataTable()
     {
-        return User::select('*');
-        //原生写法
-        // return User::leftJoin("role_user", 'role_user.user_id', '=', 'users.id')
-        //     ->whereNull('role_user.user_id')
-        //     ->get()
-        //     ->unique();
+        return $this->query()->select('*');
     }
 
     /**
@@ -46,26 +40,30 @@ class UserRepository implements UserInterface
      */
     public function create($input)
     {
-        $user = User::where('username', $input['username'])->first();
-        if ($user) {
-            throw new GeneralException("会员用户名已存在！");
+        if (isset($input->username)) {
+            $user = $this->query()->where('username', $input->username)->first();
+            if ($user) {
+                throw new GeneralException("会员用户名已存在！");
+            }
         }
 
-        $user = new User;
-        $user->username = $input->username;
+        $user = self::MODEL;
+        $user = new $user;
+        $user->username = isset($input->username) ? $input->username : '';
         $user->mobile = $input->mobile;
-        $user->name = $input->name;
-        $user->email = $input->email;
-        $user->avatar = $input->avatar;
+        $user->name = isset($input->name) ? $input->name : '';
+        $user->email = isset($input->email) ? $input->email : '';
+        $user->avatar = isset($input->avatar) ? $input->avatar : '';
         $user->password = bcrypt($input->password);
 
         DB::transaction(function () use ($user) {
-            if ($user->save()) {
-                return true;
+            if (parent::save($user)) {
+                return $user;
             }
 
             throw new GeneralException("添加失败");
         });
+        return $user;
     }
 
     /**
@@ -75,23 +73,19 @@ class UserRepository implements UserInterface
      * @return bool
      * @throws GeneralException
      */
-    public function update(User $user, $input)
+    public function update(Model $user, array $input)
     {
-        $user->username = $input->username;
-        $user->mobile = $input->mobile;
-        $user->name = $input->name;
-        $user->email = $input->email;
 
-        if ($input->avatar) {
-            $user->avatar = $input->avatar;
+        if (isset($input['avatar'])) {
+            $user->avatar = $input['avatar'];
         }
         
-        if ($input->password) {
-            $user->password = bcrypt($input->password);
+        if (isset($input['password'])) {
+            $user->password = bcrypt($input['password']);
         }
 
-        DB::transaction(function () use ($user) {
-            if ($user->update()) {
+        DB::transaction(function () use ($user, $input) {
+            if (parent::update($user, $input)) {
                 return true;
             }
 
@@ -105,12 +99,39 @@ class UserRepository implements UserInterface
      * @throws GeneralException
      * @return bool
      */
-    public function updatePassword(User $user, $input)
+    public function resetPassword($input)
     {
-        $user->password = bcrypt($input['password']);
+        $user = User::where('mobile', $input->mobile)->first();
+        if (!$user) {
+            throw new GeneralException('用户不存在！');
+        }
 
-        if ($user->save()) {
-            event(new UserPasswordChanged($user));
+        $user->password = bcrypt($input->password);
+
+        DB::transaction(function () use ($user) {
+            if (parent::save($user)) {
+                return $user;
+            }
+            throw new GeneralException('密码修改失败。');
+        });
+        return $user;
+    }
+
+    /**
+     * @param  User $user
+     * @param  $input
+     * @throws GeneralException
+     * @return bool
+     */
+    public function updatePassword(Model $user, $input)
+    {
+        if (Hash::check($input->old_password, $user->password)) {
+            $user->password = bcrypt($input->password);
+        } else {
+            throw new GeneralException('密码错误');
+        }
+
+        if (parent::save($user)) {
             return true;
         }
 
@@ -122,19 +143,22 @@ class UserRepository implements UserInterface
      * @throws GeneralException
      * @return bool
      */
-    public function destroy($id)
+    public function destroy(Model $user)
     {
         //Would be stupid to delete the administrator role
-        if ($id == 1) { //id is 1 because of the seeder
+        if ($user->id == 1) { //id is 1 because of the seeder
             throw new GeneralException('创始人不允许删除！');
         }
 
-        if (auth()->id() == $id) {
+        if (access()->id() == $user->id) {
             throw new GeneralException('不能删除自己！');
         }
-        $user = Admin::with('roles')->find($id);
-        $user->detachRoles($user->roles);
-        if ($user->delete()) {
+
+        if (count($user->roles) > 0) {
+            throw new GeneralException('删除失败，你要先删除会员的管理权限才能执行删除会员操作！');
+        }
+
+        if (parent::delete($user)) {
             return true;
         }
         throw new GeneralException('删除失败！');
@@ -145,7 +169,7 @@ class UserRepository implements UserInterface
      * @throws GeneralException
      * @return bool
      */
-    public function restore(User $user)
+    public function restore(Model $user)
     {
         //Failsafe
         if (is_null($user->deleted_at)) {
@@ -164,7 +188,7 @@ class UserRepository implements UserInterface
      * @throws GeneralException
      * @return boolean|null
      */
-    public function delete(User $user)
+    public function delete(Model $user)
     {
         //Failsafe
         if (is_null($user->deleted_at)) {
@@ -172,14 +196,9 @@ class UserRepository implements UserInterface
         }
 
         DB::transaction(function () use ($user) {
-            //Detach all roles & permissions
-            $user->detachRoles($user->roles);
-
-            if ($user->forceDelete()) {
-                event(new UserPermanentlyDeleted($user));
+            if (parent::forceDelete($user)) {
                 return true;
             }
-
             throw new GeneralException('删除失败！');
         });
     }
@@ -190,7 +209,7 @@ class UserRepository implements UserInterface
      * @throws GeneralException
      * @return bool
      */
-    public function mark(User $user, $status)
+    public function mark(Model $user, $status)
     {
         if (access()->id() == $user->id && $status == 0) {
             throw new GeneralException(trans('exceptions.backend.access.users.cant_deactivate_self'));
@@ -226,7 +245,7 @@ class UserRepository implements UserInterface
         //Figure out if email is not the same
         if ($user->email != $input['email']) {
             //Check to see if email exists
-            if (User::where('email', '=', $input['email'])->first()) {
+            if ($this->query()->where('email', '=', $input['email'])->first()) {
                 throw new GeneralException(trans('exceptions.backend.access.users.email_error'));
             }
         }

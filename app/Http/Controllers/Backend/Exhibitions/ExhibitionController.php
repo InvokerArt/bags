@@ -7,7 +7,7 @@ use App\Http\Requests\Backend\Exhibitions\ExhibitionRequest;
 use App\Http\Requests\Backend\Exhibitions\ExhibitionStoreOrUpdateRequest;
 use App\Models\CategoriesExhibitions;
 use App\Models\Exhibition;
-use App\Repositories\Backend\Exhibitions\ExhibitionInterface;
+use App\Repositories\Backend\Exhibitions\ExhibitionRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Facades\Datatables;
 
@@ -15,9 +15,8 @@ class ExhibitionController extends Controller
 {
     protected $exhibitions;
     protected $categories;
-    protected $tags;
 
-    public function __construct(ExhibitionInterface $exhibitions, CategoriesExhibitions $categories)
+    public function __construct(ExhibitionRepository $exhibitions, CategoriesExhibitions $categories)
     {
         $this->exhibitions = $exhibitions;
         $this->categories = $categories;
@@ -120,7 +119,7 @@ class ExhibitionController extends Controller
      */
     public function update(Exhibition $exhibition, ExhibitionStoreOrUpdateRequest $request)
     {
-        $this->exhibitions->update($exhibition, $request);
+        $this->exhibitions->update($exhibition, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.exhibitions.index')->withFlashSuccess('更新成功');
     }
 
@@ -130,9 +129,9 @@ class ExhibitionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Exhibition $exhibition)
     {
-        $this->exhibitions->destroy($id);
+        $this->exhibitions->destroy($exhibition);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.exhibitions.index')->withFlashSuccess('新闻删除成功');
     }
 
@@ -142,9 +141,9 @@ class ExhibitionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restore($id)
+    public function restore(Exhibition $exhibition)
     {
-        $this->exhibitions->restore($id);
+        $this->exhibitions->restore($exhibition);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.exhibitions.index')->withFlashSuccess('新闻删除成功');
     }
 
@@ -154,9 +153,9 @@ class ExhibitionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function delete(Exhibition $exhibition)
     {
-        $this->exhibitions->delete($id);
+        $this->exhibitions->delete($exhibition);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.exhibitions.index')->withFlashSuccess('新闻删除成功');
     }
 }

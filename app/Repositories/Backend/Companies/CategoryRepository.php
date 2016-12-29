@@ -2,35 +2,34 @@
 
 namespace App\Repositories\Backend\Companies;
 
-use App\Models\CategoryCompany;
+use App\Models\CategoriesCompanies;
 use App\Exceptions\GeneralException;
 use App\Helper\Catalog\Image;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class EloquentUserRepository
- * @package App\Repositories\User
- */
-class CategoryRepository implements CategoryInterface
+class CategoryRepository extends Repository
 {
-    public function delete($id)
+    /**
+     * 关联储存模型
+     */
+    const MODEL = CategoriesCompanies::class;
+
+    public function update(Model $category, array $input)
     {
-
-        $category = CategoryCompany::findOrFail($id);
-        if ($category->delete()) {
-            return true;
-        }
-
-        throw new GeneralException('删除出错');
-    }
-
-    public function update($id, $input)
-    {
-        $category = CategoryCompany::findOrFail($id);
-        if ($category->update($input->except('_token'))) {
-            $category->save();
+        if (parent::update($category, $input)) {
             return true;
         }
 
         throw new GeneralException(trans('更新出错'));
+    }
+
+    public function delete(Model $category)
+    {
+        if (parent::delete($category)) {
+            return true;
+        }
+
+        throw new GeneralException('删除出错');
     }
 }

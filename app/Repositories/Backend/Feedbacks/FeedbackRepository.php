@@ -7,27 +7,34 @@ use App\Models\Feedback;
 use App\Models\User;
 use DB;
 use Auth;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class EloquentUserRepository
  * @package App\Repositories\User
  */
-class FeedbackRepository implements FeedbackInterface
+class FeedbackRepository extends Repository
 {
+    /**
+     * 关联储存模型
+     */
+    const MODEL = Feedback::class;
 
     public function getForDataTable()
     {
-        return Feedback::with('user');
+        return $this->query()->with('user');
     }
 
     public function create($input)
     {
-        $feedback = new Feedback;
+        $feedback = self::MODEL;
+        $feedback = new $feedback;
         $feedback->user_id = Auth::id();
         $feedback->content = $input['content'];
 
         DB::transaction(function () use ($feedback) {
-            if ($feedback->save()) {
+            if (parent::save($feedback)) {
                 return true;
             }
 
@@ -35,10 +42,9 @@ class FeedbackRepository implements FeedbackInterface
         });
     }
 
-    public function destroy($id)
+    public function destroy(Model $feedback)
     {
-        $feedback = Feedback::findOrFail($id);
-        if ($feedback->delete()) {
+        if (parent::delete($feedback)) {
             return true;
         }
         throw new GeneralException('删除失败！');

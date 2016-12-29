@@ -4,7 +4,7 @@
 <div class="portlet light portlet-fit portlet-datatable bordered">
     <div class="portlet-title">
         <div class="actions">
-            <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.user.create') }}" class="btn green btn-info">
+            <a href="{{ route(env('APP_BACKEND_PREFIX').'.access.admin.create') }}" class="btn green btn-info">
                 <i class="fa fa-plus"></i>
                 <span class="hidden-xs">新建</span>
             </a>
@@ -81,7 +81,7 @@
                     pagingType: "bootstrap_extended",
                     autoWidth: false,
                     ajax: {
-                        url: '{{ route(env('APP_BACKEND_PREFIX').".access.user.get") }}',
+                        url: '{{ route(env('APP_BACKEND_PREFIX').".access.admin.get") }}',
                     },
                     columns: [
                         {data: 'username', name: 'users.username',"orderable": true,"searchable": true},

@@ -7,7 +7,7 @@ use App\Http\Requests\Backend\Certifications\CertificationStoreOrUpdateRequest;
 use App\Models\Certification;
 use App\Models\Company;
 use App\Models\User;
-use App\Repositories\Backend\Certifications\CertificationInterface;
+use App\Repositories\Backend\Certifications\CertificationRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -15,7 +15,7 @@ class CertificationController extends Controller
 {
     private $certifications;
 
-    public function __construct(CertificationInterface $certifications)
+    public function __construct(CertificationRepository $certifications)
     {
         $this->certifications = $certifications;
     }
@@ -117,7 +117,7 @@ class CertificationController extends Controller
      */
     public function update(CertificationStoreOrUpdateRequest $request, Certification $certification)
     {
-        $this->certifications->update($certification, $request);
+        $this->certifications->update($certification, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.certifications.index')->withFlashSuccess('认证更新成功');
     }
 
@@ -127,9 +127,9 @@ class CertificationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Certification $certification)
     {
-        $this->certifications->destroy($id);
+        $this->certifications->destroy($certification);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.certifications.index')->withFlashSuccess('认证删除成功');
     }
 }

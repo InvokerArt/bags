@@ -7,7 +7,7 @@ use App\Http\Requests\Backend\Joins\JoinStoreOrUpdateRequest;
 use App\Models\Join;
 use App\Models\Company;
 use App\Models\User;
-use App\Repositories\Backend\Joins\JoinInterface;
+use App\Repositories\Backend\Joins\JoinRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -15,7 +15,7 @@ class JoinController extends Controller
 {
     private $joins;
 
-    public function __construct(JoinInterface $joins)
+    public function __construct(JoinRepository $joins)
     {
         $this->joins = $joins;
     }
@@ -79,7 +79,7 @@ class JoinController extends Controller
     public function store(JoinStoreOrUpdateRequest $request)
     {
         $this->joins->create($request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.joins.index')->withFlashSuccess('认证添加成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.joins.index')->withFlashSuccess('加盟添加成功');
     }
 
     /**
@@ -115,10 +115,10 @@ class JoinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(JoinStoreOrUpdateRequest $request, Join $join)
+    public function update(Join $join, JoinStoreOrUpdateRequest $request)
     {
-        $this->joins->update($join, $request);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.joins.index')->withFlashSuccess('认证更新成功');
+        $this->joins->update($join, $request->all());
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.joins.index')->withFlashSuccess('加盟更新成功');
     }
 
     /**
@@ -127,9 +127,9 @@ class JoinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Join $join)
     {
-        $this->joins->destroy($id);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.joins.index')->withFlashSuccess('认证删除成功');
+        $this->joins->destroy($join);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.joins.index')->withFlashSuccess('加盟删除成功');
     }
 }

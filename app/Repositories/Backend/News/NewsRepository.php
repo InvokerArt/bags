@@ -6,25 +6,30 @@ use App\Exceptions\GeneralException;
 use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\Tag;
-use App\Repositories\Backend\Tags\TagsInterface;
+use App\Repositories\Backend\Tags\TagsRepository;
 use Auth;
 use Carbon\Carbon;
 use DB;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class EloquentUserRepository
  * @package App\Repositories\User
  */
-class NewsRepository implements NewsInterface
+class NewsRepository extends Repository
 {
+    /**
+     * 关联储存模型
+     */
+    const MODEL = News::class;
+
     protected $tags;
-    protected $news;
 
 
-    public function __construct(TagsInterface $tags, News $news)
+    public function __construct(TagsRepository $tags)
     {
         $this->tags = $tags;
-        $this->news = $news;
     }
 
     public function getForDataTable()
@@ -32,12 +37,12 @@ class NewsRepository implements NewsInterface
         /**
          * withCount--统计关联的结果而不实际的加载它们。
          */
-        return $this->news->with(['tags', 'categories'])->withCount('comments');
+        return $this->query()->with(['tags', 'categories'])->withCount('comments');
     }
 
     public function indexByCategories($input)
     {
-        $query = $this->news->select();
+        $query = $this->query()->select();
         if ($input->categories) {
             $query->whereHas('categories', function ($query) use ($input) {
                 $query->where('id', $input->categories);
@@ -49,12 +54,13 @@ class NewsRepository implements NewsInterface
 
     public function search($input)
     {
-        return $this->news->where('title', 'like', "%$input->q%")->orWhere('subtitle', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%")->paginate();
+        return $this->query()->where('title', 'like', "%$input->q%")->orWhere('subtitle', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%")->paginate();
     }
 
     public function create($input)
     {
-        $news = $this->news;
+        $news = self::MODEL;
+        $news = new $news;
         $news->title = $input['title'];
         //$news->slug = $input['slug'];
         $news->user_id = Auth::guard('admin')->id();
@@ -66,7 +72,7 @@ class NewsRepository implements NewsInterface
 
 
         DB::transaction(function () use ($news, $input) {
-            if ($news->save()) {
+            if (parent::save($news)) {
                 $tag = $input['tag'] ? $input['tag'] : [];
                 $categories_id = explode(',', $input['categories_id']);
                 $attachTags = [];
@@ -95,17 +101,12 @@ class NewsRepository implements NewsInterface
         });
     }
 
-    public function update(News $news, $input)
+    public function update(Model $news, array $input)
     {
-        $news->title = $input['title'];
-        $news->subtitle = $input['subtitle'];
-        $news->content = $input['content'];
-        $news->image = $input['image'];
         $news->published_at = $input['published_at'] ? $input['published_at'] : Carbon::now();
-        $news->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($news, $input) {
-            if ($news->update()) {
+            if (parent::update($news, $input)) {
                 $tag = $input['tag'] ? $input['tag'] : [];
                 $categories_id = explode(',', $input['categories_id']);
                 $attachTags = [];
@@ -134,41 +135,45 @@ class NewsRepository implements NewsInterface
         });
     }
 
-    public function destroy($id)
+    public function destroy(Model $news)
     {
-        $news = $this->findOrThrowException($id);
-        if ($news->delete()) {
+        if (parent::delete($news)) {
             return true;
         }
         throw new GeneralException('删除失败！');
     }
 
-    public function restore($id)
+    public function restore(Model $news)
     {
-        $news = $this->findOrThrowException($id);
-        if ($news->restore()) {
+        if (is_null($news->deleted_at)) {
+            throw new GeneralException('新闻不能恢复！');
+        }
+
+        if (parent::restore($news)) {
             return true;
         }
         throw new GeneralException('返回失败！');
     }
 
-    public function delete($id)
+    public function delete(Model $news)
     {
-        $news = $this->findOrThrowException($id);
-        if ($news->forceDelete()) {
-            return true;
+        if (is_null($news->deleted_at)) {
+            throw new GeneralException('要先删除新闻！');
         }
-        throw new GeneralException('删除失败！');
+        DB::transaction(function () use ($news) {
+            if (parent::forceDelete($news)) {
+                return true;
+            }
+            throw new GeneralException('删除失败！');
+        });
     }
 
-    public function findOrThrowException($id)
+    public function createFavorite(Model $news)
     {
-        $news = $this->news->withTrashed()->find($id);
-
-        if (!is_null($news)) {
-            return $news;
+        $favorites = $news->favorites()->where('user_id', Auth::id())->count();
+        if ($favorites) {
+            throw new GeneralException('你已经收藏！');
         }
-
-        throw new GeneralException('未找到需求信息');
+        $news->favorites()->create(['user_id' => Auth::id()]);
     }
 }

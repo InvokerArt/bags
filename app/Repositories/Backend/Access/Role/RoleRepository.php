@@ -2,50 +2,49 @@
 
 namespace App\Repositories\Backend\Access\Role;
 
-use Entrust;
 use App\Models\Role;
+use App\Repositories\Repository;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 use App\Exceptions\GeneralException;
 
 /**
  * Class RoleRepository
  * @package app\Repositories\Role
  */
-class RoleRepository implements RoleInterface
+class RoleRepository extends Repository
 {
-    
     /**
+     * 关联关系模型
+     */
+    const MODEL = Role::class;
+
+    /**
+     * @param string $order_by
+     * @param string $sort
      * @return mixed
      */
-    public function getCount()
+    public function getAll($order_by = 'sort', $sort = 'asc')
     {
-        return Role::count();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
-    public function getForDataTable()
-    {
-        return Role::all();
-    }
-
-    /**
-     * @param  string  $order_by
-     * @param  string  $sort
-     * @param  bool    $withPermissions
-     * @return mixed
-     */
-    public function getAllRoles($order_by = 'sort', $sort = 'asc', $withPermissions = false)
-    {
-        if ($withPermissions) {
-            return Role::with('permissions')
-                ->orderBy($order_by, $sort)
-                ->get();
-        }
-
-        return Role::orderBy($order_by, $sort)
+        return $this->query()
+            ->with('users', 'permissions')
+            ->orderBy($order_by, $sort)
             ->get();
+    }
+
+    public function getForDataTable($order_by = 'sort', $sort = 'asc')
+    {
+        return $this->query()
+            ->with('users', 'permissions')
+            ->orderBy($order_by, $sort)
+            ->select([
+                config('access.roles_table') . '.id',
+                config('access.roles_table') . '.name',
+                config('access.roles_table') . '.display_name',
+                config('access.roles_table') . '.description',
+                config('access.roles_table') . '.all',
+                config('access.roles_table') . '.sort',
+            ]);
     }
 
     /**
@@ -55,7 +54,7 @@ class RoleRepository implements RoleInterface
      */
     public function create($input)
     {
-        if (Role::where('name', $input['name'])->first()) {
+        if ($this->query()->where('name', $input['name'])->first()) {
             throw new GeneralException('角色名称已存在！');
         }
 
@@ -75,14 +74,15 @@ class RoleRepository implements RoleInterface
         }
 
         DB::transaction(function () use ($input, $all) {
-            $role = new Role;
+            $role       = self::MODEL;
+            $role       = new $role;
             $role->name = $input['name'];
             $role->display_name = $input['display_name'];
             $role->description = $input['description'];
             $role->sort = isset($input['sort']) && strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int)$input['sort'] : 0;
             $role->all = $all;
 
-            if ($role->save()) {
+            if (parent::save($role)) {
                 if (!$all) {
                     $permissions = [];
 
@@ -110,7 +110,7 @@ class RoleRepository implements RoleInterface
      * @throws Exception
      * @return bool
      */
-    public function update(Role $role, $input)
+    public function update(Model $role, array $input)
     {
         if ($role->id < 4) {
             throw new GeneralException('不能更改系统默认权限！');
@@ -142,7 +142,7 @@ class RoleRepository implements RoleInterface
         $role->all = $all;
 
         DB::transaction(function () use ($role, $input, $all) {
-            if ($role->save()) {
+            if (parent::save($role)) {
                 //If role has all access detach all permissions because they're not needed
                 if ($all) {
                     $role->permissions()->sync([]);
@@ -176,7 +176,7 @@ class RoleRepository implements RoleInterface
      * @throws Exception
      * @return bool
      */
-    public function destroy(Role $role)
+    public function destroy(Model $role)
     {
         if ($role->id < 4) {
             throw new GeneralException('不能删除系统默认角色！');
@@ -186,7 +186,7 @@ class RoleRepository implements RoleInterface
             //Detach all associated roles
             $role->permissions()->sync([]);
 
-            if ($role->delete()) {
+            if (parent::delete($role)) {
                 return true;
             }
 
@@ -200,8 +200,8 @@ class RoleRepository implements RoleInterface
     public function getDefaultUserRole()
     {
         if (is_numeric(config('access.users.default_role'))) {
-            return Role::where('id', (int) config('access.users.default_role'))->first();
+            return $this->query()->where('id', (int) config('access.users.default_role'))->first();
         }
-        return Role::where('name', config('access.users.default_role'))->first();
+        return $this->query()->where('name', config('access.users.default_role'))->first();
     }
 }

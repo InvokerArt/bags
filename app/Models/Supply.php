@@ -12,13 +12,13 @@ class Supply extends Model
 {
     use SoftDeletes, SupplyRelationship, SupplyAttribute;
 
+    protected $dates = ['deleted_at'];
+
     /**
-     * 参数黑名单
+     * 参数白名单
      * @var array
      */
-    protected $guard = [
-        'user_id',
-    ];
+    protected $fillable = ['user_id', 'title', 'slug', 'price', 'unit', 'content', 'images', 'is_excellent'];
 
     public static function supplyFilter($query, $request)
     {

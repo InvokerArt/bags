@@ -7,25 +7,23 @@ use App\Models\Supply;
 use App\Models\User;
 use Auth;
 use DB;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class EloquentUserRepository
  * @package App\Repositories\User
  */
-class SupplyRepository implements SupplyInterface
+class SupplyRepository extends Repository
 {
-    protected $supply;
-
-    public function __construct(Supply $supply)
-    {
-        $this->supply = $supply;
-    }
-
-
+    /**
+     * 关联储存模型
+     */
+    const MODEL = Supply::class;
 
     public function getForDataTable()
     {
-        return Supply::select('supplies.*', 'users.username')
+        return $this->query()->select('supplies.*', 'users.username')
         ->leftJoin('users', 'users.id', '=', 'supplies.user_id');
     }
 
@@ -37,7 +35,8 @@ class SupplyRepository implements SupplyInterface
             throw new GeneralException("会员不存在！");
         }
 
-        $supply = new Supply;
+        $supply = self::MODEL;
+        $supply = new $supply;
         $supply->title = $input['title'];
         //$supply->slug = $input['slug'];
         $supply->user_id = $user->id;
@@ -48,7 +47,7 @@ class SupplyRepository implements SupplyInterface
         $supply->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($supply) {
-            if ($supply->save()) {
+            if (parent::save($supply)) {
                 return true;
             }
 
@@ -56,18 +55,10 @@ class SupplyRepository implements SupplyInterface
         });
     }
 
-    public function update(Supply $supply, $input)
+    public function update(Model $supply, array $input)
     {
-        $supply->title = $input['title'];
-        //$supply->slug = $input['slug'];
-        $supply->price = $input['price'];
-        $supply->unit = $input['unit'];
-        $supply->content = $input['content'];
-        $supply->images = $input['images'];
-        $supply->is_excellent = $input['is_excellent'];
-
-        DB::transaction(function () use ($supply) {
-            if ($supply->update()) {
+        DB::transaction(function () use ($supply, $input) {
+            if (parent::update($supply, $input)) {
                 return true;
             }
 
@@ -75,53 +66,67 @@ class SupplyRepository implements SupplyInterface
         });
     }
 
-    public function destroy($id)
+    public function destroy(Model $supply)
     {
-        $supply = $this->findOrThrowException($id);
-        if ($supply->delete()) {
+        if (parent::delete($supply)) {
             return true;
         }
         throw new GeneralException('删除失败！');
     }
 
-    public function restore($id)
+    public function restore(Model $supply)
     {
-        $supply = $this->findOrThrowException($id);
-        if ($supply->restore()) {
+        if (is_null($supply->deleted_at)) {
+            throw new GeneralException('供应不能恢复！');
+        }
+        if (parent::restore($supply)) {
             return true;
         }
         throw new GeneralException('恢复失败！');
     }
 
-    public function delete($id)
+    public function delete(Model $supply)
     {
-        $supply = $this->findOrThrowException($id);
-        if ($supply->forceDelete()) {
-            return true;
+        if (is_null($supply->deleted_at)) {
+            throw new GeneralException('要先删除供应！');
         }
-        throw new GeneralException('删除失败！');
-    }
-
-    public function findOrThrowException($id)
-    {
-        $supply = Supply::withTrashed()->find($id);
-
-        if (!is_null($supply)) {
-            return $supply;
-        }
-
-        throw new GeneralException('未找到供应信息');
+        DB::transaction(function () use ($supply) {
+            if (parent::forceDelete($supply)) {
+                return true;
+            }
+            throw new GeneralException('删除失败！');
+        });
     }
 
     public function search($input)
     {
-        return $this->supply->where('title', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%")->paginate();
+        return $this->query()->where('title', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%")->paginate();
     }
 
     public function searchWithUser($input)
     {
-        return $this->supply->where('user_id', Auth::id())->where(function ($query) use ($input) {
+        return $this->query()->where('user_id', Auth::id())->where(function ($query) use ($input) {
             $query->where('title', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%");
         })->paginate();
+    }
+
+    public function index()
+    {
+        return $this->query()->orderBy('created_at', 'DESC')->paginate();
+    }
+
+    public function indexByUser()
+    {
+        return $this->query()->where('user_id', Auth::id())->orderBy('is_excellent')
+                    ->orderBy('created_at', 'DESC')->paginate();
+    }
+
+    public function createFavorite(Model $supply)
+    {
+        $favorites = $supply->favorites()->where('user_id', Auth::id())->count();
+        if ($favorites) {
+            throw new GeneralException('你已经收藏！');
+        }
+        $supply->favorites()->create(['user_id' => Auth::id()]);
     }
 }

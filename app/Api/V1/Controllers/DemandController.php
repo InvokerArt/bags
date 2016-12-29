@@ -6,7 +6,7 @@ use App\Api\V1\Requests\DemandStoreOrUpdateRequest;
 use App\Api\V1\Transformers\DemandShowTransformer;
 use App\Api\V1\Transformers\DemandTransformer;
 use App\Models\Demand;
-use App\Repositories\Backend\Demands\DemandInterface;
+use App\Repositories\Backend\Demands\DemandRepository;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,7 @@ class DemandController extends BaseController
 {
     protected $demands;
 
-    public function __construct(DemandInterface $demands)
+    public function __construct(DemandRepository $demands)
     {
         $this->demands = $demands;
     }
@@ -87,7 +87,7 @@ class DemandController extends BaseController
      */
     public function index()
     {
-        $demands = Demand::orderBy('created_at', 'DESC')->paginate();
+        $demands = $this->demands->index();
         return $this->response()->paginator($demands, new DemandTransformer());
     }
 
@@ -127,7 +127,7 @@ class DemandController extends BaseController
      */
     public function indexByUser()
     {
-        $demands = Demand::where('user_id', Auth::id())->orderBy('is_excellent')->orderBy('created_at', 'DESC')->paginate();
+        $demands = $this->demands->indexByUser();
         return $this->response()->paginator($demands, new DemandTransformer());
     }
 
@@ -248,7 +248,7 @@ class DemandController extends BaseController
         }
 
         $request->images = relative_url($request->images);
-        $this->demands->update($demand, $request);
+        $this->demands->update($demand, $request->all());
         return $this->response->item($demand, new DemandShowTransformer());
     }
 
@@ -286,11 +286,7 @@ class DemandController extends BaseController
      */
     public function favorite(Demand $demand)
     {
-        $favorites = $demand->favorites()->where('user_id', Auth::id())->count();
-        if ($favorites) {
-            return $this->response->errorBadRequest('你已经收藏！');
-        }
-        $demand->favorites()->create(['user_id' => Auth::id()]);
+        $this->demands->createFavorite($demand);
         return $this->response->created();
     }
 

@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Backend\Feedbacks;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Repositories\Backend\Feedbacks\FeedbackInterface;
+use App\Models\Feedback;
+use App\Repositories\Backend\Feedbacks\FeedbackRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -12,7 +13,7 @@ class FeedbackController extends Controller
 {
     protected $feedbacks;
 
-    public function __construct(FeedbackInterface $feedbacks)
+    public function __construct(FeedbackRepository $feedbacks)
     {
         $this->feedbacks = $feedbacks;
     }
@@ -105,9 +106,9 @@ class FeedbackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Feedback $feedback)
     {
-        $this->feedbacks->destroy($id);
+        $this->feedbacks->destroy($feedback);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.feedbacks.index')->withFlashSuccess('反馈删除成功');
     }
 }

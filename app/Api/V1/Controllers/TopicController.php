@@ -11,10 +11,10 @@ use App\Models\CategoriesTopics;
 use App\Models\Reply;
 use App\Models\Topic;
 use App\Models\User;
-use App\Repositories\Backend\Notifications\NotificationInterface;
-use App\Repositories\Backend\Topics\ReplyInterface;
-use App\Repositories\Backend\Topics\TopicInterface;
-use App\Repositories\Backend\Topics\VoteInterface;
+use App\Repositories\Backend\Notifications\NotificationRepository;
+use App\Repositories\Backend\Topics\ReplyRepository;
+use App\Repositories\Backend\Topics\TopicRepository;
+use App\Repositories\Backend\Topics\VoteRepository;
 use Auth;
 use Gate;
 use Illuminate\Http\Request;
@@ -26,7 +26,7 @@ class TopicController extends BaseController
     protected $notification;
     protected $vote;
 
-    public function __construct(TopicInterface $topics, ReplyInterface $replies, NotificationInterface $notification, VoteInterface $vote)
+    public function __construct(TopicRepository $topics, ReplyRepository $replies, NotificationRepository $notification, VoteRepository $vote)
     {
         $this->topics = $topics;
         $this->replies = $replies;
@@ -247,8 +247,7 @@ class TopicController extends BaseController
      */
     public function indexByUser()
     {
-        $user = Auth::user();
-        $topics = Topic::whose($user->id)->orderBy('is_excellent', 'DESC')->recent()->paginate();
+        $topics = $this->topics->indexByUser();
         return $this->response()->paginator($topics, new TopicTransformer());
     }
 
@@ -264,7 +263,7 @@ class TopicController extends BaseController
      */
     public function indexByUserId($user_id)
     {
-        $topics = Topic::whose($user_id)->recent()->paginate();
+        $topics = $this->topics->indexByUserId($user_id);
         return $this->response()->paginator($topics, new TopicTransformer());
     }
 
@@ -280,8 +279,7 @@ class TopicController extends BaseController
      */
     public function indexByUserVotes($user_id)
     {
-        $user = User::findOrFail($user_id);
-        $topics = $user->votedTopics()->orderBy('pivot_created_at', 'desc')->paginate();
+        $topics = $this->topics->indexByUserVotes($user_id);
         return $this->response()->paginator($topics, new TopicTransformer());
     }
 
@@ -539,7 +537,7 @@ class TopicController extends BaseController
             return $this->response->errorForbidden();
         }
 
-        $topic->delete();
+        $this->topics->destroy($topic);
         return $this->response->noContent();
     }
 
@@ -575,11 +573,7 @@ class TopicController extends BaseController
      */
     public function favorite(Topic $topic)
     {
-        $favorites = $topic->favorites()->where('user_id', Auth::id())->count();
-        if ($favorites) {
-            return $this->response->errorBadRequest('你已经收藏！');
-        }
-        $topic->favorites()->create(['user_id' => Auth::id()]);
+        $this->topics->createFavorite($topic);
         return $this->response->created();
     }
 
@@ -660,9 +654,7 @@ class TopicController extends BaseController
      */
     public function indexTopicsReply(Topic $topic)
     {
-        $replies = $topic->replies()->withoutBlocked()->with(['user', 'replyTo' => function ($query) {
-            $query->with('user');
-        }])->get();
+        $replies = $this->topics->indexTopicsReply($topic);
         return $this->response->collection($replies, new ReplyTransformer());
     }
 
@@ -723,20 +715,7 @@ class TopicController extends BaseController
      */
     public function search(Request $request)
     {
-        $query = Topic::select();
-
-        if ($request->q) {
-            $query->where(function ($query) use ($request) {
-                $query->where('title', 'like', "%$request->q%")
-                ->orWhere('content', 'like', "%$request->q%");
-            });
-        }
-
-        if ($request->categories) {
-            $query->where('category_id', $request->categories);
-        }
-
-        $topics = $query->paginate();
+        $this->topics->search($request);
         return $this->response->paginator($topics, new TopicTransformer());
     }
 }

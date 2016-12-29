@@ -7,9 +7,9 @@ use App\Http\Requests\Backend\Companies\CompanyStoreRequest;
 use App\Http\Requests\Backend\Companies\CompanyUpdateRequest;
 use App\Models\Admin;
 use App\Models\Area;
-use App\Models\CategoryCompany;
+use App\Models\CategoriesCompanies;
 use App\Models\Company;
-use App\Repositories\Backend\Companies\CompanyInterface;
+use App\Repositories\Backend\Companies\CompanyRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -18,7 +18,7 @@ class CompanyController extends Controller
     protected $company;
     protected $categories;
 
-    public function __construct(CompanyInterface $company, CategoryCompany $categories)
+    public function __construct(CompanyRepository $company, CategoriesCompanies $categories)
     {
         $this->company = $company;
         $this->categories = $categories;
@@ -116,19 +116,43 @@ class CompanyController extends Controller
      */
     public function update(Company $company, CompanyUpdateRequest $request)
     {
-        $this->company->update($company, $request);
+        $this->company->update($company, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.index')->withFlashSuccess('更新成功');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 回收站
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        $this->company->destroy($id);
+        $this->company->destroy($company);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.index')->withFlashSuccess('公司删除成功');
+    }
+
+    /**
+     * 还原
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Company $company)
+    {
+        $this->company->restore($company);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.index')->withFlashSuccess('公司还原成功');
+    }
+
+    /**
+     * 彻底删除
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Company $company)
+    {
+        $this->company->delete($company);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.companies.index')->withFlashSuccess('公司删除成功');
     }
 

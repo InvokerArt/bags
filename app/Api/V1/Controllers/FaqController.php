@@ -4,9 +4,17 @@ namespace App\Api\V1\Controllers;
 
 use App\Api\V1\Transformers\FaqTransformer;
 use App\Models\Faq;
+use App\Repositories\Backend\Faqs\FaqRepository;
 
 class FaqController extends BaseController
 {
+    private $faqs;
+
+    public function __construct(FaqRepository $faqs)
+    {
+        $this->faqs = $faqs;
+    }
+
 
 
     /**
@@ -48,7 +56,7 @@ class FaqController extends BaseController
      */
     public function index()
     {
-        $faqs = Faq::orderBy('created_at', 'DESC')->paginate();
+        $faqs = $this->faqs->index();
         return $this->response->paginator($faqs, new FaqTransformer());
     }
 }

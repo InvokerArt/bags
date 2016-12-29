@@ -25,7 +25,7 @@ class CategoryUpdateRequest extends Request
     {
         return [
             'name' => 'required',
-            'is_active' => 'required',
+            //'is_active' => 'required',
             //'slug' => 'required|alpha_dash'
         ];
     }

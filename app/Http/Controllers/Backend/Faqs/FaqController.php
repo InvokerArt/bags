@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Faqs;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Faq;
-use App\Repositories\Backend\Faqs\FaqInterface;
+use App\Repositories\Backend\Faqs\FaqRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -13,7 +13,7 @@ class FaqController extends Controller
 {
     protected $faqs;
 
-    public function __construct(FaqInterface $faqs)
+    public function __construct(FaqRepository $faqs)
     {
         $this->faqs = $faqs;
     }
@@ -91,9 +91,9 @@ class FaqController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Faq $faq)
+    public function update(Faq $faq, Request $request)
     {
-        $this->faqs->update($faq, $request);
+        $this->faqs->update($faq, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.faqs.index')->withFlashSuccess('常见问题更新成功');
     }
 
@@ -103,9 +103,9 @@ class FaqController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Faq $faq)
     {
-        $this->faqs->destroy($id);
+        $this->faqs->destroy($faq);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.faqs.index')->withFlashSuccess('常见问题删除成功');
     }
 }

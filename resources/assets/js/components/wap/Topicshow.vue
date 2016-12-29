@@ -45,7 +45,7 @@
     export default {
         created() {
             this.id = this.$route.params.id
-            this.token = this.$route.params.token
+            //this.token = this.$route.params.token
             this.topicShow()
         },
         data() {
@@ -58,7 +58,7 @@
         methods: {
             topicShow() {
                 var _this = this
-                this.$http.get('http://api.51hbjjd.com/topics/'+ this.id, {headers: {'Authorization': 'Bearer '+ this.token}})
+                this.$http.get('http://api.51hbjjd.com/topics/'+ this.id/*, {headers: {'Authorization': 'Bearer '+ this.token}}*/)
                         .then(response => {
                     this.topic = response.data.data
                     this.user = response.data.data.user.data

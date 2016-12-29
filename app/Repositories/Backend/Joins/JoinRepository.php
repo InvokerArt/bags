@@ -6,25 +6,35 @@ use App\Exceptions\GeneralException;
 use App\Models\Company;
 use App\Models\Join;
 use App\Models\User;
-use App\Repositories\Backend\Notifications\NotificationInterface;
+use App\Repositories\Backend\Notifications\NotificationRepository;
 use DB;
+use Auth;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class EloquentUserRepository
  * @package App\Repositories\User
  */
-class JoinRepository implements JoinInterface
+class JoinRepository extends Repository
 {
-    private $notification;
+    /**
+     * 关联储存模型
+     */
+    const MODEL = Join::class;
 
-    public function __construct(NotificationInterface $notification)
+    protected $notification;
+    protected $companies;
+
+    public function __construct(NotificationRepository $notification, Company $companies)
     {
         $this->notification = $notification;
+        $this->companies = $companies;
     }
 
     public function getForDataTable()
     {
-        return Join::select('joins.*', 'users.username', 'companies.name as companyname')
+        return $this->query()->select('joins.*', 'users.username', 'companies.name as companyname')
                 ->leftJoin('users', 'users.id', '=', 'joins.user_id')
                 ->leftJoin('companies', 'companies.id', '=', 'joins.company_id');
     }
@@ -45,12 +55,13 @@ class JoinRepository implements JoinInterface
         if ($company && $company->role === 3) {
             throw new GeneralException('该公司不属于采购商或加盟商！');
         }
-        $isJoin = Join::where('company_id', $company->id)->where('user_id', $user->id)->whereIn('status', [1, 2])->first();
+        $isJoin = $this->query()->where('company_id', $company->id)->where('user_id', $user->id)->whereIn('status', [1, 2])->first();
         if ($isJoin) {
             throw new GeneralException('请勿重复申请加盟该公司！');
         }
 
-        $join = new Join;
+        $join = self::MODEL;
+        $join = new $join;
         $join->user_id = $user->id;
         $join->company_id = $company->id;
         $join->identity_card = $input['identity_card'];
@@ -58,7 +69,7 @@ class JoinRepository implements JoinInterface
         $join->status = $input['status'];
 
         DB::transaction(function () use ($join, $input, $company) {
-            if ($join->save()) {
+            if (parent::save($join)) {
                 if ($input['action']) {
                     $join->user_id = $company->user_id;
                     $join->type =  get_class($join);
@@ -72,14 +83,10 @@ class JoinRepository implements JoinInterface
         });
     }
 
-    public function update(Join $join, $input)
+    public function update(Model $join, array $input)
     {
-        $join->identity_card = $input['identity_card'];
-        $join->licenses = $input['licenses'];
-        $join->status = $input['status'];
-
-        DB::transaction(function () use ($join) {
-            if ($join->update()) {
+        DB::transaction(function () use ($join, $input) {
+            if (parent::update($join, $input)) {
                 return true;
             }
 
@@ -87,44 +94,22 @@ class JoinRepository implements JoinInterface
         });
     }
 
-    public function destroy($id)
+    public function destroy(Model $join)
     {
-        $join = $this->findOrThrowException($id);
-
-        if ($join->delete()) {
+        if (parent::delete($join)) {
             return true;
         }
         throw new GeneralException('删除失败！');
     }
 
-    public function restore($id)
+    public function indexUserIn()
     {
-        $join = $this->findOrThrowException($id);
-
-        if ($join->restore()) {
-            return true;
-        }
-        throw new GeneralException('返回失败！');
+        $company = $this->companies->select('id')->where('user_id', Auth::id())->first();
+        return $this->query()->where('company_id', $company->id)->with('userCompany')->orderBy('created_at', 'DESC')->paginate();
     }
 
-    public function delete($id)
+    public function indexUserOut()
     {
-        $join = $this->findOrThrowException($id);
-
-        if ($join->forceDelete()) {
-            return true;
-        }
-        throw new GeneralException('删除失败！');
-    }
-
-    public function findOrThrowException($id)
-    {
-        $join = Join::find($id);
-
-        if (!is_null($join)) {
-            return $join;
-        }
-
-        throw new GeneralException('未找到加盟信息');
+        return $this->query()->where('user_id', Auth::id())->with('company')->orderBy('created_at', 'DESC')->paginate();
     }
 }

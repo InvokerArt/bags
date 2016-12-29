@@ -7,7 +7,7 @@ use App\Http\Requests\Backend\Users\UserUpdateRequest;
 use App\Http\Requests\Backend\Users\UserStoreRequest;
 use App\Models\Company;
 use App\Models\User;
-use App\Repositories\Backend\Users\UserInterface;
+use App\Repositories\Backend\Users\UserRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Facades\Datatables;
 
@@ -15,7 +15,7 @@ class UserController extends Controller
 {
     private $users;
 
-    public function __construct(UserInterface $users)
+    public function __construct(UserRepository $users)
     {
         $this->users = $users;
     }
@@ -101,26 +101,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(User $user, UserUpdateRequest $request)
     {
-        $this->users->update($user, $request);
+        $this->users->update($user, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.users.index')->withFlashSuccess('会员更新成功');
     }
 
     /**
      * 回收站
      *
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $this->users->destroy($id);
+        $this->users->destroy($user);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.users.index')->withFlashSuccess('会员删除成功');
     }
 
     /**
-     * 还原
+     * 恢复
      *
      * @param  User $user
      * @return \Illuminate\Http\Response
@@ -128,7 +128,7 @@ class UserController extends Controller
     public function restore(User $user)
     {
         $this->users->restore($user);
-        return redirect()->route(env('APP_BACKEND_PREFIX').'.users.index')->withFlashSuccess('会员还原成功');
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.users.index')->withFlashSuccess('会员恢复成功');
     }
 
     /**
@@ -139,7 +139,7 @@ class UserController extends Controller
      */
     public function delete(User $user)
     {
-        $this->users->delete($id);
+        $this->users->delete($user);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.users.index')->withFlashSuccess('会员删除成功');
     }
 

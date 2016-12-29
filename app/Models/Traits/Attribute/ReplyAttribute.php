@@ -41,7 +41,7 @@ trait ReplyAttribute
         if (!$value) {
             $this->attributes['is_blocked'] = 'no';
         } else {
-            $this->attributes['is_excellent'] = $value;
+            $this->attributes['is_blocked'] = $value;
         }
     }
 

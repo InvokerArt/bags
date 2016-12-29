@@ -8,15 +8,15 @@ use App\Http\Controllers\Controller;
 use Yajra\Datatables\Facades\Datatables;
 use App\Http\Requests\Backend\Access\Role\RoleRequest;
 use App\Http\Requests\Backend\Access\Role\RoleStoreOrUpdateRequest;
-use App\Repositories\Backend\Access\Role\RoleInterface;
-use App\Repositories\Backend\Access\Permission\PermissionInterface;
+use App\Repositories\Backend\Access\Role\RoleRepository;
+use App\Repositories\Backend\Access\Permission\PermissionRepository;
 
 class RoleController extends Controller
 {
     protected $roles;
     protected $permissions;
 
-    public function __construct(RoleInterface $roles, PermissionInterface $permissions)
+    public function __construct(RoleRepository $roles, PermissionRepository $permissions)
     {
         $this->roles = $roles;
         $this->permissions = $permissions;

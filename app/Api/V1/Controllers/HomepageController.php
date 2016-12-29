@@ -9,13 +9,13 @@ use App\Api\V1\Transformers\NewsTransformer;
 use App\Models\Image;
 use App\Models\Exhibition;
 use App\Models\News;
-use App\Repositories\Backend\Banners\ImageInterface;
+use App\Repositories\Backend\Banners\ImageRepository;
 
 class HomepageController extends BaseController
 {
     protected $image;
 
-    public function __construct(ImageInterface $image)
+    public function __construct(ImageRepository $image)
     {
         $this->image = $image;
     }

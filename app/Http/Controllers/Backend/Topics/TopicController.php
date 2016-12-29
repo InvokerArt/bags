@@ -7,7 +7,7 @@ use App\Http\Requests\Backend\Topics\TopicStoreOrUpdateRequest;
 use App\Models\CategoriesTopics;
 use App\Models\Topic;
 use App\Models\User;
-use App\Repositories\Backend\Topics\TopicInterface;
+use App\Repositories\Backend\Topics\TopicRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -16,7 +16,7 @@ class TopicController extends Controller
     protected $topics;
     protected $categories;
 
-    public function __construct(TopicInterface $topics, CategoriesTopics $categories)
+    public function __construct(TopicRepository $topics, CategoriesTopics $categories)
     {
         $this->topics = $topics;
         $this->categories = $categories;
@@ -123,7 +123,7 @@ class TopicController extends Controller
      */
     public function update(Topic $topic, TopicStoreOrUpdateRequest $request)
     {
-        $this->topics->update($topic, $request);
+        $this->topics->update($topic, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.topics.index')->withFlashSuccess('话题更新成功');
     }
 
@@ -133,9 +133,9 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Topic $topic)
     {
-        $this->topics->destroy($id);
+        $this->topics->destroy($topic);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.topics.index')->withFlashSuccess('话题删除成功');
     }
 
@@ -145,9 +145,9 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restore($id)
+    public function restore(Topic $topic)
     {
-        $this->topics->restore($id);
+        $this->topics->restore($topic);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.topics.index')->withFlashSuccess('话题还原成功');
     }
 
@@ -157,9 +157,9 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function delete(Topic $topic)
     {
-        $this->topics->delete($id);
+        $this->topics->delete($topic);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.topics.index')->withFlashSuccess('话题删除成功');
     }
 

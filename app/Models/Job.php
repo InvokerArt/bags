@@ -13,6 +13,8 @@ class Job extends Model
 
     protected $dates = ['published_at'];
 
+    protected $fillable = ['user_id', 'job', 'total', 'education', 'experience', 'minsalary', 'content'];
+
     public static function jobFilter($query, $request)
     {
         if ($request->has('id')) {

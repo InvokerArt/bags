@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Jobs\JobStoreOrUpdateRequest;
 use App\Models\Admin;
 use App\Models\Job;
-use App\Repositories\Backend\Jobs\JobInterface;
+use App\Repositories\Backend\Jobs\JobRepository;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\HtmlString;
@@ -17,7 +17,7 @@ class JobController extends Controller
     protected $jobs;
     protected $user;
 
-    public function __construct(JobInterface $jobs, Admin $user)
+    public function __construct(JobRepository $jobs, Admin $user)
     {
         $this->jobs = $jobs;
         $this->user = $user;
@@ -112,7 +112,7 @@ class JobController extends Controller
      */
     public function update(Job $job, JobStoreOrUpdateRequest $request)
     {
-        $this->jobs->update($job, $request);
+        $this->jobs->update($job, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.jobs.index')->withFlashSuccess('招聘更新成功');
     }
 
@@ -122,9 +122,9 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Job $job)
     {
-        $this->jobs->destroy($id);
+        $this->jobs->destroy($job);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.jobs.index')->withFlashSuccess('招聘删除成功');
     }
 
@@ -134,9 +134,10 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restore($id)
+    public function restore(Job $job)
     {
-        //
+        $this->jobs->restore($job);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.jobs.index')->withFlashSuccess('恢复成功');
     }
 
     /**
@@ -145,9 +146,9 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function deleted($id)
+    public function delete(Job $job)
     {
-        $this->jobs->delete($id);
+        $this->jobs->delete($job);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.jobs.index')->withFlashSuccess('招聘删除成功');
     }
 }

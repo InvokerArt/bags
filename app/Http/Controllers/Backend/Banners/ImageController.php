@@ -7,7 +7,7 @@ use App\Http\Requests\Backend\Banners\ImageStoreRequest;
 use App\Http\Requests\Backend\Banners\ImageUpdateRequest;
 use App\Models\Banner;
 use App\Models\Image;
-use App\Repositories\Backend\Banners\ImageInterface;
+use App\Repositories\Backend\Banners\ImageRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -15,7 +15,7 @@ class ImageController extends Controller
 {
     protected $images;
 
-    public function __construct(ImageInterface $images)
+    public function __construct(ImageRepository $images)
     {
         $this->images = $images;
     }
@@ -62,7 +62,7 @@ class ImageController extends Controller
     public function create()
     {
         $banners = Banner::orderBy('id')->pluck('title', 'id');
-        $order = count($this->images->getAll())+1;
+        $order = $this->images->getCount()+1;
         return view('backend.banners.images.create', compact('banners', 'order'));
     }
 
@@ -110,7 +110,7 @@ class ImageController extends Controller
      */
     public function update(ImageUpdateRequest $request, Image $image)
     {
-        $this->images->update($image, $request);
+        $this->images->update($image, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.banners.image.index')->withFlashSuccess('广告更新成功');
     }
 
@@ -120,9 +120,9 @@ class ImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Image $image)
     {
-        $this->images->destroy($id);
+        $this->images->destroy($image);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.banners.image.index')->withFlashSuccess('广告删除成功');
     }
 
@@ -132,9 +132,21 @@ class ImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restore($id)
+    public function restore(Image $image)
     {
-        $this->images->restore($id);
+        $this->images->restore($image);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.banners.image.index')->withFlashSuccess('广告恢复成功');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Image $image)
+    {
+        $this->images->delete($image);
+        return redirect()->route(env('APP_BACKEND_PREFIX').'.banners.image.index')->withFlashSuccess('广告删除成功');
     }
 }

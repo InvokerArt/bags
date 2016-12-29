@@ -12,6 +12,8 @@ class Reply extends Model
 {
     use SoftDeletes, ReplyRelationship, ReplyAttribute;
 
+    protected $fillable = ['source', 'topic_id', 'user_id', 'parent_id', 'is_blocked', 'vote_count', 'content'];
+
     public static function replyFilter($query, $request)
     {
         if ($request->has('id')) {

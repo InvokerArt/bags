@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Http\Requests\Backend\Topics\CategoryUpdateRequest;
 use App\Http\Requests\Backend\Topics\CategoryRequest;
-use App\Models\CategoriesTopics;
-use App\Repositories\Backend\Topics\CategoryInterface;
+use App\Models\CategoriesTopics as Category;
+use App\Repositories\Backend\Topics\CategoryRepository;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -18,7 +18,7 @@ class CategoryController extends Controller
      */
     protected $categories;
 
-    public function __construct(CategoryInterface $categories)
+    public function __construct(CategoryRepository $categories)
     {
         $this->categories = $categories;
     }
@@ -32,9 +32,9 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         if ($id) {
-            $category = CategoriesTopics::root()->find($id);
+            $category = Category::root()->find($id);
         } else {
-            $category = CategoriesTopics::roots()->first();
+            $category = Category::roots()->first();
         }
         return view('backend.topics.category.index', compact('category'));
     }
@@ -59,8 +59,8 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         $name = $request->name;
-        $categories = CategoriesTopics::root()->find($id);
-        $children = CategoriesTopics::create(['name' => $name]);
+        $categories = Category::root()->find($id);
+        $children = Category::create(['name' => $name]);
         $children->makeChildOf($categories);
         return ['id'=>$children->id, 'icon' => 'fa fa-folder icon-lg icon-state-warning'];
     }
@@ -94,9 +94,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, CategoryUpdateRequest $request)
+    public function update(Category $category, CategoryUpdateRequest $request)
     {
-        $this->categories->update($id, $request);
+        $this->categories->update($category, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.topics.categories.index')->withFlashSuccess('更新成功');
     }
 
@@ -106,9 +106,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        $this->categories->delete($id);
+        $this->categories->delete($category);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.catalog.categories.index')->withFlashSuccess('删除成功');
     }
 
@@ -120,7 +120,7 @@ class CategoryController extends Controller
         $parent = $request->parent;
         $disabled = $request->disabled;
         if ($parent == "#") {
-            $catetories = CategoriesTopics::roots()->get();
+            $catetories = Category::roots()->get();
             foreach ($catetories as $category) {
                 $children = $category->children()->get();
                 $data[] = array(
@@ -134,7 +134,7 @@ class CategoryController extends Controller
                 );
             }
         } else {
-            $catetories = CategoriesTopics::root()->find($parent)->getImmediateDescendants();
+            $catetories = Category::root()->find($parent)->getImmediateDescendants();
             foreach ($catetories as $category) {
                 $children = $category->isLeaf();
                 $data[] = array(
@@ -155,8 +155,8 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         $parent = $request->parent;
-        $catetorie = CategoriesTopics::root()->find($parent);
-        $children = CategoriesTopics::root()->find($id);
+        $catetorie = Category::root()->find($parent);
+        $children = Category::root()->find($id);
         $children->makeChildOf($catetorie);
     }
 
@@ -164,8 +164,8 @@ class CategoryController extends Controller
     {
         $id = $request->id;
         $parent = $request->parent;
-        $categories = CategoriesTopics::root()->find($parent);
-        $childrens = CategoriesTopics::root()->find($id)->getDescendantsAndSelf();
+        $categories = Category::root()->find($parent);
+        $childrens = Category::root()->find($id)->getDescendantsAndSelf();
     }
 
     public function rename(CategoryRequest $request)

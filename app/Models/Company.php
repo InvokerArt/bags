@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\Attribute\CompanyAttribute;
 use App\Models\Traits\Relationship\CompanyRelationship;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
 {
-    use Searchable, CompanyRelationship, CompanyAttribute;
+    use SoftDeletes, CompanyRelationship, CompanyAttribute;
 
     protected $fillable = ['user_id', 'name', 'telephone', 'address', 'addressDetail', 'notes', 'content', 'licenses', 'photos', 'role'];
+
+    protected $dates = ['deleted_at'];
 
     public static function companyFilter($query, $request)
     {

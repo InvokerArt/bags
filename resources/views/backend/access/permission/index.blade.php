@@ -65,10 +65,10 @@
                         url: '{{ route(env('APP_BACKEND_PREFIX').".access.permission.get") }}',
                     },
                     columns: [
-                        {data: 'name', name: 'roles.name',"orderable": true,"searchable": true},
-                        {data: 'display_name', name: 'roles.display_name',"orderable": false,"searchable": false},
-                        {data: 'description', name: 'roles.description',"orderable": true,"searchable": true},
-                        {data: 'actions', name: 'actions', orderable: false, searchable: false}
+                        {data: 'name', "orderable": true,"searchable": true},
+                        {data: 'display_name', "orderable": false,"searchable": false},
+                        {data: 'description', "orderable": true,"searchable": true},
+                        {data: 'actions', orderable: false, searchable: false}
                     ],
                     "lengthMenu": [[20, 40, 100, -1], [20, 40, 100, "全部"]],
                     "order": [

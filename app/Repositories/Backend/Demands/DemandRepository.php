@@ -7,25 +7,23 @@ use App\Models\Demand;
 use App\Models\User;
 use Auth;
 use DB;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class EloquentUserRepository
  * @package App\Repositories\User
  */
-class DemandRepository implements DemandInterface
+class DemandRepository extends Repository
 {
-    protected $demand;
-
-    public function __construct(Demand $demand)
-    {
-        $this->demand = $demand;
-    }
-
-
+    /**
+     * 关联储存模型
+     */
+    const MODEL = Demand::class;
 
     public function getForDataTable()
     {
-        return Demand::select('demands.*', 'users.username')
+        return $this->query()->select('demands.*', 'users.username')
         ->leftJoin('users', 'users.id', '=', 'demands.user_id');
     }
 
@@ -37,7 +35,8 @@ class DemandRepository implements DemandInterface
             throw new GeneralException("会员不存在！");
         }
 
-        $demand = new Demand;
+        $demand = self::MODEL;
+        $demand = new $demand;
         $demand->title = $input['title'];
         //$demand->slug = $input['slug'];
         $demand->user_id = $user->id;
@@ -48,7 +47,7 @@ class DemandRepository implements DemandInterface
         $demand->is_excellent = $input['is_excellent'];
 
         DB::transaction(function () use ($demand) {
-            if ($demand->save()) {
+            if (parent::save($demand)) {
                 return true;
             }
 
@@ -56,18 +55,10 @@ class DemandRepository implements DemandInterface
         });
     }
 
-    public function update(Demand $demand, $input)
+    public function update(Model $demand, array $input)
     {
-        $demand->title = $input['title'];
-        //$demand->slug = $input['slug'];
-        $demand->quantity = $input['quantity'];
-        $demand->unit = $input['unit'];
-        $demand->content = $input['content'];
-        $demand->images = $input['images'];
-        $demand->is_excellent = $input['is_excellent'];
-
-        DB::transaction(function () use ($demand) {
-            if ($demand->update()) {
+        DB::transaction(function () use ($demand, $input) {
+            if (parent::update($demand, $input)) {
                 return true;
             }
 
@@ -75,53 +66,66 @@ class DemandRepository implements DemandInterface
         });
     }
 
-    public function destroy($id)
+    public function destroy(Model $demand)
     {
-        $demand = $this->findOrThrowException($id);
-        if ($demand->delete()) {
+        if (parent::delete($demand)) {
             return true;
         }
         throw new GeneralException('删除失败！');
     }
 
-    public function restore($id)
+    public function restore(Model $demand)
     {
-        $demand = $this->findOrThrowException($id);
-        if ($demand->restore()) {
+        if (is_null($demand->deleted_at)) {
+            throw new GeneralException('需求不能恢复！');
+        }
+        if (parent::restore($demand)) {
             return true;
         }
         throw new GeneralException('恢复失败！');
     }
 
-    public function delete($id)
+    public function delete(Model $demand)
     {
-        $demand = $this->findOrThrowException($id);
-        if ($demand->forceDelete()) {
-            return true;
+        if (is_null($demand->deleted_at)) {
+            throw new GeneralException('要先删除需求！');
         }
-        throw new GeneralException('删除失败！');
-    }
-
-    public function findOrThrowException($id)
-    {
-        $demand = Demand::withTrashed()->find($id);
-
-        if (!is_null($demand)) {
-            return $demand;
-        }
-
-        throw new GeneralException('未找到需求信息');
+        DB::transaction(function () use ($demand) {
+            if (parent::forceDelete($demand)) {
+                return true;
+            }
+            throw new GeneralException('删除失败！');
+        });
     }
 
     public function search($input)
     {
-        return $this->demand->where('title', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%")->paginate();
+        return $this->query()->where('title', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%")->paginate();
     }
 
     public function searchWithUser($input)
     {
-        return $this->demand->where('user_id', Auth::id())->where(function ($query) use ($input) {
+        return $this->query()->where('user_id', Auth::id())->where(function ($query) use ($input) {
             $query->where('title', 'like', "%$input->q%")->orWhere('content', 'like', "%$input->q%");
         })->paginate();
+    }
+
+    public function index()
+    {
+        return $this->query()->orderBy('created_at', 'DESC')->paginate();
+    }
+
+    public function indexByUser()
+    {
+        return $this->query()->where('user_id', Auth::id())->orderBy('is_excellent')->orderBy('created_at', 'DESC')->paginate();
+    }
+
+    public function createFavorite(Model $demand)
+    {
+        $favorites = $demand->favorites()->where('user_id', Auth::id())->count();
+        if ($favorites) {
+            throw new GeneralException('你已经收藏！');
+        }
+        $demand->favorites()->create(['user_id' => Auth::id()]);
     }
 }

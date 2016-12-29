@@ -6,32 +6,37 @@ use App\Exceptions\GeneralException;
 use App\Models\Comment;
 use App\Models\News;
 use DB;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
-class CommentRepository implements CommentInterface
+class CommentRepository extends Repository
 {
+    /**
+     * 关联储存模型
+     */
+    const MODEL = Comment::class;
+
     public function getForDataTable()
     {
-        return Comment::with(['user', 'commentable']);
+        return $this->query()->with(['user', 'commentable']);
     }
 
     public function create($input)
     {
-        $comment = new Comment;
+        $comment = self::MODEL;
+        $comment = new $comment;
         $news = News::find($input['news_id']);
         if (!$news) {
             throw new GeneralException("添加失败，评论新闻不存在！");
         }
         if ($input['parent_id']) {
             //查询评论新闻和用户是否存在
-            $commentReady = Comment::where('commentable_id', $input['news_id'])->where('id', $input['parent_id'])->first();
+            $commentReady = $this->query()->where('commentable_id', $input['news_id'])->where('id', $input['parent_id'])->first();
             if (!$commentReady) {
                 throw new GeneralException("添加失败，评论用户不存在！");
             }
             $comment->parent_id = $input['parent_id'];
         }
-        $comment->content = $input['content'];
-        $comment->is_blocked = $input['is_blocked'];
-        $comment->user_id = $input['user_id'];
 
         DB::transaction(function () use ($news, $comment) {
             if ($news->comments()->save($comment)) {
@@ -44,7 +49,7 @@ class CommentRepository implements CommentInterface
         });
     }
 
-    public function update(Comment $comment, $input)
+    public function update(Model $comment, array $input)
     {
         $news = News::find($input['news_id']);
         if (!$news) {
@@ -52,18 +57,15 @@ class CommentRepository implements CommentInterface
         }
         if ($input['parent_id']) {
             //查询评论新闻和用户是否存在
-            $commentReady = Comment::where('commentable_id', $input['news_id'])->where('id', $input['parent_id'])->first();
+            $commentReady = $this->query()->where('commentable_id', $input['news_id'])->where('id', $input['parent_id'])->first();
             if (!$commentReady) {
                 throw new GeneralException("添加失败，评论用户不存在！");
             }
             $comment->parent_id = $input['parent_id'];
         }
-        $comment->content = $input['content'];
-        $comment->is_blocked = $input['is_blocked'];
-        $comment->user_id = $input['user_id'];
 
-        DB::transaction(function () use ($comment) {
-            if ($comment->update()) {
+        DB::transaction(function () use ($comment, $input) {
+            if (parent::update($comment, $input)) {
                 return true;
             }
 
@@ -71,43 +73,29 @@ class CommentRepository implements CommentInterface
         });
     }
 
-    public function destroy($id)
+    public function destroy(Model $comment)
     {
-        $comment = $this->findOrThrowException($id);
-        if ($comment->delete()) {
+        if (parent::delete($comment)) {
             $comment->commentable()->decrement('comment_count', 1);
             return true;
         }
         throw new GeneralException('删除失败！');
     }
 
-    public function restore($id)
+    public function restore(Model $comment)
     {
-        $comment = $this->findOrThrowException($id);
-        if ($comment->restore()) {
+        if (parent::restore($comment)) {
             $comment->commentable()->increment('comment_count', 1);
             return true;
         }
         throw new GeneralException('返回失败！');
     }
 
-    public function delete($id)
+    public function delete(Model $comment)
     {
-        $comment = $this->findOrThrowException($id);
-        if ($comment->forceDelete()) {
+        if (parent::forceDelete($comment)) {
             return true;
         }
         throw new GeneralException('删除失败！');
-    }
-
-    public function findOrThrowException($id)
-    {
-        $demand = Comment::withTrashed()->find($id);
-
-        if (!is_null($demand)) {
-            return $demand;
-        }
-
-        throw new GeneralException('未找到需求信息');
     }
 }

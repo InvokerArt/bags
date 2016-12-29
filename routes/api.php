@@ -34,7 +34,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         //更新个人信息
         $api->patch('users', 'AuthController@update');
         //修改密码
-        $api->patch('users/password', 'AuthController@editPassword');
+        $api->patch('users/password', 'AuthController@updatePassword');
         $api->get('users/join-in', 'AuthController@indexJoinIn');
         $api->get('users/join-out', 'AuthController@indexJoinOut');
         $api->get('users/certification-in', 'AuthController@indexCertificationIn');

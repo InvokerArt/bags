@@ -10,6 +10,8 @@ class Join extends Model
 {
     use JoinAttribute, JoinRelationship;
 
+    protected $fillable = ['user_id', 'company_id', 'identity_card', 'licenses', 'status'];
+
     public static function joinFilter($query, $request)
     {
         if ($request->has('id')) {

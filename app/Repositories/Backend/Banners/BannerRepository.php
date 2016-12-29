@@ -5,26 +5,34 @@ namespace App\Repositories\Backend\Banners;
 use App\Exceptions\GeneralException;
 use App\Models\Banner;
 use DB;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class EloquentUserRepository
  * @package App\Repositories\User
  */
-class BannerRepository implements BannerInterface
+class BannerRepository extends Repository
 {
+    /**
+     * 关联储存模型
+     */
+    const MODEL = Banner::class;
+
     public function getForDataTable()
     {
-        return Banner::select('*');
+        return $this->query()->select('*');
     }
 
     public function create($input)
     {
-        $banner = new Banner;
+        $banner = self::MODEL;
+        $banner = new $banner;
         $banner->title = $input['title'];
         $banner->description = $input['description'];
 
         DB::transaction(function () use ($banner) {
-            if ($banner->save()) {
+            if (parent::save($banner)) {
                 return true;
             }
 
@@ -32,13 +40,10 @@ class BannerRepository implements BannerInterface
         });
     }
 
-    public function update(Banner $banner, $input)
+    public function update(Model $banner, array $input)
     {
-        $banner->title = $input['title'];
-        $banner->description = $input['description'];
-
         DB::transaction(function () use ($banner) {
-            if ($banner->update()) {
+            if (parent::update($banner, $input)) {
                 return true;
             }
 
@@ -46,44 +51,35 @@ class BannerRepository implements BannerInterface
         });
     }
 
-    public function destroy($id)
+    public function destroy(Model $banner)
     {
-        $banner = $this->findOrThrowException($id);
-
-        if ($banner->delete()) {
+        if (parent::delete($banner)) {
             return true;
         }
         throw new GeneralException('删除失败！');
     }
 
-    public function restore($id)
+    public function restore(Model $banner)
     {
-        $banner = $this->findOrThrowException($id);
-
-        if ($banner->restore()) {
+        if (is_null($banner->deleted_at)) {
+            throw new GeneralException('广告位不能恢复！');
+        }
+        if (parent::restore($banner)) {
             return true;
         }
         throw new GeneralException('返回失败！');
     }
 
-    public function delete($id)
+    public function delete(Model $banner)
     {
-        $banner = $this->findOrThrowException($id);
-
-        if ($banner->forceDelete()) {
-            return true;
+        if (is_null($banner->deleted_at)) {
+            throw new GeneralException('要先删除广告位！');
         }
-        throw new GeneralException('删除失败！');
-    }
-
-    public function findOrThrowException($id)
-    {
-        $banner = Banner::withTrashed()->find($id);
-
-        if (!is_null($banner)) {
-            return $banner;
-        }
-
-        throw new GeneralException('未找到广告位信息');
+        DB::transaction(function () use ($banner) {
+            if (parent::forceDelete($banner)) {
+                return true;
+            }
+            throw new GeneralException('删除失败！');
+        });
     }
 }

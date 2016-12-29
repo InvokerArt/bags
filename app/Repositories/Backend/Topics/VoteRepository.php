@@ -3,14 +3,21 @@
 namespace App\Repositories\Backend\Topics;
 
 use App\Models\Notification;
-use App\Repositories\Backend\Notifications\NotificationInterface;
+use App\Repositories\Backend\Notifications\NotificationRepository;
 use Auth;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
-class VoteRepository implements VoteInterface
+class VoteRepository extends Repository
 {
+    /**
+     * 关联储存模型
+     */
+    const MODEL = Notification::class;
+    
     protected $notification;
 
-    public function __construct(NotificationInterface $notification)
+    public function __construct(NotificationRepository $notification)
     {
         $this->notification = $notification;
     }

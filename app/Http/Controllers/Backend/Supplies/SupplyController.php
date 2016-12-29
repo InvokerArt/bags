@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Supplies\SupplyStoreOrUpdateRequest;
 use App\Models\Supply;
 use App\Models\User;
-use App\Repositories\Backend\Supplies\SupplyInterface;
+use App\Repositories\Backend\Supplies\SupplyRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Facades\Datatables;
 
@@ -14,7 +14,7 @@ class SupplyController extends Controller
 {
     protected $supplies;
 
-    public function __construct(SupplyInterface $supplies)
+    public function __construct(SupplyRepository $supplies)
     {
         $this->supplies = $supplies;
     }
@@ -125,7 +125,7 @@ class SupplyController extends Controller
      */
     public function update(Supply $supply, SupplyStoreOrUpdateRequest $request)
     {
-        $this->supplies->update($supply, $request);
+        $this->supplies->update($supply, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.supplies.index')->withFlashSuccess('更新成功');
     }
 
@@ -135,9 +135,9 @@ class SupplyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Supply $supply)
     {
-        $this->supplies->destroy($id);
+        $this->supplies->destroy($supply);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.supplies.index')->withFlashSuccess('产品删除成功');
     }
 
@@ -147,9 +147,9 @@ class SupplyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restore($id)
+    public function restore(Supply $supply)
     {
-        $this->supplies->restore($id);
+        $this->supplies->restore($supply);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.supplies.index')->withFlashSuccess('产品恢复成功');
     }
 
@@ -159,9 +159,9 @@ class SupplyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function delete(Supply $supply)
     {
-        $this->supplies->delete($id);
+        $this->supplies->delete($supply);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.supplies.index')->withFlashSuccess('产品删除成功');
     }
 }

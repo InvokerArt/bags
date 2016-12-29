@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Access\Permission\PermissionRequest;
 use App\Http\Requests\Backend\Access\Permission\PermissionStoreOrUpdateRequest;
 use App\Models\Permission;
-use App\Repositories\Backend\Access\Permission\PermissionInterface;
-use App\Repositories\Backend\Access\Role\RoleInterface;
+use App\Repositories\Backend\Access\Permission\PermissionRepository;
+use App\Repositories\Backend\Access\Role\RoleRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -16,13 +16,11 @@ class PermissionController extends Controller
     protected $permissions;
     protected $roles;
 
-    public function __construct(PermissionInterface $permissions, RoleInterface $roles)
+    public function __construct(PermissionRepository $permissions, RoleRepository $roles)
     {
         $this->permissions = $permissions;
         $this->roles = $roles;
     }
-
-
 
     /**
      * 权限列表页
@@ -43,7 +41,7 @@ class PermissionController extends Controller
     public function get(PermissionRequest $request)
     {
         return Datatables::of($this->permissions->getForDataTable())
-            ->addColumn('actions', function($permission) {
+            ->addColumn('actions', function ($permission) {
                 return $permission->action_buttons;
             })
             ->make(true);

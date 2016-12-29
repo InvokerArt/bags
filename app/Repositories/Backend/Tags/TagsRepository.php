@@ -4,11 +4,18 @@ namespace App\Repositories\Backend\Tags;
 
 use App\Exceptions\GeneralException;
 use App\Models\Tag;
-use App\Repositories\Backend\Tags\TagInterface;
+use App\Repositories\Backend\Tags\TagRepository;
 use DB;
+use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
-class TagsRepository implements TagsInterface
+class TagsRepository extends Repository
 {
+    /**
+     * 关联储存模型
+     */
+    const MODEL = Tag::class;
+
     /**
      * [获取所有标签]
      * @Ben
@@ -19,14 +26,14 @@ class TagsRepository implements TagsInterface
      */
     public function getAllTags($order_by = 'id', $sort = 'asc')
     {
-        return Tag::orderBy($order_by, $sort)
+        return $this->query()->orderBy($order_by, $sort)
         ->get();
     }
 
     public function getPopularTags($limit = 10)
     {
         //ORM获取
-        return Tag::select('id', 'name')
+        return $this->query()->select('id', 'name')
         ->withCount('news')
         ->limit($limit)
         ->get()
@@ -34,7 +41,7 @@ class TagsRepository implements TagsInterface
             return $query->news->count();
         });
         //原始mysql获取
-        // $tags = Tag::select ([
+        // $tags = $this->query()->select ([
         //     'id',
         //     'name',
         //     DB::raw('count(taggables.taggable_id) AS count'),
@@ -50,21 +57,22 @@ class TagsRepository implements TagsInterface
 
     public function getForDataTable()
     {
-        $tags = Tag::select('*')->withCount('news');
+        $tags = $this->query()->select('*')->withCount('news');
         return $tags;
     }
 
     public function create($input)
     {
-        if (Tag::where('name', $input['name'])->first()) {
+        if ($this->query()->where('name', $input['name'])->first()) {
             throw new GeneralException('标签已存在！');
         }
 
         $result = DB::transaction(function () use ($input) {
-            $tag = new Tag;
+            $tag = self::MODEL;
+            $tag = new $tag;
             $tag->name = $input['name'];
 
-            if ($tag->save()) {
+            if (parent::save($tag)) {
                 return $tag;
             }
 
@@ -74,19 +82,17 @@ class TagsRepository implements TagsInterface
         return $result;
     }
 
-    public function update($input, $id)
+    public function update(Model $tag, array $input)
     {
-        $tag = Tag::find($id);
         $tag->name = $input['name'];
-        if ($tag->save()) {
+        if (parent::save($tag)) {
             return true;
         }
         throw new GeneralException('更新失败！');
     }
 
-    public function destroy($id)
+    public function destroy(Model $tag)
     {
-        $tag = Tag::find($id);
         if ($tag->delete()) {
             return true;
         }

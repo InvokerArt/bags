@@ -36,7 +36,6 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">
                                     广告位描述
-                                    <span class="required">*</span>
                                 </label>
                                 <div class="col-md-10">
                                     {{ Form::textarea('description', null, ['class' => 'form-control editor', 'autocomplete' => 'true',]) }}

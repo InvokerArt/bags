@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Products\ProductStoreOrUpdateRequest;
 use App\Models\Product;
 use App\Models\User;
-use App\Repositories\Backend\Products\ProductInterface;
+use App\Repositories\Backend\Products\ProductRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Facades\Datatables;
 
@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
     protected $products;
 
-    public function __construct(ProductInterface $products)
+    public function __construct(ProductRepository $products)
     {
         $this->products = $products;
     }
@@ -125,7 +125,7 @@ class ProductController extends Controller
      */
     public function update(Product $product, ProductStoreOrUpdateRequest $request)
     {
-        $this->products->update($product, $request);
+        $this->products->update($product, $request->all());
         return redirect()->route(env('APP_BACKEND_PREFIX').'.products.index')->withFlashSuccess('更新成功');
     }
 
@@ -135,9 +135,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        $this->products->destroy($id);
+        $this->products->destroy($product);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.products.index')->withFlashSuccess('产品删除成功');
     }
 
@@ -147,9 +147,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restore($id)
+    public function restore(Product $product)
     {
-        $this->products->restore($id);
+        $this->products->restore($product);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.products.index')->withFlashSuccess('产品恢复成功');
     }
 
@@ -159,9 +159,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function delete(Product $product)
     {
-        $this->products->delete($id);
+        $this->products->delete($product);
         return redirect()->route(env('APP_BACKEND_PREFIX').'.products.index')->withFlashSuccess('产品删除成功');
     }
 }

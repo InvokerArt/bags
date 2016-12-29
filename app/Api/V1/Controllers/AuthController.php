@@ -19,10 +19,11 @@ use App\Models\Certification;
 use App\Models\Company;
 use App\Models\Join;
 use App\Models\User;
-use App\Repositories\Backend\Users\UserInterface;
+use App\Repositories\Backend\Certifications\CertificationRepository;
+use App\Repositories\Backend\Joins\JoinRepository;
+use App\Repositories\Backend\Users\UserRepository;
 use Auth;
 use GuzzleHttp\Exception\RequestException;
-use Hash;
 use Illuminate\Http\Request;
 use SmsManager;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -30,10 +31,14 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 class AuthController extends BaseController
 {
     protected $users;
+    protected $joins;
+    protected $certifications;
 
-    public function __construct(UserInterface $users)
+    public function __construct(UserRepository $users, JoinRepository $joins, CertificationRepository $certifications)
     {
         $this->users = $users;
+        $this->joins = $joins;
+        $this->certifications = $certifications;
     }
 
     /**
@@ -109,12 +114,9 @@ class AuthController extends BaseController
      */
     public function register(UserStoreRequest $request)
     {
-        $user = new User;
-        $user->mobile = $request->mobile;
-        $user->password = bcrypt($request->password);
         try {
             // 创建用户成功
-            $user->save();
+            $user = $this->users->create($request);
             $user->password = $request->password;
             event(new UserCreateEvent($user));
             return $this->response->created();
@@ -137,18 +139,13 @@ class AuthController extends BaseController
      */
     public function reset(UserResetRequest $request)
     {
-        $user = User::where('mobile', $request->mobile)->first();
-        if ($user) {
-            try {
-                $user->password = bcrypt($request->password);
-                $user->save();
-                event(new UserUpdateEvent($user));
-                return $this->response->noContent();
-            } catch (\Exception $e) {
-                return $this->response->errorBadRequest($e->getMessage());
-            }
-        } else {
-            return $this->resource->errorNotFound('用户不存在！');
+        try {
+            $user = $this->users->resetPassword($request);
+            $user->password = $request->password;
+            event(new UserUpdateEvent($user));
+            return $this->response->noContent();
+        } catch (\Exception $e) {
+            return $this->response->errorBadRequest($e->getMessage());
         }
     }
 
@@ -181,7 +178,7 @@ class AuthController extends BaseController
     {
         $user = Auth::user();
         $request->avatar = str_replace(env('APP_URL'), '', $request->avatar);
-        $this->users->update($user, $request);
+        $this->users->update($user, $request->all());
         return $this->response->item($user, new UserTransformer());
     }
 
@@ -196,20 +193,16 @@ class AuthController extends BaseController
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 204 No Content
      */
-    public function editPassword(UserPasswordRequest $request)
+    public function updatePassword(UserPasswordRequest $request)
     {
         $user = Auth::user();
-        if (Hash::check($request->old_password, $user->password)) {
-            $user->password = bcrypt($request->password);
-            try {
-                $user->save();
-                event(new UserUpdateEvent($user));
-                return $this->response->noContent();
-            } catch (\Exception $e) {
-                return $this->response->errorBadRequest($e->getMessage());
-            }
-        } else {
-            return $this->response->errorForbidden('密码错误');
+        try {
+            $this->users->updatePassword($user, $request);
+            $user->password = $request->password;
+            event(new UserUpdateEvent($user));
+            return $this->response->noContent();
+        } catch (\Exception $e) {
+            return $this->response->errorBadRequest($e->getMessage());
         }
     }
 
@@ -373,7 +366,7 @@ class AuthController extends BaseController
     }
      * @apiSampleRequest /api/users/companies
      */
-    public function company(Request $request)
+    public function company()
     {
         $company = Auth::user()->company()->first();
         return $this->response->item($company, new CompanyTransformer());
@@ -426,8 +419,7 @@ class AuthController extends BaseController
      */
     public function indexJoinIn()
     {
-        $company = Company::select('id')->where('user_id', Auth::id())->first();
-        $joins = Join::where('company_id', $company->id)->with('userCompany')->orderBy('created_at', 'DESC')->paginate();
+        $joins = $this->joins->indexUserIn();
         return $this->response->paginator($joins, new JoinTransformer());
     }
 
@@ -479,7 +471,7 @@ class AuthController extends BaseController
      */
     public function indexJoinOut()
     {
-        $joins = Join::where('user_id', Auth::id())->with('company')->orderBy('created_at', 'DESC')->paginate();
+        $joins = $this->joins->indexUserOut();
         return $this->response->paginator($joins, new JoinTransformer());
     }
 
@@ -497,8 +489,7 @@ class AuthController extends BaseController
      */
     public function indexCertificationIn()
     {
-        $company = Company::select('id')->where('user_id', Auth::id())->first();
-        $certifications = Certification::where('company_id', $company->id)->with('userCompany')->orderBy('created_at', 'DESC')->paginate();
+        $certifications = $this->certifications->indexUserIn();
         return $this->response->paginator($certifications, new CertificationTransformer());
     }
 
@@ -516,7 +507,7 @@ class AuthController extends BaseController
      */
     public function indexCertificationOut()
     {
-        $certifications = Certification::where('user_id', Auth::id())->with('company')->orderBy('created_at', 'DESC')->paginate();
+        $certifications = $this->certifications->indexUserOut();
         return $this->response->paginator($certifications, new CertificationTransformer());
     }
 }

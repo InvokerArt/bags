@@ -79,19 +79,4 @@ trait TopicRelationship
         $excerpt = trim(preg_replace('/\s\s+/', ' ', strip_tags($html)));
         return str_limit($excerpt, 200);
     }
-
-    public function scopeByWhom($query, $user_id)
-    {
-        return $query->where('user_id', '=', $user_id);
-    }
-
-    public function scopeRecent($query)
-    {
-        return $query->orderBy('created_at', 'desc');
-    }
-
-    public function scopeWithOutBlank($query, $user_id)
-    {
-        return $query->where('user_id', '=', $user_id);
-    }
 }

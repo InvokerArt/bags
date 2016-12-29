@@ -3,10 +3,10 @@
 namespace App\Repositories\Frontend\Access\User;
 
 /**
- * Interface UserInterface
+ * Repository UserRepository
  * @package App\Repositories\Frontend\User
  */
-interface UserInterface
+interface UserRepository
 {
     /**
      * @param $id

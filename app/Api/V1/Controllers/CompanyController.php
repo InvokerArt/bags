@@ -17,19 +17,19 @@ use App\Api\V1\Transformers\JoinAndValidateTransformer;
 use App\Api\V1\Transformers\JoinTransformer;
 use App\Api\V1\Transformers\ProductShowTransformer;
 use App\Api\V1\Transformers\ProductTransformer;
-use App\Models\Area;
-use App\Models\CategoryCompany;
+use App\Models\CategoriesCompanies;
 use App\Models\Certification;
 use App\Models\Company;
 use App\Models\Image;
 use App\Models\Job;
 use App\Models\Join;
 use App\Models\Product;
-use App\Repositories\Backend\Banners\ImageInterface;
-use App\Repositories\Backend\Certifications\CertificationInterface;
-use App\Repositories\Backend\Companies\CompanyInterface;
-use App\Repositories\Backend\Jobs\JobInterface;
-use App\Repositories\Backend\Joins\JoinInterface;
+use App\Repositories\Backend\Banners\ImageRepository;
+use App\Repositories\Backend\Certifications\CertificationRepository;
+use App\Repositories\Backend\Companies\CompanyRepository;
+use App\Repositories\Backend\Jobs\JobRepository;
+use App\Repositories\Backend\Joins\JoinRepository;
+use App\Repositories\Backend\Products\ProductRepository;
 use Auth;
 use Illuminate\Http\Request;
 use Validator;
@@ -39,16 +39,18 @@ class CompanyController extends BaseController
     protected $joins;
     protected $certifications;
     protected $companies;
-    private $job;
-    private $image;
+    protected $jobs;
+    protected $images;
+    protected $products;
 
-    public function __construct(JoinInterface $joins, CertificationInterface $certifications, CompanyInterface $companies, JobInterface $job, ImageInterface $image)
+    public function __construct(JoinRepository $joins, CertificationRepository $certifications, CompanyRepository $companies, JobRepository $jobs, ImageRepository $images, ProductRepository $products)
     {
         $this->joins = $joins;
         $this->certifications = $certifications;
         $this->companies = $companies;
-        $this->job = $job;
-        $this->image = $image;
+        $this->jobs = $jobs;
+        $this->images = $images;
+        $this->products = $products;
     }
 
     /**
@@ -89,7 +91,7 @@ class CompanyController extends BaseController
      */
     public function banner()
     {
-        $images = $this->image->getCategoryBanners(2);
+        $images = $this->images->getCategoryBanners(2);
         return $this->response->collection($images, new BannerTransformer());
     }
 
@@ -136,16 +138,8 @@ class CompanyController extends BaseController
      */
     public function index($id)
     {
-        if ($id) {
-            $companys = Company::where('role', $id)->with(['certifications' => function ($query) {
-                $query->validate();
-            }])->orderBy('created_at', 'DESC')->paginate();
-        } else {
-            $companys = Company::where('role', 1)->orWhere('role', 2)->with(['certifications' => function ($query) {
-                $query->validate();
-            }])->orderBy('created_at', 'DESC')->paginate();
-        }
-        return $this->response()->paginator($companys, new CompanyTransformer());
+        $companies = $this->companies->indexByRole($id);
+        return $this->response()->paginator($companies, new CompanyTransformer());
     }
 
     /**
@@ -196,8 +190,7 @@ class CompanyController extends BaseController
      */
     public function categories($id)
     {
-        //激活的分类
-        $categories = CategoryCompany::where('is_active', 1)->where('role', $id)->get();
+        $categories = $this->companies->indexCategoriesByRole($id);
         return $this->response()->collection($categories, new CategoryTransformer());
     }
 
@@ -310,8 +303,7 @@ class CompanyController extends BaseController
      */
     public function job(Request $request)
     {
-        $user = $request->user();
-        $jobs = $user->jobs()->orderBy('created_at', 'DESC')->paginate();
+        $jobs = $this->jobs->indexByUser();
         return $this->response->paginator($jobs, new JobTransformer());
     }
 
@@ -337,7 +329,7 @@ class CompanyController extends BaseController
     {
         $user = $request->user();
         $request->merge(['user_id' => $user->id]);
-        $job = $this->job->create($request);
+        $job = $this->jobs->create($request);
         return $this->response->created();
     }
 
@@ -383,8 +375,7 @@ class CompanyController extends BaseController
      */
     public function product(Request $request)
     {
-        $user = $request->user();
-        $products = $user->products()->paginate();
+        $products = $this->products->indexByUser();
         return $this->response->paginator($products, new ProductTransformer());
     }
 
@@ -476,7 +467,7 @@ class CompanyController extends BaseController
      */
     public function join(Join $join, Request $request)
     {
-        $this->joins->update($join, $request);
+        $this->joins->update($join, $request->all());
         return $this->response->item($join, new JoinTransformer());
     }
 
@@ -516,7 +507,7 @@ class CompanyController extends BaseController
      */
     public function certification(Certification $certification, Request $request)
     {
-        $this->certifications->update($certification, $request);
+        $this->certifications->update($certification, $request->all());
         return $this->response->item($certification, new CertificationTransformer());
     }
 
@@ -589,7 +580,7 @@ class CompanyController extends BaseController
             throw new \Dingo\Api\Exception\StoreResourceFailedException('422 Unprocessable Entity', $validator->errors());
         }
         //return $this->response->array($request->categories);
-        $this->companies->update($company, $request);
+        $this->companies->update($company, $request->all());
         return $this->response->item($company, new CompanyUpdateTransformer());
     }
 
@@ -606,11 +597,7 @@ class CompanyController extends BaseController
      */
     public function favorite(Company $company)
     {
-        $favorites = $company->favorites()->where('user_id', Auth::id())->count();
-        if ($favorites) {
-            return $this->response->errorBadRequest('你已经收藏！');
-        }
-        $company->favorites()->create(['user_id' => Auth::id()]);
+        $this->companies->createFavorite($company);
         return $this->response->created();
     }
 
@@ -627,11 +614,7 @@ class CompanyController extends BaseController
      */
     public function jobFavorite(Job $job)
     {
-        $favorites = $job->favorites()->where('user_id', Auth::id())->count();
-        if ($favorites) {
-            return $this->response->errorBadRequest('你已经收藏！');
-        }
-        $job->favorites()->create(['user_id' => Auth::id()]);
+        $this->jobs->createFavorite($job);
         return $this->response->created();
     }
 
@@ -648,11 +631,7 @@ class CompanyController extends BaseController
      */
     public function productFavorite(Product $product)
     {
-        $favorites = $product->favorites()->where('user_id', Auth::id())->count();
-        if ($favorites) {
-            return $this->response->errorBadRequest('你已经收藏！');
-        }
-        $product->favorites()->create(['user_id' => Auth::id()]);
+        $this->products->createFavorite($product);
         return $this->response->created();
     }
 
@@ -698,70 +677,7 @@ class CompanyController extends BaseController
      */
     public function search(Request $request)
     {
-        $query = Company::select();
-
-        if ($request->q) {
-            $query->where(function ($query) use ($request) {
-                $query->where('name', 'like', "%$request->q%")
-                ->orWhere('notes', 'like', "%$request->q%")
-                ->orWhere('content', 'like', "%$request->q%");
-            });
-        }
-
-        if (isset($request->role)) {
-            if ($request->role == 0) {
-                $query->where(function ($query) {
-                    $query->where('role', 1)
-                    ->orWhere('role', 2);
-                });
-            } else {
-                $query->where('role', $request->role);
-            }
-        }
-
-        if ($request->categories) {
-            $query->whereHas('categories', function ($query) use ($request) {
-                $query->where('category_id', $request->categories);
-            });
-        }
-
-        if ($request->address) {
-            $provinces = Area::select('code')->where('parent_id', $request->address)->with('childrens')->get();
-            if (count($provinces)) {
-                foreach ($provinces as $key => $province) {
-                    $city = $province->childrens;
-                    if (count($city)) {
-                        $citys[] = $province->childrens;
-                    }
-                }
-                //搜索省级地址
-                if (isset($citys)) {
-                    $citys = collect($citys);
-                    $citys = $citys->collapse();
-                    foreach ($citys as $value) {
-                        $area = Area::select('code')->where('parent_id', $value->code)->get();
-                        if (count($area)) {
-                            $areas[] = $area;
-                        }
-                    }
-                    if (isset($areas)) {
-                        $areas = collect($areas);
-                        $areas = $areas->collapse();
-                        $query->whereIn('address', $areas);
-                    } else {
-                        $query->whereIn('address', $citys);
-                    }
-                } else {
-                    //搜索市级地址
-                    $query->whereIn('address', $provinces);
-                }
-            } else {
-                //搜索区级地址
-                $query->where('address', $request->address);
-            }
-        }
-
-        $companies = $query->paginate();
+        $companies = $this->companies->search($request);
         return $this->response->paginator($companies, new CompanyTransformer());
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\News;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Comments\CommentStoreOrUpdateRequest;
 use App\Models\Comments\Comment;
-use App\Repositories\Backend\Comments\CommentInterface;
+use App\Repositories\Backend\Comments\CommentRepository;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -13,7 +13,7 @@ class CommentController extends Controller
 {
     protected $comments;
 
-    public function __construct(CommentInterface $comments)
+    public function __construct(CommentRepository $comments)
     {
         $this->comments = $comments;
     }
