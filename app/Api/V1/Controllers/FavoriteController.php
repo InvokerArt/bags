@@ -40,18 +40,19 @@ class FavoriteController extends BaseController
     {
         "data": [
             {
-                "id": 1,
-                "name": "航运城",
+                "id": 112,
+                "company_id": 1,
+                "name": "航运城测试",
                 "province": "福建省",
                 "city": "厦门市",
                 "area": "思明区",
-                "addressDetail": "软件园二期24号之二306B",
+                "addressDetail": "HK排比哈哈哈哈他JJ他拒绝离开过来了来了太可怜了啦啦啦啦",
                 "telephone": "0592-5928529",
+                "role": 1,
                 "photos": [
-                    "/storage/companies/2016/11/192246tXXv.png",
-                    "/storage/companies/2016/11/192247z703.png"
+                    "http://117.29.170.226:8000/storage/companies/2016/12/092247GL7n.png"
                 ],
-                "is_validate": 0,
+                "is_validate": 1,
                 "is_excellent": 0
             }
         ],
@@ -77,8 +78,8 @@ class FavoriteController extends BaseController
                 unset($companys[$key]);
                 continue;
             }
-            $favorite->id = $company->id;
             $favorite->company_id = $favorite->id;
+            $favorite->id = $company->id;
             $companys[$key] = $favorite;
         }
         return $this->response()->paginator($companys, new CompanyFavoriteTransformer());
@@ -97,6 +98,7 @@ class FavoriteController extends BaseController
         "data": [
             {
                 "id": 1,
+                "exhibitions_id": 2,
                 "title": "有一个展会",
                 "address": "xiamen",
                 "telephone": "05925910000",
@@ -125,8 +127,8 @@ class FavoriteController extends BaseController
                 unset($exhibitions[$key]);
                 continue;
             }
-            $favorite->id = $exhibition->id;
             $favorite->exhibition_id = $favorite->id;
+            $favorite->id = $exhibition->id;
             $exhibitions[$key] = $favorite;
         }
         return $this->response()->paginator($exhibitions, new ExhibitionFavoriteTransformer());
@@ -145,6 +147,7 @@ class FavoriteController extends BaseController
         "data": [
             {
                 "id": 1,
+                "news_id": 2,
                 "title": "sed vel asperiores",
                 "subtitle": "nisi consectetur ea",
                 "image": "/storage/images/00425874a34ae1fd522f96c753ee2b2b.jpg",
@@ -181,8 +184,8 @@ class FavoriteController extends BaseController
                 unset($news[$key]);
                 continue;
             }
-            $favorite->id = $new->id;
             $favorite->new_id = $favorite->id;
+            $favorite->id = $new->id;
             $news[$key] = $favorite;
         }
         return $this->response()->paginator($news, new NewsFavoriteTransformer());
@@ -201,6 +204,7 @@ class FavoriteController extends BaseController
         "data": [
             {
                 "id": 1,
+                "product_id": 1,
                 "title": "产品标题",
                 "price": 1.2,
                 "unit": 1,
@@ -232,8 +236,8 @@ class FavoriteController extends BaseController
                 unset($products[$key]);
                 continue;
             }
-            $favorite->id = $product->id;
             $favorite->product_id = $favorite->id;
+            $favorite->id = $product->id;
             $products[$key] = $favorite;
         }
         return $this->response()->paginator($products, new ProductFavoriteTransformer());
@@ -252,6 +256,7 @@ class FavoriteController extends BaseController
         "data": [
             {
                 "id": 1,
+                "job_id": 2,
                 "job": "销售代表",
                 "total": "10人",
                 "education": "本科大学",
@@ -282,8 +287,8 @@ class FavoriteController extends BaseController
                 unset($jobs[$key]);
                 continue;
             }
-            $favorite->id = $job->id;
             $favorite->job_id = $favorite->id;
+            $favorite->id = $job->id;
             $jobs[$key] = $favorite;
         }
         return $this->response()->paginator($jobs, new JobFavoriteTransformer());
@@ -302,6 +307,7 @@ class FavoriteController extends BaseController
         "data": [
             {
                 "id": 1,
+                "topic_id": 2,
                 "category_id": 2,
                 "title": "Laravel 5.3 中文文档翻译完成",
                 "content": "<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \" hiragino=\"\" sans=\"\" microsoft=\"\" wenquanyi=\"\" micro=\"\" white-space:=\"\" background-color:=\"\"><img src=\"https://dn-phphub.qbox.me/uploads/images/201608/24/1/IEQ4Xir8sH.jpg\" alt=\"\" data-type=\"image\" style=\"box-sizing: border-box; border: 1px solid rgb(221, 221, 221); vertical-align: middle; max-width: 100%; box-shadow: rgb(204, 204, 204) 0px 0px 30px; margin-bottom: 30px; margin-top: 10px;\"/></p><p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \" hiragino=\"\" sans=\"\" microsoft=\"\" wenquanyi=\"\" micro=\"\" white-space:=\"\" background-color:=\"\">文档地址在此：<a href=\"https://laravel-china.org/docs/5.3\" style=\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\">https://laravel-china.org/docs/5.3</a></p><p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \" hiragino=\"\" sans=\"\" microsoft=\"\" wenquanyi=\"\" micro=\"\" white-space:=\"\" background-color:=\"\">翻译的召集帖：<a href=\"https://laravel-china.org/topics/2752\" style=\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\">https://laravel-china.org/topics/2752</a></p><p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \" hiragino=\"\" sans=\"\" microsoft=\"\" wenquanyi=\"\" micro=\"\" white-space:=\"\" background-color:=\"\">参与人员列表：<a href=\"https://laravel-china.org/roles/7\" style=\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\">Laravel 5.3 译者</a></p><p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \" hiragino=\"\" sans=\"\" microsoft=\"\" wenquanyi=\"\" micro=\"\" white-space:=\"\" background-color:=\"\">项目托管在 Github 上，欢迎提交反馈：<a href=\"https://github.com/laravel-china/laravel-docs\" style=\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\">https://github.com/laravel-china/laravel-docs</a></p><blockquote style=\"box-sizing: border-box; padding: 6px 8px; border-left: 4px solid rgb(221, 221, 221); line-height: 30px; color: rgb(119, 119, 119); background-color: rgb(247, 247, 247); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \" hiragino=\"\" sans=\"\" microsoft=\"\" wenquanyi=\"\" micro=\"\" white-space:=\"\" margin:=\"\" 20px=\"\" 0px=\"\"><p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; line-height: 30px;\">我代表 Laravel 中文文档的受益者对 可爱的&nbsp;<a href=\"https://laravel-china.org/roles/7\" style=\"box-sizing: border-box; background: transparent; color: rgb(5, 161, 162); text-decoration: none;\">Laravel 5.3 译者</a>&nbsp;表示感谢&nbsp;<img title=\":beer:\" alt=\":beer:\" class=\"emoji\" src=\"https://dn-phphub.qbox.me/assets/images/emoji/beer.png\" align=\"absmiddle\" style=\"box-sizing: border-box; border: 0px; vertical-align: middle; width: 1.6em; display: inline-block; margin-bottom: 0px; margin-top: -5px; margin-left: 5px; max-width: 100%;\"/>&nbsp;<img title=\":metal:\" alt=\":metal:\" class=\"emoji\" src=\"https://dn-phphub.qbox.me/assets/images/emoji/metal.png\" align=\"absmiddle\" style=\"box-sizing: border-box; border: 0px; vertical-align: middle; width: 1.6em; display: inline-block; margin-bottom: 0px; margin-top: -5px; margin-left: 5px; max-width: 100%;\"/></p></blockquote><p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 30px; color: rgb(82, 82, 82); font-family: NotoSansHans-Regular, AvenirNext-Regular, arial, \" hiragino=\"\" sans=\"\" microsoft=\"\" wenquanyi=\"\" micro=\"\" white-space:=\"\" background-color:=\"\"><img src=\"https://dn-phphub.qbox.me/uploads/images/201610/19/1/F9kV4goXoU.png\" alt=\"\" data-type=\"image\" style=\"box-sizing: border-box; border: 1px solid rgb(221, 221, 221); vertical-align: middle; max-width: 100%; box-shadow: rgb(204, 204, 204) 0px 0px 30px; margin-bottom: 30px; margin-top: 10px;\"/></p><p><br/></p>",
@@ -344,8 +350,8 @@ class FavoriteController extends BaseController
                 unset($topics[$key]);
                 continue;
             }
-            $favorite->id = $topic->id;
             $favorite->topic_id = $favorite->id;
+            $favorite->id = $topic->id;
             $topics[$key] = $favorite;
         }
         return $this->response()->paginator($topics, new TopicFavoriteTransformer());
@@ -360,6 +366,31 @@ class FavoriteController extends BaseController
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 113,
+                "demand_id": 1,
+                "title": "我需求质量好的袋子",
+                "quantity": 1000,
+                "unit": 5,
+                "images": [
+                    "http://stone.dev/uploads/products/2016/11/165305Y37a.png"
+                ],
+                "is_excellent": 0
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 1,
+                "count": 1,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
      * @apiSampleRequest /api/favorites/demands
      */
     public function indexForDemand()
@@ -371,8 +402,8 @@ class FavoriteController extends BaseController
                 unset($demands[$key]);
                 continue;
             }
-            $favorite->id = $demand->id;
             $favorite->demand_id = $favorite->id;
+            $favorite->id = $demand->id;
             $demands[$key] = $favorite;
         }
         return $this->response()->paginator($demands, new DemandFavoriteTransformer());
@@ -387,6 +418,32 @@ class FavoriteController extends BaseController
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 200 OK
+    {
+        "data": [
+            {
+                "id": 105,
+                "supply_id": 30,
+                "title": "一盒白糖",
+                "price": 50,
+                "unit": 5,
+                "images": [
+                    "http://117.29.170.226:8000/storage/companies/2016/12/062736s8QD.png"
+                ],
+                "content": "这是一箱白糖",
+                "is_excellent": 0
+            }
+        ],
+        "meta": {
+            "pagination": {
+                "total": 1,
+                "count": 1,
+                "per_page": 15,
+                "current_page": 1,
+                "total_pages": 1,
+                "links": []
+            }
+        }
+    }
      * @apiSampleRequest /api/favorites/supplies
      */
     public function indexForSupply()
@@ -398,8 +455,8 @@ class FavoriteController extends BaseController
                 unset($supplies[$key]);
                 continue;
             }
-            $favorite->id = $supply->id;
             $favorite->supply_id = $favorite->id;
+            $favorite->id = $supply->id;
             $supplies[$key] = $favorite;
         }
         return $this->response()->paginator($supplies, new SupplyFavoriteTransformer());
