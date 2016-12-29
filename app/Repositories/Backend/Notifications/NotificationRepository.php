@@ -83,14 +83,14 @@ class NotificationRepository extends Repository
 
     public function index()
     {
-        return $this->notificationusers->with('notification')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
+        return $this->notificationUsers->with('notification')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
     }
 
     public function createUsersNotifications()
     {
         //生成消息开始
         $user = Auth::user();
-        $lastNotification = $this->notificationusers->select('created_at')->where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
+        $lastNotification = $this->notificationUsers->select('created_at')->where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
         $lastReadAt = ($lastNotification) ? $lastNotification->created_at : '';
         $unreadNotifications = $this->query()->where('created_at', '>', $lastReadAt)->where('type', 'system')->get();
         if ($unreadNotifications) {
@@ -106,7 +106,7 @@ class NotificationRepository extends Repository
 
     public function makeAsRead($id)
     {
-        $unreadNotification = $this->notificationusers->where('id', $id)->where('user_id', Auth::id())->first();
+        $unreadNotification = $this->notificationUsers->where('id', $id)->where('user_id', Auth::id())->first();
         $unreadNotification->read_at = new Carbon;
         parent::save($unreadNotification);
     }
@@ -125,7 +125,7 @@ class NotificationRepository extends Repository
             $notification->updated_at = $input->created_at;
             $notification->save();
         } else {
-            $notificationUser = $this->notificationusers->where('notification_id', $message->id);
+            $notificationUser = $this->notificationUsers->where('notification_id', $message->id);
             $notificationUser->update(['read_at' => Carbon::now()]);
         }
     }
