@@ -77,6 +77,8 @@ class FavoriteController extends BaseController
                 unset($companys[$key]);
                 continue;
             }
+            $favorite->id = $company->id;
+            $favorite->company_id = $favorite->id;
             $companys[$key] = $favorite;
         }
         return $this->response()->paginator($companys, new CompanyTransformer());
