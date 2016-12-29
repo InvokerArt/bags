@@ -252,7 +252,7 @@ class SupplyController extends BaseController
      */
     public function favorite(Supply $supply)
     {
-        $this->supplies->createFavorite();
+        $this->supplies->createFavorite($supply);
         return $this->response->created();
     }
 
