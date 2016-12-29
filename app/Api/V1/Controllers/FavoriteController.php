@@ -2,14 +2,14 @@
 
 namespace App\Api\V1\Controllers;
 
-use App\Api\V1\Transformers\CompanyTransformer;
-use App\Api\V1\Transformers\DemandTransformer;
-use App\Api\V1\Transformers\ExhibitionTransformer;
-use App\Api\V1\Transformers\JobTransformer;
-use App\Api\V1\Transformers\NewsTransformer;
-use App\Api\V1\Transformers\ProductTransformer;
-use App\Api\V1\Transformers\SupplyTransformer;
-use App\Api\V1\Transformers\TopicTransformer;
+use App\Api\V1\Transformers\CompanyFavoriteTransformer;
+use App\Api\V1\Transformers\DemandFavoriteTransformer;
+use App\Api\V1\Transformers\ExhibitionFavoriteTransformer;
+use App\Api\V1\Transformers\JobFavoriteTransformer;
+use App\Api\V1\Transformers\NewsFavoriteTransformer;
+use App\Api\V1\Transformers\ProductFavoriteTransformer;
+use App\Api\V1\Transformers\SupplyFavoriteTransformer;
+use App\Api\V1\Transformers\TopicFavoriteTransformer;
 use App\Models\Company;
 use App\Models\Demand;
 use App\Models\Exhibition;
