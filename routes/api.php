@@ -171,7 +171,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
      * 产品
      */
     $api->get('products/search', 'ProductController@search');
-    $api->get('products/{product}', 'ProductController@show');
+    $api->get('products/{product}', 'ProductController@show')->middleware('authOrNot:api');
 
     //常见问题
     $api->get('faqs', 'FaqController@index');

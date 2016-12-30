@@ -34,7 +34,8 @@
         "laravel/scout": "^1.1",
         "elasticsearch/elasticsearch": "^5.0",
         "jpush/jpush": "^3.5",
-        "barryvdh/laravel-cors": "^0.8.2" 
+        "barryvdh/laravel-cors": "^0.8.2",
+        "spatie/laravel-backup": "^4.3" 
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
