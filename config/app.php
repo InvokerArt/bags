@@ -220,6 +220,8 @@
         //Jpush
         App\Providers\JpushServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        //备份
+        Spatie\Backup\BackupServiceProvider::class,
     ],
 
     /*
