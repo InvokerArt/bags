@@ -27,7 +27,8 @@ class CompanyShowTransformer extends BaseTransformer
             'role' => $model->role,
             'photos' => $model->photos ? img_fullurl($model->photos) : [],
             'licenses' => $model->licenses ? img_fullurl($model->licenses) : [],
-            'created_at' => $model->created_at->toDateTimeString()
+            'created_at' => $model->created_at->toDateTimeString(),
+            'is_favorite' => isset($model->is_favorite) && $model->is_favorite ? 1 : 0,
         ];
     }
 
