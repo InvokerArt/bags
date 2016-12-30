@@ -151,7 +151,6 @@ class ProductController extends BaseController
         $product->addressDetail = $company->addressDetail;
         $product->telephone = $company->telephone;
         $product->is_favorite = $this->favorites->userIsFavorite('product', $product->id, Auth::id());
-        $company->products = $products;
         return $this->response->item($product, new ProductShowTransformer());
     }
 
