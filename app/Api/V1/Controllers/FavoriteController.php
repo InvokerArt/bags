@@ -19,10 +19,19 @@ use App\Models\News;
 use App\Models\Product;
 use App\Models\Supply;
 use App\Models\Topic;
+use App\Repositories\Backend\Favorites\FavoriteRepository;
 use Auth;
+use Illuminate\Http\Request;
 
 class FavoriteController extends BaseController
 {
+    private $favorites;
+
+    public function __construct(FavoriteRepository $favorites)
+    {
+        $this->favorites = $favorites;
+    }
+
 
     /**
      * @apiDefine Favorite 收藏
@@ -464,23 +473,20 @@ class FavoriteController extends BaseController
     }
 
     /**
-     * @api {delete} /favorites/:id/ 删除收藏
+     * @api {delete} /favorites 删除收藏
      * @apiDescription 删除收藏
      * @apiGroup Favorite
      * @apiPermission 认证
      * @apiVersion 1.0.0
+     * @apiParam {Number} favorite_id 模型ID
+     * @apiParam {String="news","product","topic","demand","supply","company","exhibition","job"} favorite_type 模型
      * @apiHeader Authorization Bearer {access_token}
      * @apiSuccessExample {json} Success-Response:
      *      HTTP/1.1 204 No Content
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $user = Auth::user();
-        $favorite = Favorite::findOrFail($id);
-        if (!$user->can('delete', $favorite)) {
-            return $this->response->errorForbidden();
-        }
-        $favorite->delete();
+        $this->favorites->destroyFavorite($request);
         return $this->response->noContent();
     }
 }

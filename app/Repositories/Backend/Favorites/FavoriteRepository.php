@@ -5,6 +5,7 @@ namespace App\Repositories\Backend\Favorites;
 use App\Exceptions\GeneralException;
 use App\Models\Favorite;
 use DB;
+use Auth;
 use App\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model;
 
@@ -63,5 +64,14 @@ class FavoriteRepository extends Repository
                 # code...
                 break;
         }
+    }
+
+    public function destroyFavorite($input)
+    {
+        $favorite = $this->query()->where(['favorite_id' => $input->favorite_id, 'user_id' => Auth::id(), 'favorite_type' => $this->favoriteModel($input->favorite_type)])->first();
+        if (!$favorite) {
+            throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+        }
+        parent::delete($favorite);
     }
 }

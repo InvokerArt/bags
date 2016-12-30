@@ -2709,7 +2709,7 @@
   },
   {
     "type": "delete",
-    "url": "/favorites/:id/",
+    "url": "/favorites",
     "title": "删除收藏",
     "description": "<p>删除收藏</p>",
     "group": "Favorite",
@@ -2719,6 +2719,36 @@
       }
     ],
     "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "favorite_id",
+            "description": "<p>模型ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "\"news\"",
+              "\"product\"",
+              "\"topic\"",
+              "\"demand\"",
+              "\"supply\"",
+              "\"company\"",
+              "\"exhibition\"",
+              "\"job\""
+            ],
+            "optional": false,
+            "field": "favorite_type",
+            "description": "<p>模型</p>"
+          }
+        ]
+      }
+    },
     "header": {
       "fields": {
         "Header": [
@@ -2742,7 +2772,7 @@
     },
     "filename": "App/Api/v1/Controllers/FavoriteController.php",
     "groupTitle": "收藏",
-    "name": "DeleteFavoritesId"
+    "name": "DeleteFavorites"
   },
   {
     "type": "get",

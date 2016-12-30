@@ -92,7 +92,7 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
         $api->post('exhibitions/{exhibition}/favorites', 'ExhibitionController@favorite');
         $api->post('demands/{demand}/favorites', 'DemandController@favorite');
         $api->post('supplies/{supply}/favorites', 'SupplyController@favorite');
-        $api->delete('favorites/{favorite}', 'FavoriteController@destroy');
+        $api->delete('favorites', 'FavoriteController@destroy');
         //消息
         $api->get('notifications', 'NotificationController@index');
         $api->post('notifications/{id}', 'NotificationController@makeAsRead');
