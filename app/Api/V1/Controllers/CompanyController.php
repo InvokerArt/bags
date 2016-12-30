@@ -268,6 +268,7 @@ class CompanyController extends BaseController
     {
         $company->increment('view_count', 1);
         $company->categories = $company->categories()->get();
+        $company->is_favorite = $this->favorites->userIsFavorite('company', $company->id, Auth::id());
         $user = $company->user()->first();
         $products = $user->products()->get();
         foreach ($products as $key => $product) {
