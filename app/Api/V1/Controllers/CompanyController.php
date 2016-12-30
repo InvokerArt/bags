@@ -270,12 +270,7 @@ class CompanyController extends BaseController
         $company->categories = $company->categories()->get();
         $company->is_favorite = $this->favorites->userIsFavorite('company', $company->id, Auth::id());
         $user = $company->user()->first();
-        $products = $user->products()->get();
-        foreach ($products as $key => $product) {
-            $product->is_favorite = $this->favorites->userIsFavorite('product', $product->id, Auth::id());
-            $products[$key] = $product;
-        }
-        $company->products = $products;
+        $company->products = $user->products()->get();
         $jobs = $user->jobs()->get();
         foreach ($jobs as $key => $job) {
             $job->is_favorite = $this->favorites->userIsFavorite('job', $job->id, Auth::id());

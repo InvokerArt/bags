@@ -6,6 +6,7 @@ use App\Api\V1\Requests\ProductStoreOrUpdateRequest;
 use App\Api\V1\Transformers\ProductShowTransformer;
 use App\Api\V1\Transformers\ProductTransformer;
 use App\Models\Product;
+use App\Repositories\Backend\Favorites\FavoriteRepository;
 use App\Repositories\Backend\Products\ProductRepository;
 use Auth;
 use Illuminate\Http\Request;
@@ -13,10 +14,12 @@ use Illuminate\Http\Request;
 class ProductController extends BaseController
 {
     protected $products;
+    protected $favorites;
 
-    public function __construct(ProductRepository $products)
+    public function __construct(ProductRepository $products, FavoriteRepository $favorites)
     {
         $this->products = $products;
+        $this->favorites = $favorites;
     }
 
     /**
@@ -147,6 +150,8 @@ class ProductController extends BaseController
         $product->address = $company->address;
         $product->addressDetail = $company->addressDetail;
         $product->telephone = $company->telephone;
+        $product->is_favorite = $this->favorites->userIsFavorite('product', $product->id, Auth::id());
+        $company->products = $products;
         return $this->response->item($product, new ProductShowTransformer());
     }
 
