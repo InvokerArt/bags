@@ -25,7 +25,7 @@ class CompanyFavoriteTransformer extends BaseTransformer
             'role' => $model->role,
             'photos' => ($model->photos) ? img_fullurl($model->photos) : [],
             'is_validate' => (bool)count($model->certifications),
-            'is_excellent' => $model->is_excellent == 'yes' ? 1 : 0,
+            'is_excellent' => $model->is_excellent == 'yes' ? 1 : 0
         ];
     }
 }

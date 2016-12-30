@@ -17,7 +17,6 @@ class ProductFavoriteTransformer extends BaseTransformer
             'unit' => $model->unit,
             'content' => $model->content,
             'images' => $model->images ? img_fullurl($model->images) : [],
-            'is_favorite' => isset($model->is_favorite) && $model->is_favorite ? 1 : 0,
         ];
     }
 }
