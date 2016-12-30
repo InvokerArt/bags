@@ -5,14 +5,14 @@
 @section('content')
 <div class="portlet">
     <div class="note note-danger no-margin margin-bottom-10">上传图片不能包含中文或非法字符！双击文件夹进入文件夹</div>
-    <div class="portlet-body">
+    <iframe src="{!! URL::to('/filemanager/dialog.php') !!}" class="filemanager"></iframe>
+{{--     <div class="portlet-body">
         <div class="tabbable-bordered">
             <div class="tab-content">
                 <media-manager></media-manager>
-                <iframe src="{!! URL::to('/filemanager/dialog.php') !!}" class="filemanager"></iframe>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 @stop
 

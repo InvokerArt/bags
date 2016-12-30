@@ -68,10 +68,7 @@ class FavoriteRepository extends Repository
 
     public function destroyFavorite($input)
     {
-        $favorite = $this->query()->where(['favorite_id' => $input->favorite_id, 'user_id' => Auth::id(), 'favorite_type' => $this->favoriteModel($input->favorite_type)])->first();
-        if (!$favorite) {
-            throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-        }
+        $favorite = $this->query()->where(['favorite_id' => $input->favorite_id, 'user_id' => Auth::id(), 'favorite_type' => $this->favoriteModel($input->favorite_type)])->firstOrFail();
         parent::delete($favorite);
     }
 }
