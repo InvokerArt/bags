@@ -55,6 +55,9 @@ class FavoriteRepository extends Repository
             case 'company':
                 return 'App\Models\Company';
                 break;
+            case 'exhibition':
+                return 'App\Models\Exhibition';
+                break;
             
             default:
                 # code...
