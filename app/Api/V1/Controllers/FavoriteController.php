@@ -297,6 +297,7 @@ class FavoriteController extends BaseController
                 continue;
             }
             $company = $favorite->company;
+            $favorite->job_id = $job->favorite_id;
             $favorite->company_id = $company->id;
             $favorite->id = $job->id;
             $jobs[$key] = $favorite;

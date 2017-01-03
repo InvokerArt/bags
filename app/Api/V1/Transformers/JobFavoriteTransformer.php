@@ -10,6 +10,7 @@ class JobFavoriteTransformer extends BaseTransformer
     {
         return [
             'id' => $model->id,
+            'job_id' => $model->job_id,
             'company_id' => $model->company_id,
             'job' => $model->job,
             'total' => $model->total,
