@@ -2,6 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('css/global/vendor/jstree/themes/default/style.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('js/vendor/fancybox/jquery.fancybox.css') }}">
 @stop
 
 @section('content')
@@ -93,38 +94,57 @@
                     <span>特色图片</span>
                 </h2>
                 <div class="inside">
-                    <input type="hidden" name="image" class="thumbnail" value="{{ $news->image }}" v-model="image">
-                    <a href="javascript:;" class="update-thumbnail" @click="openFromPageImage()">
-                        <img v-if="image" class="img img-responsive" id="page-image-preview" style="width:100%" :src="image">
-                    </a>
-                    <p class="help-block" id="how-to" v-if="image" @click="openFromPageImage()">点击图片来修改或更新</p>
-                    <p class="help-block" v-if="image">
-                        <a href="javascript:;" class="news-thumbnail" @click="removeImage()">移除特色图片</a>
-                    </p>
-                    <p class="help-block" v-else="image">
-                        <a href="javascript:;" @click="openFromPageImage()">添加特色图片</a>
-                    </p>
+                    <input type="hidden" name="image" class="thumbnail" id="image" value="{{ $news->image }}">
+                    <div class="image-value-show" @if(!$news->image)style="display: none"@endif>
+                        <a href="/filemanager/dialog.php?type=1&field_id=image" class="update-thumbnail iframe-btn">
+                            <img class="img img-responsive" id="page-image-preview" style="width:100%" src="{{ $news->image }}">
+                        </a>
+                        <p class="help-block" id="how-to">点击图片来修改或更新</p>
+                        <p class="help-block">
+                            <a href="javascript:;" class="news-thumbnail">移除特色图片</a>
+                        </p>
+                    </div>
+                    <div class="image-value-first" @if($news->image)style="display: none"@endif>
+                        <p class="help-block">
+                            <a href="/filemanager/dialog.php?type=1&field_id=image" class="iframe-btn">添加特色图片</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 {{ Form::close() }}
-<media-modal :show.sync="showMediaManager">
-    <media-manager
-            :is-modal="true"
-            :selected-event-name.sync="selectedEventName"
-            :show.sync="showMediaManager"
-    >
-    </media-manager>
-</media-modal>
 @stop
 
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/media-manager.js') }}"></script>
     @include('UEditor::head')
+    <script type="text/javascript" src="{{ asset('js/vendor/fancybox/jquery.fancybox.pack.js') }}"></script>
     <script src="{{asset('js/jstree.min.js')}}"></script>
     <script type="text/javascript">
         $(function(){
+            // 图片管理
+            $('.iframe-btn').fancybox({
+                'type'      : 'iframe',
+                'autoSize'  : false,
+                beforeLoad : function() {
+                    this.width  = 900;
+                    this.height = 600;
+                },
+                afterClose: function(event) {
+                    $baseImagePath = $('.thumbnail').val().replace("{{ env('APP_URL') }}", "");
+                    $('.thumbnail').val($baseImagePath);
+                    $('.img-responsive').attr('src', $('.thumbnail').val());
+                    $('.image-value-show').show();
+                    $('.image-value-first').hide();
+                }
+            });
+
+            $('.news-thumbnail').on('click', function(){
+                $('.thumbnail').val('');
+                $('.image-value-show').hide();
+                $('.image-value-first').show();
+            })
+
             var checkNodeIds = "{{ implode(',', $categories) }}".split(",");
             $('.select2').select2({
                 placeholder: "从常用标签中选择"
@@ -251,56 +271,6 @@
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
-
-        new Vue({
-            el: 'body',
-            data: {
-                image: null,
-                selectedEventName: null,
-                showMediaManager: false,
-                simpleMde: null
-            },
-
-            ready: function () {
-                //移除图片
-                // $(document).on('click', '.news-thumbnail', function(){
-                //     $('.thumbnail').val('');
-                // })
-            },
-
-            events: {
-                'media-manager-selected-image': function (file) {
-                    this.image = file.relativePath;
-                    this.showMediaManager = false;
-                },
-
-                'media-manager-notification' : function(message, type, time)
-                {
-                    swal({   
-                        title: "提示信息",   
-                        text: message,   
-                        timer: 2000,   
-                        showConfirmButton: false 
-                    });
-                }
-
-            },
-
-            methods: {
-
-                openFromPageImage: function()
-                {
-                    this.showMediaManager = true;
-                    this.selectedEventName = 'image';
-                },
-
-                removeImage: function()
-                {
-                    this.image = '';
-                }
-            }
-        });
-
 
     </script>
 @stop

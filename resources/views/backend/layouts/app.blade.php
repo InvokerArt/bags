@@ -11,7 +11,7 @@
     <meta name="author" content="@yield('meta_author', 'btan')">
     @yield('meta')
 
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="/favicon.ico"/>
     <!-- Styles -->
     @yield('before-styles-end')
     {!! Html::style(elixir('css/backend/default.css'),['id'=>'style_color']) !!}

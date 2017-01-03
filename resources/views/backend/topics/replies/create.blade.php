@@ -50,7 +50,6 @@
 @stop
 
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/media-manager.js') }}"></script>
     @include('UEditor::head')
     <script src="{{asset('js/jstree.min.js')}}"></script>
     <script type="text/javascript">

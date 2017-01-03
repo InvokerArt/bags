@@ -91,7 +91,7 @@ $config = array(
 	|
 	*/
     'thumbs_base_path' => '../../storage/app/public/thumbs/',
-
+    'storage_path' => '../../storage/',
 
     /*
 	|--------------------------------------------------------------------------

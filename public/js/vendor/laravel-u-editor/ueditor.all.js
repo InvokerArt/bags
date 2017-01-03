@@ -8035,7 +8035,7 @@ UE.Editor.defaultOptions = function(editor){
         autoClearEmptyNode: true,
         fullscreen: false,
         readonly: false,
-        zIndex: 9900,
+        zIndex: 8000,
         imagePopup: true,
         enterTag: 'p',
         customDomain: false,

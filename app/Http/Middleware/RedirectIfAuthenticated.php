@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Session;
+use URL;
 
 class RedirectIfAuthenticated
 {
@@ -17,10 +19,10 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            // 根据不同 guard 跳转到不同的页面
-            $url = $guard ? env('APP_BACKEND_PREFIX').'/dashboard':'/dashboard';
-            return redirect($url);
+        if (!Auth::guard($guard)->check()) {
+            if (!URL::isValidUrl(env('APP_URL').DS.env('APP_BACKEND_PREFIX').'/login') || !URL::isValidUrl(env('APP_URL').DS.'/login')) {
+                Session::put('url.intended', URL::full());
+            }
         }
         return $next($request);
     }
