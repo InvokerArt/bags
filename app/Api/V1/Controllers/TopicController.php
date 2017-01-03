@@ -492,7 +492,12 @@ class TopicController extends BaseController
             $topic->is_favorite = $this->favorites->userIsFavorite('topic', $topic->id, Auth::id());
             $topic->is_vote = $this->topics->userIsVoted($topic->id, Auth::id());
         }
-        $topic->replies = $topic->replies()->get();
+        $replies = $topic->replies()->get();
+        foreach ($replies as $key => $reply) {
+            $reply->is_vote = $this->topics->userIsVoted($reply->id, Auth::id());
+            $replies[$key] = $reply;
+        }
+        $topic->replies = $replies;
         return $this->response->item($topic, new TopicTransformer());
     }
 

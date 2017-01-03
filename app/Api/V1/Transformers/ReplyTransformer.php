@@ -17,6 +17,7 @@ class ReplyTransformer extends BaseTransformer
             'created_at' => $model->created_at->toDateTimeString(),
             'replyTo_userid' => ($model->replyTo) ? $model->replyTo->user->id : '',
             'replyTo_username' => ($model->replyTo) ? $model->replyTo->user->username : '',
+            'is_vote' => isset($model->is_vote) && $model->is_vote ? 1 : 0,
         ];
     }
 
