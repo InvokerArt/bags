@@ -63,10 +63,16 @@ class Topic extends Model
 
     public function getCategoryTopicsWithFilter($filter, $category_id)
     {
-        return $this->applyFilter($filter == 'default' ? 'category' : $filter)
+        if ($category_id) {
+            return $this->applyFilter($filter == 'default' ? 'category' : $filter)
                     ->where('category_id', '=', $category_id)
                     ->with('user', 'category', 'lastReplyUser')
                     ->paginate();
+        } else {
+            return $this->applyFilter($filter == 'default' ? 'category' : $filter)
+                    ->with('user', 'category', 'lastReplyUser')
+                    ->paginate();
+        }
     }
 
     public function getTopicFilter($request_filter)
