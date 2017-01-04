@@ -9,9 +9,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Storage;
 use Log;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
-class UserEventListener
+class UserEventListener implements ShouldQueue
 {
     public static $token = null;
     public static $tokenPath = 'easemob.token';
@@ -67,7 +66,7 @@ class UserEventListener
                 'createtime'=> time()
             ));
             return $reponse['access_token'];
-        } catch (\Exception $e) {
+        } catch (RequestException $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -87,7 +86,7 @@ class UserEventListener
                 ],
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
-        } catch (\Exception $e) {
+        } catch (RequestException $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -106,7 +105,7 @@ class UserEventListener
                 ],
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
-        } catch (\Exception $e) {
+        } catch (RequestException $e) {
             throw new \Exception($e->getMessage());
         }
     }
