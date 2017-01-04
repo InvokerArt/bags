@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Storage;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
-class UserEventListener
+class UserEventListener implements ShouldQueue
 {
     public static $token = null;
     public static $tokenPath = 'easemob.token';
