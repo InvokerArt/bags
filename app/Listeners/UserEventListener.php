@@ -11,7 +11,7 @@ use Storage;
 use Log;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
-class UserEventListener
+class UserEventListener implements ShouldQueue
 {
     public static $token = null;
     public static $tokenPath = 'easemob.token';
@@ -106,7 +106,6 @@ class UserEventListener
                 ],
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
-        dd($registerResult);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
