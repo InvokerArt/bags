@@ -67,7 +67,7 @@ class UserEventListener implements ShouldQueue
             ));
             return $reponse['access_token'];
         } catch (RequestException $e) {
-            throw new \Exception($e->getMessage());
+            Log::info($e->getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ class UserEventListener implements ShouldQueue
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
         } catch (RequestException $e) {
-            throw new \Exception($e->getMessage());
+            Log::info($e->getMessage());
         }
     }
 
@@ -105,8 +105,9 @@ class UserEventListener implements ShouldQueue
                 ],
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
+            Log::info($registerResult);
         } catch (RequestException $e) {
-            throw new \Exception($e->getMessage());
+            Log::info($e->getMessage());
         }
     }
 
@@ -116,7 +117,7 @@ class UserEventListener implements ShouldQueue
            \App\Events\UserCreateEvent::class,
             'App\Listeners\UserEventListener@create'
         );
-        
+
         $events->listen(
            \App\Events\UserUpdateEvent::class,
             'App\Listeners\UserEventListener@update'

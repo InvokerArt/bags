@@ -123,13 +123,31 @@ class TopicRepository extends Repository
      *
      * @return bool
      */
-    public function userIsVoted($topic_id, $user_id)
+    public function userIsTopicVoted($topic_id, $user_id)
     {
         return Vote::query()->where([
             'user_id'      => $user_id,
             'votable_id'   => $topic_id,
             'votable_type' => 'App\Models\Topic',
             'is'           => 'topic_vote',
+        ])->exists();
+    }
+
+    /**
+     * 是否已经支持回复.
+     *
+     * @param $reply_id
+     * @param $user_id
+     *
+     * @return bool
+     */
+    public function userIsReplyVoted($reply_id, $user_id)
+    {
+        return Vote::query()->where([
+            'user_id'      => $user_id,
+            'votable_id'   => $reply_id,
+            'votable_type' => 'App\Models\Reply',
+            'is'           => 'reply_vote',
         ])->exists();
     }
 

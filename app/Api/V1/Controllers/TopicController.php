@@ -490,11 +490,11 @@ class TopicController extends BaseController
         $topic->increment('view_count', 1);
         if (Auth::check()) {
             $topic->is_favorite = $this->favorites->userIsFavorite('topic', $topic->id, Auth::id());
-            $topic->is_vote = $this->topics->userIsVoted($topic->id, Auth::id());
+            $topic->is_vote = $this->topics->userIsTopicVoted($topic->id, Auth::id());
         }
         $replies = $topic->replies()->get();
         foreach ($replies as $key => $reply) {
-            $reply->is_vote = $this->topics->userIsVoted($reply->id, Auth::id());
+            $reply->is_vote = $this->topics->userIsReplyVoted($reply->id, Auth::id());
             $replies[$key] = $reply;
         }
         $topic->replies = $replies;
