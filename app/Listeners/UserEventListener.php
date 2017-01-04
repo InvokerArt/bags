@@ -101,7 +101,7 @@ class UserEventListener implements ShouldQueue
                     'Authorization' => 'Bearer '.$token
                 ],
                 'json' => [
-                    'password' => $event->user->password,
+                    'newpassword' => $event->user->password,
                 ],
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
