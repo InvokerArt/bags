@@ -93,21 +93,22 @@ class UserEventListener implements ShouldQueue
 
     public function update($event)
     {
-        $token = $this->getToken();
-        try {
-            $client = new \GuzzleHttp\Client();
-            $registerResponse = $client->request('PUT', $this->url.'users/'.$event->user->mobile.'/password', [
-                'headers' => [
-                    'Authorization' => 'Bearer '.$token
-                ],
-                'json' => [
-                    'newpassword' => $event->user->password,
-                ],
-            ]);
-            $registerResult = json_decode((string) $registerResponse->getBody(), true);
-        } catch (RequestException $e) {
-            throw new \Exception($e->getMessage());
-        }
+        Log::info('tset');
+        // $token = $this->getToken();
+        // try {
+        //     $client = new \GuzzleHttp\Client();
+        //     $registerResponse = $client->request('PUT', $this->url.'users/'.$event->user->mobile.'/password', [
+        //         'headers' => [
+        //             'Authorization' => 'Bearer '.$token
+        //         ],
+        //         'json' => [
+        //             'newpassword' => $event->user->password,
+        //         ],
+        //     ]);
+        //     $registerResult = json_decode((string) $registerResponse->getBody(), true);
+        // } catch (RequestException $e) {
+        //     throw new \Exception($e->getMessage());
+        // }
     }
 
     public function subscribe($events)
