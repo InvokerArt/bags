@@ -106,7 +106,7 @@ class UserEventListener
                 ],
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
-        dd($registerResponse);
+        dd($registerResult);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
