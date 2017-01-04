@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Storage;
+use Log;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class UserEventListener implements ShouldQueue
@@ -87,7 +88,7 @@ class UserEventListener implements ShouldQueue
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
         } catch (\Exception $e) {
-            //throw new \Exception($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
@@ -106,7 +107,7 @@ class UserEventListener implements ShouldQueue
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
         } catch (\Exception $e) {
-            //throw new \Exception($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
