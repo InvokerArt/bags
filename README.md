@@ -1,8 +1,7 @@
 ## 项目注意事项
-Metronic 模板gulp 失败注意使用  cd node_modules/gulp-sass/ 然后 npm install node-sass@3.3.2版本
-"stevenyangecho/laravel-u-editor": "^1.3"
-根据自己项目有做修改
-！！！监听队列修改了程序一定要记得重启Suppervisor！！！
+Metronic 模板gulp 失败注意使用 cd node_modules/gulp-sass/ 然后 npm install node-sass@3.3.2版本  
+"stevenyangecho/laravel-u-editor": "^1.3" 根据自己项目有做修改  
+！！！队列修改了程序一定要记得重启Suppervisor！！！  
 
 ## Apidoc
 apidoc -i App/Api/v1/Controllers -o public/apidoc  
