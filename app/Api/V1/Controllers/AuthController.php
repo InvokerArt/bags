@@ -141,7 +141,7 @@ class AuthController extends BaseController
     {
         try {
             $user = $this->users->resetPassword($request);
-            $user->password = $request->password;
+            $user->newpassword = $request->password;
             event(new UserUpdateEvent($user));
             return $this->response->noContent();
         } catch (\Exception $e) {
@@ -198,7 +198,7 @@ class AuthController extends BaseController
         $user = Auth::user();
         try {
             $this->users->updatePassword($user, $request);
-            $user->password = $request->password;
+            $user->newpassword = $request->password;
             event(new UserUpdateEvent($user));
             return $this->response->noContent();
         } catch (\Exception $e) {
