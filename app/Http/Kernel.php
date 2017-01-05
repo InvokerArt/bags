@@ -74,5 +74,6 @@ class Kernel extends HttpKernel
         'admin.auth' => \App\Http\Middleware\RedirectIfNotAdmin::class,
         'passport' => \App\Http\Middleware\PassportDingo::class,
         'authOrNot' => \App\Http\Middleware\PassportAuthOrNot::class,
+        'cacheable' => \Spatie\Varnish\Middleware\CacheWithVarnish::class,
     ];
 }

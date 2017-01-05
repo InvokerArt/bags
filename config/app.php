@@ -222,6 +222,8 @@
         Barryvdh\Cors\ServiceProvider::class,
         //备份
         Spatie\Backup\BackupServiceProvider::class,
+        //Varnish缓存
+        Spatie\Varnish\VarnishServiceProvider::class,
     ],
 
     /*

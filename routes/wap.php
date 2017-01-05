@@ -10,6 +10,8 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-Route::get('/{vue_capture?}', function () {
-    return view('wap.layouts.app');
-})->where('vue_capture', '[\/\w\.-]*');
+Route::group(['middleware' => 'cacheable'], function () {
+    Route::get('/{vue_capture?}', function () {
+        return view('wap.layouts.app');
+    })->where('vue_capture', '[\/\w\.-]*');
+});
