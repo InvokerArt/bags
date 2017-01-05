@@ -17,7 +17,7 @@
 /**
  * 登录退出路由
  */
-Route::group(['middleware' => 'cacheable'], function () {
+//Route::group(['middleware' => 'cacheable'], function () {
     Auth::routes();
     //技验验证
     Route::get('ajax/geetest', 'Controller@getGeetest');
@@ -48,4 +48,4 @@ Route::group(['middleware' => 'cacheable'], function () {
     //产品上传
     Route::post('upload/product', 'UploadController@product')->name('upload.product');
     Route::delete('upload/product', 'UploadController@productDelete')->name('upload.productDelete');
-});
+//});

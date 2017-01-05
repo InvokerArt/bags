@@ -5,7 +5,7 @@
  * Namespaces indicate folder structure
  * Admin middleware groups web, auth, and routeNeedsPermission
  */
-Route::group(['middleware' => 'cacheable'], function () {
+//Route::group(['middleware' => 'cacheable'], function () {
     Route::group(['namespace' => 'Backend', 'as' => env('APP_BACKEND_PREFIX').'.', 'middleware' => 'web'], function () {
         Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
             Route::get('login', 'LoginController@showLoginForm')->name('login');
@@ -355,4 +355,4 @@ Route::group(['middleware' => 'cacheable'], function () {
             ]);
         });
     });
-});
+//});

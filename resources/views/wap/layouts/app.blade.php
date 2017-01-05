@@ -20,7 +20,7 @@
                 window.location.href="http://sj.qq.com/myapp/detail.htm?apkName=com.environmentalprotection";
             }
             if (isiOS) {
-                window.location.href="http://www.51hbjjd.com/";
+                window.location.href="https://itunes.apple.com/us/app/huan-bao-su-liao-dai/id1188622926?l=zh&ls=1&mt=8";
             }
         }
     </script>
