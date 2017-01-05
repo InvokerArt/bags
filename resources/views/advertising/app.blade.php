@@ -91,6 +91,41 @@
         overflow: hidden;
         background:#63a021 url('images/advertising/ready-test.png') top center no-repeat;
     }
+    .ready-test .m{
+        width: 1000px;
+        height: 100%;
+        position: relative;
+        margin:0 auto;
+    }
+    .ready-test .m .android{
+        position: absolute;
+        width: 160px;
+        height: 35px;
+        display: block;
+        top: 303px;
+        right: 178px;
+        text-indent: -9999px;
+        border-radius: 30px;
+    }
+    .ready-test .m .ios{
+        position: absolute;
+        width: 160px;
+        height: 35px;
+        display: block;
+        top: 303px;
+        left: 178px;
+        text-indent: -9999px;
+        border-radius: 30px;
+    }
+    .ready-test .m .shippingcity{
+        position: absolute;
+        width: 215px;
+        height: 20px;
+        display: block;
+        bottom: 44px;
+        left: 390px;
+        text-indent: -9999px;
+    }
 </style>
 @endsection
 
@@ -117,6 +152,11 @@
     <div class="wap-show">
     </div>
     <div class="ready-test">
+        <div class="m">
+            <a class="android" target="__blank" href="http://sj.qq.com/myapp/detail.htm?apkName=com.environmentalprotection">Android下载</a>
+            <a class="ios" target="__blank" href="https://itunes.apple.com/us/app/huan-bao-su-liao-dai/id1188622926?l=zh&ls=1&mt=8">Ios下载</a>
+            <a class="shippingcity" target="__blank" href="http://www.shippingcity.com">航慧（上海）网络科技有限公司</a>
+        </div>
     </div>
 </div>
 @endsection
