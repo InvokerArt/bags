@@ -117,7 +117,7 @@ class AuthController extends BaseController
         try {
             // 创建用户成功
             $user = $this->users->create($request);
-            $user->password = $request->password;
+            $user->newpassword = $request->password;
             event(new UserCreateEvent($user));
             return $this->response->created();
         } catch (\Exception $e) {

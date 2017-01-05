@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class UserUpdateEvent
 {
-    use InteractsWithSockets, SerializesModels;
+    use InteractsWithSockets;
 
     public $user;
 

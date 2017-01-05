@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Storage;
 use Log;
 
-class UserEventListener
+class UserEventListener implements ShouldQueue
 {
     public static $token = null;
     public static $tokenPath = 'easemob.token';
@@ -82,11 +82,10 @@ class UserEventListener
                 ],
                 'json' => [
                     'username' => $event->user->mobile,
-                    'password' => $event->user->password,
+                    'password' => $event->user->newpassword,
                 ],
             ]);
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
-            dd($event->user->password);
         } catch (RequestException $e) {
             Log::info($e->getMessage());
         }
