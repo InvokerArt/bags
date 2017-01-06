@@ -119,11 +119,11 @@
     }
     .ready-test .m .shippingcity{
         position: absolute;
-        width: 215px;
+        width: 305px;
         height: 20px;
         display: block;
         bottom: 44px;
-        left: 390px;
+        left: 345px;
         text-indent: -9999px;
     }
 </style>
