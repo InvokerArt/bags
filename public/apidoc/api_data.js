@@ -543,6 +543,31 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/users/infobymobile/:mobile",
+    "title": "获取用户信息",
+    "description": "<p>根据手机获取用户信息</p>",
+    "group": "Auth",
+    "permission": [
+      {
+        "name": "无"
+      }
+    ],
+    "version": "1.0.0",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n    \"data\": {\n        \"id\": 1,\n        \"username\": \"admin\",\n        \"mobile\": \"13111111111\",\n        \"email\": \"admin@admin.com\",\n        \"avatar\": \"http://stone.dev/uploads/avatars/default/medium.png\",\n        \"created_at\": \"2016-11-02 15:57:24\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "App/Api/v1/Controllers/AuthController.php",
+    "groupTitle": "用户",
+    "name": "GetUsersInfobymobileMobile"
+  },
+  {
+    "type": "get",
     "url": "/users/join-in",
     "title": "我收到的加盟",
     "description": "<p>我收到的加盟</p>",
