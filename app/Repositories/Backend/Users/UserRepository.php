@@ -352,4 +352,9 @@ class UserRepository extends Repository
             return ['avatar' => $avatarUrl];
         }
     }
+
+    public function userInfoByMobile($input)
+    {
+        return $this->query()->where('mobile', $input->mobile)->firstOrFail();
+    }
 }

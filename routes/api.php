@@ -195,5 +195,6 @@ $api->version('v1', ['namespace' => 'App\Api\V1\Controllers',
     $api->post('upload/company', 'UploadController@company');
     $api->post('upload/product', 'UploadController@product');
     //单个用户
+    $api->get('users/infobymobile/{mobile}', 'AuthController@userInfoByMobile');
     $api->get('users/{user}', 'AuthController@userInfo');
 });

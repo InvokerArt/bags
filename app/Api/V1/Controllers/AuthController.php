@@ -291,6 +291,31 @@ class AuthController extends BaseController
     }
 
     /**
+     * @api {get} /users/infobymobile/:mobile 获取用户信息
+     * @apiDescription 根据手机获取用户信息
+     * @apiGroup Auth
+     * @apiPermission 无
+     * @apiVersion 1.0.0
+     * @apiSuccessExample {json} Success-Response:
+     *      HTTP/1.1 200 OK
+    {
+        "data": {
+            "id": 1,
+            "username": "admin",
+            "mobile": "13111111111",
+            "email": "admin@admin.com",
+            "avatar": "http://stone.dev/uploads/avatars/default/medium.png",
+            "created_at": "2016-11-02 15:57:24"
+        }
+    }
+     */
+    public function userInfoByMobile(Request $request)
+    {
+        $user = $this->users->userInfoByMobile($request);
+        return $this->response->item($user, new UserTransformer());
+    }
+
+    /**
      * @api {get} /users/me 当前用户信息
      * @apiDescription 当前用户信息
      * @apiGroup Auth
