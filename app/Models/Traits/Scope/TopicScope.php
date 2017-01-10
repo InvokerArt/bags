@@ -35,7 +35,7 @@ trait TopicScope
     {
         return $query->fresh()
                      ->pinned()
-                     ->orderBy('updated_at', 'desc');
+                     ->orderBy('created_at', 'desc');
     }
 
     public function scopePinned($query)

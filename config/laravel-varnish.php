@@ -14,7 +14,7 @@ return [
     /*
      * The port where the administrative tasks may be sent to.
      */
-    'administrative_port' => 80,
+    'administrative_port' => 6082,
 
     /*
      * The default amount of minutes that content rendered using the `CacheWithVarnish`
