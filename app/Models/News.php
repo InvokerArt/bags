@@ -21,7 +21,7 @@ class News extends Model
      * 参数白名单
      * @var array
      */
-    protected $fillable = ['user_id', 'slug', 'title', 'subtitle', 'content', 'image', 'view_count', 'comment_count', 'ix_excellent', 'is_top', 'status', 'published_at'];
+    protected $fillable = ['user_id', 'slug', 'title', 'subtitle', 'content', 'image', 'view_count', 'comment_count', 'is_excellent', 'is_top', 'status', 'published_at'];
     
     /**
      * @var array
