@@ -4,12 +4,13 @@ namespace App\Models;
 
 use App\Models\Traits\Attribute\ImageAttribute;
 use App\Models\Traits\Relationship\ImageRelationship;
+use App\Models\Traits\Scope\ImageScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Image extends Model
 {
-    use SoftDeletes, ImageAttribute, ImageRelationship;
+    use SoftDeletes, ImageScope, ImageAttribute, ImageRelationship;
 
     protected $table = 'banner_image';
 
