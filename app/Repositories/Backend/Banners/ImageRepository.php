@@ -33,7 +33,7 @@ class ImageRepository extends Repository
 
     public function getCategoryBanners($id)
     {
-        return $this->query()->where('banner_id', $id)->orderBy('order', 'desc')->get();
+        return $this->query()->where('banner_id', $id)->orderBy('order', 'asc')->get();
     }
 
     public function create($input)
