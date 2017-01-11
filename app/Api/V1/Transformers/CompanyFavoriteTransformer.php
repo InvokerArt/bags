@@ -12,7 +12,6 @@ class CompanyFavoriteTransformer extends BaseTransformer
         $area = Area::select('name', 'parent_id')->where('code', $model->address)->first();
         $city = Area::select('name', 'parent_id')->where('code', $area->parent_id)->first();
         $province = Area::select('name')->where('code', $city->parent_id)->first();
-        $location = $province->name.$city->name.$area->name;
         return [
             'id' => $model->id,
             'company_id' => $model->company_id,
