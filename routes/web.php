@@ -21,8 +21,6 @@ Route::group(['middleware' => 'cacheable'], function () {
     Auth::routes();
     //技验验证
     Route::get('ajax/geetest', 'Controller@getGeetest');
-    //媒体库
-    TalvBansal\MediaManager\Http\Routes::mediaBrowser();
     //普通文件上传
     Route::post('upload', 'UploadController@index')->name('upload.index');
     //营业执照和公司照片文件上传

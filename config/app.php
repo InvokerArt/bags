@@ -206,8 +206,6 @@
         Baum\Providers\BaumServiceProvider::class,
         //百度编辑器
         Stevenyangecho\UEditor\UEditorServiceProvider::class,
-        //Media
-        TalvBansal\MediaManager\Providers\MediaManagerServiceProvider::class,
         //图片处理
         Intervention\Image\ImageServiceProvider::class,
         //jquery validate
