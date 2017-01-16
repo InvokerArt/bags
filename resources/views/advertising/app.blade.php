@@ -154,7 +154,7 @@
     <div class="ready-test">
         <div class="m">
             <a class="android" target="__blank" href="http://sj.qq.com/myapp/detail.htm?apkName=com.environmentalprotection">Android下载</a>
-            <a class="ios" target="__blank" href="https://itunes.apple.com/us/app/huan-bao-su-liao-dai/id1188622926?l=zh&ls=1&mt=8">Ios下载</a>
+            <a class="ios" target="__blank" href="https://itunes.apple.com/us/app/huan-bao-jiang-jie-dai-rang/id1193110855?l=zh&ls=1&mt=8">Ios下载</a>
             <a class="shippingcity" target="__blank" href="http://www.shippingcity.com">航慧（上海）网络科技有限公司</a>
         </div>
     </div>
