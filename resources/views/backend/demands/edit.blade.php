@@ -147,7 +147,6 @@
          
             init: {
                 PostInit: function() {
-                    $('#photos_uploader_filelist').html("");
          
                     $('#photos_uploader_uploadfiles').click(function() {
                         photoer.start();

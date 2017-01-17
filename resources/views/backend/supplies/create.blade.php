@@ -63,7 +63,7 @@
                                 <div class="col-md-3">
                                     <div class="input-group" id="price">
                                         {{ Form::text('price', null, ['class' => 'form-control', 'autocomplete' => 'off']) }}
-                                        {{ Form::select('unit', ['1'=>'个', '2'=>'袋', '3'=>'箱'], null, ['class' => 'form-control select2', 'id' => 'unit']) }}
+                                        {{ Form::select('unit', ['1'=>'只', '2'=>'个', '3'=>'扎', '4'=>'袋', '5'=>'箱'], null, ['class' => 'form-control select2', 'id' => 'unit']) }}
                                     </div>
                                 </div>
                             </div>
