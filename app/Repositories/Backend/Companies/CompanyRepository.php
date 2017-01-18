@@ -218,7 +218,7 @@ class CompanyRepository extends Repository
             }
         }
 
-        $companies = $query->paginate();
+        $companies = $query->orderBy('created_at', 'desc')->paginate();
         return $companies;
     }
 }
