@@ -130,4 +130,10 @@ class NotificationRepository extends Repository
             $notificationUser->update(['read_at' => Carbon::now()]);
         }
     }
+
+    //根据sender获取所有通知消息
+    public function getNotificationsBySender($user_id)
+    {
+        return $this->query()->where('sender', $user_id)->get();
+    }
 }

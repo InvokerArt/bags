@@ -2,22 +2,25 @@
 
 namespace App\Listeners;
 
-use App\Events\AuthEvent;
+use App\Repositories\Backend\Notifications\NotificationRepository;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Storage;
 use Log;
+use Storage;
 
 class UserEventListener implements ShouldQueue
 {
+    protected $notification;
+
     public static $token = null;
     public static $tokenPath = 'easemob.token';
 
-    public function __construct()
+    public function __construct(NotificationRepository $notification)
     {
         $this->url = 'https://a1.easemob.com/'.env('EASEMOB_ORG_NAME').'/'.env('EASEMOB_APP_NAME').'/';
+        $this->notification = $notification;
     }
 
     //获取token，当操作有权限的行为时，需要token
@@ -73,6 +76,7 @@ class UserEventListener implements ShouldQueue
 
     public function create($event)
     {
+        //创建环信即时通讯账号
         $token = $this->getToken();
         try {
             $client = new \GuzzleHttp\Client();
@@ -93,6 +97,7 @@ class UserEventListener implements ShouldQueue
 
     public function update($event)
     {
+        //更新环信即时通讯密码
         $token = $this->getToken();
         try {
             $client = new \GuzzleHttp\Client();
@@ -110,6 +115,28 @@ class UserEventListener implements ShouldQueue
         }
     }
 
+    public function delete($event)
+    {
+        //删除环信即时通讯账号
+        $token = $this->getToken();
+        try {
+            $client = new \GuzzleHttp\Client();
+            $registerResponse = $client->request('DELETE', $this->url.'users/'.$event->user->mobile, [
+                'headers' => [
+                    'Authorization' => 'Bearer '.$token
+                ],
+            ]);
+            $registerResult = json_decode((string) $registerResponse->getBody(), true);
+        } catch (RequestException $e) {
+            Log::info($e->getMessage());
+        }
+        //删除通知消息
+        $notifications = $this->notification->getNotificationsBySender($event->user->id);
+        foreach ($notifications as $notification) {
+            $this->notification->destroy($notification);
+        }
+    }
+
     public function subscribe($events)
     {
         $events->listen(
@@ -120,6 +147,11 @@ class UserEventListener implements ShouldQueue
         $events->listen(
            \App\Events\UserUpdateEvent::class,
             'App\Listeners\UserEventListener@update'
+        );
+
+        $events->listen(
+           \App\Events\UserPermanentlyDeleted::class,
+            'App\Listeners\UserEventListener@delete'
         );
     }
 }

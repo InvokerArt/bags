@@ -2,14 +2,15 @@
 
 namespace App\Repositories\Backend\Users;
 
+use App\Events\UserPermanentlyDeleted;
 use App\Exceptions\GeneralException;
 use App\Models\User;
+use App\Repositories\Repository;
+use Hash;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Image;
 use URL;
-use Hash;
-use App\Repositories\Repository;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class EloquentUserRepository
@@ -197,6 +198,7 @@ class UserRepository extends Repository
 
         DB::transaction(function () use ($user) {
             if (parent::forceDelete($user)) {
+                event(new UserPermanentlyDeleted($user));
                 return true;
             }
             throw new GeneralException('删除失败！');
