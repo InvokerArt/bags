@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Backend\Users;
 
+use App\Events\UserDeleted;
 use App\Events\UserPermanentlyDeleted;
 use App\Exceptions\GeneralException;
 use App\Models\User;
@@ -160,6 +161,7 @@ class UserRepository extends Repository
         }
 
         if (parent::delete($user)) {
+            event(new UserDeleted($user));
             return true;
         }
         throw new GeneralException('删除失败！');

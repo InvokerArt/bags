@@ -117,6 +117,15 @@ class UserEventListener implements ShouldQueue
 
     public function delete($event)
     {
+        //删除通知消息
+        $notifications = $this->notification->getNotificationsBySender($event->user->id);
+        foreach ($notifications as $notification) {
+            $this->notification->destroy($notification);
+        }
+    }
+
+    public function permanentlyDelete($event)
+    {
         //删除环信即时通讯账号
         $token = $this->getToken();
         try {
@@ -129,11 +138,6 @@ class UserEventListener implements ShouldQueue
             $registerResult = json_decode((string) $registerResponse->getBody(), true);
         } catch (RequestException $e) {
             Log::info($e->getMessage());
-        }
-        //删除通知消息
-        $notifications = $this->notification->getNotificationsBySender($event->user->id);
-        foreach ($notifications as $notification) {
-            $this->notification->destroy($notification);
         }
     }
 
@@ -149,9 +153,16 @@ class UserEventListener implements ShouldQueue
             'App\Listeners\UserEventListener@update'
         );
 
+        //软删除用户
+        $events->listen(
+           \App\Events\UserDeleted::class,
+            'App\Listeners\UserEventListener@delete'
+        );
+
+        //彻底删除用户
         $events->listen(
            \App\Events\UserPermanentlyDeleted::class,
-            'App\Listeners\UserEventListener@delete'
+            'App\Listeners\UserEventListener@permanentlyDelete'
         );
     }
 }
