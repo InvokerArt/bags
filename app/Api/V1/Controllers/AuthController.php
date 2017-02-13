@@ -27,6 +27,8 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use SmsManager;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use League\Fractal\Manager as FractalManager;
+use League\Fractal\Resource\Item;
 
 class AuthController extends BaseController
 {
@@ -34,11 +36,12 @@ class AuthController extends BaseController
     protected $joins;
     protected $certifications;
 
-    public function __construct(UserRepository $users, JoinRepository $joins, CertificationRepository $certifications)
+    public function __construct(UserRepository $users, JoinRepository $joins, CertificationRepository $certifications, FractalManager $fractal)
     {
         $this->users = $users;
         $this->joins = $joins;
         $this->certifications = $certifications;
+        $this->fractal = $fractal;
     }
 
     /**
@@ -92,8 +95,7 @@ class AuthController extends BaseController
             ]);
             $data['data'] = json_decode((string) $response->getBody(), true);
             $user = User::where('mobile', $request->mobile)->first();
-            $userTransformer = new UserTransformer();
-            $data['data']['user'] = $userTransformer->transform($user);
+            $data['data']['user'] = $this->fractal->createData(new Item($user, new UserTransformer))->toArray();
             return $this->response->array($data);
         } catch (RequestException $e) {
             throw new UnauthorizedHttpException('Unauthenticated.', '认证失败');
@@ -357,9 +359,12 @@ class AuthController extends BaseController
         $user = Auth::user();
         $user = json_decode($this->response->item($user, new UserTransformer())->morph()->content(), true);
         $data['data']['user'] = $user['data'];
-        $company = Auth::user()->company()->first();
+        //获取用户变形器更好的实现形式
+        //$data['user'] = $this->fractal->createData(new Item($user, new UserTransformer))->toArray();
+        $company = Auth::user()->company()->firstOrFail();
         $company = json_decode($this->response->item($company, new CompanyTransformer())->morph()->content(), true);
         $data['data']['company'] = $company['data'] ? $company['data'] : (object)null;
+        //$data['company'] = $company ? $this->fractal->createData(new Item($company, new CompanyTransformer))->toArray() : (object)null;
         return $this->response->array($data);
     }
 
