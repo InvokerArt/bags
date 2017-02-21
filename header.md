@@ -1,3 +1,8 @@
+#### 接口说明
+在Header中加入  
+Accept: application/vnd.stone.v1+json即可选择api版本  
+X-Client-Platform：Android|Ios 即可表示请求来源设备
+
 #### Http Code 说明
 ````
 200 OK - [GET]：服务器成功返回用户请求的数据。

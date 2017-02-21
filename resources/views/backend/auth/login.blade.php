@@ -42,10 +42,6 @@
                     @if ($errors->first('username')) 
                         <li>{{ $errors->first('username') }}</li> 
                     @endif
-
-                    @if ($errors->first('password')) 
-                        <li>{{ $errors->first('password') }}</li>
-                    @endif
                 </ul>
             </div>
             <div class="form-group">
